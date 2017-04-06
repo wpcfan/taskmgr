@@ -1,0 +1,10 @@
+<md-toolbar color="primary" >
+  <button md-icon-button (click)="onClick()">
+    <md-icon>menu</md-icon>
+  </button>
+  <span>Awesome Todos</span>
+  <span></span>
+  <span *ngIf="(auth$ | async).user as user">
+    <a routerLink="/profile">{{user.name}}</a>
+  </span>
+</md-toolbar>

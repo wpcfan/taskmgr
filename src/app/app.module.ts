@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-
+import { CoreModule } from './core/core.module';
+import { AppRoutingModule } from './app-routing.module';
+import { TodoModule } from './todo/todo.module';
+import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -11,10 +12,11 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    HttpModule
+    CoreModule,
+    AppRoutingModule,
+    LoginModule,
+    TodoModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
