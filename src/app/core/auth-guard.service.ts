@@ -7,6 +7,7 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot }    from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 import { Store } from '@ngrx/store';
 import { AppState } from '../domain/entities.interface';
 

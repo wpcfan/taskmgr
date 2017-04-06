@@ -2,16 +2,16 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { HeaderComponent } from './header/header.component';
 import { AuthGuardService } from './auth-guard.service';
 import { authReducer } from '../reducers/auth.reducer';
-import { MaterialModule, MdSidenav, MdSidenavContainer } from '@angular/material';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+
 import 'hammerjs';
 
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule,
     StoreModule.provideStore({
       auth: authReducer
     }),
@@ -22,10 +22,9 @@ import 'hammerjs';
   ],
   exports: [
     HeaderComponent,
-    MdSidenav,
-    MdSidenavContainer],
+    FooterComponent],
   providers: [AuthGuardService],
-  declarations: [HeaderComponent]
+  declarations: [HeaderComponent, FooterComponent]
 })
 export class CoreModule {
   constructor (@Optional() @SkipSelf() parentModule: CoreModule) {
