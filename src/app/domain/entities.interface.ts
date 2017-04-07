@@ -5,10 +5,11 @@ export interface Err {
 export interface Auth {
   user?: User;
   err?: Err;
+  token?: string;
 }
 
 export interface User {
-  id: string;
+  id?: string;
   username: string;
   password: string;
 }

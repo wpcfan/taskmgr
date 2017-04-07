@@ -15,6 +15,11 @@ import { AppState } from '../domain/entities.interface';
 export class AuthGuardService implements CanActivate, CanLoad {
 
   constructor(private router: Router, private store$: Store<AppState>) { }
+  /**
+   * 
+   * @param route 
+   * @param state 
+   */
   canActivate(
     route: ActivatedRouteSnapshot, 
     state: RouterStateSnapshot
@@ -22,11 +27,27 @@ export class AuthGuardService implements CanActivate, CanLoad {
     const url: string = state.url;
     
     return this.store$.select(appState => appState.auth)
-      .map(auth => auth.err !== undefined);
+      .map(auth => {
+        if(auth.err == undefined){
+          this.router.navigate(['login']);
+          return false;
+        }
+        return true;
+      });
   }
+  /**
+   * 
+   * @param route 
+   */
   canLoad(route: Route): Observable<boolean> {
     let url = `/${route.path}`;
     return this.store$.select(appState => appState.auth)
-      .map(auth => auth.err !== undefined);
+      .map(auth => {
+        if(auth.err == undefined){
+          this.router.navigate(['login']);
+          return false;
+        }
+        return true;
+      });
   }
 }
