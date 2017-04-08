@@ -1,0 +1,17 @@
+<div>
+  <i class="fa fa-check-circle fa-lg" 
+    *ngIf="checked" 
+    (click)="toggle(); $event.stopPropagation()"></i>
+  <i class="fa fa-check-circle-o fa-lg" 
+    *ngIf="!checked" 
+    (click)="toggle(); $event.stopPropagation()"></i>
+  <label class="display-4" 
+    [class.label-completed]="checked" 
+    (click)="toggle(); $event.stopPropagation()">
+    {{desc}}
+  </label>
+  <button class="btn btn-accent" 
+    (click)="remove(); $event.stopPropagation()">
+    <i class="fa fa-remove fa-lg" ></i>
+  </button>
+</div>

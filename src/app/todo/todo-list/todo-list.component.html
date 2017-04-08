@@ -1,0 +1,10 @@
+<ul class="list-group">
+  <li *ngFor="let item of items" class="list-group-item">
+    <app-todo-item
+      [checked]="item.completed"
+      (toggle)="handleToggle(item)"
+      (remove)="handleRemove(item)"
+      [desc]="todo.desc">
+    </app-todo-item>
+  </li>
+</ul>

@@ -11,11 +11,11 @@ import { AppState } from '../../domain/entities.interface';
 import * as authActions from '../../actions/auth.action';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   form: FormGroup;
   constructor(
     private fb: FormBuilder,
@@ -24,15 +24,22 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      name: ['', Validators.required],
+      email: [''],
+      password: ['', Validators.required],
+      repeat: ['', Validators.required]
     });
   }
+
   onSubmit({value, valid}){
     if(!valid) return;
     this.store$.dispatch(
-      new authActions.LoginAction({
+      new authActions.RegisterAction({
         username: value.username, 
-        password: value.password
+        password: value.password,
+        name: value.name,
+        email: value.email
       }));
   }
+
 }

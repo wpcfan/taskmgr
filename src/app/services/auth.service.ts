@@ -32,7 +32,8 @@ export class AuthService {
    * @param user 用户信息，id 属性会被忽略，因为服务器端会创建新的 id
    */
   register(user: User): Observable<User>{
-    const uri = `${this.baseUri}/${this.domain}/register`;
+    // const uri = `${this.baseUri}/${this.domain}/register`;
+    const uri = `${this.baseUri}/users`;
     return this.http.post(uri, JSON.stringify(user), {headers: this.headers})
       .map(res => res.json());
   }
@@ -44,11 +45,16 @@ export class AuthService {
    * @param password 密码（明文），服务器会进行加密处理
    */
   login(username: string, password: string): Observable<User>{
-    const uri = `${this.baseUri}/${this.domain}/login`;
-    return this.http.post(
-      uri, 
-      JSON.stringify({username: username, password: password}), 
-      {headers: this.headers})
-      .map(res => res.json());
+    // const uri = `${this.baseUri}/${this.domain}/login`;
+    // return this.http.post(
+    //   uri, 
+    //   JSON.stringify({username: username, password: password}), 
+    //   {headers: this.headers})
+    //   .map(res => res.json());
+    const uri = `${this.baseUri}/users?username=${username}`;
+    return this.http.get(uri).map(res => {
+      const data = res.json();
+      return data[0];
+    });
   }
 }

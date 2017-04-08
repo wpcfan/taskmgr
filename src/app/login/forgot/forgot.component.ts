@@ -11,11 +11,11 @@ import { AppState } from '../../domain/entities.interface';
 import * as authActions from '../../actions/auth.action';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-forgot',
+  templateUrl: './forgot.component.html',
+  styleUrls: ['./forgot.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class ForgotComponent implements OnInit {
   form: FormGroup;
   constructor(
     private fb: FormBuilder,
@@ -23,16 +23,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      email: ['', Validators.required]
     });
   }
   onSubmit({value, valid}){
     if(!valid) return;
-    this.store$.dispatch(
-      new authActions.LoginAction({
-        username: value.username, 
-        password: value.password
-      }));
   }
 }

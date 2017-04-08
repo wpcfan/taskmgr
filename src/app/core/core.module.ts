@@ -3,11 +3,15 @@ import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { routerReducer, RouterStoreModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthGuardService } from './auth-guard.service';
 import { AuthService } from '../services/auth.service';
+import { TodoService } from '../services/todo.service';
 import { authReducer } from '../reducers/auth.reducer';
+import { todoReducer, todoFilterReducer } from '../reducers/todo.reducer';
 import { AuthEffects } from '../effects/auth.effects';
+import { TodoEffects } from '../effects/todo.effects';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 
@@ -16,9 +20,14 @@ import { FooterComponent } from './footer/footer.component';
     CommonModule,
     HttpModule,
     EffectsModule.run(AuthEffects),
+    EffectsModule.run(TodoEffects),
     StoreModule.provideStore({
-      auth: authReducer
+      auth: authReducer,
+      todos: todoReducer,
+      todoFilter: todoFilterReducer,
+      router: routerReducer
     }),
+    RouterStoreModule.connectRouter(),
     // Note that you must instrument after importing StoreModule
     StoreDevtoolsModule.instrumentOnlyWithExtension({
       maxAge: 5
@@ -30,6 +39,7 @@ import { FooterComponent } from './footer/footer.component';
   providers: [
     AuthGuardService,
     AuthService,
+    TodoService,
     {
       provide: 'BASE_URI',
       useValue: 'http://localhost:3000'

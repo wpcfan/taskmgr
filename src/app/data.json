@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "username": "wang",
+      "password": "1234",
+      "name": "zhang san",
+      "email": "zhangsan@gmail.com",
+      "id": "SJzXaBSpg"
+    },
+    {
+      "username": "wangwu",
+      "password": "123456",
+      "name": "wang wu",
+      "email": "ww@gmail.com",
+      "id": "BJZCaSr6e"
+    }
+  ],
+  "todos": [
+    {
+      "id": "5894a12f-dae1-5ab0-5761-1371ba4f703e",
+      "desc": "have breakfast",
+      "completed": false,
+      "userId": "SJzXaBSpg"
+    }
+  ]
+}

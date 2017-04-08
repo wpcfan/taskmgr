@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {  } from '@ngrx/store'
 import { Effect, Actions, toPayload } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
+import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/switchMap';
@@ -44,4 +44,14 @@ export class AuthEffects{
     })
     .map(user => new authActions.RegisterSuccessAction({user: user}))
     .catch(err => of(new authActions.RegisterFailAction(err.json())));
+
+  @Effect()
+  navigateHome$: Observable<Action> = this.actions$
+    .ofType(authActions.ActionTypes.LOGIN_SUCCESS)
+    .map(() => go(['/todos']));
+
+  @Effect()
+  registerAndHome$: Observable<Action> = this.actions$
+    .ofType(authActions.ActionTypes.REGISTER_SUCCESS)
+    .map(() => go(['/todos']));
 }
