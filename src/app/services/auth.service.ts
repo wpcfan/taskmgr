@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
-import { User, Err, Auth } from '../domain/entities.interface';
+import * as entities from '../domain';
 
 /**
  * 认证服务主要用于用户的注册和登录功能
@@ -31,7 +31,7 @@ export class AuthService {
    * 
    * @param user 用户信息，id 属性会被忽略，因为服务器端会创建新的 id
    */
-  register(user: User): Observable<User>{
+  register(user: entities.User): Observable<entities.User>{
     // const uri = `${this.baseUri}/${this.domain}/register`;
     const uri = `${this.baseUri}/users`;
     return this.http.post(uri, JSON.stringify(user), {headers: this.headers})
@@ -44,7 +44,7 @@ export class AuthService {
    * @param username 用户名
    * @param password 密码（明文），服务器会进行加密处理
    */
-  login(username: string, password: string): Observable<User>{
+  login(username: string, password: string): Observable<entities.User>{
     // const uri = `${this.baseUri}/${this.domain}/login`;
     // return this.http.post(
     //   uri, 

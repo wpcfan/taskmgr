@@ -1,5 +1,3 @@
-import { RouterState } from '@ngrx/router-store';
-
 export interface Err {
   timestamp?: Date;
   status?: number;
@@ -28,10 +26,4 @@ export interface Todo{
   desc?: string;
   completed?: boolean;
   userId?: string;
-}
-
-export interface AppState{
-  todos: Todo[];
-  auth: Auth;
-  router: RouterState;
 }

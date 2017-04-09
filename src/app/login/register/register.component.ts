@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { AppState } from '../../domain/entities.interface';
+import * as fromRoot from '../../reducers';
 import * as authActions from '../../actions/auth.action';
 
 @Component({
@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
   form: FormGroup;
   constructor(
     private fb: FormBuilder,
-    private store$: Store<AppState>) { }
+    private store$: Store<fromRoot.State>) { }
 
   ngOnInit() {
     this.form = this.fb.group({

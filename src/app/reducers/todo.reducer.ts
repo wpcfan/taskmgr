@@ -1,32 +1,43 @@
-import { Todo } from '../domain/entities.interface';
+import * as entities from '../domain';
+import { createSelector } from 'reselect';
 import * as todoActions from '../actions/todo.action';
-import * as todoFilterActions from '../actions/todo-visibility.action';
 
-const initialState: Todo[] = [];
+export interface State{
+  todos: entities.Todo[],
+  visibilityFilter: string;
+}
 
-export function todoReducer(state = initialState, action: todoActions.Actions): Todo[] {
+const initialState: State = {
+  todos: [],
+  visibilityFilter: 'ALL'
+};
+
+export function reducer(
+  state = initialState, action: todoActions.Actions): State {
   switch (action.type) {
     case todoActions.ActionTypes.ADD_TODO_SUCCESS:
-      return [...state, action.payload];
+      return Object.assign({}, state, {todos: [...state.todos, action.payload]});
     case todoActions.ActionTypes.REMOVE_TODO_SUCCESS:
-      return state.filter(todo => todo.id !== action.payload.id);
+      return Object.assign({}, state, 
+      state.todos.filter(todo => todo.id !== action.payload.id));
     case todoActions.ActionTypes.TOGGLE_TODO_SUCCESS:
-      return state.map(todo => {
-        if(todo.id !== action.payload.id){
+      const todos_toggle = state.todos.map(todo => {
+        if(todo.id === action.payload.id) {
+          return Object.assign({}, todo, {completed: action.payload.completed});
+        } else {
           return todo;
         }
-        return Object.assign({}, todo, {completed: !todo.completed});
       });
+      return Object.assign({}, state, {todos: todos_toggle});
     case todoActions.ActionTypes.TOGGLE_ALL_SUCCESS:
-      return state.map(todo => {
-        return Object.assign({}, todo, {completed: !todo.completed});
-      });
+      return Object.assign({}, state, 
+      {todos: state.todos.map(todo => Object.assign({}, todo, {completed: !todo.completed}))});
     case todoActions.ActionTypes.LOAD_TODOS_SUCCESS:
-      return [
-        ...action.payload
-      ];
+      return Object.assign({}, state, {todos: [...action.payload]});
     case todoActions.ActionTypes.CLEAR_COMPLETED_SUCCESS:
-      return state.filter(todo => !todo.completed);
+      return Object.assign({}, state, {todos: state.todos.filter(todo => !todo.completed)});
+    case todoActions.ActionTypes.SET_VISIBILITY_FILTER:
+      return Object.assign({}, state, {visibilityFilter: action.payload});
     case todoActions.ActionTypes.LOAD_TODOS_FAIL:
     case todoActions.ActionTypes.TOGGLE_TODO_FAIL:
     case todoActions.ActionTypes.TOGGLE_ALL_FAIL:
@@ -37,15 +48,18 @@ export function todoReducer(state = initialState, action: todoActions.Actions): 
   }
 }
 
-export function todoFilterReducer (state = (todo: Todo) => todo, action: todoFilterActions.Actions): Todo {
-  switch (action.type) {
-    case todoFilterActions.ActionTypes.VISIBILITY_ALL_TODOS:
-      return todo => todo;
-    case todoFilterActions.ActionTypes.VISIBILITY_ACTIVE_TODOS:
-      return todo => !todo.completed;
-    case todoFilterActions.ActionTypes.VISIBILITY_COMPLETED_TODOS:
-      return todo => todo.completed;
-    default:
-      return state;
-  }
-}
+export const getVisibilityFilter = (state: State) => state.visibilityFilter
+export const getTodos = (state) => state.todos
+
+export const getVisibleTodos = createSelector(
+  [getVisibilityFilter, getTodos], (filter, todos)=>{
+    switch (filter) {
+      case 'ACTIVE':
+        return todos.filter(t => !t.completed);
+      case 'COMPLETED':
+        return todos.filter(t => t.completed);
+      case 'ALL':
+      default:
+        return todos;
+    }
+  })

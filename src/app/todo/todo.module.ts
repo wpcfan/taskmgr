@@ -12,6 +12,7 @@ import { TodoListComponent } from './todo-list/todo-list.component';
     SharedModule,
     TodoRoutingModule
   ],
+  exports: [TodoComponent],
   declarations: [
     TodoComponent, 
     TodoHeaderComponent, 

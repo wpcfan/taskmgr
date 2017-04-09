@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Store } from '@ngrx/store';
 import { go } from '@ngrx/router-store';
-import { AppState } from '../domain/entities.interface';
+import * as fromRoot from '../reducers'
 
 @Injectable()
 export class AuthGuardService implements CanActivate, CanLoad {
@@ -20,7 +20,7 @@ export class AuthGuardService implements CanActivate, CanLoad {
    * @param router 路由注入，用于导航处理
    * @param store$ redux store注入，用于状态管理
    */
-  constructor(private store$: Store<AppState>) { }
+  constructor(private store$: Store<fromRoot.State>) { }
 
   /**
    * 用于判断是否可以激活改路由
@@ -31,7 +31,7 @@ export class AuthGuardService implements CanActivate, CanLoad {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     const url: string = state.url;
     console.log('canActivate: ' + url);
-    return this.store$.select(appState => appState.auth)
+    return this.store$.select(fromRoot.getAuth)
       .map(auth => {
         if(auth.user === undefined || auth.err !== undefined){
           this.store$.dispatch(go(['/login']));
@@ -48,7 +48,7 @@ export class AuthGuardService implements CanActivate, CanLoad {
   canLoad(route: Route): Observable<boolean> {
     const url = `/${route.path}`;
     console.log('canLoad: '+ url);
-    return this.store$.select(appState => appState.auth)
+    return this.store$.select(fromRoot.getAuth)
       .map(auth => {
         if(auth.user === undefined || auth.err !== undefined){
           this.store$.dispatch(go(['/login']));

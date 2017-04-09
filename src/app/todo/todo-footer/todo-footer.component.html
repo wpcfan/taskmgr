@@ -1,3 +1,11 @@
-<p>
-  todo-footer works!
-</p>
+<footer class="footer">
+  <span class="todo-count">
+    还剩 <strong>{{itemCount}}</strong> 个待办事项
+  </span>
+  <div class="btn-group" role="group" aria-label="筛选器">
+    <button type="button" class="btn btn-primary" (click)="handleFilter(0)">全部</button>
+    <button type="button" class="btn btn-primary" (click)="handleFilter(1)">待完成</button>
+    <button type="button" class="btn btn-primary" (click)="handleFilter(2)">已完成</button>
+  </div>
+  <button class="clear-completed" (click)="onClick()">清理已完成项目</button>
+</footer>

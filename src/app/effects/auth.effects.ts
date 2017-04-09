@@ -8,7 +8,6 @@ import 'rxjs/add/operator/switchMap';
 
 import { AuthService } from '../services/auth.service';
 import * as authActions from '../actions/auth.action';
-import { User, Err } from '../domain/entities.interface';
 
 @Injectable()
 export class AuthEffects{
@@ -39,7 +38,7 @@ export class AuthEffects{
   register$: Observable<Action> = this.actions$
     .ofType(authActions.ActionTypes.REGISTER)
     .map(toPayload)
-    .switchMap((val:User) => {
+    .switchMap((val) => {
       return this.authService.register(val);
     })
     .map(user => new authActions.RegisterSuccessAction({user: user}))

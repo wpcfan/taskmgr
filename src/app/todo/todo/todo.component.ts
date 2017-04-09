@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { Todo, AppState } from '../../domain/entities.interface';
+import * as entities from '../../domain';
+import * as fromRoot from '../../reducers';
 import * as todoActions from '../../actions/todo.action';
-import * as todoFilterActions from '../../actions/todo-visibility.action';
 
 @Component({
   selector: 'app-todo',
@@ -11,9 +11,9 @@ import * as todoFilterActions from '../../actions/todo-visibility.action';
   styleUrls: ['./todo.component.scss']
 })
 export class TodoComponent implements OnInit {
-  todos$: Observable<Todo[]>;
-  constructor(private store$: Store<AppState>) { 
-    this.todos$ = this.store$.select(state => state.todos);
+  todos$: Observable<entities.Todo[]>;
+  constructor(private store$: Store<fromRoot.State>) { 
+    this.todos$ = this.store$.select(fromRoot.getVisibleTodos);
   }
 
   ngOnInit() {
@@ -28,11 +28,30 @@ export class TodoComponent implements OnInit {
     this.store$.dispatch({type: todoActions.ActionTypes.TOGGLE_ALL});
   }
 
-  removeTodo(todo: Todo){
+  removeTodo(todo: entities.Todo){
     this.store$.dispatch({type: todoActions.ActionTypes.REMOVE_TODO, payload: todo});
   }
 
-  toggleTodo(todo: Todo){
+  toggleTodo(todo: entities.Todo){
     this.store$.dispatch({type: todoActions.ActionTypes.TOGGLE_TODO, payload: todo});
+  }
+
+  clearCompleted(){
+    this.store$.dispatch({type: todoActions.ActionTypes.CLEAR_COMPLETED});
+  }
+
+  applyFilter(value: number){
+    switch (value) {
+      case 1:
+        this.store$.dispatch({type: todoActions.ActionTypes.SET_VISIBILITY_FILTER, payload: 'ACTIVE'})
+        break;
+      case 2:
+        this.store$.dispatch({type: todoActions.ActionTypes.SET_VISIBILITY_FILTER, payload: 'COMPLETED'})
+        break;
+      case 0:
+      default:
+        this.store$.dispatch({type: todoActions.ActionTypes.SET_VISIBILITY_FILTER, payload: 'ALL'})
+        break;
+    }
   }
 }

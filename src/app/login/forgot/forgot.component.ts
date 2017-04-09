@@ -7,7 +7,8 @@ import {
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { AppState } from '../../domain/entities.interface';
+import * as entities from '../../domain';
+import * as fromRoot from '../../reducers';
 import * as authActions from '../../actions/auth.action';
 
 @Component({
@@ -19,7 +20,7 @@ export class ForgotComponent implements OnInit {
   form: FormGroup;
   constructor(
     private fb: FormBuilder,
-    private store$: Store<AppState>) { }
+    private store$: Store<fromRoot.State>) { }
 
   ngOnInit() {
     this.form = this.fb.group({

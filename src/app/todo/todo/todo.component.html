@@ -1,12 +1,16 @@
-<app-todo-header
-  (toggleAll)="toggleAll()"
-  (textSubmit)="addTodo($event)">
-</app-todo-header>
-<app-todo-list
-  [items]="todos$ | async"
-  (remove)="removeTodo($event)"
-  (toggle)="toggleTodo($event)">
-</app-todo-list>
-<app-todo-footer>
-  
-</app-todo-footer>
+<div class="container">
+  <app-todo-header
+    (toggleAll)="toggleAll()"
+    (textSubmit)="addTodo($event)">
+  </app-todo-header>
+  <app-todo-list
+    [todos]="todos$|async"
+    (remove)="removeTodo($event)"
+    (toggle)="toggleTodo($event)">
+  </app-todo-list>
+  <app-todo-footer
+    [itemCount]="(todos$|async).length"
+    (clearCompleted)="clearCompleted()"
+    (filterChange)="applyFilter($event)">
+  </app-todo-footer>
+</div>

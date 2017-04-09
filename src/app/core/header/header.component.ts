@@ -1,8 +1,8 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-
-import { AppState, Auth } from '../../domain/entities.interface';
+import * as fromRoot from '../../reducers'
+import * as entities from '../../domain';
 
 @Component({
   selector: 'app-header',
@@ -11,12 +11,12 @@ import { AppState, Auth } from '../../domain/entities.interface';
 })
 export class HeaderComponent {
 
-  auth$: Observable<Auth>;
+  auth$: Observable<entities.Auth>;
 
   @Output("toggle") clickHandler: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private store$: Store<AppState>) { 
-    this.auth$ = this.store$.select(appState => appState.auth);
+  constructor(private store$: Store<fromRoot.State>) { 
+    this.auth$ = this.store$.select(fromRoot.getAuth);
   }
 
   onClick(){

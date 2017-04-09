@@ -6,41 +6,29 @@ import {
   EventEmitter 
 } from '@angular/core';
 
-import { 
-  FormGroup, 
-  FormBuilder, 
-  FormControl,
-  Validators 
-} from '@angular/forms';
-
 @Component({
   selector: 'app-todo-header',
   templateUrl: './todo-header.component.html',
   styleUrls: ['./todo-header.component.scss']
 })
 export class TodoHeaderComponent implements OnInit {
-  form: FormGroup;
+  desc: string = '';
   toggleAll: boolean = false;
   @Output("toggleAll") toggleAllEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output("textSubmit") textSubmitEvent: EventEmitter<string> = new EventEmitter<string>();
   validateErr: string = '';
 
-  constructor(private fb: FormBuilder) { }
+  constructor() { }
   
-  ngOnInit(){
-    this.form = this.fb.group({
-      desc: ['', Validators.required]
-    });
-  }
+  ngOnInit(){}
 
   onClick(){
     this.toggleAll = ! this.toggleAll;
     this.toggleAllEvent.emit(this.toggleAll);
   }
 
-  onSubmit({valid, value}){
-    if(!valid) return;
-    this.textSubmitEvent.emit(value);
-    this.form.reset();
+  handleText(){
+    this.textSubmitEvent.emit(this.desc);
+    this.desc = '';
   }
 }

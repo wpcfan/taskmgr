@@ -1,17 +1,7 @@
-<div>
-  <i class="fa fa-check-circle fa-lg" 
-    *ngIf="checked" 
-    (click)="toggle(); $event.stopPropagation()"></i>
-  <i class="fa fa-check-circle-o fa-lg" 
-    *ngIf="!checked" 
-    (click)="toggle(); $event.stopPropagation()"></i>
-  <label class="display-4" 
-    [class.label-completed]="checked" 
-    (click)="toggle(); $event.stopPropagation()">
+<li class="list-group-item justify-content-between">
+  <span [class.label-completed]="completed" (click)="toggle()">
+    <span class="badge badge-primary"><i class="fa fa-check" [class.icon-completed]="completed"></i></span>
     {{desc}}
-  </label>
-  <button class="btn btn-accent" 
-    (click)="remove(); $event.stopPropagation()">
-    <i class="fa fa-remove fa-lg" ></i>
-  </button>
-</div>
+  </span>
+  <span class="red-text" (click)="remove()">X</span>
+</li>

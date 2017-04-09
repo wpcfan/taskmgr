@@ -8,8 +8,8 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/withLatestFrom';
 import { TodoService } from '../services/todo.service';
 import * as todoActions from '../actions/todo.action';
-import * as todoFilterActions from '../actions/todo-visibility.action';
-import { Todo, Err, AppState } from '../domain/entities.interface';
+import * as fromRoot from '../reducers';
+import * as entities from '../domain';
 
 @Injectable()
 export class TodoEffects{
@@ -21,7 +21,7 @@ export class TodoEffects{
   constructor(
     private actions$: Actions, 
     private todoService: TodoService,
-    private store$: Store<AppState>) { }
+    private store$: Store<fromRoot.State>) { }
   /**
    * 
    */
@@ -29,7 +29,7 @@ export class TodoEffects{
   loadTodos$: Observable<Action> = this.actions$
     .ofType(todoActions.ActionTypes.LOAD_TODOS)
     .map(toPayload)
-    .withLatestFrom(this.store$.select(state => state.auth))
+    .withLatestFrom(this.store$.select(fromRoot.getAuth))
     .switchMap(([_, auth]) => {
       return this.todoService.getTodos(auth.user.id);
     })
@@ -40,9 +40,9 @@ export class TodoEffects{
   addTodo$: Observable<Action> = this.actions$
     .ofType(todoActions.ActionTypes.ADD_TODO)
     .map(toPayload)
-    .withLatestFrom(this.store$.select(state => state.auth))
+    .withLatestFrom(this.store$.select(fromRoot.getAuth))
     .switchMap(([desc, auth]) => {
-      const todo: Todo = {
+      const todo: entities.Todo = {
         desc: desc,
         completed: false,
         userId: auth.user.id
@@ -72,16 +72,16 @@ export class TodoEffects{
   toggleAll$: Observable<Action> = this.actions$
     .ofType(todoActions.ActionTypes.TOGGLE_ALL)
     .map(toPayload)
-    .withLatestFrom(this.store$.select(state => state.auth))
+    .withLatestFrom(this.store$.select(fromRoot.getAuth))
     .switchMap(([_, auth]) => this.todoService.toggleAll(auth.user.id))
-    .map(num => new todoActions.ToggleAllAction(num))
+    .map(num => new todoActions.ToggleAllSuccessAction(num))
     .catch(err => of(new todoActions.ToggleAllFailAction(err.json())));
 
   @Effect()
   clearCompleted$: Observable<Action> = this.actions$
     .ofType(todoActions.ActionTypes.CLEAR_COMPLETED)
     .map(toPayload)
-    .withLatestFrom(this.store$.select(state => state.auth))
+    .withLatestFrom(this.store$.select(fromRoot.getAuth))
     .switchMap(([_, auth]) => this.todoService.clearCompleted(auth.user.id))
     .map(num => new todoActions.ClearCompletedSuccessAction(num))
     .catch(err => of(new todoActions.ClearCompletedFailAction(err.json())));

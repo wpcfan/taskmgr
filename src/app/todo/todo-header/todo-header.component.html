@@ -1,4 +1,4 @@
-<form class="container mt-5" [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate>
+<div class="container mt-5">
   <div class="md-form input-group display-4">
     <span class="blue-text prefix">
       <i class="fa fa-check-square fa-lg" *ngIf="toggleAll" (click)="onClick()"></i>
@@ -8,11 +8,11 @@
       type="text" 
       name="desc" 
       aria-label="带复选框的文字输入" 
-      formControlName="desc"
-      (keyup.enter)="onSubmit(form)" />
+      [(ngModel)]="desc"
+      (keyup.enter)="handleText()" />
     <label for="desc" [attr.data-error]="validateErr">今天想做点什么？</label>
     <span class="input-group-btn">
-      <button class="btn btn-primary" type="submit">Go!</button>
+      <button class="btn btn-primary" type="button" (click)="handleText()">Go!</button>
     </span>
   </div>
-</form>
+</div>

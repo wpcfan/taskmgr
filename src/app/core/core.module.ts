@@ -8,8 +8,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthGuardService } from './auth-guard.service';
 import { AuthService } from '../services/auth.service';
 import { TodoService } from '../services/todo.service';
-import { authReducer } from '../reducers/auth.reducer';
-import { todoReducer, todoFilterReducer } from '../reducers/todo.reducer';
+import { reducer } from '../reducers';
 import { AuthEffects } from '../effects/auth.effects';
 import { TodoEffects } from '../effects/todo.effects';
 import { HeaderComponent } from './header/header.component';
@@ -21,12 +20,14 @@ import { FooterComponent } from './footer/footer.component';
     HttpModule,
     EffectsModule.run(AuthEffects),
     EffectsModule.run(TodoEffects),
-    StoreModule.provideStore({
-      auth: authReducer,
-      todos: todoReducer,
-      todoFilter: todoFilterReducer,
-      router: routerReducer
-    }),
+   /**
+     * StoreModule.provideStore is imported once in the root module, accepting a reducer
+     * function or object map of reducer functions. If passed an object of
+     * reducers, combineReducers will be run creating your application
+     * meta-reducer. This returns all providers for an @ngrx/store
+     * based application.
+     */
+    StoreModule.provideStore(reducer),
     RouterStoreModule.connectRouter(),
     // Note that you must instrument after importing StoreModule
     StoreDevtoolsModule.instrumentOnlyWithExtension({
@@ -43,9 +44,10 @@ import { FooterComponent } from './footer/footer.component';
     {
       provide: 'BASE_URI',
       useValue: 'http://localhost:3000'
-    }
-    ],
-  declarations: [HeaderComponent, FooterComponent]
+    }],
+  declarations: [
+    HeaderComponent, 
+    FooterComponent]
 })
 export class CoreModule {
   constructor (@Optional() @SkipSelf() parentModule: CoreModule) {
