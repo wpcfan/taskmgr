@@ -36,7 +36,7 @@
     },
     {
       "desc": "需要买一支新的羽毛球拍",
-      "completed": false,
+      "completed": true,
       "userId": "SJzXaBSpg",
       "id": 4
     }

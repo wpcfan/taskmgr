@@ -53,4 +53,9 @@ export class AuthEffects{
   registerAndHome$: Observable<Action> = this.actions$
     .ofType(authActions.ActionTypes.REGISTER_SUCCESS)
     .map(() => go(['/todos']));
+  
+  @Effect()
+  logout$: Observable<Action> = this.actions$
+    .ofType(authActions.ActionTypes.LOGOUT)
+    .map(() => go(['/login']));
 }

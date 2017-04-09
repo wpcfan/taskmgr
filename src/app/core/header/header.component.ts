@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromRoot from '../../reducers'
+import * as actions from '../../actions/auth.action'
 import * as entities from '../../domain';
 
 @Component({
@@ -21,5 +22,9 @@ export class HeaderComponent {
 
   onClick(){
     this.clickHandler.emit();
+  }
+
+  logout(){
+    this.store$.dispatch({type: actions.ActionTypes.LOGOUT});
   }
 }

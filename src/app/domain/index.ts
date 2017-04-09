@@ -27,3 +27,10 @@ export interface Todo{
   completed?: boolean;
   userId?: string;
 }
+
+export interface Quote{
+  cn: string;
+  en: string;
+  pic: string;
+  picSquare: string;
+}

@@ -8,9 +8,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthGuardService } from './auth-guard.service';
 import { AuthService } from '../services/auth.service';
 import { TodoService } from '../services/todo.service';
+import { QuoteService } from '../services/quote.service';
 import { reducer } from '../reducers';
 import { AuthEffects } from '../effects/auth.effects';
 import { TodoEffects } from '../effects/todo.effects';
+import { QuoteEffects } from '../effects/quote.effects';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 
@@ -20,6 +22,7 @@ import { FooterComponent } from './footer/footer.component';
     HttpModule,
     EffectsModule.run(AuthEffects),
     EffectsModule.run(TodoEffects),
+    EffectsModule.run(QuoteEffects),
    /**
      * StoreModule.provideStore is imported once in the root module, accepting a reducer
      * function or object map of reducer functions. If passed an object of
@@ -41,6 +44,7 @@ import { FooterComponent } from './footer/footer.component';
     AuthGuardService,
     AuthService,
     TodoService,
+    QuoteService,
     {
       provide: 'BASE_URI',
       useValue: 'http://localhost:3000'
