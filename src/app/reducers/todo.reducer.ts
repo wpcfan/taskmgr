@@ -19,7 +19,7 @@ export function reducer(
       return Object.assign({}, state, {todos: [...state.todos, action.payload]});
     case todoActions.ActionTypes.REMOVE_TODO_SUCCESS:
       return Object.assign({}, state, 
-      state.todos.filter(todo => todo.id !== action.payload.id));
+      {todos: state.todos.filter(todo => todo.id !== action.payload.id)});
     case todoActions.ActionTypes.TOGGLE_TODO_SUCCESS:
       const todos_toggle = state.todos.map(todo => {
         if(todo.id === action.payload.id) {

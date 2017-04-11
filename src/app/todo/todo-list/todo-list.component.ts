@@ -17,7 +17,7 @@ export class TodoListComponent {
   @Input() 
   set todos(value){
     if(value !== undefined || value.length ===0)
-      this._todos = value;
+      this._todos = [...value];
   }
   handleToggle(item: entities.Todo){
     this.toggleEvent.emit(item);

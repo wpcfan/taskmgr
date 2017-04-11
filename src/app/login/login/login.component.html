@@ -1,5 +1,33 @@
 <form class="container mt-5" [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate>
   <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-block">
+          <div class="form-header blue darken-4">
+            <h3><i class="fa fa-lock"></i> 登录：</h3>
+          </div>
+          <div class="md-form">
+            <i class="fa fa-envelope prefix"></i>
+            <input type="text" id="username" class="form-control" formControlName="username">
+            <label for="username">您的用户名</label>
+          </div>
+          <div class="md-form">
+            <i class="fa fa-lock prefix"></i>
+            <input type="password" id="password" class="form-control" formControlName="password">
+            <label for="password">您的密码</label>
+          </div>
+          <div class="text-center">
+            <button class="btn btn-deep-purple" type="submit" [disabled]="!form.valid">登录</button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="options">
+            <p>还没有账户？ <a routerLink="/register">注册</a></p>
+            <p>忘记 <a routerLink="/forgot">密码？</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="col-md-4">
       <div class="card card-cascade wider">
         <div class="view overlay hm-white-slight">
@@ -13,34 +41,6 @@
             <hr>
             <!--Quotation-->
             <p><i class="fa fa-quote-left"></i> {{(quote$|async).en}}</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-block">
-          <div class="form-header blue darken-4">
-            <h3><i class="fa fa-lock"></i> 登录：</h3>
-          </div>
-          <div class="md-form">
-            <i class="fa fa-envelope prefix"></i>
-            <input type="text" name="username" class="form-control" formControlName="username">
-            <label for="username">您的用户名</label>
-          </div>
-          <div class="md-form">
-            <i class="fa fa-lock prefix"></i>
-            <input type="password" name="password" class="form-control" formControlName="password">
-            <label for="password">您的密码</label>
-          </div>
-          <div class="text-center">
-            <button class="btn btn-deep-purple" type="submit" [disabled]="!form.valid">登录</button>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <div class="options">
-            <p>还没有账户？ <a routerLink="/register">注册</a></p>
-            <p>忘记 <a routerLink="/forgot">密码？</a></p>
-          </div>
         </div>
       </div>
     </div>
