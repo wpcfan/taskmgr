@@ -7,7 +7,7 @@ import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/switchMap';
 
 import { AuthService } from '../services/auth.service';
-import * as authActions from '../actions/auth.action';
+import * as actions from '../actions/auth.action';
 
 @Injectable()
 export class AuthEffects{
@@ -23,39 +23,39 @@ export class AuthEffects{
    */
   @Effect()
   login$: Observable<Action> = this.actions$
-    .ofType(authActions.ActionTypes.LOGIN)
+    .ofType(actions.ActionTypes.LOGIN)
     .map(toPayload)
     .switchMap((val:{username:string, password: string}) => {
       return this.authService.login(val.username, val.password);
     })
-    .map(user => new authActions.LoginSuccessAction({user: user}))
-    .catch(err => of(new authActions.LoginFailAction(err.json())));
+    .map(user => new actions.LoginSuccessAction({user: user}))
+    .catch(err => of(new actions.LoginFailAction(err.json())));
 
   /**
    * 
    */
   @Effect()
   register$: Observable<Action> = this.actions$
-    .ofType(authActions.ActionTypes.REGISTER)
+    .ofType(actions.ActionTypes.REGISTER)
     .map(toPayload)
     .switchMap((val) => {
       return this.authService.register(val);
     })
-    .map(user => new authActions.RegisterSuccessAction({user: user}))
-    .catch(err => of(new authActions.RegisterFailAction(err.json())));
+    .map(user => new actions.RegisterSuccessAction({user: user}))
+    .catch(err => of(new actions.RegisterFailAction(err.json())));
 
   @Effect()
   navigateHome$: Observable<Action> = this.actions$
-    .ofType(authActions.ActionTypes.LOGIN_SUCCESS)
+    .ofType(actions.ActionTypes.LOGIN_SUCCESS)
     .map(() => go(['/todos']));
 
   @Effect()
   registerAndHome$: Observable<Action> = this.actions$
-    .ofType(authActions.ActionTypes.REGISTER_SUCCESS)
+    .ofType(actions.ActionTypes.REGISTER_SUCCESS)
     .map(() => go(['/todos']));
   
   @Effect()
   logout$: Observable<Action> = this.actions$
-    .ofType(authActions.ActionTypes.LOGOUT)
+    .ofType(actions.ActionTypes.LOGOUT)
     .map(() => go(['/login']));
 }

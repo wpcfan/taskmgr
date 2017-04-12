@@ -1,6 +1,6 @@
 import { Reducer, Action } from '@ngrx/store';
 import * as entities from '../domain';
-import * as authAction from '../actions/auth.action';
+import * as actions from '../actions/auth.action';
 
 export interface State{
   auth: entities.Auth;
@@ -10,19 +10,19 @@ const initialState: State = {
   auth: {}
 }
 
-export function reducer (state: State = initialState, action: authAction.Actions): State {
+export function reducer (state: State = initialState, action: actions.Actions): State {
   switch (action.type) {
-    case authAction.ActionTypes.LOGIN_SUCCESS:
+    case actions.ActionTypes.LOGIN_SUCCESS:
       return Object.assign({}, state, {auth: action.payload});
-    case authAction.ActionTypes.LOGIN_FAIL:
+    case actions.ActionTypes.LOGIN_FAIL:
       return Object.assign({}, state, {
         auth: {err: action.payload}
       });
-    case authAction.ActionTypes.LOGOUT:
+    case actions.ActionTypes.LOGOUT:
       return initialState;
-    case authAction.ActionTypes.REGISTER_SUCCESS:
+    case actions.ActionTypes.REGISTER_SUCCESS:
       return Object.assign({}, state, {auth: action.payload});
-    case authAction.ActionTypes.REGISTER_FAIL:
+    case actions.ActionTypes.REGISTER_FAIL:
       return Object.assign({}, state, {
         auth: {err: action.payload}
       });
