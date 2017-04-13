@@ -10,8 +10,8 @@ const initialState: State = {
   quote: {
     cn: '满足感在于不断的努力，而不是现有成就。全心努力定会胜利满满。',
     en: 'Satisfaction lies in the effort, not in the attainment. Full effort is full victory. ',
-    pic: 'assets/quote_fallback.jpg',
-    picSquare: 'assets/quote_thumb_fallback.jpg'
+    pic: 'assets/img/quote_fallback.jpg',
+    picSquare: 'assets/img/quote_thumb_fallback.jpg'
   }
 }
 

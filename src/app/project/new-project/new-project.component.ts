@@ -8,14 +8,14 @@ import {
 import { Store } from '@ngrx/store';
 
 import * as fromRoot from '../../reducers';
-import * as actions from '../../actions/auth.action';
+import * as actions from '../../actions/project.action';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  selector: 'app-new-project',
+  templateUrl: './new-project.component.html',
+  styleUrls: ['./new-project.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class NewProjectComponent implements OnInit {
   form: FormGroup;
   constructor(
     private fb: FormBuilder,
@@ -23,22 +23,17 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      username: ['', Validators.required],
       name: ['', Validators.required],
-      email: [''],
-      password: ['', Validators.required],
-      repeat: ['', Validators.required]
+      desc: ['']
     });
   }
 
   onSubmit({value, valid}){
     if(!valid) return;
     this.store$.dispatch(
-      new actions.RegisterAction({
-        username: value.username, 
-        password: value.password,
+      new actions.AddProjectAction({
         name: value.name,
-        email: value.email
+        desc: value.desc
       }));
   }
 

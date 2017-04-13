@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromRoot from '../../reducers';
@@ -11,7 +11,6 @@ import * as actions from '../../actions/project.action';
   styleUrls: ['./project-list.component.scss']
 })
 export class ProjectListComponent implements OnInit {
-  
   projects$: Observable<entities.Project>;
 
   constructor(private store$: Store<fromRoot.State>) { 
@@ -22,4 +21,11 @@ export class ProjectListComponent implements OnInit {
   ngOnInit() {
   }
 
+  selectProject(project: entities.Project){
+ 
+  }
+
+  addProject(){
+    
+  }
 }
