@@ -40,5 +40,13 @@
       "userId": "SJzXaBSpg",
       "id": "Sk0EbkOTe"
     }
+  ],
+  "projects": [
+    {
+      "id": "1",
+      "name": "First Project",
+      "desc": "This is my first project",
+      "memberIds": ["SJzXaBSpg", "BJZCaSr6e"]
+    }
   ]
 }

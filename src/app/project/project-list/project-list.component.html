@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-md-3" *ngFor="let project of (projects$ | async)">
+    <div class="card text-center" >
+      <div class="card-header primary-color white-text">
+        {{project.name}}
+      </div>
+      <div class="card-block">
+        <h4 class="card-title">Special title treatment</h4>
+        <p class="card-text">{{project.desc}}</p>
+      </div>
+      <div class="card-footer primary-color white-text">
+        <p>2 days ago</p>
+      </div>
+    </div>
+  </div> 
+  <div class="col-md-3">
+    <div class="card text-center" >
+      <div class="card-header primary-color white-text">
+        新建项目
+      </div>
+      <div class="card-block">
+        <p class="card-text">点这里新建一个项目</p>
+      </div>
+      <div class="card-footer primary-color white-text">
+        <p>2 days ago</p>
+      </div>
+    </div>
+  </div>
+</div>
+

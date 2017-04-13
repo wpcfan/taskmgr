@@ -47,7 +47,7 @@ export class AuthEffects{
   @Effect()
   navigateHome$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.LOGIN_SUCCESS)
-    .map(() => go(['/todos']));
+    .map(() => go(['/projects']));
 
   @Effect()
   registerAndHome$: Observable<Action> = this.actions$

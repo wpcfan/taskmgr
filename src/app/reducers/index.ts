@@ -39,6 +39,7 @@ import { combineReducers } from '@ngrx/store';
 import * as fromAuth from './auth.reducer';
 import * as fromTodos from './todo.reducer';
 import * as fromQuote from './quote.reducer';
+import * as fromProjects from './project.reducer';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -48,6 +49,7 @@ export interface State {
   auth: fromAuth.State;
   todos: fromTodos.State;
   quote: fromQuote.State;
+  projects: fromProjects.State;
   router: fromRouter.RouterState;
 }
 
@@ -62,6 +64,7 @@ const reducers = {
   auth: fromAuth.reducer,
   todos: fromTodos.reducer,
   quote: fromQuote.reducer,
+  projects: fromProjects.reducer,
   router: fromRouter.routerReducer,
 };
 
@@ -79,6 +82,7 @@ export function reducer(state: any, action: any) {
 export const getAuthState = (state: State) => state.auth;
 export const getTodosState = (state: State) => state.todos;
 export const getQuoteState = (state: State) => state.quote;
+export const getProjectsState = (state: State) => state.projects;
 export const getRouterState = (state: State) => state.router;
 
 export const getAuth = createSelector(getAuthState, fromAuth.getAuth);
@@ -86,3 +90,4 @@ export const getTodos = createSelector(getTodosState, fromTodos.getTodos);
 export const getVisibilityFilter = createSelector(getTodosState, fromTodos.getVisibilityFilter);
 export const getVisibleTodos = createSelector(getTodosState, fromTodos.getVisibleTodos);
 export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
+export const getProjects = createSelector(getProjectsState, fromProjects.getProjects);

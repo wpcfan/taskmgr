@@ -19,6 +19,7 @@ export interface User {
   password?: string;
   name?: string;
   email?: string;
+  projectIds?: string[];
 }
 
 export interface Todo{
@@ -33,4 +34,40 @@ export interface Quote{
   en: string;
   pic: string;
   picSquare: string;
+}
+
+export interface TaskDiscussion{
+  id: string;
+  taskId: string;
+  message: string;
+  senderId: string;
+  sentDate: Date;
+}
+
+export interface Task{
+  id: string;
+  taskListId: string;
+  desc: string;
+  completed: boolean;
+  ownerId: string;
+  participantIds: string[];
+  dueDate: Date;
+  priority: number;
+  remark: string;
+  tags: string[];
+  reminder: Date;
+}
+
+export interface TaskList{
+  id: string;
+  name: string;
+  projectId: string;
+}
+
+export interface Project{
+  id?: string;
+  name: string;
+  desc?: string;
+  coverImg?: string;
+  memberIds?: string[]; // 存储成员ID
 }
