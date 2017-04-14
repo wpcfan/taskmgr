@@ -1,37 +1,7 @@
-<nav class="navbar navbar-toggleable-md navbar-dark bg-primary">
-  <div class="container">
-    <button 
-      class="navbar-toggler navbar-toggler-right" 
-      type="button" 
-      data-toggle="collapse" 
-      data-target="#collapseMenu" 
-      aria-controls="collapseMenu"
-      aria-expanded="false" 
-      aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand">
-      <strong>Awesome Todos</strong>
-    </a>
+<md-toolbar color="primary">
+  <span>Teamwork</span>
+  <span><a routerLink="/projects">项目</a></span>
+  <span class="fill-remaining-space"></span>
 
-    <div class="collapse navbar-collapse" id="collapseMenu">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/todos" >待办事项 <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/stats">统计</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/my">我的</a>
-        </li>
-      </ul>
-      <div>
-        <a class="nav-link" *ngIf="(auth$|async).user" (click)="logout()">退出</a>
-      </div>
-      <!--<form class="form-inline waves-effect waves-light">
-        <input class="form-control" type="text" placeholder="Search">
-      </form>-->
-    </div>
-  </div>
-</nav>
+  <span><a *ngIf="(auth$|async).user" (click)="logout()">退出</a></span>
+</md-toolbar>

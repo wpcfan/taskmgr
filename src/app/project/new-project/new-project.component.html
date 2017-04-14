@@ -1,29 +1,18 @@
-<form class="modal-dialog" role="document" [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate>
-  <!--Content-->
-  <div class="modal-content">
-    <!--Header-->
-    <div class="modal-header">
-      <h3 class="w-100"><i class="fa fa-user"></i> 创建项目：</h3>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <!--Body-->
-    <div class="modal-body">
-      <div class="md-form">
-        <i class="fa fa-user prefix"></i>
-        <input type="text" id="name" class="form-control" formControlName="name">
-        <label for="name">项目名称</label>
-      </div>
-      <div class="md-form">
-        <i class="fa fa-user prefix"></i>
-        <input type="text" id="desc" class="form-control" formControlName="desc">
-        <label for="desc">项目简介（选填）</label>
-      </div>
-      <div class="text-center">
-        <button class="btn btn-deep-purple" type="submit" [disabled]="!form.valid">完成并创建</button>
-      </div>
-    </div>
-  </div>
-  <!--/.Content-->
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate>
+  <md-card class="card">
+    <md-card-header>
+      <md-card-title> 创建项目：</md-card-title>
+    </md-card-header>
+    <md-card-content>
+      <md-input-container class="full-width">
+        <input mdInput placeholder="项目名称" formControlName="name">
+      </md-input-container>
+      <md-input-container class="full-width">
+        <input mdInput placeholder="项目简介（选填）" formControlName="desc">
+      </md-input-container>
+    </md-card-content>
+    <md-card-actions class="text-center">
+      <button md-raised-button type="submit" [disabled]="!form.valid">完成并创建</button>
+    </md-card-actions>
+  </md-card>
 </form>

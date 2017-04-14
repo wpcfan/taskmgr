@@ -1,0 +1,20 @@
+.full-width {
+  width: 100%;
+}
+
+.form {
+  margin: 15px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.card {
+  width: 20rem;
+  flex: 1 1 auto;
+}
+
+.text-center{
+  margin: 10px;
+  text-align: center;
+}

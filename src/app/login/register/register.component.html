@@ -1,43 +1,26 @@
-<form class="container mt-5" [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate>
-  <div class="card">
-    <div class="card-block">
-      <div class="form-header  blue darken-4">
-        <h3><i class="fa fa-user"></i> 注册：</h3>
-      </div>
-      <div class="md-form">
-        <i class="fa fa-user prefix"></i>
-        <input type="text" id="username" class="form-control" formControlName="username">
-        <label for="username">起个与众不同的用户名</label>
-      </div>
-      <div class="md-form">
-        <i class="fa fa-user prefix"></i>
-        <input type="text" id="name" class="form-control" formControlName="name">
-        <label for="name">您的名字</label>
-      </div>
-      <div class="md-form">
-        <i class="fa fa-envelope prefix"></i>
-        <input type="text" id="email" class="form-control" formControlName="email">
-        <label for="email">您的电子邮箱</label>
-      </div>
-      <div class="md-form">
-        <i class="fa fa-lock prefix"></i>
-        <input type="password" id="password" class="form-control" formControlName="password">
-        <label for="password">您的密码</label>
-      </div>
-      <div class="md-form">
-        <i class="fa fa-lock prefix"></i>
-        <input type="password" id="repeat" class="form-control" formControlName="repeat">
-        <label for="repeat">为避免失误请再次输入</label>
-      </div>
-      <div class="text-center">
-        <button class="btn btn-deep-purple" type="submit" [disabled]="!form.valid">注册</button>
-      </div>
-      <div class="modal-footer">
-        <div class="options">
-          <p>已有账户？ <a routerLink="/login">登录</a></p>
-          <p>忘记 <a routerLink="/forgot">密码？</a></p>
-        </div>
-      </div>
-    </div>
-  </div>
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate>
+  <md-card class="card">
+    <md-card-header>
+      <md-card-title> 注册：</md-card-title>
+    </md-card-header>
+    <md-card-content>
+      <md-input-container class="full-width">
+        <input mdInput placeholder="起个与众不同的用户名" formControlName="username">
+      </md-input-container>
+      <md-input-container class="full-width">
+        <input mdInput type="text" placeholder="您的名字" formControlName="name">
+      </md-input-container>
+      <md-input-container class="full-width">
+        <input mdInput type="password" placeholder="您的密码" formControlName="password">
+      </md-input-container>
+      <md-input-container class="full-width">
+        <input mdInput type="password" placeholder="为避免失误请再次输入" formControlName="repeat">
+      </md-input-container>
+      <button md-raised-button type="submit" [disabled]="!form.valid">注册</button>
+    </md-card-content>
+    <md-card-actions class="text-right">
+      <p>已有账户？ <a routerLink="/login">登录</a></p>
+      <p>忘记 <a routerLink="/forgot">密码？</a></p>
+    </md-card-actions>
+  </md-card>
 </form>

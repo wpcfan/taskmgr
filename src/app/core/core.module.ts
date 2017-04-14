@@ -1,6 +1,8 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MdSidenavModule, MdToolbarModule, MdSidenavContainer, MdSidenav, MdToolbar } from '@angular/material';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { routerReducer, RouterStoreModule } from '@ngrx/router-store';
@@ -11,10 +13,15 @@ import { effects } from '../effects';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 
+import 'hammerjs';
+
 @NgModule({
   imports: [
     CommonModule,
     HttpModule,
+    BrowserAnimationsModule,
+    MdSidenavModule,
+    MdToolbarModule,
     EffectsModule.run(effects.auth),
     EffectsModule.run(effects.todos),
     EffectsModule.run(effects.quote),
@@ -34,6 +41,9 @@ import { FooterComponent } from './footer/footer.component';
     })
   ],
   exports: [
+    MdSidenavContainer,
+    MdSidenav,
+    MdToolbar,
     HeaderComponent,
     FooterComponent],
   providers: [

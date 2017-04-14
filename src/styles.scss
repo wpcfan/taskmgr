@@ -1,13 +1,7 @@
-html,
-body,
-.view {
-  height: 100%;
-}
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
-.view {
-  background: url("https://mdbootstrap.com/images/regular/city/img%20(17).jpg") no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+html, body, material-app, md-sidenav-container, main {
+  margin: 0;
+  width: 100%;
+  height: 100%;
 }

@@ -1,28 +1,29 @@
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-md-3" *ngFor="let project of (projects$ | async)">
-      <div class="card mb-3" (click)="selectProject(project)">
-        <img class="card-img-top" src="/assets/img/prj_cover_02.jpg" alt="Card image cap">
-        <div class="card-block">
-          <h4 class="card-title">{{project.name}}</h4>
-          <p class="card-text">{{project.desc}}</p>
-        </div>
-      </div>
-    </div> 
-    <div class="col-md-3">
-      <div class="card default-color text-center z-depth-2" (click)="addProject()">
-        <img class="card-img-top" src="/assets/img/prj_cover_01.jpg" alt="Card image cap">
-        <div class="card-block">
-          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-new-project">
-            新增项目
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="projects">
+    <md-card class="card" *ngFor="let project of (projects$ | async)">
+      <md-card-header>
+        <md-card-title> {{project.name}} </md-card-title>
+      </md-card-header>
+      <img md-card-image src="/assets/img/prj_cover_02.jpg">
+      <md-card-content>
+        <p>{{project.desc}}</p>
+      </md-card-content>
+      <md-card-actions class="text-right">
+        <p>还没有账户？ <a routerLink="/register">注册</a></p>
+        <p>忘记 <a routerLink="/forgot">密码？</a></p>
+      </md-card-actions>
+    </md-card>
+  <md-card class="card">
+    <md-card-header>
+      <md-card-title> 新增项目 </md-card-title>
+    </md-card-header>
+    <img md-card-image src="/assets/img/prj_cover_01.jpg">
+    <md-card-content>
+      <p>添加一个项目</p>
+    </md-card-content>
+    <md-card-actions class="text-right">
+      <button md-raised-button>
+        新增项目
+      </button>
+    </md-card-actions>
+  </md-card>
 </div> 
-
-<!-- Modal Login -->
-<div class="modal fade modal-ext" id="modal-new-project" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <app-new-project></app-new-project>
-</div>

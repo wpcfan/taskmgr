@@ -1,23 +1,17 @@
-<form class="container mt-5" [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate>
-  <div class="card">
-    <div class="card-block">
-      <div class="form-header blue darken-4">
-        <h3><i class="fa fa-lock"></i> 忘记密码：</h3>
-      </div>
-      <div class="md-form">
-        <i class="fa fa-envelope prefix"></i>
-        <input type="text" id="email" class="form-control" formControlName="email">
-        <label for="email">注册时使用的电子邮箱</label>
-      </div>
-      <div class="text-center">
-        <button class="btn btn-deep-purple" type="submit" [disabled]="!form.valid">登录</button>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <div class="options">
-        <p>还没有账户？ <a routerLink="/register">注册</a></p>
-        <p>已有账户 <a routerLink="/login">登录</a></p>
-      </div>
-    </div>
-  </div>
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate>
+  <md-card class="card">
+    <md-card-header>
+      <md-card-title> 忘记密码：</md-card-title>
+    </md-card-header>
+    <md-card-content>
+      <md-input-container class="full-width">
+        <input mdInput placeholder="注册时使用的电子邮箱" formControlName="email">
+      </md-input-container>
+      <button md-raised-button type="submit" [disabled]="!form.valid">找回密码</button>
+    </md-card-content>
+    <md-card-actions class="text-right">
+      <p>还没有账户？ <a routerLink="/register">注册</a></p>
+      <p>已有账户 <a routerLink="/login">登录</a></p>
+    </md-card-actions>
+  </md-card>  
 </form>
