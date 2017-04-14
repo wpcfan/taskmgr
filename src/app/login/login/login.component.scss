@@ -3,15 +3,15 @@
 }
 
 .form {
-  margin: 15px;
+  margin: 5px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .card {
-  width: 20rem;
-  flex: 1 1 auto;
+  flex: 0 0 20rem;
 }
 
 .text-right{

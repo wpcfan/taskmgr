@@ -5,10 +5,10 @@
     </md-card-header>
     <md-card-content>
       <md-input-container class="full-width">
-        <input mdInput placeholder="您的用户名" formControlName="username">
+        <input mdInput type="text" placeholder="您的用户名" formControlName="username">
       </md-input-container>
       <md-input-container class="full-width">
-        <input mdInput placeholder="您的密码" formControlName="password">
+        <input mdInput type="password" placeholder="您的密码" formControlName="password">
       </md-input-container>
       <button md-raised-button type="submit" [disabled]="!form.valid">登录</button>
     </md-card-content>
