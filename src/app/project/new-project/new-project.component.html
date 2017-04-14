@@ -1,18 +1,15 @@
 <form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate>
-  <md-card class="card">
-    <md-card-header>
-      <md-card-title> 创建项目：</md-card-title>
-    </md-card-header>
-    <md-card-content>
-      <md-input-container class="full-width">
-        <input mdInput placeholder="项目名称" formControlName="name">
-      </md-input-container>
-      <md-input-container class="full-width">
-        <input mdInput placeholder="项目简介（选填）" formControlName="desc">
-      </md-input-container>
-    </md-card-content>
-    <md-card-actions class="text-center">
-      <button md-raised-button type="submit" [disabled]="!form.valid">完成并创建</button>
-    </md-card-actions>
-  </md-card>
+  <h3 md-dialog-title>创建项目：</h3>
+  <div md-dialog-content>
+    <md-input-container class="full-width">
+      <input mdInput placeholder="项目名称" formControlName="name">
+    </md-input-container>
+    <md-input-container class="full-width">
+      <input mdInput placeholder="项目简介（选填）" formControlName="desc">
+    </md-input-container>
+  </div>
+  <div md-dialog-actions>
+    <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">完成并创建</button>
+    <button md-dialog-close md-raised-button type="button">关闭</button>
+  </div>
 </form>

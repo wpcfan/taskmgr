@@ -5,6 +5,7 @@ import {
   FormControl,
   Validators 
 } from '@angular/forms';
+import {MdDialog, MdDialogRef} from '@angular/material';
 import { Store } from '@ngrx/store';
 
 import * as fromRoot from '../../reducers';
@@ -19,7 +20,8 @@ export class NewProjectComponent implements OnInit {
   form: FormGroup;
   constructor(
     private fb: FormBuilder,
-    private store$: Store<fromRoot.State>) { }
+    private store$: Store<fromRoot.State>,
+    private dialogRef: MdDialogRef<NewProjectComponent>) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -35,6 +37,7 @@ export class NewProjectComponent implements OnInit {
         name: value.name,
         desc: value.desc
       }));
+    this.dialogRef.close();
   }
 
 }

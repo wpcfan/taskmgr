@@ -11,6 +11,7 @@ import { NewProjectComponent } from './new-project/new-project.component';
     ProjectRoutingModule
   ],
   exports: [ProjectListComponent],
+  entryComponents:[NewProjectComponent],
   declarations: [ProjectListComponent, ProjectItemComponent, NewProjectComponent]
 })
 export class ProjectModule { }
