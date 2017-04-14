@@ -30,7 +30,6 @@ export class AuthGuardService implements CanActivate, CanLoad {
    */
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     const url: string = state.url;
-    console.log('canActivate: ' + url);
     return this.store$.select(fromRoot.getAuth)
       .map(auth => {
         if(auth.user === undefined || auth.err !== undefined){
@@ -47,7 +46,6 @@ export class AuthGuardService implements CanActivate, CanLoad {
    */
   canLoad(route: Route): Observable<boolean> {
     const url = `/${route.path}`;
-    console.log('canLoad: '+ url);
     return this.store$.select(fromRoot.getAuth)
       .map(auth => {
         if(auth.user === undefined || auth.err !== undefined){
