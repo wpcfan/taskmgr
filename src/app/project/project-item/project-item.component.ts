@@ -38,7 +38,7 @@ export class ProjectItemComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {data: {dialog: confirm}});
     dialogRef.afterClosed().subscribe(val => {
       if(val)
-        this.store$.dispatch({type: actions.ActionTypes.DELETE_PROJECT, payload: this.project});
+        this.store$.dispatch(new actions.DeleteProjectAction(this.project));
     })
   }
 }

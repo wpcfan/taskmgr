@@ -44,7 +44,7 @@ export class NewProjectComponent implements OnInit {
 
   onSubmit({value, valid}){
     if(!valid) return;
-    if(this.data === undefined || this.data === null)
+    if(this.data.project === undefined || this.data.project === null)
       this.store$.dispatch(
         new actions.AddProjectAction({
           name: value.name,
