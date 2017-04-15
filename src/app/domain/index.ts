@@ -69,5 +69,13 @@ export interface Project{
   name: string;
   desc?: string;
   coverImg?: string;
+  enabled?: boolean;
+  archived?: boolean;
   memberIds?: string[]; // 存储成员ID
+}
+
+export interface ConfirmDialog{
+  title: string;
+  content: string;
+  confirmAction: string;
 }

@@ -1,3 +1,31 @@
-<p>
-  project-item works!
-</p>
+<md-card>
+  <md-card-header>
+    <md-card-title class="title-bar"> 
+      <span>
+        {{project.name}} 
+      </span>
+      <button md-icon-button [mdMenuTriggerFor]="menu">
+        <md-icon>more_vert</md-icon>
+      </button>
+    </md-card-title>
+  </md-card-header>
+  <img md-card-image src="/assets/img/prj_cover_02.jpg">
+  <md-card-content>
+    <p>{{project.desc}}</p>
+  </md-card-content>
+</md-card>
+
+<md-menu #menu="mdMenu">
+  <button md-menu-item (click)="openUpdateDialog()">
+    <md-icon>dialpad</md-icon>
+    <span>编辑项目信息</span>
+  </button>
+  <button md-menu-item (click)="openInviteDialog()">
+    <md-icon>voicemail</md-icon>
+    <span>邀请成员</span>
+  </button>
+  <button md-menu-item (click)="openDeleteDialog()">
+    <md-icon>notifications_off</md-icon>
+    <span>删除项目</span>
+  </button>
+</md-menu>

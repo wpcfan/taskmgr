@@ -40,6 +40,7 @@ import * as fromAuth from './auth.reducer';
 import * as fromTodos from './todo.reducer';
 import * as fromQuote from './quote.reducer';
 import * as fromProjects from './project.reducer';
+import * as fromTaskLists from './task-list.reducer';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -50,6 +51,7 @@ export interface State {
   todos: fromTodos.State;
   quote: fromQuote.State;
   projects: fromProjects.State;
+  taskLists: fromTaskLists.State;
   router: fromRouter.RouterState;
 }
 
@@ -65,6 +67,7 @@ const reducers = {
   todos: fromTodos.reducer,
   quote: fromQuote.reducer,
   projects: fromProjects.reducer,
+  taskLists: fromTaskLists.reducer,
   router: fromRouter.routerReducer,
 };
 
@@ -83,6 +86,7 @@ export const getAuthState = (state: State) => state.auth;
 export const getTodosState = (state: State) => state.todos;
 export const getQuoteState = (state: State) => state.quote;
 export const getProjectsState = (state: State) => state.projects;
+export const getTaskListsState = (state: State) => state.taskLists;
 export const getRouterState = (state: State) => state.router;
 
 export const getAuth = createSelector(getAuthState, fromAuth.getAuth);
@@ -91,3 +95,10 @@ export const getVisibilityFilter = createSelector(getTodosState, fromTodos.getVi
 export const getVisibleTodos = createSelector(getTodosState, fromTodos.getVisibleTodos);
 export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
 export const getProjects = createSelector(getProjectsState, fromProjects.getProjects);
+export const getTaskLists = createSelector(getTaskListsState, fromTaskLists.getTaskLists);
+
+export const getSelectedProjectId = createSelector(getProjectsState, fromProjects.getSelectedId);
+export const getSelectedProject = createSelector(getProjectsState, getSelectedProjectId, (state, id)=>{
+  const selected = state.projects.filter(project => project.id === id);
+  return selected.length > 0 ? selected[0] : null;
+});

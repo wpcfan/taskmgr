@@ -14,7 +14,8 @@ export const ActionTypes = {
   DELETE_PROJECT_FAIL:     type('[Project] Delete Fail'),  
   LOAD_PROJECTS:           type('[Project] Load'),
   LOAD_PROJECTS_SUCCESS:   type('[Project] Load Success'),
-  LOAD_PROJECTS_FAIL:      type('[Project] Load Fail')
+  LOAD_PROJECTS_FAIL:      type('[Project] Load Fail'),
+  SELECT_PROJECT:          type('[Project] Select Project')
 };
 
 export class AddProjectAction implements Action {
@@ -77,6 +78,11 @@ export class LoadProjectsFailAction implements Action {
   constructor(public payload: entities.Err){}
 }
 
+export class SelectProjectAction implements Action {
+  type = ActionTypes.SELECT_PROJECT;
+  constructor(public payload: entities.Project){}
+}
+
 
 export type Actions
   = AddProjectAction
@@ -90,4 +96,5 @@ export type Actions
   | DeleteProjectFailAction
   | LoadProjectsAction
   | LoadProjectsSuccessAction
-  | LoadProjectsFailAction;
+  | LoadProjectsFailAction
+  | SelectProjectAction;

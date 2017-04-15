@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { 
   FormGroup, 
   FormBuilder, 
@@ -13,6 +13,7 @@ import * as authActions from '../../actions/auth.action';
 
 @Component({
   selector: 'app-forgot',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './forgot.component.html',
   styleUrls: ['./forgot.component.scss']
 })

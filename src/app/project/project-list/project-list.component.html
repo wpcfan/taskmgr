@@ -1,29 +1,15 @@
 <div class="projects">
-  <md-card class="card" *ngFor="let project of (projects$ | async)">
-    <md-card-header>
-      <md-card-title> {{project.name}} </md-card-title>
-    </md-card-header>
-    <img md-card-image src="/assets/img/prj_cover_02.jpg">
-    <md-card-content>
-      <p>{{project.desc}}</p>
-    </md-card-content>
-    <md-card-actions class="text-right">
-      <p>还没有账户？ <a routerLink="/register">注册</a></p>
-      <p>忘记 <a routerLink="/forgot">密码？</a></p>
-    </md-card-actions>
-  </md-card>
+  <app-project-item *ngFor="let project of (projects$ | async)" [item]="project">
+  </app-project-item>
   <md-card class="card">
     <md-card-header>
       <md-card-title> 新增项目 </md-card-title>
     </md-card-header>
     <img md-card-image src="/assets/img/prj_cover_01.jpg">
     <md-card-content>
-      <p>添加一个项目</p>
-    </md-card-content>
-    <md-card-actions class="text-right">
       <button md-raised-button (click)="openNewProjectDialog()">
         新增项目
       </button>
-    </md-card-actions>
+    </md-card-content>
   </md-card>
 </div> 

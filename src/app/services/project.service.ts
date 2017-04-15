@@ -23,31 +23,33 @@ export class ProjectService {
   // POST /projects
   add(project: entities.Project): Observable<entities.Project>{
     const uri = `${this.baseUri}/${this.domain}`;
+    const prjToAdd = Object.assign({}, project, {enabled: true, archived: false})
     return this.http
-      .post(uri, JSON.stringify(project), {headers: this.headers})
+      .post(uri, JSON.stringify(prjToAdd), {headers: this.headers})
       .map(res => res.json());
   }
 
   // PUT /projects
   update(project: entities.Project): Observable<entities.Project>{
     const uri = `${this.baseUri}/${this.domain}/${project.id}`;
-    const updated = Object.assign({}, project);
+    const updated = Object.assign({}, {name: project.name, desc: project.desc});
     return this.http
-      .put(uri, JSON.stringify(updated), {headers: this.headers})
+      .patch(uri, JSON.stringify(updated), {headers: this.headers})
       .map(res => updated);
   }
 
-  // DELETE /projects
+  // PATCH /projects instead of deleting the records
   delete(project: entities.Project): Observable<entities.Project>{
     const uri = `${this.baseUri}/${this.domain}/${project.id}`;
+    const deleted = Object.assign({}, {enabled: false});
     return this.http
-      .delete(uri, {headers: this.headers})
-      .mapTo(project);
+      .patch(uri, JSON.stringify(deleted), {headers: this.headers})
+      .map(res => res.json());
   }
 
   // GET /projects
   get(userId: string): Observable<entities.Project[]>{
-    const uri = `${this.baseUri}/${this.domain}`;
+    const uri = `${this.baseUri}/${this.domain}/?enabled=true&archived=false`;
     return this.http.get(uri)
       .map(res => res.json() as entities.Project[])
       .map(prjs => prjs.filter(prj => 

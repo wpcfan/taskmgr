@@ -46,6 +46,8 @@
       "id": "1",
       "name": "First Project",
       "desc": "This is my first project",
+      "enabled": true,
+      "archived": false,
       "memberIds": [
         "SJzXaBSpg",
         "BJZCaSr6e"
@@ -54,74 +56,32 @@
     {
       "name": "my second",
       "desc": "this is the second project",
+      "enabled": true,
+      "archived": false,
       "memberIds": [
         "SJzXaBSpg"
       ],
       "id": "B16VFn36l"
     },
     {
-      "name": "sdasd",
+      "name": "手机阅读",
       "desc": "sdasd",
+      "enabled": true,
+      "archived": false,
       "memberIds": [
         "SJzXaBSpg"
       ],
       "id": "SJQjt2hpe"
     },
     {
-      "name": "sdasdsa",
+      "id": "SkyqDkRal",
+      "name": "another project 1",
       "desc": "dsad",
+      "enabled": false,
+      "archived": false,
       "memberIds": [
         "SJzXaBSpg"
-      ],
-      "id": "SkyqDkRal"
-    },
-    {
-      "name": "haha",
-      "desc": "hsha",
-      "memberIds": [
-        "SJzXaBSpg"
-      ],
-      "id": "rkmiD1Cpl"
-    },
-    {
-      "name": "something",
-      "desc": "dsaa",
-      "memberIds": [
-        "SJzXaBSpg"
-      ],
-      "id": "SJIOhJApe"
-    },
-    {
-      "name": "hello",
-      "desc": "nice",
-      "memberIds": [
-        "SJzXaBSpg"
-      ],
-      "id": "HJ01ayCpx"
-    },
-    {
-      "name": "hekl",
-      "desc": "aas",
-      "memberIds": [
-        "SJzXaBSpg"
-      ],
-      "id": "ByjXTyR6x"
-    },
-    {
-      "name": "as",
-      "desc": "asdsad",
-      "memberIds": [
-        "SJzXaBSpg"
-      ],
-      "id": "H1TpMzCal"
-    },
-    {
-      "name": "sdsad",
-      "desc": "sdsad",
-      "memberIds": [
-        "SJzXaBSpg"
-      ],
-      "id": "SJ4D97R6e"
+      ]
     }
   ]
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { 
   FormGroup, 
   FormBuilder, 
@@ -12,6 +12,7 @@ import * as actions from '../../actions/auth.action';
 
 @Component({
   selector: 'app-register',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
