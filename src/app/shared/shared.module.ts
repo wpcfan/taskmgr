@@ -7,8 +7,11 @@ import {
   MdButtonToggleModule,
   MdCardModule,
   MdButtonModule,
-  MdDialogModule
+  MdDialogModule,
+  MdMenuModule,
+  MdIconModule
 } from '@angular/material';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   imports: [
@@ -20,7 +23,9 @@ import {
     MdButtonToggleModule,
     MdCardModule,
     MdButtonModule,
-    MdDialogModule
+    MdDialogModule,
+    MdMenuModule,
+    MdIconModule,
   ],
   exports: [
     CommonModule,
@@ -31,8 +36,12 @@ import {
     MdButtonToggleModule,
     MdCardModule,
     MdButtonModule,
-    MdDialogModule
+    MdDialogModule,
+    MdMenuModule,
+    MdIconModule,
+    ConfirmDialogComponent
   ],
-  declarations: []
+  declarations: [ConfirmDialogComponent],
+  entryComponents: [ConfirmDialogComponent]
 })
 export class SharedModule { }
