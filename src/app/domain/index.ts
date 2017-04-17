@@ -19,7 +19,8 @@ export interface User {
   password?: string;
   name?: string;
   email?: string;
-  projectIds?: string[];
+  ownerOf?: string[];
+  memberOf?: string[];
 }
 
 export interface Todo{
@@ -71,7 +72,8 @@ export interface Project{
   coverImg?: string;
   enabled?: boolean;
   archived?: boolean;
-  memberIds?: string[]; // 存储成员ID
+  owner?: User;
+  members?: User[];
 }
 
 export interface ConfirmDialog{

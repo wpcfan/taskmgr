@@ -1,14 +1,16 @@
-import * as entities from '../domain';
+import * as models from '../domain';
 import { createSelector } from 'reselect';
 import * as actions from '../actions/project.action';
 
 export interface State{
-  projects: entities.Project[];
+  ids: string[];
+  entities: { [id: string]: models.Project };
   selectedId: string | null;
 }
 
 const initialState: State = {
-  projects: [],
+  ids: [],
+  entities: {},
   selectedId: null
 };
 
@@ -16,25 +18,34 @@ export function reducer(
   state = initialState, action: actions.Actions): State {
   switch (action.type) {
     case actions.ActionTypes.ADD_PROJECT_SUCCESS: {
-      return Object.assign({}, state, 
-        {projects: [...state.projects, action.payload]});
+      const project = action.payload;
+      const ids = [...state.ids, project.id];
+      const entities = Object.assign({}, state.entities, {[project.id]: project})
+      return Object.assign({}, state, {ids: ids, entities: entities});
     }
     case actions.ActionTypes.DELETE_PROJECT_SUCCESS: {
-      return Object.assign({}, state, 
-        {projects: state.projects.filter(prj => prj.id !== action.payload.id)});
+      const project = action.payload;
+      const ids = state.ids.filter(id => id !== project.id);
+      const entities = ids.reduce((entities: { [id: string]: models.Project }, id) => {
+        return Object.assign(entities, {
+          [id]: state.entities[id]
+        })
+      },{});
+      return Object.assign({}, state, {ids: ids, entities: entities});
     }
     case actions.ActionTypes.UPDATE_PROJECT_SUCCESS: {
-      const prj_update = state.projects.map(prj => {
-        if(prj.id === action.payload.id) {
-          return Object.assign({}, action.payload);
-        } else {
-          return prj;
-        }
-      });
-      return Object.assign({}, state, {projects: prj_update});
+      const project = action.payload;
+      const entities = Object.assign({}, state.entities, {[project.id]: project});
+      return Object.assign({}, state, {entities: entities});
     }
     case actions.ActionTypes.LOAD_PROJECTS_SUCCESS:{
-      return Object.assign({}, state, {projects: [...action.payload]});
+      const projects = <models.Project[]>action.payload;
+      const newEntities = projects.reduce((entities: { [id: string]: models.Project }, project: models.Project) => {
+        return Object.assign(entities, {
+          [project.id]: project
+        });
+      }, {});
+      return Object.assign({}, state, {entities: newEntities});
     }
     case actions.ActionTypes.SELECT_PROJECT: {
       return Object.assign({}, state, {selectedId: action.payload.id});
@@ -48,5 +59,12 @@ export function reducer(
   }
 }
 
-export const getProjects = (state) => state.projects;
+export const getEntities = (state) => state.entities;
 export const getSelectedId = (state) => state.selectedId; 
+export const getIds = (state) => state.ids;
+export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
+  return entities[selectedId];
+});
+export const getAll = createSelector(getEntities, getIds, (entities, ids) => {
+  return ids.map(id => entities[id]);
+});

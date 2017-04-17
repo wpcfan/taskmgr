@@ -9,7 +9,7 @@ import 'rxjs/add/operator/withLatestFrom';
 import { TodoService } from '../services/todo.service';
 import * as actions from '../actions/todo.action';
 import * as fromRoot from '../reducers';
-import * as entities from '../domain';
+import * as models from '../domain';
 
 @Injectable()
 export class TodoEffects{
@@ -42,7 +42,7 @@ export class TodoEffects{
     .map(toPayload)
     .withLatestFrom(this.store$.select(fromRoot.getAuth))
     .switchMap(([desc, auth]) => {
-      const todo: entities.Todo = {
+      const todo: models.Todo = {
         desc: desc,
         completed: false,
         userId: auth.user.id

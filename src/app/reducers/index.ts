@@ -94,11 +94,10 @@ export const getTodos = createSelector(getTodosState, fromTodos.getTodos);
 export const getVisibilityFilter = createSelector(getTodosState, fromTodos.getVisibilityFilter);
 export const getVisibleTodos = createSelector(getTodosState, fromTodos.getVisibleTodos);
 export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
-export const getProjects = createSelector(getProjectsState, fromProjects.getProjects);
+export const getProjects = createSelector(getProjectsState, getAuth, (state, auth)=>{
+  return 
+})
 export const getTaskLists = createSelector(getTaskListsState, fromTaskLists.getTaskLists);
 
 export const getSelectedProjectId = createSelector(getProjectsState, fromProjects.getSelectedId);
-export const getSelectedProject = createSelector(getProjectsState, getSelectedProjectId, (state, id)=>{
-  const selected = state.projects.filter(project => project.id === id);
-  return selected.length > 0 ? selected[0] : null;
-});
+export const getSelectedProject = createSelector(getProjectsState, fromProjects.getSelected);

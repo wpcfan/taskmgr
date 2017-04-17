@@ -9,7 +9,6 @@ import 'rxjs/add/operator/withLatestFrom';
 import { ProjectService } from '../services/project.service';
 import * as actions from '../actions/project.action';
 import * as fromRoot from '../reducers';
-import * as entities from '../domain';
 
 @Injectable()
 export class ProjectEffects{

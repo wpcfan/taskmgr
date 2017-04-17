@@ -1,9 +1,9 @@
-import * as entities from '../domain';
+import * as models from '../domain';
 import { createSelector } from 'reselect';
 import * as actions from '../actions/task-list.action';
 
 export interface State{
-  taskLists: entities.TaskList[]
+  taskLists: models.TaskList[]
 }
 
 const initialState: State = {
