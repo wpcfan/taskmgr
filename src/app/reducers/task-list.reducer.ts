@@ -1,14 +1,21 @@
-import * as entities from '../domain';
+import * as models from '../domain';
 import { createSelector } from 'reselect';
 import * as actions from '../actions/task-list.action';
 
 export interface State{
-  taskLists: entities.TaskList[]
+  taskLists: models.TaskList[]
 }
 
 const initialState: State = {
   taskLists: []
 };
+
+interface TaskState{
+  projects: {byId: any, ids: string[]};
+  lists: {byId: any, ids: string[]};
+  tasks: {byId: any, ids: string[]};
+  users: {byId: any, ids: string[]};
+}
 
 export function reducer(
   state = initialState, action: actions.Actions): State {

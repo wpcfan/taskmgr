@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { type } from '../utils/type.util';
-import * as entities from '../domain';
+import * as models from '../domain';
 
 export const ActionTypes = {
   ADD_TODO:                   type('[Collection] Add Todo'),
@@ -31,57 +31,57 @@ export class AddTodoAction implements Action {
 
 export class AddTodoSuccessAction implements Action {
   type = ActionTypes.ADD_TODO_SUCCESS;
-  constructor(public payload: entities.Todo){}
+  constructor(public payload: models.Todo){}
 }
 
 export class AddTodoFailAction implements Action {
   type = ActionTypes.ADD_TODO_FAIL;
-  constructor(public payload: entities.Err){}
+  constructor(public payload: models.Err){}
 }
 
 export class RemoveTodoAction implements Action {
   type = ActionTypes.REMOVE_TODO;
-  constructor(public payload: entities.Todo){}
+  constructor(public payload: models.Todo){}
 }
 
 export class RemoveTodoSuccessAction implements Action {
   type = ActionTypes.REMOVE_TODO_SUCCESS;
-  constructor(public payload: entities.Todo){}
+  constructor(public payload: models.Todo){}
 }
 
 export class RemoveTodoFailAction implements Action {
   type = ActionTypes.REMOVE_TODO_FAIL;
-  constructor(public payload: entities.Err){}
+  constructor(public payload: models.Err){}
 }
 
 export class ToggleTodoAction implements Action {
   type = ActionTypes.TOGGLE_TODO;
-  constructor(public payload: entities.Todo){}
+  constructor(public payload: models.Todo){}
 }
 
 export class ToggleTodoSuccessAction implements Action {
   type = ActionTypes.TOGGLE_TODO_SUCCESS;
-  constructor(public payload: entities.Todo){}
+  constructor(public payload: models.Todo){}
 }
 
 export class ToggleTodoFailAction implements Action {
   type = ActionTypes.TOGGLE_TODO_FAIL;
-  constructor(public payload: entities.Err){}
+  constructor(public payload: models.Err){}
 }
 
 export class ToggleAllAction implements Action {
   type = ActionTypes.TOGGLE_ALL;
-  constructor(public payload: entities.Todo){}
+  constructor(public payload: models.Todo){}
 }
 
 export class ToggleAllSuccessAction implements Action {
   type = ActionTypes.TOGGLE_ALL_SUCCESS;
-  constructor(public payload: entities.Todo){}
+  constructor(public payload: models.Todo){}
 }
 
 export class ToggleAllFailAction implements Action {
   type = ActionTypes.TOGGLE_ALL_FAIL;
-  constructor(public payload: entities.Err){}
+  constructor(public payload: models.Err){}
 }
 
 export class ClearCompletedAction implements Action {
@@ -96,7 +96,7 @@ export class ClearCompletedSuccessAction implements Action {
 
 export class ClearCompletedFailAction implements Action {
   type = ActionTypes.CLEAR_COMPLETED_FAIL;
-  constructor(public payload: entities.Err){}
+  constructor(public payload: models.Err){}
 }
 
 export class LoadTodosAction implements Action {
@@ -106,12 +106,12 @@ export class LoadTodosAction implements Action {
 
 export class LoadTodosSuccessAction implements Action {
   type = ActionTypes.LOAD_TODOS_SUCCESS;
-  constructor(public payload: entities.Todo[]){}
+  constructor(public payload: models.Todo[]){}
 }
 
 export class LoadTodosFailAction implements Action {
   type = ActionTypes.LOAD_TODOS_FAIL;
-  constructor(public payload: entities.Err){}
+  constructor(public payload: models.Err){}
 }
 
 export class SetVisibilityFilterAction implements Action {

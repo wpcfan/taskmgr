@@ -2,7 +2,13 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdSidenavModule, MdToolbarModule, MdSidenavContainer, MdSidenav, MdToolbar } from '@angular/material';
+import { 
+  MdSidenavModule, 
+  MdToolbarModule, 
+  MdSidenavContainer, 
+  MdSidenav, 
+  MdToolbar 
+} from '@angular/material';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { routerReducer, RouterStoreModule } from '@ngrx/router-store';

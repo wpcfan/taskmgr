@@ -6,7 +6,7 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/reduce';
 import 'rxjs/add/observable/from';
-import * as entities from '../domain';
+import * as models from '../domain';
 
 @Injectable()
 export class TodoService {
@@ -14,14 +14,14 @@ export class TodoService {
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
   // 定义此服务的rest api路径
   private domain: string = 'todos';
-  private auth$: Observable<entities.Auth>;
+  private auth$: Observable<models.Auth>;
 
   constructor(
     private http: Http,
     @Inject('BASE_URI') private baseUri) { }
 
   // POST /todos
-  addTodo(todo: entities.Todo): Observable<entities.Todo>{
+  addTodo(todo: models.Todo): Observable<models.Todo>{
     const uri = `${this.baseUri}/${this.domain}`;
     return this.http
       .post(uri, JSON.stringify(todo), {headers: this.headers})
@@ -29,7 +29,7 @@ export class TodoService {
   }
 
   // PUT /todos
-  toggleTodo(todo: entities.Todo): Observable<entities.Todo>{
+  toggleTodo(todo: models.Todo): Observable<models.Todo>{
     const uri = `${this.baseUri}/${this.domain}/${todo.id}`;
     const updatedTodo = Object.assign({}, todo, {completed: !todo.completed});
     return this.http
@@ -38,7 +38,7 @@ export class TodoService {
   }
 
   // DELETE /todos
-  removeTodo(todo: entities.Todo): Observable<entities.Todo>{
+  removeTodo(todo: models.Todo): Observable<models.Todo>{
     const uri = `${this.baseUri}/${this.domain}/${todo.id}`;
     return this.http
       .delete(uri, {headers: this.headers})
@@ -46,7 +46,7 @@ export class TodoService {
   }
 
   // GET /todos
-  getTodos(userId: string): Observable<entities.Todo[]>{
+  getTodos(userId: string): Observable<models.Todo[]>{
     const uri = `${this.baseUri}/${this.domain}/?userId=${userId}`;
     return this.http.get(uri).map(res => res.json());
   }

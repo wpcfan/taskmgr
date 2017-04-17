@@ -1,9 +1,9 @@
 import { Reducer, Action } from '@ngrx/store';
-import * as entities from '../domain';
+import * as models from '../domain';
 import * as actions from '../actions/quote.action';
 
 export interface State{
-  quote: entities.Quote;
+  quote: models.Quote;
 }
 
 const initialState: State = {

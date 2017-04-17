@@ -43,11 +43,12 @@
   ],
   "projects": [
     {
-      "id": "1",
+      "id": "p0001",
       "name": "First Project",
       "desc": "This is my first project",
       "enabled": true,
       "archived": false,
+      "ownerId": "SJzXaBSpg",
       "memberIds": [
         "SJzXaBSpg",
         "BJZCaSr6e"
@@ -58,8 +59,10 @@
       "desc": "this is the second project",
       "enabled": true,
       "archived": false,
+      "ownerId": "BJZCaSr6e",
       "memberIds": [
-        "SJzXaBSpg"
+        "SJzXaBSpg",
+        "BJZCaSr6e"
       ],
       "id": "B16VFn36l"
     },
@@ -68,30 +71,81 @@
       "desc": "sdasd",
       "enabled": true,
       "archived": false,
+      "ownerId": "BJZCaSr6e",
       "memberIds": [
-        "SJzXaBSpg"
+        "BJZCaSr6e"
       ],
       "id": "SJQjt2hpe"
+    }
+  ],
+  "taskLists": [
+    {
+      "id": "tl0001",
+      "name": "计划任务",
+      "projectId": "p0001"
     },
     {
-      "id": "SkyqDkRal",
-      "name": "another project 1",
-      "desc": "dsad",
-      "enabled": false,
-      "archived": false,
-      "memberIds": [
-        "SJzXaBSpg"
-      ]
+      "id": "tl0002",
+      "name": "进行中任务",
+      "projectId": "p0001"
     },
     {
-      "name": "sdasda",
-      "desc": "",
-      "memberIds": [
-        "SJzXaBSpg"
+      "id": "tl0003",
+      "name": "已完成任务",
+      "projectId": "p0001"
+    }
+  ],
+  "tasks" : [
+    {
+      "id" : "t00001",
+      "taskListId": "tl0001",
+      "desc": "上午10点买凯文凯利的《必然》",
+      "completed": false,
+      "ownerId": "SJzXaBSpg",
+      "creatorId": "SJzXaBSpg",
+      "participantIds": [
+        "SJzXaBSpg", "BJZCaSr6e"
       ],
-      "enabled": true,
-      "archived": false,
-      "id": "BkcS9j1Cl"
+      "startDate": "2017-04-15",
+      "dueDate": "2017-04-20",
+      "priority": 1,
+      "tags": ["angular", "javascript"],
+      "reminder": "2017-04-18",
+      "remark": "this is a test"
+    },
+    {
+      "id" : "t00002",
+      "taskListId": "tl0001",
+      "desc": "下午2点去游泳",
+      "completed": false,
+      "ownerId": "SJzXaBSpg",
+      "creatorId": "BJZCaSr6e",
+      "participantIds": [
+        "BJZCaSr6e"
+      ],
+      "startDate": "2017-04-15",
+      "dueDate": "2017-04-20",
+      "priority": 1,
+      "tags": ["angular", "javascript"],
+      "reminder": "2017-04-18",
+      "remark": "this is a test"
+    },
+    {
+      "id" : "t00003",
+      "taskListId": "tl0002",
+      "desc": "晚上和同学吃饭",
+      "completed": false,
+      "ownerId": "SJzXaBSpg",
+      "creatorId": "BJZCaSr6e",
+      "participantIds": [
+        "BJZCaSr6e"
+      ],
+      "startDate": "2017-04-16",
+      "dueDate": "2017-04-19",
+      "priority": 1,
+      "tags": ["react", "vue"],
+      "reminder": "2017-04-17",
+      "remark": "this is a test"
     }
   ]
 }

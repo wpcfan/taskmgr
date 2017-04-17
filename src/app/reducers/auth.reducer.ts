@@ -1,9 +1,9 @@
 import { Reducer, Action } from '@ngrx/store';
-import * as entities from '../domain';
+import * as models from '../domain';
 import * as actions from '../actions/auth.action';
 
 export interface State{
-  auth: entities.Auth;
+  auth: models.Auth;
 }
 
 const initialState: State = {

@@ -1,0 +1,5 @@
+//Projects
+GET http://localhost:3000/projects/?enabled=true
+
+//Tasks
+GET http://localhost:3000/taskLists?_embed=tasks&projectId=p0001

@@ -1,9 +1,9 @@
-import * as entities from '../domain';
+import * as models from '../domain';
 import { createSelector } from 'reselect';
 import * as todoActions from '../actions/todo.action';
 
 export interface State{
-  todos: entities.Todo[],
+  todos: models.Todo[],
   visibilityFilter: string;
 }
 

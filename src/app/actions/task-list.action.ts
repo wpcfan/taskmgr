@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { type } from '../utils/type.util';
-import * as entities from '../domain';
+import * as models from '../domain';
 
 export const ActionTypes = {
   ADD_TASK_LIST:             type('[TaskList] Add'),
@@ -19,47 +19,47 @@ export const ActionTypes = {
 
 export class AddTaskListAction implements Action {
   type = ActionTypes.ADD_TASK_LIST;
-  constructor(public payload: entities.TaskList){}
+  constructor(public payload: models.TaskList){}
 }
 
 export class AddTaskListSuccessAction implements Action {
   type = ActionTypes.ADD_TASK_LIST_SUCCESS;
-  constructor(public payload: entities.TaskList){}
+  constructor(public payload: models.TaskList){}
 }
 
 export class AddTaskListFailAction implements Action {
   type = ActionTypes.ADD_TASK_LIST_FAIL;
-  constructor(public payload: entities.Err){}
+  constructor(public payload: models.Err){}
 }
 
 export class UpdateTaskListAction implements Action {
   type = ActionTypes.UPDATE_TASK_LIST;
-  constructor(public payload: entities.TaskList){}
+  constructor(public payload: models.TaskList){}
 }
 
 export class UpdateTaskListSuccessAction implements Action {
   type = ActionTypes.UPDATE_TASK_LIST_SUCCESS;
-  constructor(public payload: entities.TaskList){}
+  constructor(public payload: models.TaskList){}
 }
 
 export class UpdateTaskListFailAction implements Action {
   type = ActionTypes.UPDATE_TASK_LIST_FAIL;
-  constructor(public payload: entities.Err){}
+  constructor(public payload: models.Err){}
 }
 
 export class DeleteTaskListAction implements Action {
   type = ActionTypes.DELETE_TASK_LIST;
-  constructor(public payload: entities.TaskList){}
+  constructor(public payload: models.TaskList){}
 }
 
 export class DeleteTaskListSuccessAction implements Action {
   type = ActionTypes.DELETE_TASK_LIST_SUCCESS;
-  constructor(public payload: entities.TaskList){}
+  constructor(public payload: models.TaskList){}
 }
 
 export class DeleteTaskListFailAction implements Action {
   type = ActionTypes.DELETE_TASK_LIST_FAIL;
-  constructor(public payload: entities.Err){}
+  constructor(public payload: models.Err){}
 }
 
 export class LoadTaskListsAction implements Action {
@@ -69,12 +69,12 @@ export class LoadTaskListsAction implements Action {
 
 export class LoadTaskListsSuccessAction implements Action {
   type = ActionTypes.LOAD_TASK_LISTS_SUCCESS;
-  constructor(public payload: entities.TaskList[]){}
+  constructor(public payload: models.TaskList[]){}
 }
 
 export class LoadTaskListsFailAction implements Action {
   type = ActionTypes.LOAD_TASK_LISTS_FAIL;
-  constructor(public payload: entities.Err){}
+  constructor(public payload: models.Err){}
 }
 
 

@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { type } from '../utils/type.util';
-import * as entities from '../domain';
+import * as models from '../domain';
 
 export const ActionTypes = {
   ADD_PROJECT:             type('[Project] Add'),
@@ -20,47 +20,47 @@ export const ActionTypes = {
 
 export class AddProjectAction implements Action {
   type = ActionTypes.ADD_PROJECT;
-  constructor(public payload: entities.Project){}
+  constructor(public payload: models.Project){}
 }
 
 export class AddProjectSuccessAction implements Action {
   type = ActionTypes.ADD_PROJECT_SUCCESS;
-  constructor(public payload: entities.Project){}
+  constructor(public payload: models.Project){}
 }
 
 export class AddProjectFailAction implements Action {
   type = ActionTypes.ADD_PROJECT_FAIL;
-  constructor(public payload: entities.Err){}
+  constructor(public payload: models.Err){}
 }
 
 export class UpdateProjectAction implements Action {
   type = ActionTypes.UPDATE_PROJECT;
-  constructor(public payload: entities.Project){}
+  constructor(public payload: models.Project){}
 }
 
 export class UpdateProjectSuccessAction implements Action {
   type = ActionTypes.UPDATE_PROJECT_SUCCESS;
-  constructor(public payload: entities.Project){}
+  constructor(public payload: models.Project){}
 }
 
 export class UpdateProjectFailAction implements Action {
   type = ActionTypes.UPDATE_PROJECT_FAIL;
-  constructor(public payload: entities.Err){}
+  constructor(public payload: models.Err){}
 }
 
 export class DeleteProjectAction implements Action {
   type = ActionTypes.DELETE_PROJECT;
-  constructor(public payload: entities.Project){}
+  constructor(public payload: models.Project){}
 }
 
 export class DeleteProjectSuccessAction implements Action {
   type = ActionTypes.DELETE_PROJECT_SUCCESS;
-  constructor(public payload: entities.Project){}
+  constructor(public payload: models.Project){}
 }
 
 export class DeleteProjectFailAction implements Action {
   type = ActionTypes.DELETE_PROJECT_FAIL;
-  constructor(public payload: entities.Err){}
+  constructor(public payload: models.Err){}
 }
 
 export class LoadProjectsAction implements Action {
@@ -70,17 +70,17 @@ export class LoadProjectsAction implements Action {
 
 export class LoadProjectsSuccessAction implements Action {
   type = ActionTypes.LOAD_PROJECTS_SUCCESS;
-  constructor(public payload: entities.Project[]){}
+  constructor(public payload: models.Project[]){}
 }
 
 export class LoadProjectsFailAction implements Action {
   type = ActionTypes.LOAD_PROJECTS_FAIL;
-  constructor(public payload: entities.Err){}
+  constructor(public payload: models.Err){}
 }
 
 export class SelectProjectAction implements Action {
   type = ActionTypes.SELECT_PROJECT;
-  constructor(public payload: entities.Project){}
+  constructor(public payload: models.Project){}
 }
 
 

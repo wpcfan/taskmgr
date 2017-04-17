@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { type } from '../utils/type.util';
-import * as entities from '../domain';
+import * as models from '../domain';
 
 export const ActionTypes = {
   QUOTE:             type('[Quote] Quote'),
@@ -15,12 +15,12 @@ export class QuoteAction implements Action {
 
 export class QuoteSuccessAction implements Action {
   type = ActionTypes.QUOTE_SUCCESS;
-  constructor(public payload: entities.Quote){}
+  constructor(public payload: models.Quote){}
 }
 
 export class QuoteFailAction implements Action {
   type = ActionTypes.QUOTE_FAIL;
-  constructor(public payload: entities.Err){}
+  constructor(public payload: models.Err){}
 }
 
 
