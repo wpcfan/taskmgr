@@ -71,7 +71,7 @@ export interface Project{
   coverImg?: string;
   enabled?: boolean;
   archived?: boolean;
-  memberIds?: string[]; // 存储成员ID
+  member?: User[]; // 存储成员ID
 }
 
 export interface ConfirmDialog{

@@ -49,17 +49,8 @@ export class ProjectService {
 
   // GET /projects
   get(userId: string): Observable<models.Project[]>{
-<<<<<<< HEAD
-<<<<<<< HEAD
     const uri = `${this.baseUri}/${this.domain}/?enabled=true`;
-=======
-=======
->>>>>>> 2f6b79cabf38e0c0cc8660f10f1e198f2df33bfc
-    const uri = `${this.baseUri}/${this.domain}/?enabled=true&archived=false`;
->>>>>>> 2f6b79cabf38e0c0cc8660f10f1e198f2df33bfc
     return this.http.get(uri)
-      .map(res => res.json() as models.Project[])
-      .map(prjs => prjs.filter(prj => 
-        prj.members.filter(member => member.id === userId).length > 0));
+      .map(res => res.json() as models.Project[]);
   }
 }

@@ -3,17 +3,8 @@ import { createSelector } from 'reselect';
 import * as actions from '../actions/project.action';
 
 export interface State{
-<<<<<<< HEAD
-<<<<<<< HEAD
-  projects: models.Project[];
-=======
   ids: string[];
   entities: { [id: string]: models.Project };
->>>>>>> 2f6b79cabf38e0c0cc8660f10f1e198f2df33bfc
-=======
-  ids: string[];
-  entities: { [id: string]: models.Project };
->>>>>>> 2f6b79cabf38e0c0cc8660f10f1e198f2df33bfc
   selectedId: string | null;
 }
 

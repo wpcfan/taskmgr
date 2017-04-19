@@ -28,7 +28,7 @@ export class AuthEffects{
     .switchMap((val:{username:string, password: string}) => {
       return this.authService.login(val.username, val.password);
     })
-    .map(user => new actions.LoginSuccessAction({user: user}))
+    .map(auth => new actions.LoginSuccessAction(auth))
     .catch(err => of(new actions.LoginFailAction(err.json())));
 
   /**

@@ -60,7 +60,7 @@ import 'hammerjs';
     services.project,
     {
       provide: 'BASE_URI',
-      useValue: 'http://localhost:3000'
+      useValue: 'http://localhost:8090'
     }],
   declarations: [
     HeaderComponent, 
