@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
+import * as wilddog from 'wilddog'
 import * as models from '../domain';
 
 /**
@@ -24,18 +25,32 @@ export class AuthService {
    */
   constructor(
     private http: Http,
-    @Inject('BASE_URI') private baseUri) { }
+    @Inject('BASE_URI') private baseUri) { 
+      const config = {
+        authDomain: "taskmgr.wilddog.com"
+      };
+      wilddog.initializeApp(config);
+    }
 
   /**
    * 使用用户提供的个人信息进行注册，成功则返回 User，否则抛出异常
    * 
    * @param user 用户信息，id 属性会被忽略，因为服务器端会创建新的 id
    */
-  register(user: models.User): Observable<models.User>{
-    const uri = `${this.baseUri}/${this.domain}/register`;
-    // const uri = `${this.baseUri}/users`;
-    return this.http.post(uri, JSON.stringify(user), {headers: this.headers})
-      .map(res => res.json());
+  register(user: models.User): Observable<models.Auth>{
+    // const uri = `${this.baseUri}/${this.domain}/register`;
+    // return this.http.post(uri, JSON.stringify(user), {headers: this.headers})
+    //   .map(res => res.json());
+    const auth = wilddog.auth()
+      .createUserWithEmailAndPassword(user.email, user.password)
+      .then(u => Object.assign({}, {
+        token: u.getToken(),
+        user: {
+          id: u.uid,
+          email: u.email
+        }
+      }));
+    return Observable.from(auth);
   }
 
   /**
@@ -44,17 +59,26 @@ export class AuthService {
    * @param username 用户名
    * @param password 密码（明文），服务器会进行加密处理
    */
-  login(username: string, password: string): Observable<models.Auth>{
-    const uri = `${this.baseUri}/${this.domain}`;
-    return this.http.post(
-      uri, 
-      JSON.stringify({username: username, password: password}), 
-      {headers: this.headers})
-      .map(res => res.json());
-    // const uri = `${this.baseUri}/users?username=${username}`;
-    // return this.http.get(uri).map(res => {
-    //   const data = res.json();
-    //   return data[0];
-    // });
+  login(email: string, password: string): Observable<models.Auth>{
+    // const uri = `${this.baseUri}/${this.domain}`;
+    // return this.http.post(
+    //   uri, 
+    //   JSON.stringify({username: username, password: password}), 
+    //   {headers: this.headers})
+    //   .map(res => res.json());
+    const auth = wilddog.auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(u => Object.assign({}, {
+        token: u.getToken(),
+        user: {
+          id: u.uid,
+          email: u.email
+        }
+      }));
+    return Observable.from(auth);
+  }
+
+  logout(): Observable<void> {
+    return Observable.from(wilddog.auth().signOut());
   }
 }

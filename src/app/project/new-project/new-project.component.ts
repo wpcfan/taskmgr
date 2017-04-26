@@ -42,7 +42,8 @@ export class NewProjectComponent implements OnInit {
     }
   }
 
-  onSubmit({value, valid}){
+  onSubmit({value, valid}, event: Event){
+    event.preventDefault();
     if(!valid) return;
     if(this.data.project === undefined || this.data.project === null)
       this.store$.dispatch(

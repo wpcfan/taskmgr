@@ -15,11 +15,9 @@ export interface Auth {
 
 export interface User {
   id?: string;
-  username: string;
+  email: string;
+  name: string;
   password?: string;
-  name?: string;
-  email?: string;
-  projectIds?: string[];
 }
 
 export interface Todo{

@@ -1,5 +1,25 @@
-//Projects
-GET http://localhost:3000/projects/?enabled=true
+// Login
+POST http://localhost:8090/auth
+Content-Type: application/json
+Accept-Charset: utf-8
 
+{
+	"username":"wang",
+	"password":"wang1234"
+}
+
+###
+//Projects
+GET http://localhost:8090/projects/?enabled=true&archived=false
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YW5nIiwiY3JlYXRlZCI6MTQ5MjQ5NDY1MTQ4OSwiZXhwIjoxNDkzMDk5NDUxfQ.7KqheQW14zjW2cFEbWUnvSz5RXzItxwjVTZ3fa2K3rjkU4anN-A4Wu0kBaJ_adHNY5XRlygVfNQOfPTaQBgq2w
+userId: 58f5a904edc76ab0e033cfc3
+
+###
+// Pageable
+GET http://localhost:8090/projects/?page=0&size=3
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YW5nIiwiY3JlYXRlZCI6MTQ5MjQ5NDY1MTQ4OSwiZXhwIjoxNDkzMDk5NDUxfQ.7KqheQW14zjW2cFEbWUnvSz5RXzItxwjVTZ3fa2K3rjkU4anN-A4Wu0kBaJ_adHNY5XRlygVfNQOfPTaQBgq2w
+userId: 58f5a904edc76ab0e033cfc3
+
+###
 //Tasks
 GET http://localhost:3000/taskLists?_embed=tasks&projectId=p0001

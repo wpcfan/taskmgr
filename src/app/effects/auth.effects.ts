@@ -38,10 +38,8 @@ export class AuthEffects{
   register$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.REGISTER)
     .map(toPayload)
-    .switchMap((val) => {
-      return this.authService.register(val);
-    })
-    .map(user => new actions.RegisterSuccessAction({user: user}))
+    .switchMap((val) => this.authService.register(val))
+    .map(auth => new actions.RegisterSuccessAction(auth))
     .catch(err => of(new actions.RegisterFailAction(err.json())));
 
   @Effect()
@@ -57,5 +55,6 @@ export class AuthEffects{
   @Effect()
   logout$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.LOGOUT)
+    .switchMap(_ => this.authService.logout())
     .map(() => go(['/login']));
 }

@@ -1,11 +1,11 @@
-<form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate>
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)" novalidate>
   <md-card class="card">
     <md-card-header>
       <md-card-title> 登录：</md-card-title>
     </md-card-header>
     <md-card-content>
       <md-input-container class="full-width">
-        <input mdInput type="text" placeholder="您的用户名" formControlName="username">
+        <input mdInput type="text" placeholder="您的Email" formControlName="email">
       </md-input-container>
       <md-input-container class="full-width">
         <input mdInput type="password" placeholder="您的密码" formControlName="password">
