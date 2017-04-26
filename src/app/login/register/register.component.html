@@ -1,4 +1,4 @@
-<form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form)" novalidate>
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)" novalidate>
   <md-card class="card">
     <md-card-header>
       <md-card-title> 注册：</md-card-title>

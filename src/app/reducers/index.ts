@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import { ActionReducer } from '@ngrx/store';
 import * as fromRouter from '@ngrx/router-store';
 import { environment } from '../../environments/environment';
-
+import * as models from '../domain';
 /**
  * The compose function is one of our most handy tools. In basic terms, you give
  * it any number of functions and it returns a function. This new function
@@ -47,7 +47,7 @@ import * as fromTaskLists from './task-list.reducer';
  * our top level state interface is just a map of keys to inner state types.
  */
 export interface State {
-  auth: fromAuth.State;
+  auth: models.Auth;
   todos: fromTodos.State;
   quote: fromQuote.State;
   projects: fromProjects.State;

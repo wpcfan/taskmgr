@@ -34,13 +34,13 @@ export class LoginComponent implements OnInit {
     });
     this.store$.dispatch({type: actions.ActionTypes.QUOTE});
   }
-  onSubmit({value, valid}, event: Event){
-    event.preventDefault();
+  onSubmit({value, valid}, e: Event){
     if(!valid) return;
     this.store$.dispatch(
       new authActions.LoginAction({
         email: value.email, 
         password: value.password
       }));
+    e.preventDefault();
   }
 }

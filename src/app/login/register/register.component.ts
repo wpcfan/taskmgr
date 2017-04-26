@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  onSubmit({value, valid}){
+  onSubmit({value, valid}, e: Event){
     if(!valid) return;
     this.store$.dispatch(
       new actions.RegisterAction({
@@ -39,6 +39,7 @@ export class RegisterComponent implements OnInit {
         name: value.name,
         email: value.email
       }));
+    e.preventDefault();
   }
 
 }
