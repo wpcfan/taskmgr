@@ -40,6 +40,8 @@ export function reducer(
     }
     case actions.ActionTypes.LOAD_PROJECTS_SUCCESS:{
       const projects = <models.Project[]>action.payload;
+      // if projects is null then return the orginal state
+      if(projects === null) return state; 
       const newEntities = projects.reduce((entities: { [id: string]: models.Project }, project: models.Project) => {
         return Object.assign(entities, {
           [project.id]: project

@@ -60,7 +60,7 @@ import 'hammerjs';
     services.project,
     {
       provide: 'BASE_URI',
-      useValue: 'http://localhost:8090'
+      useValue: 'https://taskmgr.wilddogio.com'
     }],
   declarations: [
     HeaderComponent, 
