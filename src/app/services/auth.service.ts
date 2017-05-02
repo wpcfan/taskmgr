@@ -4,8 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
-import * as wilddog from 'wilddog'
 import * as models from '../domain';
+import * as wilddog from 'wilddog';
 
 /**
  * 认证服务主要用于用户的注册和登录功能
@@ -16,7 +16,6 @@ export class AuthService {
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
   // 定义此服务的rest api路径
   private domain: string = 'auth';
-
   /**
    * 构造函数用于注入服务的依赖以及进行必要的初始化
    * 

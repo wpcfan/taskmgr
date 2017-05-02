@@ -1,4 +1,35 @@
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~@angular/material/theming';
+// 引入其他依赖
+
+// 此处将公用的 Material 风格包含在此处是为了达成整个应用使用一个单一 css
+// 所以请确保只在此处包含一次即可，其他地方不要再包含了。
+@include mat-core();
+
+// 使用在 palette.scss 中定义的 Material Design 调色板来定义我们自有主题的调色板
+// 对于每个调色板，你可以指定默认、轻柔或更重的色调
+$my-app-primary: mat-palette($mat-indigo);
+$my-app-accent:  mat-palette($mat-pink, A200, A100, A400);
+
+// 警告的调色板此处定义其实是不必要的，因为默认就是红色，但列在这里便于以后的自定义。
+$my-app-warn:    mat-palette($mat-red);
+
+// 创建一个主题对象 (包含所有自定义的调色板).
+$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+
+// 包含主题风格和每个组件使用的风格。此处可以 @import 或 @include 你的自定义 mixins
+@include angular-material-theme($my-app-theme);
+
+// 提供一个深色主题
+$dark-primary: mat-palette($mat-blue-grey);
+$dark-accent:  mat-palette($mat-amber, A200, A100, A400);
+$dark-warn:    mat-palette($mat-deep-orange);
+$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+// 将深色主题包含在一个 css 类中，这样任何组件如果包含在一个应用此类的元素中
+// 该组件就会应用这个主题风格
+.myapp-dark-theme {
+  @include angular-material-theme($dark-theme);
+}
 
 html, body, material-app, md-sidenav-container {
   margin: 0;

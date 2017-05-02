@@ -4,12 +4,13 @@ import {
   CanLoad,
   Route,
   ActivatedRouteSnapshot,
-  RouterStateSnapshot }    from '@angular/router';
+  RouterStateSnapshot 
+} from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Store } from '@ngrx/store';
 import { go } from '@ngrx/router-store';
-import * as fromRoot from '../reducers'
+import * as fromRoot from '../reducers';
 
 @Injectable()
 export class AuthGuardService implements CanActivate, CanLoad {

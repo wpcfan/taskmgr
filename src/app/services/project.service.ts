@@ -6,8 +6,8 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/reduce';
 import 'rxjs/add/observable/from';
-import * as wilddog from 'wilddog'
 import * as models from '../domain';
+import * as wilddog from 'wilddog';
 
 @Injectable()
 export class ProjectService {
@@ -23,9 +23,11 @@ export class ProjectService {
 
   // POST /projects
   add(project: models.Project): Observable<models.Project>{
-    const uri = `${this.baseUri}/${this.domain}`;
-    const uid = wilddog.auth().currentUser.uid;
-    const prjToAdd = Object.assign({}, project, {enabled: true, archived: false, members: {[uid]: true}})
+    const auth = wilddog.auth();
+    const token = auth.currentUser.getToken();
+    const userId = auth.currentUser.uid;
+    const uri = `${this.baseUri}/${this.domain}?auth=${token}`;
+    const prjToAdd = Object.assign({}, project, {enabled: true, archived: false, members: {[userId]: "owner"}})
     return this.http
       .post(uri, JSON.stringify(prjToAdd), {headers: this.headers})
       .map(res => res.json());
@@ -51,7 +53,9 @@ export class ProjectService {
 
   // GET /projects
   get(userId: string): Observable<models.Project[]>{
-    const uri = `${this.baseUri}/${this.domain}.json?orderBy="enabled"&equalTo=true`;
+    const auth = wilddog.auth();
+    const token = auth.currentUser.getToken();
+    const uri = `${this.baseUri}/${this.domain}.json?orderBy="enabled"&equalTo=true&auth=${token}`;
     return this.http.get(uri)
       .map(res => res.json() as models.Project[]);
   }

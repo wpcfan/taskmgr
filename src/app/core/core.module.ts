@@ -18,7 +18,6 @@ import { reducer } from '../reducers';
 import { effects } from '../effects';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-
 import 'hammerjs';
 
 @NgModule({
@@ -52,7 +51,7 @@ import 'hammerjs';
     MdToolbar,
     HeaderComponent,
     FooterComponent],
-  providers: [
+  providers: [  
     services.auth_guard,
     services.auth,
     services.todo,
@@ -68,8 +67,8 @@ import 'hammerjs';
 })
 export class CoreModule {
   constructor (@Optional() @SkipSelf() parentModule: CoreModule) {
-  if (parentModule) {
-    throw new Error('CoreModule is already loaded. Import it in the AppModule only');
+    if (parentModule) {
+      throw new Error('CoreModule is already loaded. Import it in the AppModule only');
     }
   }
 }
