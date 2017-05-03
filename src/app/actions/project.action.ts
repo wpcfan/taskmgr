@@ -70,7 +70,7 @@ export class LoadProjectsAction implements Action {
 
 export class LoadProjectsSuccessAction implements Action {
   type = ActionTypes.LOAD_PROJECTS_SUCCESS;
-  constructor(public payload: models.Project[]){}
+  constructor(public payload: {[id: string]: models.Project}){}
 }
 
 export class LoadProjectsFailAction implements Action {

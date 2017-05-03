@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import * as models from '../domain';
-import * as wilddog from 'wilddog';
+import { NgWilddogAuth } from "../ng-wilddog/auth";
 
 /**
  * 认证服务主要用于用户的注册和登录功能
@@ -24,12 +24,8 @@ export class AuthService {
    */
   constructor(
     private http: Http,
-    @Inject('BASE_URI') private baseUri) { 
-      const config = {
-        authDomain: "taskmgr.wilddog.com"
-      };
-      wilddog.initializeApp(config);
-    }
+    @Inject('BASE_URI') private baseUri,
+    private auth: NgWilddogAuth) { }
 
   /**
    * 使用用户提供的个人信息进行注册，成功则返回 User，否则抛出异常
@@ -40,7 +36,7 @@ export class AuthService {
     // const uri = `${this.baseUri}/${this.domain}/register`;
     // return this.http.post(uri, JSON.stringify(user), {headers: this.headers})
     //   .map(res => res.json());
-    const auth = wilddog.auth()
+    const auth = this.auth.auth
       .createUserWithEmailAndPassword(user.email, user.password)
       .then(u => Object.assign({}, {
         token: u.getToken(),
@@ -65,7 +61,7 @@ export class AuthService {
     //   JSON.stringify({username: username, password: password}), 
     //   {headers: this.headers})
     //   .map(res => res.json());
-    const auth = wilddog.auth()
+    const auth = this.auth.auth
       .signInWithEmailAndPassword(email, password)
       .then(u => Object.assign({}, {
         token: u.getToken(),
@@ -78,6 +74,6 @@ export class AuthService {
   }
 
   logout(): Observable<void> {
-    return Observable.from(wilddog.auth().signOut());
+    return Observable.from(this.auth.auth.signOut());
   }
 }

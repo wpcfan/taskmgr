@@ -39,15 +39,14 @@ export function reducer(
       return Object.assign({}, state, {entities: entities});
     }
     case actions.ActionTypes.LOAD_PROJECTS_SUCCESS:{
-      const projects = <models.Project[]>action.payload;
+      const projects = action.payload;
       // if projects is null then return the orginal state
       if(projects === null) return state; 
-      const newEntities = projects.reduce((entities: { [id: string]: models.Project }, project: models.Project) => {
-        return Object.assign(entities, {
-          [project.id]: project
-        });
-      }, {});
-      return Object.assign({}, state, {entities: newEntities});
+      let prjIds = [];
+      for(let key in projects){
+        prjIds = [...state.ids, key];
+      }
+      return Object.assign({}, state, {ids: [...prjIds], entities: projects});
     }
     case actions.ActionTypes.SELECT_PROJECT: {
       return Object.assign({}, state, {selectedId: action.payload.id});
