@@ -1,4 +1,3 @@
-import * as wilddog from 'wilddog';
 import { Inject, Injectable } from '@angular/core';
 import { WilddogAppConfigToken, WilddogApp } from './wilddog-app';
 import { WilddogListFactory } from './wilddog-list-factory';

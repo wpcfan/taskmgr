@@ -106,7 +106,7 @@ export function WilddogListFactory (
 
 /**
  * Creates a WilddogListObservable from a reference or query. Options can be provided as a second
- * parameter. This function understands the nuances of the Firebase SDK event ordering and other
+ * parameter. This function understands the nuances of the Wilddog SDK event ordering and other
  * quirks. This function takes into account that not all .on() callbacks are guaranteed to be
  * asynchonous. It creates a initial array from a promise of ref.once('value'), and then starts
  * listening to child events. When the initial array is loaded, the observable starts emitting values.
@@ -180,7 +180,7 @@ function wilddogListObservable(ref: wilddog.sync.Reference | DatabaseQuery, {pre
 
     return () => {
       // Loop through callback handles and dispose of each event with handle
-      // The Firebase SDK requires the reference, event name, and callback to
+      // The Wilddog SDK requires the reference, event name, and callback to
       // properly unsubscribe, otherwise it can affect other subscriptions.
       handles.forEach(item => {
         ref.off(item.event, item.handle);
