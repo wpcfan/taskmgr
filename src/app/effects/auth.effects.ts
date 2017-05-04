@@ -55,6 +55,5 @@ export class AuthEffects{
   @Effect()
   logout$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.LOGOUT)
-    .switchMap(_ => this.authService.logout())
     .map(() => go(['/login']));
 }

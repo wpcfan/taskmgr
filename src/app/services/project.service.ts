@@ -7,63 +7,50 @@ import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/reduce';
 import 'rxjs/add/observable/from';
 import * as models from '../domain';
-import * as wilddog from 'wilddog';
 
 @Injectable()
 export class ProjectService {
-  // 定义Request Headers
-  private headers: Headers = new Headers({
-    'Content-Type': 'application/json;charset=UTF-8'
-  });
-  // 定义此服务的rest api路径
-  private domain: string = 'projects';
-  private auth$: Observable<models.Auth>;
-
+  private domain: string = 'classes/projects';
+  private headers = new Headers({
+    'Content-Type': 'application/json'
+  })
   constructor(
-    private http: Http,
-    @Inject('BASE_URI') private baseUri) { }
+    @Inject('BASE_CONFIG') private config,
+    private http: Http) { 
+      this.headers.append('X-LC-Id', config.LCId);
+      this.headers.append('X-LC-Key', config.LCKey);
+    }
 
   // POST /projects
   add(project: models.Project): Observable<models.Project>{
-    const ref = wilddog.sync().ref("/projects");
-    const prjToAdd = Object.assign(
-      {}, 
-      project, 
-      {enabled: true, archived: false});
-    return Observable.from(
-      ref.push(prjToAdd).then(newRef => 
-        Object.assign({}, prjToAdd, {id: newRef.key()})));
-    // return this.http
-    //   .post(uri, JSON.stringify(prjToAdd), {headers: this.headers})
-    //   .map(res => res.json());
+    const uri =  `${this.config.uri}/${this.domain}`;
+    return this.http
+      .post(uri, JSON.stringify(project), {headers: this.headers})
+      .map(res => res.json() as models.Project);
   }
 
   // PUT /projects
   update(project: models.Project): Observable<models.Project>{
-    const ref = wilddog.sync().ref("/projects").child(project.id);
-    return Observable.from(ref.update(project));
-    // const uri = `${this.baseUri}/${this.domain}/${project.id}`;
-    // const updated = Object.assign({}, {name: project.name, desc: project.desc});
-    // return this.http
-    //   .patch(uri, JSON.stringify(updated), {headers: this.headers})
-    //   .map(res => updated);
+    const uri =  `${this.config.uri}/${this.domain}/${project.id}`;
+    return this.http
+      .put(uri, JSON.stringify(project), {headers: this.headers})
+      .map(_ => project);
   }
 
-  // PATCH /projects instead of deleting the records
+  // DELETE /projects instead of deleting the records
   delete(project: models.Project): Observable<models.Project>{
-    const uri = `${this.baseUri}/${this.domain}/${project.id}`;
-    const deleted = Object.assign({}, {enabled: false});
+    const uri =  `${this.config.uri}/${this.domain}/${project.id}`;
     return this.http
-      .patch(uri, JSON.stringify(deleted), {headers: this.headers})
-      .map(res => res.json());
+      .delete(uri)
+      .map(_ => project);
   }
 
   // GET /projects
-  get(userId: string): Observable<{[id: string]: models.Project}>{
-    const auth = wilddog.auth();
-    const token = auth.currentUser.getToken();
-    const uri = `${this.baseUri}/${this.domain}.json?orderBy="enabled"&equalTo=true&auth=${token}`;
-    return this.http.get(uri)
-      .map(res => res.json() as {[id: string]: models.Project});
+  get(userId: string): Observable<models.Project[]>{
+    const uri =  `${this.config.uri}/${this.domain}`;
+    const whereClause = `{"members": "${userId}"}`;
+    return this.http
+      .get(uri, {params: {'where': whereClause}, headers: this.headers})
+      .map(res => res.json().results);
   }
 }

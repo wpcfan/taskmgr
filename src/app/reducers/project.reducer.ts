@@ -42,11 +42,12 @@ export function reducer(
       const projects = action.payload;
       // if projects is null then return the orginal state
       if(projects === null) return state; 
-      let prjIds = [];
-      for(let key in projects){
-        prjIds = [...state.ids, key];
-      }
-      return Object.assign({}, state, {ids: [...prjIds], entities: projects});
+      const entities = projects.reduce((entities: { [id: string]: models.Project }, project) => {
+        return Object.assign(entities, {
+          [project.id]: state.entities[project.id]
+        })
+      },{});
+      return Object.assign({}, state, {ids: projects.map(project => project.id), entities: entities});
     }
     case actions.ActionTypes.SELECT_PROJECT: {
       return Object.assign({}, state, {selectedId: action.payload.id});

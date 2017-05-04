@@ -25,10 +25,10 @@ userId: 58f5a904edc76ab0e033cfc3
 GET http://localhost:3000/taskLists?_embed=tasks&projectId=p0001
 
 ###
-GET https://taskmgr.wilddogio.com/projects.json?orderBy="enabled"&equalTo=true&auth=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2IjoxLCJpYXQiOjE0OTMzNzczMzksInVzZXJfaWQiOiI0N2RhYTQyYzczNmQ4MTZiY2IzZGMyMmFhYmRiIiwiaXNzIjoiaHR0cHM6Ly90YXNrbWdyLndpbGRkb2dpby5jb20iLCJuYW1lIjoiIiwicGljdHVyZSI6IiIsImVtYWlsIjoid2FuZ0AxNjMuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwaG9uZV9udW1iZXIiOiIiLCJwaG9uZV9udW1iZXJfdmVyaWZpZWQiOmZhbHNlLCJ3aWxkZG9nIjp7ImlkZW50aXRpZXMiOnsicGFzc3dvcmQiOlsid2FuZ0AxNjMuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifSwiZXhwIjoxNDk4MjE1NzM5fQ.gXnf90cq_KSqQ75XfpmUBq_jpksLi4pUvcV4LPIikx4
+GET https://taskmgr.wilddogio.com/projects.json?auth=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2IjoxLCJpYXQiOjE0OTMzNzczMzksInVzZXJfaWQiOiI0N2RhYTQyYzczNmQ4MTZiY2IzZGMyMmFhYmRiIiwiaXNzIjoiaHR0cHM6Ly90YXNrbWdyLndpbGRkb2dpby5jb20iLCJuYW1lIjoiIiwicGljdHVyZSI6IiIsImVtYWlsIjoid2FuZ0AxNjMuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwaG9uZV9udW1iZXIiOiIiLCJwaG9uZV9udW1iZXJfdmVyaWZpZWQiOmZhbHNlLCJ3aWxkZG9nIjp7ImlkZW50aXRpZXMiOnsicGFzc3dvcmQiOlsid2FuZ0AxNjMuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifSwiZXhwIjoxNDk4MjE1NzM5fQ.gXnf90cq_KSqQ75XfpmUBq_jpksLi4pUvcV4LPIikx4
 
 ###
-POST https://taskmgr.wilddogio.com/projects.json?auth=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2IjoxLCJpYXQiOjE0OTMzNzczMzksInVzZXJfaWQiOiI0N2RhYTQyYzczNmQ4MTZiY2IzZGMyMmFhYmRiIiwiaXNzIjoiaHR0cHM6Ly90YXNrbWdyLndpbGRkb2dpby5jb20iLCJuYW1lIjoiIiwicGljdHVyZSI6IiIsImVtYWlsIjoid2FuZ0AxNjMuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwaG9uZV9udW1iZXIiOiIiLCJwaG9uZV9udW1iZXJfdmVyaWZpZWQiOmZhbHNlLCJ3aWxkZG9nIjp7ImlkZW50aXRpZXMiOnsicGFzc3dvcmQiOlsid2FuZ0AxNjMuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifSwiZXhwIjoxNDk4MjE1NzM5fQ.gXnf90cq_KSqQ75XfpmUBq_jpksLi4pUvcV4LPIikx4
+POST https://taskmgr.wilddogio.com/projects.json?auth=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2IjoxLCJpYXQiOjE0OTMzNzczMzksInVzZXJfaWQiOiI0N2RhYTQyYzczNmQ4MTZiY2IzZGMyMmFhYmRiIiwiaXNzIjoiaHR0cHM6Ly90YXNrbWdyLndpbGRkb2dpby5jb20iLCJuYW1lIjoiIiwicGljdHVyZSI6IiIsImVtYWlsIjoid2FuZ0AxNjMuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwaG9uZV9udW1iZXIiOiIiLCJwaG9uZV9udW1iZXJfdmVyaWZpZWQiOmZhbHNlLCJ3aWxkZG9nIjp7ImlkZW50aXRpZXMiOnsicGFzc3dvcmQiOlsid2FuZ0AxNjMuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifSwiZXhwIjoxNDk4MjE1NzM5fQ.gXnf90cq_KSqQ75XfpmUBq_jpksLi4pUvcV4LPIikx4 HTTP/1.1
 Content-Type: application/json
 Charset: utf-8
 
@@ -41,5 +41,49 @@ Charset: utf-8
 OPTIONS https://taskmgr.wilddogio.com/projects.json?auth=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2IjoxLCJpYXQiOjE0OTM3MDI4ODIsInVzZXJfaWQiOiI0N2RhYTQyYzczNmQ4MTZiY2IzZGMyMmFhYmRiIiwiaXNzIjoiaHR0cHM6Ly90YXNrbWdyLndpbGRkb2dpby5jb20iLCJuYW1lIjoiIiwicGljdHVyZSI6IiIsImVtYWlsIjoid2FuZ0AxNjMuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwaG9uZV9udW1iZXIiOiIiLCJwaG9uZV9udW1iZXJfdmVyaWZpZWQiOmZhbHNlLCJ3aWxkZG9nIjp7ImlkZW50aXRpZXMiOnsicGFzc3dvcmQiOlsid2FuZ0AxNjMuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifSwiZXhwIjoxNDk4NTQxMjgyfQ.Rwf2WuFLaOzg13QMbXJlYefH0rxeRFh7TjOQxgBjajs HTTP/1.1
 Access-Control-Request-Method: POST
 Access-Control-Request-Headers: Content-Type
-Origin: localhost
-Host: taskmgr.wilddogio.com
+Origin: https://localhost
+
+###
+GET https://api.leancloud.cn/1.1/classes/Post/558e20cbe4b060308e3eb36c
+X-LC-Id: ABTVy9loYSaIMc3EkaFRupTL-gzGzoHsz
+X-LC-Key: mwywiweRadXf6CztkUNyUsPS
+
+###
+POST https://leancloud.cn/1.1/roles
+X-LC-Id: ABTVy9loYSaIMc3EkaFRupTL-gzGzoHsz
+X-LC-Key: mwywiweRadXf6CztkUNyUsPS"
+Content-Type: application/json
+
+{
+	"name": "CLevel",
+	"ACL": {
+		"*": {
+			"read": true
+		}
+	},
+	"roles": {
+		"__op": "AddRelation",
+		"objects": [
+			{
+				"__type": "Pointer",
+				"className": "_Role",
+				"objectId": "22590acf4644d904006d8f9ecf"
+			}
+		]
+	},
+	"users": {
+		"__op": "AddRelation",
+		"objects": [
+			{
+				"__type": "Pointer",
+				"className": "_User",
+				"objectId": "590acda82f301e00582a352a"
+			}
+		]
+	}
+}
+  
+###
+https://leancloud.cn/1.1/classes/projects?where=%7B%22members%22%3A%22590acda82f301e00582a352a%22%7D
+X-LC-Id: ABTVy9loYSaIMc3EkaFRupTL-gzGzoHsz
+X-LC-Key: mwywiweRadXf6CztkUNyUsPS

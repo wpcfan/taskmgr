@@ -18,7 +18,7 @@ export class TodoService {
 
   constructor(
     private http: Http,
-    @Inject('BASE_URI') private baseUri) { }
+    @Inject('BASE_CONFIG') private baseUri) { }
 
   // POST /todos
   addTodo(todo: models.Todo): Observable<models.Todo>{

@@ -20,18 +20,10 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import 'hammerjs';
 
-import { NgWilddogModule } from "../ng-wilddog";
-import { NgWilddogAuth } from "../ng-wilddog/auth";
-import { NgWilddogDatabase } from "../ng-wilddog/database";
-
 @NgModule({
   imports: [
     CommonModule,
     HttpModule,
-    NgWilddogModule.initializeApp({
-      authDomain: "taskmgr.wilddog.com",
-      syncURL: "https://taskmgr.wilddogio.com",
-    }),
     BrowserAnimationsModule,
     MdSidenavModule,
     MdToolbarModule,
@@ -66,11 +58,13 @@ import { NgWilddogDatabase } from "../ng-wilddog/database";
     services.quote,
     services.project,
     {
-      provide: 'BASE_URI',
-      useValue: 'https://taskmgr.wilddogio.com'
-    },
-    NgWilddogAuth,
-    NgWilddogDatabase
+      provide: 'BASE_CONFIG',
+      useValue: {
+        uri: 'https://leancloud.cn/1.1',
+        LCId: 'ABTVy9loYSaIMc3EkaFRupTL-gzGzoHsz',
+        LCKey: 'mwywiweRadXf6CztkUNyUsPS'
+      }
+    }
     ],
   declarations: [
     HeaderComponent, 

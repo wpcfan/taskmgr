@@ -31,7 +31,7 @@ export class ProjectEffects{
     .withLatestFrom(this.store$.select(fromRoot.getAuth))
     .switchMap(([_, auth]) => this.service.get(auth.user.id))
     .map(projects => new actions.LoadProjectsSuccessAction(projects))
-    .catch(err => of(new actions.LoadProjectsFailAction(err.json())));
+    .catch(err => of(new actions.LoadProjectsFailAction(JSON.stringify(err))));
 
   @Effect()
   addProject$: Observable<Action> = this.actions$
@@ -39,9 +39,7 @@ export class ProjectEffects{
     .map(toPayload)
     .withLatestFrom(this.store$.select(fromRoot.getAuth))
     .switchMap(([project, auth]) => {
-      const added = Object.assign({}, project, {
-        id: auth.user.id, 
-        members: {[auth.user.id]: "owner"}});
+      const added = Object.assign({}, project, {members: [`${auth.user.id}`]});
       return this.service.add(added);
     })
     .map(project => new actions.AddProjectSuccessAction(project))

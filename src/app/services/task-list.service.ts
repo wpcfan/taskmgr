@@ -8,7 +8,7 @@ export class TaskListService {
   private domain: string = 'tasklists'
   constructor(
     private http: Http,
-    @Inject('BASE_URI') private baseUri) { }
+    @Inject('BASE_CONFIG') private baseUri) { }
 
     // GET /projects
   get(projectId: string): Observable<models.TaskList[]>{
