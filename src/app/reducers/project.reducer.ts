@@ -44,7 +44,7 @@ export function reducer(
       if(projects === null) return state; 
       const entities = projects.reduce((entities: { [id: string]: models.Project }, project) => {
         return Object.assign(entities, {
-          [project.id]: state.entities[project.id]
+          [project.id]: project
         })
       },{});
       return Object.assign({}, state, {ids: projects.map(project => project.id), entities: entities});

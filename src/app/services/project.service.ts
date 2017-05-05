@@ -26,7 +26,7 @@ export class ProjectService {
     const uri =  `${this.config.uri}/${this.domain}`;
     return this.http
       .post(uri, JSON.stringify(project), {headers: this.headers})
-      .map(res => res.json() as models.Project);
+      .map(res => Object.assign({}, project, {id: res.json().objectId}));
   }
 
   // PUT /projects
@@ -41,7 +41,7 @@ export class ProjectService {
   delete(project: models.Project): Observable<models.Project>{
     const uri =  `${this.config.uri}/${this.domain}/${project.id}`;
     return this.http
-      .delete(uri)
+      .delete(uri, {headers: this.headers})
       .map(_ => project);
   }
 
@@ -51,6 +51,10 @@ export class ProjectService {
     const whereClause = `{"members": "${userId}"}`;
     return this.http
       .get(uri, {params: {'where': whereClause}, headers: this.headers})
-      .map(res => res.json().results);
+      .map(res => {
+        const results = res.json().results;
+        return results.map(p => Object.assign({}, 
+          {id: p.objectId, name: p.name, desc: p.desc, members:[...p.members]}))
+      });
   }
 }
