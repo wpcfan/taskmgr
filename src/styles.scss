@@ -66,28 +66,24 @@ $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 //   }
 // }
 
-html, body, material-app, md-sidenav-container {
+html, body, material-app, md-sidenav-container, .site {
   margin: 0;
   width: 100%;
   height: 100%;
 }
 
-.mat-sidenav-content{
-  height: 100%;
+.site{
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 main{
-  min-height: calc(100vh - 138px);
-  flex: 1 1 auto;
+  flex: 1;
 }
 
-header{
-  flex: 0;
-}
-
-footer{
-  flex: 0;
+.content{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

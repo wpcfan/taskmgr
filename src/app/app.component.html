@@ -1,12 +1,16 @@
 <md-sidenav-container>
-  <md-sidenav mode="over" opened="true">Drawer content</md-sidenav>
-  <header>
-    <app-header></app-header>
-  </header>
-  <main>
-    <router-outlet></router-outlet>
-  </main>
-  <footer>
-    <app-footer></app-footer>
-  </footer>
+  <md-sidenav mode="push">Drawer content</md-sidenav>
+  <div class="site">
+    <header>
+      <app-header></app-header>
+    </header>
+    <main>
+      <div class="content">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+    <footer>
+      <app-footer></app-footer>
+    </footer>
+  </div>
 </md-sidenav-container>
