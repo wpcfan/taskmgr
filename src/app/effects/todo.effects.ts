@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/withLatestFrom';
+import 'rxjs/add/operator/map';
 import { TodoService } from '../services/todo.service';
 import * as actions from '../actions/todo.action';
 import * as fromRoot from '../reducers';

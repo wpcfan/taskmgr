@@ -4,6 +4,7 @@ import { Action, Store } from '@ngrx/store';
 import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/withLatestFrom';
 import { ProjectService } from '../services/project.service';
