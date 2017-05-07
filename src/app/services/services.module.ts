@@ -5,12 +5,12 @@ import { QuoteService } from './quote.service';
 import { TodoService } from './todo.service';
 import { AuthGuardService } from './auth-guard.service'
 
-export const services = {
-  authGuard: AuthGuardService,
-  auth: AuthService,
-  project: ProjectService,
-  quote: QuoteService,
-  todo: TodoService
+export  {
+  AuthGuardService,
+  AuthService,
+  ProjectService,
+  QuoteService,
+  TodoService
 }
 
 @NgModule({})
@@ -19,11 +19,11 @@ export class ServicesModule {
     return {
       ngModule: ServicesModule,
       providers: [
-        services.auth, 
-        services.authGuard, 
-        services.project, 
-        services.quote, 
-        services.todo
+        AuthGuardService, 
+        AuthService, 
+        ProjectService, 
+        QuoteService, 
+        TodoService
       ]
     }
   }

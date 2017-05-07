@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import * as fromRoot from '../../reducers';
 import * as entities from '../../domain';
 import * as actions from '../../actions/project.action';
-import { NewProjectComponent } from '../new-project/new-project.component';
+import { NewProjectComponent } from '../new-project';
 
 @Component({
   selector: 'app-project-list',

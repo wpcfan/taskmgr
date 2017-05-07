@@ -7,7 +7,7 @@ import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/withLatestFrom';
-import { ProjectService } from '../services/project.service';
+import { ProjectService } from '../services';
 import * as actions from '../actions/project.action';
 import * as fromRoot from '../reducers';
 

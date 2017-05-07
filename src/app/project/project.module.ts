@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '../shared';
 import { ProjectRoutingModule } from './project-routing.module';
-import { ProjectListComponent } from './project-list/project-list.component';
-import { NewProjectComponent } from './new-project/new-project.component';
-import { ProjectItemComponent } from './project-item/project-item.component';
+import { ProjectListComponent } from './project-list';
+import { NewProjectComponent } from './new-project';
+import { ProjectItemComponent } from './project-item';
 
 @NgModule({
   imports: [

@@ -11,7 +11,9 @@ import {
   MdMenuModule,
   MdIconModule
 } from '@angular/material';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from './confirm-dialog';
+
+export {ConfirmDialogComponent}
 
 @NgModule({
   imports: [

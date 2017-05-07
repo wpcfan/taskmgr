@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import * as entities from '../../domain';
 import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/project.action';
-import { NewProjectComponent } from '../new-project/new-project.component';
-import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component'
+import { NewProjectComponent } from '../new-project';
+import { ConfirmDialogComponent } from '../../shared'
 
 @Component({
   selector: 'app-project-item',
