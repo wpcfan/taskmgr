@@ -13,7 +13,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { routerReducer, RouterStoreModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { services } from '../services';
+import { ServicesModule } from '../services';
 import { reducer } from '../reducers';
 import { effects } from '../effects';
 import { HeaderComponent } from './header/header.component';
@@ -24,6 +24,7 @@ import 'hammerjs';
   imports: [
     CommonModule,
     HttpModule,
+    ServicesModule.forRoot(),
     BrowserAnimationsModule,
     MdSidenavModule,
     MdToolbarModule,
@@ -52,11 +53,6 @@ import 'hammerjs';
     HeaderComponent,
     FooterComponent],
   providers: [  
-    services.auth_guard,
-    services.auth,
-    services.todo,
-    services.quote,
-    services.project,
     {
       provide: 'BASE_CONFIG',
       useValue: {
