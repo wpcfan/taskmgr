@@ -7,8 +7,8 @@ const routes: Routes = [
   { 
     path: 'projects', 
     component: ProjectListComponent,
-    canActivate: [ services.auth_guard ],
-    canLoad: [ services.auth_guard ]
+    canActivate: [ services.authGuard ],
+    canLoad: [ services.authGuard ]
   }
 ];
 

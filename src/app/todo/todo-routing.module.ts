@@ -7,8 +7,8 @@ const routes: Routes = [
   { 
     path: 'todos', 
     component: TodoComponent,
-    canActivate: [ services.auth_guard ],
-    canLoad: [ services.auth_guard ]
+    canActivate: [ services.authGuard ],
+    canLoad: [ services.authGuard ]
   }
 ];
 
