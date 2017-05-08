@@ -24,7 +24,7 @@ export class AuthGuardService implements CanActivate, CanLoad {
   constructor(private store$: Store<fromRoot.State>) { }
 
   /**
-   * 用于判断是否可以激活改路由
+   * 用于判断是否可以激活该路由
    * 
    * @param route 
    * @param state 
@@ -42,7 +42,7 @@ export class AuthGuardService implements CanActivate, CanLoad {
   }
 
   /**
-   * 
+   * 用于判断路由是否可以加载，一般用于阻止直接的 URL 访问
    * @param route 
    */
   canLoad(route: Route): Observable<boolean> {

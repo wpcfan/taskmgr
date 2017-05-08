@@ -38,25 +38,28 @@ describe('AuthService', () => {
     });
   });
 
-  it('should return an Observable<Auth>', async(inject([AuthService, MockBackend], (service: AuthService, mockBackend: MockBackend) => {
+  it('should return an Observable<Auth>', 
+    inject([AuthService, MockBackend], 
+      (service: AuthService, mockBackend: MockBackend) => {
     const mockUser: models.User = {
       name: 'someuser@dev.local',
       password: '123abc',
       email: 'someuser@dev.local'
-    }
-    service.register(mockUser).subscribe(auth => {
-      expect(auth.user).toBe(mockUser)
-    })
+    };
     const mockResponse = {
       sessionToken: 'tokenSet',
       objectId: 'obj123abc',
       username: 'someuser@dev.local'
-    }
+    };
     mockBackend.connections.subscribe(conn => {
       conn.mockRespond(new Response(new ResponseOptions({
         body: JSON.stringify(mockResponse)
       })))
-    })
-  })));
+    });
+    service.register(mockUser).subscribe(auth => {
+      expect(auth.token).toEqual('tokenSet');
+      expect(auth.user.email).toEqual(mockUser.email);
+    });
+  }));
 
 });
