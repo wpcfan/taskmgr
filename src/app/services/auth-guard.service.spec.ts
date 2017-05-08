@@ -16,15 +16,16 @@ import { StoreModule } from '@ngrx/store';
 import { reducer, State, getAuth } from '../reducers';
 import * as authActions from '../actions/auth.action'
 
-let mockSnapshot:any = jasmine.createSpyObj<RouterStateSnapshot>("RouterStateSnapshot", ['toString']);
+let mockSnapshot:any = jasmine
+  .createSpyObj<RouterStateSnapshot>("RouterStateSnapshot", ['toString']);
 
 @Component({
-  template: '<router-outlet></router-outlet>'
+  template: `<router-outlet></router-outlet>`
 })
 class RoutingComponent { }
 
 @Component({
-  template: ''
+  template: ``
 })
 class DummyComponent { }
 

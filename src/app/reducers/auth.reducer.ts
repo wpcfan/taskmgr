@@ -2,15 +2,14 @@ import { Reducer, Action } from '@ngrx/store';
 import * as models from '../domain';
 import * as actions from '../actions/auth.action';
 
-
-const initialState: models.Auth = {}
+export const initialState: models.Auth = {}
 
 export function reducer (state: models.Auth = initialState, action: actions.Actions): models.Auth {
   switch (action.type) {
     case actions.ActionTypes.LOGIN_SUCCESS:
       return Object.assign({}, state, action.payload);
     case actions.ActionTypes.LOGIN_FAIL:
-      return Object.assign({}, state, {
+      return Object.assign({}, {
         err: action.payload
       });
     case actions.ActionTypes.LOGOUT:
@@ -18,7 +17,7 @@ export function reducer (state: models.Auth = initialState, action: actions.Acti
     case actions.ActionTypes.REGISTER_SUCCESS:
       return Object.assign({}, state, action.payload);
     case actions.ActionTypes.REGISTER_FAIL:
-      return Object.assign({}, state, {
+      return Object.assign({}, {
         err: action.payload
       });
     default:
