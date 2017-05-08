@@ -16,8 +16,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ServicesModule } from '../services';
 import { reducer } from '../reducers';
 import { effects } from '../effects';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header';
+import { FooterComponent } from './footer';
 import 'hammerjs';
 
 @NgModule({

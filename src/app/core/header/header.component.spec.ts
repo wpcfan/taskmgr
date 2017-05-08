@@ -1,5 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { StoreModule } from '@ngrx/store';
+import { reducer } from '../../reducers';
+import { 
+  MdToolbarModule, 
+  MdToolbar 
+} from '@angular/material';
 import { HeaderComponent } from './header.component';
 
 describe('HeaderComponent', () => {
@@ -8,7 +13,11 @@ describe('HeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
+      declarations: [ HeaderComponent, MdToolbar ],
+      imports: [
+        StoreModule.provideStore(reducer),
+        MdToolbarModule
+      ]
     })
     .compileComponents();
   }));
