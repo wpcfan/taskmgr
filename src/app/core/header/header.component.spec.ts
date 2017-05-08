@@ -7,7 +7,7 @@ import {
 } from '@angular/material';
 import { HeaderComponent } from './header.component';
 
-describe('HeaderComponent', () => {
+describe('测试顶部组件：HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
 
@@ -28,7 +28,7 @@ describe('HeaderComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('组件应该被创建', () => {
     expect(component).toBeTruthy();
   });
 });

@@ -11,8 +11,8 @@ import { MockBackend } from '@angular/http/testing';
 import { AuthService } from './auth.service';
 import * as models from "../domain";
 
-describe('AuthService', () => {
-  beforeEach(() => {
+describe('测试鉴权服务：AuthService', () => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
       providers: [
@@ -35,11 +35,11 @@ describe('AuthService', () => {
         BaseResponseOptions,
         AuthService
       ]
-    });
-  });
+    }).compileComponents();;
+  }));
 
-  it('should return an Observable<Auth>', 
-    inject([AuthService, MockBackend], 
+  it('注册后应该返回一个 Observable<Auth>', 
+    async(inject([AuthService, MockBackend], 
       (service: AuthService, mockBackend: MockBackend) => {
     const mockUser: models.User = {
       name: 'someuser@dev.local',
@@ -60,6 +60,6 @@ describe('AuthService', () => {
       expect(auth.token).toEqual('tokenSet');
       expect(auth.user.email).toEqual(mockUser.email);
     });
-  }));
+  })));
 
 });

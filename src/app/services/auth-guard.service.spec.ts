@@ -30,8 +30,8 @@ class RoutingComponent { }
 class DummyComponent { }
 
 
-describe('AuthGuardService', () => {
-  beforeEach(() => {
+describe('测试路由守卫服务：AuthGuardService', () => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule.withRoutes([
@@ -45,11 +45,11 @@ describe('AuthGuardService', () => {
         AuthGuardService,
         {provide: RouterStateSnapshot, useValue: mockSnapshot}
       ]
-    });
-  });
+    }).compileComponents();;
+  }));
 
-  it('should not allow user to get around guard', 
-    inject([AuthGuardService, Store], 
+  it('不应该允许绕过守卫', 
+    async(inject([AuthGuardService, Store], 
       (service: AuthGuardService, store$: Store<State>) => {
     let fixture = TestBed.createComponent(RoutingComponent);
     const guard$ = service.canActivate(new ActivatedRouteSnapshot(), mockSnapshot);
@@ -64,6 +64,6 @@ describe('AuthGuardService', () => {
       payload:{
         token: 'xxxx', 
         user: { id: 'xxxx',email: 'abc@dev.local', name: 'xxxx', password: 'sssss'}}});
-  }));
+  })));
 
 });
