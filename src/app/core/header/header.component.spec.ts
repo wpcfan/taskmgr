@@ -13,7 +13,7 @@ describe('HeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HeaderComponent, MdToolbar ],
+      declarations: [ HeaderComponent ],
       imports: [
         StoreModule.provideStore(reducer),
         MdToolbarModule

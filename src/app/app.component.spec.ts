@@ -1,5 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
 import { MdSidenavModule } from "@angular/material";
+import { APP_BASE_HREF } from "@angular/common";
 import { RouterModule } from '@angular/router';
 import { CoreModule } from './core';
 import { AppComponent } from './app.component';
@@ -10,7 +11,11 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
-      imports: [MdSidenavModule, RouterModule, CoreModule]
+      imports: [MdSidenavModule, RouterModule.forRoot([]), CoreModule],
+      providers:[{
+        provide: APP_BASE_HREF,
+        useValue: '/'
+      }]
     }).compileComponents();
   }));
 
@@ -24,6 +29,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('site')).toBeTruthy();
+    expect(compiled.querySelector('.site')).toBeTruthy();
   }));
 });
