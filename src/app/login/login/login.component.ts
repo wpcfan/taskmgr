@@ -5,7 +5,7 @@ import {
   FormControl,
   Validators 
 } from '@angular/forms';
-import { trigger, state, style, transition, animate } from "@angular/animations";
+import { flyInOut } from "../../anim";
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromRoot from '../../reducers';
@@ -18,18 +18,7 @@ import * as actions from '../../actions/quote.action';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  animations: [
-    trigger('flyInOut', [
-      state('in', style({transform: 'translateX(0)'})),
-      transition('void => *', [
-        style({transform: 'translateX(100%)'}),
-        animate(300)
-      ]),
-      transition('* => void', [
-        animate(300, style({transform: 'translateX(-100%)'}))
-      ])
-    ])
-  ]
+  animations: [flyInOut]
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
