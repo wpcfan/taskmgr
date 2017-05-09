@@ -1,15 +1,10 @@
 <div class="projects">
   <app-project-item *ngFor="let project of (projects$ | async)" [item]="project">
   </app-project-item>
-  <md-card>
+  <md-card (click)="openNewProjectDialog()">
     <md-card-header>
       <md-card-title> 新增项目 </md-card-title>
     </md-card-header>
-    <img md-card-image src="/assets/img/prj_cover_01.jpg">
-    <md-card-content>
-      <button md-raised-button (click)="openNewProjectDialog()">
-        新增项目
-      </button>
-    </md-card-content>
+    <img md-card-image src="/assets/img/add.svg">
   </md-card>
 </div> 
