@@ -21,10 +21,10 @@ export class TaskListService {
     const taskList = {
       name: name,
       projectId: projectId
-    }
+    };
     return this.http
       .post(uri, JSON.stringify(taskList), {headers: this.headers})
-      .map(res => Object.assign({}, taskList, {id: res.json().objectId}));
+      .map(res => Object.assign({}, {id: res.json().objectId, name: name, projectId: projectId}));
   }
 
     // GET /tasklist

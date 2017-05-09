@@ -4,10 +4,11 @@ import { Action, Store } from '@ngrx/store';
 import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { concat } from 'rxjs/observable/concat';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/withLatestFrom';
-import { ProjectService } from '../services';
+import { ProjectService, TaskListService } from '../services';
 import * as actions from '../actions/project.action';
 import * as fromRoot from '../reducers';
 import * as models from '../domain';
@@ -22,6 +23,7 @@ export class ProjectEffects{
   constructor(
     private actions$: Actions, 
     private service: ProjectService,
+    private taskService: TaskListService,
     private store$: Store<fromRoot.State>) { }
   /**
    * 
@@ -46,6 +48,18 @@ export class ProjectEffects{
       const added = Object.assign({}, project, {members: [`${auth.user.id}`]});
       return this.service
         .add(added)
+        .switchMap(prj => {
+          const id = prj.id;
+          return concat(
+            this.taskService.add('待办', id), 
+            this.taskService.add('进行中', id),
+            this.taskService.add('已完成', id))
+            .reduce((r,x)=> {
+              return [...r, x];
+            },[])
+            .map(tls => Object.assign({}, prj, {taskLists: tls.map(tl=>tl.id)}))
+            .switchMap(prj => this.service.update(prj))
+        })
         .map(project => new actions.AddProjectSuccessAction(project))
         .catch(err => of(new actions.AddProjectFailAction(JSON.stringify(err))))
       }

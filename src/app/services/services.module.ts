@@ -3,14 +3,16 @@ import { AuthService } from './auth.service';
 import { ProjectService } from './project.service';
 import { QuoteService } from './quote.service';
 import { TodoService } from './todo.service';
-import { AuthGuardService } from './auth-guard.service'
+import { TaskListService } from './task-list.service';
+import { AuthGuardService } from './auth-guard.service';
 
 export  {
   AuthGuardService,
   AuthService,
   ProjectService,
   QuoteService,
-  TodoService
+  TodoService,
+  TaskListService
 }
 
 @NgModule({})
@@ -23,7 +25,8 @@ export class ServicesModule {
         AuthService, 
         ProjectService, 
         QuoteService, 
-        TodoService
+        TodoService,
+        TaskListService
       ]
     }
   }

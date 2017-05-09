@@ -37,12 +37,12 @@ export class LoginComponent implements OnInit {
     this.store$.dispatch({type: actions.ActionTypes.QUOTE});
   }
   onSubmit({value, valid}, e: Event){
+    e.preventDefault();
     if(!valid) return;
     this.store$.dispatch(
       new authActions.LoginAction({
         email: value.email, 
         password: value.password
       }));
-    e.preventDefault();
   }
 }

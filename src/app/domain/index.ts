@@ -69,7 +69,8 @@ export interface Project{
   coverImg?: string;
   enabled?: boolean;
   archived?: boolean;
-  members?: {[id: string]: string}; // 存储成员 key 为 ID， value 为角色
+  taskLists?: string[]; // 存储 TaskList ID
+  members?: string[]; // 存储成员 key 为 ID， value 为角色
 }
 
 export interface ConfirmDialog{

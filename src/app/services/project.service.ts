@@ -54,7 +54,7 @@ export class ProjectService {
       .map(res => {
         const results = res.json().results;
         return results.map(p => Object.assign({}, 
-          {id: p.objectId, name: p.name, desc: p.desc, members:[...p.members]}))
+          {id: p.objectId, name: p.name, desc: p.desc, taskLists:[...p.taskLists], members:[...p.members]}))
       });
   }
 }
