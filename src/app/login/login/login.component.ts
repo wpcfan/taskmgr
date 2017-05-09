@@ -5,7 +5,7 @@ import {
   FormControl,
   Validators 
 } from '@angular/forms';
-import { flyInOut } from "../../anim";
+import { flyInOutAnim } from "../../anim";
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromRoot from '../../reducers';
@@ -18,7 +18,7 @@ import * as actions from '../../actions/quote.action';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  animations: [flyInOut]
+  animations: [flyInOutAnim]
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;

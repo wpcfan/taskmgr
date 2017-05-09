@@ -6,14 +6,14 @@ import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/project.action';
 import { NewProjectComponent } from '../new-project';
 import { ConfirmDialogComponent } from '../../shared'
-import { flyInOut } from "../../anim";
+import { foldAnim } from "../../anim";
 
 @Component({
   selector: 'app-project-item',
   templateUrl: './project-item.component.html',
   styleUrls: ['./project-item.component.scss'],
-  animations: [flyInOut],
-  host: {'[@flyInOut]':''} // 绑定动画到宿主元素，即<app-project-item>
+  animations: [foldAnim],
+  host: {'[@fold]':'in'} // 绑定动画到宿主元素，即<app-project-item>
 })
 export class ProjectItemComponent implements OnInit {
   @Input('item') project: entities.Project;

@@ -1,6 +1,6 @@
 import { trigger, state, animate, transition, style } from '@angular/animations';
 
-export const flyInOut = trigger('flyInOut', [
+export const flyInOutAnim = trigger('flyInOut', [
   state('in', style({transform: 'translateX(0)'})),
   transition('void => *', [// `void => *` 可以写成 `:enter`
     style({transform: 'translateX(100%)'}),
