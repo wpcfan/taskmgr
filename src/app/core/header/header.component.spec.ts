@@ -31,4 +31,10 @@ describe('测试顶部组件：HeaderComponent', () => {
   it('组件应该被创建', () => {
     expect(component).toBeTruthy();
   });
+
+  it('组件模板的元素应该被正确创建', () => {
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('span').innerText).toContain('企业协作平台');
+    expect(compiled.querySelector('span a').innerText).toContain('项目');
+  });
 });
