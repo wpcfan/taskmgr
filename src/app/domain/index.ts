@@ -57,7 +57,7 @@ export interface Task{
 }
 
 export interface TaskList{
-  id: string;
+  id?: string;
   name: string;
   projectId: string;
 }

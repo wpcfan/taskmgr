@@ -34,7 +34,8 @@ export class ProjectEffects{
     .switchMap(([_, auth]) => this.service
       .get(auth.user.id)
       .map(projects => new actions.LoadProjectsSuccessAction(projects))
-      .catch(err => of(new actions.LoadProjectsFailAction(JSON.stringify(err)))));
+      .catch(err => of(new actions.LoadProjectsFailAction(JSON.stringify(err))))
+    );
 
   @Effect()
   addProject$: Observable<Action> = this.actions$
@@ -45,10 +46,10 @@ export class ProjectEffects{
       const added = Object.assign({}, project, {members: [`${auth.user.id}`]});
       return this.service
         .add(added)
-        .catch(err => of(new actions.AddProjectFailAction(JSON.stringify(err))).mapTo(undefined));
-    })
-    .filter(p => p !== undefined)
-    .map(project => new actions.AddProjectSuccessAction(project));
+        .map(project => new actions.AddProjectSuccessAction(project))
+        .catch(err => of(new actions.AddProjectFailAction(JSON.stringify(err))))
+      }
+    );
 
   @Effect()
   updateProject$: Observable<Action> = this.actions$
@@ -56,9 +57,9 @@ export class ProjectEffects{
     .map(toPayload)
     .switchMap(project => this.service
       .update(project)
-      .catch(err => of(new actions.UpdateProjectFailAction(JSON.stringify(err))).mapTo(undefined)))
-    .filter(p => p !== undefined)
-    .map(project => new actions.UpdateProjectSuccessAction(project));
+      .map(project => new actions.UpdateProjectSuccessAction(project))
+      .catch(err => of(new actions.UpdateProjectFailAction(JSON.stringify(err))))
+    );
   
   @Effect()
   removeProject$: Observable<Action> = this.actions$
@@ -66,8 +67,8 @@ export class ProjectEffects{
     .map(toPayload)
     .switchMap(project => this.service
       .delete(project)
-      .catch(err => of(new actions.DeleteProjectFailAction(JSON.stringify(err))).mapTo(undefined)))
-    .filter(p => p !== undefined)
-    .map(project => new actions.DeleteProjectSuccessAction(project));
+      .map(project => new actions.DeleteProjectSuccessAction(project))
+      .catch(err => of(new actions.DeleteProjectFailAction(JSON.stringify(err))))
+    );
   
 }

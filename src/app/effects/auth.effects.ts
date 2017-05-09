@@ -27,9 +27,9 @@ export class AuthEffects{
     .map(toPayload)
     .switchMap((val:{email:string, password: string}) => this.authService
         .login(val.email, val.password)
+        .map(auth => new actions.LoginSuccessAction(auth))
         .catch(err => of(new actions.LoginFailAction(err)))
-    )
-    .map(auth => new actions.LoginSuccessAction(auth));
+    );
 
   /**
    * 
@@ -40,8 +40,9 @@ export class AuthEffects{
     .map(toPayload)
     .switchMap((val) => this.authService
       .register(val)
-      .catch(err => of(new actions.RegisterFailAction(err))))
-    .map(auth => new actions.RegisterSuccessAction(auth));
+      .map(auth => new actions.RegisterSuccessAction(auth))
+      .catch(err => of(new actions.RegisterFailAction(err)))
+    );
 
   @Effect()
   navigateHome$: Observable<Action> = this.actions$
