@@ -5,6 +5,7 @@ import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/filter';
 
 import { QuoteService } from '../services';
 import * as actions from '../actions/quote.action';
@@ -28,7 +29,7 @@ export class QuoteEffects{
     .switchMap(() => this.quoteService
       .getQuote()
       .catch(err => of(new actions.QuoteFailAction(JSON.stringify(err))).mapTo(undefined)))
-    .map(quote => new actions.QuoteSuccessAction(quote))
-    ;
+    .filter(m => m !== undefined)
+    .map(quote => new actions.QuoteSuccessAction(quote));
 
 }
