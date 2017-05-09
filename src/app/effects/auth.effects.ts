@@ -25,11 +25,11 @@ export class AuthEffects{
   login$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.LOGIN)
     .map(toPayload)
-    .switchMap((val:{email:string, password: string}) => {
-      return this.authService.login(val.email, val.password);
-    })
-    .map(auth => new actions.LoginSuccessAction(auth))
-    .catch(err => of(new actions.LoginFailAction(err)));
+    .switchMap((val:{email:string, password: string}) => this.authService
+        .login(val.email, val.password)
+        .catch(err => of(new actions.LoginFailAction(err)))
+    )
+    .map(auth => new actions.LoginSuccessAction(auth));
 
   /**
    * 
@@ -38,9 +38,10 @@ export class AuthEffects{
   register$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.REGISTER)
     .map(toPayload)
-    .switchMap((val) => this.authService.register(val))
-    .map(auth => new actions.RegisterSuccessAction(auth))
-    .catch(err => of(new actions.RegisterFailAction(err)));
+    .switchMap((val) => this.authService
+      .register(val)
+      .catch(err => of(new actions.RegisterFailAction(err))))
+    .map(auth => new actions.RegisterSuccessAction(auth));
 
   @Effect()
   navigateHome$: Observable<Action> = this.actions$

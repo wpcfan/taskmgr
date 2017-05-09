@@ -25,10 +25,10 @@ export class QuoteEffects{
   quote$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.QUOTE)
     .map(toPayload)
-    .switchMap(() => {
-      return this.quoteService.getQuote();
-    })
+    .switchMap(() => this.quoteService
+      .getQuote()
+      .catch(err => of(new actions.QuoteFailAction(JSON.stringify(err))).mapTo(undefined)))
     .map(quote => new actions.QuoteSuccessAction(quote))
-    .catch(err => of(new actions.QuoteFailAction(err.json())));
+    ;
 
 }
