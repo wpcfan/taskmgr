@@ -9,13 +9,9 @@ import {
   MdSidenav, 
   MdToolbar 
 } from '@angular/material';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { routerReducer, RouterStoreModule } from '@ngrx/router-store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { AppEffectsModule } from "../effects";
 import { ServicesModule } from '../services';
-import { reducer } from '../reducers';
-import { effects } from '../effects';
+import { AppStoreModule } from '../reducers/app-store.module';
 import { HeaderComponent } from './header';
 import { FooterComponent } from './footer';
 import 'hammerjs';
@@ -28,23 +24,8 @@ import 'hammerjs';
     BrowserAnimationsModule,
     MdSidenavModule,
     MdToolbarModule,
-    EffectsModule.run(effects.auth),
-    EffectsModule.run(effects.todos),
-    EffectsModule.run(effects.quote),
-    EffectsModule.run(effects.projects),
-   /**
-     * StoreModule.provideStore is imported once in the root module, accepting a reducer
-     * function or object map of reducer functions. If passed an object of
-     * reducers, combineReducers will be run creating your application
-     * meta-reducer. This returns all providers for an @ngrx/store
-     * based application.
-     */
-    StoreModule.provideStore(reducer),
-    RouterStoreModule.connectRouter(),
-    // Note that you must instrument after importing StoreModule
-    StoreDevtoolsModule.instrumentOnlyWithExtension({
-      maxAge: 5
-    })
+    AppStoreModule,
+    AppEffectsModule,
   ],
   exports: [
     MdSidenavContainer,
@@ -56,9 +37,7 @@ import 'hammerjs';
     {
       provide: 'BASE_CONFIG',
       useValue: {
-        uri: 'https://leancloud.cn/1.1',
-        LCId: 'ABTVy9loYSaIMc3EkaFRupTL-gzGzoHsz',
-        LCKey: 'mwywiweRadXf6CztkUNyUsPS'
+        uri: 'http://localhost:3000',
       }
     }
     ],
