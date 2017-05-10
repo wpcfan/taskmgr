@@ -6,12 +6,15 @@ import * as fromRoot from '../../reducers';
 import * as entities from '../../domain';
 import * as actions from '../../actions/project.action';
 import { NewProjectComponent } from '../new-project';
+import { dropFromTopAnim } from '../../anim';
 
 @Component({
   selector: 'app-project-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './project-list.component.html',
-  styleUrls: ['./project-list.component.scss']
+  styleUrls: ['./project-list.component.scss'],
+  animations: [dropFromTopAnim],
+  host: {'[@dropFromTop]': 'in'}
 })
 export class ProjectListComponent implements OnInit {
   projects$: Observable<entities.Project>;
