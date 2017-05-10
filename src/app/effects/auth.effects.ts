@@ -28,7 +28,13 @@ export class AuthEffects{
     .switchMap((val:{email:string, password: string}) => this.authService
         .login(val.email, val.password)
         .map(auth => new actions.LoginSuccessAction(auth))
-        .catch(err => of(new actions.LoginFailAction(err)))
+        .catch(err => of(new actions.LoginFailAction({
+          status: 501, 
+          message: err.message,
+          exception: err.stack,
+          path: '/login',
+          timestamp: new Date()
+        })))
     );
 
   /**
@@ -52,7 +58,7 @@ export class AuthEffects{
   @Effect()
   registerAndHome$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.REGISTER_SUCCESS)
-    .map(() => go(['/todos']));
+    .map(() => go(['/projects']));
   
   @Effect()
   logout$: Observable<Action> = this.actions$

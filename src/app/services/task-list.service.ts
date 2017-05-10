@@ -5,16 +5,13 @@ import * as models from '../domain';
 
 @Injectable()
 export class TaskListService {
-  private domain: string = 'classes/tasklists';
+  private domain: string = 'tasklists';
   private headers = new Headers({
     'Content-Type': 'application/json'
   })
   constructor(
     @Inject('BASE_CONFIG') private config,
-    private http: Http) { 
-      this.headers.append('X-LC-Id', config.LCId);
-      this.headers.append('X-LC-Key', config.LCKey);
-    }
+    private http: Http) { }
 
   add(name: string, projectId: string): Observable<models.TaskList> {
     const uri = `${this.config.uri}/${this.domain}`;
@@ -24,7 +21,21 @@ export class TaskListService {
     };
     return this.http
       .post(uri, JSON.stringify(taskList), {headers: this.headers})
-      .map(res => Object.assign({}, {id: res.json().objectId, name: name, projectId: projectId}));
+      .map(res => res.json());
+  }
+
+  update(taskList: models.TaskList): Observable<models.TaskList>{
+    const uri = `${this.config.uri}/${this.domain}/${taskList.id}`;
+    return this.http
+      .put(uri, JSON.stringify(taskList), {headers: this.headers})
+      .map(res => res.json());
+  }
+
+  delete(taskList: models.TaskList): Observable<models.TaskList>{
+    const uri = `${this.config.uri}/${this.domain}/${taskList.id}`;
+    return this.http
+      .delete(uri)
+      .mapTo(taskList);
   }
 
     // GET /tasklist

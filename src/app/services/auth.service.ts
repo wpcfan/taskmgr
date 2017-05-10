@@ -13,7 +13,9 @@ import * as models from '../domain';
 export class AuthService {
   private headers = new Headers({
     'Content-Type': 'application/json'
-  })
+  });
+
+  private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ';
 
   /**
    * 构造函数用于注入服务的依赖以及进行必要的初始化
@@ -23,10 +25,7 @@ export class AuthService {
    */
   constructor(
     private http: Http,
-    @Inject('BASE_CONFIG') private config) { 
-      this.headers.append('X-LC-Id', config.LCId);
-      this.headers.append('X-LC-Key', config.LCKey);
-    }
+    @Inject('BASE_CONFIG') private config) { }
 
   /**
    * 使用用户提供的个人信息进行注册，成功则返回 User，否则抛出异常
@@ -35,27 +34,16 @@ export class AuthService {
    */
   register(user: models.User): Observable<models.Auth>{
     const uri =  `${this.config.uri}/users`;
-    const userToAdd = {
-      "username": user.email,
-      "password": user.password,
-      "email": user.email,
-      "roles":{
-        "__op": "AddRelation", 
-        "objects": [
-          {
-            "__type":"Pointer",
-            "className":"_Role",
-            "objectId":"590acf4644d904006d8f9ecf"
-          }
-        ]
-      }
-    };
     return this.http
-      .post(uri, JSON.stringify(userToAdd), {headers: this.headers})
-      .map(res => Object.assign({}, {
-        token: res.json().sessionToken,
-        user: Object.assign({}, user, {id: res.json().objectId})
-      }));
+      .get(uri, {params: {"email": user.email}})
+      .switchMap(res => {
+        if(res.json() === 0) throw new Error('username existed');
+        return this.http.post(uri, JSON.stringify(user), {headers: this.headers})
+        .map(res => Object.assign({}, {
+          token: this.token,
+          user: Object.assign({}, res.json())
+        }))
+      });
   }
 
   /**
@@ -65,16 +53,15 @@ export class AuthService {
    * @param password 密码（明文），服务器会进行加密处理
    */
   login(email: string, password: string): Observable<models.Auth>{
-    const uri =  `${this.config.uri}/login`;
-    const userToLogin = {
-      "username": email,
-      "password": password
-    };
+    const uri =  `${this.config.uri}/users`;
     return this.http
-      .post(uri, JSON.stringify(userToLogin), {headers: this.headers})
-      .map(res => Object.assign({}, {
-        token: res.json().sessionToken,
-        user: Object.assign({}, {id: res.json().objectId, email: res.json().username})
-      }));
+      .get(uri, {params: {"email": email, "password": password}})
+      .map(res => {
+        if(res.json().length === 0) throw new Error('Login Failed');
+        return Object.assign({}, {
+          token: this.token,
+          user: Object.assign({}, res.json()[0])
+        });
+      });
   }
 }
