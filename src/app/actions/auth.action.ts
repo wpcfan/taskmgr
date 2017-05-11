@@ -5,10 +5,10 @@ import * as models from '../domain';
 export const ActionTypes = {
   LOGIN:             type('[Auth] Login'),
   LOGIN_SUCCESS:     type('[Auth] Login Success'),
-  LOGIN_FAIL:        type('[Err] Login Fail'),
+  LOGIN_FAIL:        type('[Auth] Login Fail'),
   REGISTER:          type('[Auth] Register'),
   REGISTER_SUCCESS:  type('[Auth] Register Success'),
-  REGISTER_FAIL:     type('[Err] Register Fail'),
+  REGISTER_FAIL:     type('[Auth] Register Fail'),
   LOGOUT:            type('[Auth] Logout')
 };
 

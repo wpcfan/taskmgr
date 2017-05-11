@@ -22,7 +22,7 @@ export class ProjectListComponent implements OnInit {
   constructor(
     private store$: Store<fromRoot.State>,
     private dialog: MdDialog) { 
-    this.store$.dispatch({type: actions.ActionTypes.LOAD_PROJECTS});
+    this.store$.dispatch({type: actions.ActionTypes.LOADS});
     this.projects$ = this.store$.select(fromRoot.getProjects);
   }
 

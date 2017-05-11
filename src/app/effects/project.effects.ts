@@ -30,7 +30,7 @@ export class ProjectEffects{
    */
   @Effect()
   loadProjects$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.LOAD_PROJECTS)
+    .ofType(actions.ActionTypes.LOADS)
     .map(toPayload)
     .withLatestFrom(this.store$.select(fromRoot.getAuth))
     .switchMap(([_, auth]) => this.service
@@ -41,7 +41,7 @@ export class ProjectEffects{
 
   @Effect()
   addProject$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.ADD_PROJECT)
+    .ofType(actions.ActionTypes.ADD)
     .map(toPayload)
     .withLatestFrom(this.store$.select(fromRoot.getAuth))
     .switchMap(([project, auth]) => {
@@ -67,7 +67,7 @@ export class ProjectEffects{
 
   @Effect()
   updateProject$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.UPDATE_PROJECT)
+    .ofType(actions.ActionTypes.UPDATE)
     .map(toPayload)
     .switchMap(project => this.service
       .update(project)
@@ -77,7 +77,7 @@ export class ProjectEffects{
   
   @Effect()
   removeProject$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.DELETE_PROJECT)
+    .ofType(actions.ActionTypes.DELETE)
     .map(toPayload)
     .switchMap(project => this.service
       .delete(project)

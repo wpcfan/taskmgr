@@ -3,77 +3,77 @@ import { type } from '../utils/type.util';
 import * as models from '../domain';
 
 export const ActionTypes = {
-  ADD_TASK_LIST:             type('[TaskList] Add'),
-  ADD_TASK_LIST_SUCCESS:     type('[TaskList] Add Success'),
-  ADD_TASK_LIST_FAIL:        type('[TaskList] Add Fail'),
-  UPDATE_TASK_LIST:          type('[TaskList] Update'),
-  UPDATE_TASK_LIST_SUCCESS:  type('[TaskList] Update Success'),
-  UPDATE_TASK_LIST_FAIL:     type('[TaskList] Update Fail'),
-  DELETE_TASK_LIST:          type('[TaskList] Delete'),
-  DELETE_TASK_LIST_SUCCESS:  type('[TaskList] Delete Success'),
-  DELETE_TASK_LIST_FAIL:     type('[TaskList] Delete Fail'),  
-  LOAD_TASK_LISTS:           type('[TaskList] Load'),
-  LOAD_TASK_LISTS_SUCCESS:   type('[TaskList] Load Success'),
-  LOAD_TASK_LISTS_FAIL:      type('[TaskList] Load Fail')
+  ADD:             type('[TaskList] Add'),
+  ADD_SUCCESS:     type('[TaskList] Add Success'),
+  ADD_FAIL:        type('[TaskList] Add Fail'),
+  UPDATE:          type('[TaskList] Update'),
+  UPDATE_SUCCESS:  type('[TaskList] Update Success'),
+  UPDATE_FAIL:     type('[TaskList] Update Fail'),
+  DELETE:          type('[TaskList] Delete'),
+  DELETE_SUCCESS:  type('[TaskList] Delete Success'),
+  DELETE_FAIL:     type('[TaskList] Delete Fail'),  
+  LOADS:           type('[TaskList] Load'),
+  LOADS_SUCCESS:   type('[TaskList] Load Success'),
+  LOADS_FAIL:      type('[TaskList] Load Fail')
 };
 
 export class AddTaskListAction implements Action {
-  type = ActionTypes.ADD_TASK_LIST;
+  type = ActionTypes.ADD;
   constructor(public payload: models.TaskList){}
 }
 
 export class AddTaskListSuccessAction implements Action {
-  type = ActionTypes.ADD_TASK_LIST_SUCCESS;
+  type = ActionTypes.ADD_SUCCESS;
   constructor(public payload: models.TaskList){}
 }
 
 export class AddTaskListFailAction implements Action {
-  type = ActionTypes.ADD_TASK_LIST_FAIL;
+  type = ActionTypes.ADD_FAIL;
   constructor(public payload: models.Err){}
 }
 
 export class UpdateTaskListAction implements Action {
-  type = ActionTypes.UPDATE_TASK_LIST;
+  type = ActionTypes.UPDATE;
   constructor(public payload: models.TaskList){}
 }
 
 export class UpdateTaskListSuccessAction implements Action {
-  type = ActionTypes.UPDATE_TASK_LIST_SUCCESS;
+  type = ActionTypes.UPDATE_SUCCESS;
   constructor(public payload: models.TaskList){}
 }
 
 export class UpdateTaskListFailAction implements Action {
-  type = ActionTypes.UPDATE_TASK_LIST_FAIL;
+  type = ActionTypes.UPDATE_FAIL;
   constructor(public payload: models.Err){}
 }
 
 export class DeleteTaskListAction implements Action {
-  type = ActionTypes.DELETE_TASK_LIST;
+  type = ActionTypes.DELETE;
   constructor(public payload: models.TaskList){}
 }
 
 export class DeleteTaskListSuccessAction implements Action {
-  type = ActionTypes.DELETE_TASK_LIST_SUCCESS;
+  type = ActionTypes.DELETE_SUCCESS;
   constructor(public payload: models.TaskList){}
 }
 
 export class DeleteTaskListFailAction implements Action {
-  type = ActionTypes.DELETE_TASK_LIST_FAIL;
+  type = ActionTypes.DELETE_FAIL;
   constructor(public payload: models.Err){}
 }
 
 export class LoadTaskListsAction implements Action {
-  type = ActionTypes.LOAD_TASK_LISTS;
+  type = ActionTypes.LOADS;
   constructor(public payload: any){}
 }
 
 export class LoadTaskListsSuccessAction implements Action {
-  type = ActionTypes.LOAD_TASK_LISTS_SUCCESS;
+  type = ActionTypes.LOADS_SUCCESS;
   constructor(public payload: models.TaskList[]){}
 }
 
 export class LoadTaskListsFailAction implements Action {
-  type = ActionTypes.LOAD_TASK_LISTS_FAIL;
+  type = ActionTypes.LOADS_FAIL;
   constructor(public payload: models.Err){}
 }
 

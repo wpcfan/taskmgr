@@ -30,7 +30,7 @@ export class TaskListEffects{
    */
   @Effect()
   loadTaskLists$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.LOAD_TASK_LISTS)
+    .ofType(actions.ActionTypes.LOADS)
     .map(toPayload)
     .withLatestFrom(this.store$.select(fromRoot.getSelectedProjectId))
     .switchMap(([_, projectId]) => this.service$
@@ -41,7 +41,7 @@ export class TaskListEffects{
 
   @Effect()
   addTaskList$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.ADD_TASK_LIST)
+    .ofType(actions.ActionTypes.ADD)
     .map(toPayload)
     .withLatestFrom(this.store$.select(fromRoot.getSelectedProjectId))
     .switchMap(([taskList, projectId]) => {
@@ -54,7 +54,7 @@ export class TaskListEffects{
 
   @Effect()
   updateTaskList$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.UPDATE_TASK_LIST)
+    .ofType(actions.ActionTypes.UPDATE)
     .map(toPayload)
     .switchMap(taskList => this.service$
       .update(taskList)
@@ -64,7 +64,7 @@ export class TaskListEffects{
   
   @Effect()
   removeTaskList$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.DELETE_TASK_LIST)
+    .ofType(actions.ActionTypes.DELETE)
     .map(toPayload)
     .switchMap(taskList => this.service$
       .delete(taskList)

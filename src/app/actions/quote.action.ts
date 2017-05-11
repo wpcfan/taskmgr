@@ -5,7 +5,7 @@ import * as models from '../domain';
 export const ActionTypes = {
   QUOTE:             type('[Quote] Quote'),
   QUOTE_SUCCESS:     type('[Quote] Quote Success'),
-  QUOTE_FAIL:        type('[Err] Quote Fail')
+  QUOTE_FAIL:        type('[Quote] Quote Fail')
 };
 
 export class QuoteAction implements Action {

@@ -17,13 +17,13 @@ const initialState: State = {
 export function reducer(
   state = initialState, action: actions.Actions): State {
   switch (action.type) {
-    case actions.ActionTypes.ADD_PROJECT_SUCCESS: {
+    case actions.ActionTypes.ADD_SUCCESS: {
       const project = action.payload;
       const ids = [...state.ids, project.id];
       const entities = Object.assign({}, state.entities, {[project.id]: project})
       return Object.assign({}, state, {ids: ids, entities: entities});
     }
-    case actions.ActionTypes.DELETE_PROJECT_SUCCESS: {
+    case actions.ActionTypes.DELETE_SUCCESS: {
       const project = action.payload;
       const ids = state.ids.filter(id => id !== project.id);
       const entities = ids.reduce((entities: { [id: string]: models.Project }, id) => {
@@ -33,12 +33,12 @@ export function reducer(
       },{});
       return Object.assign({}, state, {ids: ids, entities: entities});
     }
-    case actions.ActionTypes.UPDATE_PROJECT_SUCCESS: {
+    case actions.ActionTypes.UPDATE_SUCCESS: {
       const project = action.payload;
       const entities = Object.assign({}, state.entities, {[project.id]: project});
       return Object.assign({}, state, {entities: entities});
     }
-    case actions.ActionTypes.LOAD_PROJECTS_SUCCESS:{
+    case actions.ActionTypes.LOADS_SUCCESS:{
       const projects = action.payload;
       // if projects is null then return the orginal state
       if(projects === null) return state; 
@@ -49,13 +49,13 @@ export function reducer(
       },{});
       return Object.assign({}, state, {ids: projects.map(project => project.id), entities: entities});
     }
-    case actions.ActionTypes.SELECT_PROJECT: {
+    case actions.ActionTypes.SELECT: {
       return Object.assign({}, state, {selectedId: action.payload.id});
     }
-    case actions.ActionTypes.LOAD_PROJECTS_FAIL:
-    case actions.ActionTypes.ADD_PROJECT_FAIL:
-    case actions.ActionTypes.UPDATE_PROJECT_FAIL:
-    case actions.ActionTypes.DELETE_PROJECT_FAIL:
+    case actions.ActionTypes.LOADS_FAIL:
+    case actions.ActionTypes.ADD_FAIL:
+    case actions.ActionTypes.UPDATE_FAIL:
+    case actions.ActionTypes.DELETE_FAIL:
     default:
       return state;
   }
