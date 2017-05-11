@@ -13,6 +13,7 @@ import {
   MdGridListModule
 } from '@angular/material';
 import { ConfirmDialogComponent } from './confirm-dialog';
+import { ImageListSelectComponent } from './image-list-select/image-list-select.component';
 
 export {ConfirmDialogComponent}
 
@@ -42,9 +43,10 @@ export {ConfirmDialogComponent}
     MdDialogModule,
     MdMenuModule,
     MdIconModule,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    ImageListSelectComponent
   ],
-  declarations: [ConfirmDialogComponent],
+  declarations: [ConfirmDialogComponent, ImageListSelectComponent],
   entryComponents: [ConfirmDialogComponent]
 })
 export class SharedModule { }

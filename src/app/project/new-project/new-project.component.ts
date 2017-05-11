@@ -31,16 +31,19 @@ export class NewProjectComponent implements OnInit {
 
   ngOnInit() {
     if(this.data.project === undefined || this.data.project === null) {
+      const img = `/assets/img/covers/${Math.floor(Math.random()*39).toFixed(0)}.jpg`
       this.form = this.fb.group({
         name: ['', Validators.required],
-        desc: ['']
+        desc: [''],
+        coverImg: [img]
       });
       this.dialogTitle = '创建项目：';
     }
     else {
       this.form = this.fb.group({
         name: [this.data.project.name, Validators.required],
-        desc: [this.data.project.desc]
+        desc: [this.data.project.desc],
+        coverImg: [this.data.project.coverImg]
       });
       this.dialogTitle = '修改项目：';
     }
@@ -66,12 +69,10 @@ export class NewProjectComponent implements OnInit {
         new actions.UpdateProjectAction({
           id: this.data.project.id,
           name: value.name,
-          desc: value.desc
+          desc: value.desc,
+          coverImg: value.coverImg
         }));
     this.dialogRef.close();
   }
 
-  selectCoverImg(i: number){
-    console.log(i);
-  }
 }

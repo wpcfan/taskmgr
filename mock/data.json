@@ -15,32 +15,16 @@
   ],
   "projects": [
     {
+      "id": 1,
       "name": "微信",
       "desc": "全国最大的社交软件",
-      "members": [
-        "37489e0c-df34-c261-71c4-ce75357e3035"
-      ],
-      "coverImg": "/assets/img/covers/26.jpg",
-      "id": 1,
-      "taskLists": [
-        1,
-        2,
-        3
-      ]
+      "coverImg": "/assets/img/covers/0_tn.jpg"
     },
     {
+      "id": 2,
       "name": "缺陷跟踪系统",
       "desc": "用于企业内部的缺陷跟踪和汇总报告",
-      "members": [
-        "37489e0c-df34-c261-71c4-ce75357e3035"
-      ],
-      "coverImg": "/assets/img/covers/4.jpg",
-      "id": 2,
-      "taskLists": [
-        4,
-        5,
-        6
-      ]
+      "coverImg": "/assets/img/covers/5_tn.jpg"
     }
   ],
   "tasklists": [

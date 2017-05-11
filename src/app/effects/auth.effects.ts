@@ -65,8 +65,4 @@ export class AuthEffects{
     .ofType(actions.ActionTypes.LOGOUT)
     .map(() => go(['/']));
 
-  @Effect()
-  loginFail$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.LOGIN_FAIL)
-    .map(() => go(['/']));
 }

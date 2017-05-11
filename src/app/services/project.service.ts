@@ -24,7 +24,6 @@ export class ProjectService {
   // POST /projects
   add(project: models.Project): Observable<models.Project>{
     const uri =  `${this.config.uri}/${this.domain}`;
-    project.coverImg = `/assets/img/covers/${Math.floor(Math.random()*39).toFixed(0)}.jpg`
     return this.http
       .post(uri, JSON.stringify(project), {headers: this.headers})
       .map(res => res.json());
