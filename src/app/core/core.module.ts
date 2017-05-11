@@ -9,6 +9,7 @@ import {
   MdSidenav, 
   MdToolbar 
 } from '@angular/material';
+import { SharedModule } from "../shared";
 import { AppEffectsModule } from "../effects";
 import { ServicesModule } from '../services';
 import { AppStoreModule } from '../reducers/app-store.module';
@@ -26,6 +27,7 @@ import 'hammerjs';
     MdToolbarModule,
     AppStoreModule,
     AppEffectsModule,
+    SharedModule
   ],
   exports: [
     MdSidenavContainer,
