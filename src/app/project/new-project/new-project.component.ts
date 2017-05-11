@@ -7,7 +7,9 @@ import {
 } from '@angular/forms';
 import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { Store } from '@ngrx/store';
-
+import { Observable } from "rxjs/Observable";
+import 'rxjs/add/observable/range';
+import 'rxjs/add/operator/map';
 import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/project.action';
 
@@ -20,6 +22,7 @@ import * as actions from '../../actions/project.action';
 export class NewProjectComponent implements OnInit {
   form: FormGroup;
   dialogTitle: string;
+  thumbnails$: Observable<string[]>;
   constructor(
     private fb: FormBuilder,
     private store$: Store<fromRoot.State>,
@@ -41,6 +44,12 @@ export class NewProjectComponent implements OnInit {
       });
       this.dialogTitle = '修改项目：';
     }
+    this.thumbnails$ = Observable
+      .range(0, 40)
+      .map(i => `/assets/img/covers/${i}_tn.jpg`)
+      .reduce((r,x) => {
+        return [...r, x]
+      }, []);
   }
 
   onSubmit({value, valid}, event: Event){
@@ -62,4 +71,7 @@ export class NewProjectComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  selectCoverImg(i: number){
+    console.log(i);
+  }
 }

@@ -9,7 +9,8 @@ import {
   MdButtonModule,
   MdDialogModule,
   MdMenuModule,
-  MdIconModule
+  MdIconModule,
+  MdGridListModule
 } from '@angular/material';
 import { ConfirmDialogComponent } from './confirm-dialog';
 

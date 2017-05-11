@@ -7,6 +7,13 @@
     <md-input-container class="full-width">
       <input mdInput placeholder="项目简介（选填）" formControlName="desc">
     </md-input-container>
+    <div class="scroll-container">
+      <md-grid-list cols="10" rowHeight="100px">
+        <md-grid-tile *ngFor="let thumbnail of thumbnails$ | async; let i = index;">
+          <img [src]="thumbnail" class="thumbnail" (click)="selectCoverImg(i)">
+        </md-grid-tile>
+      </md-grid-list>
+    </div>
   </div>
   <div md-dialog-actions>
     <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">保存</button>

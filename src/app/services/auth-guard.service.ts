@@ -37,7 +37,6 @@ export class AuthGuardService implements CanActivate, CanLoad {
     const url: string = state.url;
     return this.store$.select(fromRoot.getAuth)
       .map(auth => {
-        console.log(auth.user === undefined || auth.err !== undefined)
         if(auth.user === undefined || auth.err !== undefined){
           return false;
         }
