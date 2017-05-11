@@ -7,6 +7,8 @@ export const dropFromTopAnim = trigger('dropFromTop', [
     animate('300ms')
   ]),
   transition(':leave', [// `void => *` 可以写成 `:leave`
-    animate(300, style({transform: 'translateY(0)'}))
+    animate('0.3s 0 ease', style({
+      opacity: 0.4
+    }))
   ])
 ]);

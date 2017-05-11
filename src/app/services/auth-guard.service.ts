@@ -8,9 +8,13 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/takeUntil';
 import { Store } from '@ngrx/store';
 import { go } from '@ngrx/router-store';
 import * as fromRoot from '../reducers';
+import { Actions, toPayload } from '@ngrx/effects';
+import * as actions from '../actions/auth.action';
 
 @Injectable()
 export class AuthGuardService implements CanActivate, CanLoad {
@@ -21,7 +25,7 @@ export class AuthGuardService implements CanActivate, CanLoad {
    * @param router 路由注入，用于导航处理
    * @param store$ redux store注入，用于状态管理
    */
-  constructor(private store$: Store<fromRoot.State>) { }
+  constructor(private actions$: Actions, private store$: Store<fromRoot.State>) { }
 
   /**
    * 用于判断是否可以激活该路由
@@ -33,12 +37,14 @@ export class AuthGuardService implements CanActivate, CanLoad {
     const url: string = state.url;
     return this.store$.select(fromRoot.getAuth)
       .map(auth => {
+        console.log(auth.user === undefined || auth.err !== undefined)
         if(auth.user === undefined || auth.err !== undefined){
-          this.store$.dispatch(go(['/login']));
           return false;
         }
         return true;
-      });
+      })
+      .take(1)
+      .takeUntil(this.actions$.ofType(actions.ActionTypes.LOGIN_FAIL));
   }
 
   /**
@@ -50,7 +56,6 @@ export class AuthGuardService implements CanActivate, CanLoad {
     return this.store$.select(fromRoot.getAuth)
       .map(auth => {
         if(auth.user === undefined || auth.err !== undefined){
-          this.store$.dispatch(go(['/login']));
           return false;
         }
         return true;

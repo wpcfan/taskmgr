@@ -28,10 +28,10 @@ export interface Todo{
 }
 
 export interface Quote{
+  id?: string;
   cn: string;
   en: string;
   pic: string;
-  picSquare: string;
 }
 
 export interface TaskDiscussion{
