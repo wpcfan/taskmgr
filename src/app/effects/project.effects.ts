@@ -90,5 +90,5 @@ export class ProjectEffects{
   selectProject$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.SELECT)
     .map(toPayload)
-    .map(project => go(['/tasklists', {'projectId': project.id}]));
+    .map(project => go([`/tasklists/${project.id}`]));
 }
