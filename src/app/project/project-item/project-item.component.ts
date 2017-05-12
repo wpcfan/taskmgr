@@ -1,6 +1,8 @@
 import { 
   Component, 
   Input, 
+  Output,
+  EventEmitter,
   HostBinding, 
   HostListener,
   ChangeDetectionStrategy 
@@ -33,10 +35,17 @@ export class ProjectItemComponent {
   }
   @Input('item') project: entities.Project;
 
+  @Output('itemSelected') 
+  click = new EventEmitter<void>()
+
   constructor(
     private dialog: MdDialog,
     private store$: Store<fromRoot.State>) { }
   
+  onClick(ev: Event){
+    ev.preventDefault();
+    this.click.emit();
+  }
 
   openUpdateDialog(ev: Event){
     ev.preventDefault();

@@ -84,5 +84,9 @@ export class ProjectEffects{
       .map(project => new actions.DeleteProjectSuccessAction(project))
       .catch(err => of(new actions.DeleteProjectFailAction(JSON.stringify(err))))
     );
-  
+
+  @Effect()
+  selectProject$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.SELECT)
+    .map(_ => go(['/tasklists']));
 }

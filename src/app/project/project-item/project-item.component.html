@@ -1,13 +1,13 @@
 <md-card>
-  <md-card-header>
+  <md-card-header (click)="onClick($event)">
     <md-card-title> 
-        <span>
-          {{project.name}} 
-        </span>
+      <span>
+        {{project.name}} 
+      </span>
     </md-card-title>
   </md-card-header>
-  <img md-card-image [src]="project.coverImg">
-  <md-card-content>
+  <img md-card-image [src]="project.coverImg" (click)="onClick($event)">
+  <md-card-content (click)="onClick($event)">
     <p>{{project.desc}}</p>
   </md-card-content>
   <md-card-actions>

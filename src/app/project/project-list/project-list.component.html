@@ -3,7 +3,7 @@
     class="card" 
     *ngFor="let project of (projects$ | async)" 
     [item]="project"
-    (click)="selectProject(project)">
+    (itemSelected)="selectProject(project)">
   </app-project-item>
   <md-card (click)="openNewProjectDialog()">
     <md-card-header>
