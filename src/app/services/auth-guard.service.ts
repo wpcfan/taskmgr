@@ -1,25 +1,41 @@
 import { Injectable } from '@angular/core';
 import {
   CanActivate,
+  CanLoad,
   Route,
   ActivatedRouteSnapshot,
   RouterStateSnapshot
 } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/takeUntil';
+import 'rxjs/add/operator/defaultIfEmpty';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Store } from '@ngrx/store';
+import { Actions } from "@ngrx/effects";
 import * as fromRoot from '../reducers';
+import * as actions from '../actions/auth.action';
 
 @Injectable()
-export class AuthGuardService implements CanActivate {
+export class AuthGuardService implements CanActivate, CanLoad {
 
+  private _authSubject: BehaviorSubject<boolean>= new BehaviorSubject<boolean>(false);
   /**
    * 构造函数用于注入服务的依赖以及进行必要的初始化
    * 
    * @param router 路由注入，用于导航处理
    * @param store$ redux store注入，用于状态管理
    */
-  constructor(private store$: Store<fromRoot.State>) { }
+  constructor(
+    private actions$: Actions,
+    private store$: Store<fromRoot.State>) { 
+      this.store$
+      .select(s => s.auth)
+      .subscribe(auth => {
+        const result = (auth.user !== undefined);
+        this._authSubject.next(result);
+      });
+    }
 
   /**
    * 用于判断是否可以激活该路由
@@ -27,12 +43,17 @@ export class AuthGuardService implements CanActivate {
    * @param route 
    */
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-    return this.store$.select(fromRoot.getAuth)
-      .map(auth => {
-        if(auth.user === undefined || auth.err !== undefined){
-          return false;
-        }
-        return true;
-      });
+    return this.checkAuth();
+  }
+
+  /**
+   * 用于惰性路由，判断是否可以加载
+   */
+  canLoad(route: Route): Observable<boolean>{
+    return this.checkAuth();
+  }
+
+  checkAuth(): Observable<boolean>{
+    return this._authSubject.asObservable();
   }
 }

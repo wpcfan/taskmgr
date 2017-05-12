@@ -8,6 +8,7 @@ import { concat } from 'rxjs/observable/concat';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/withLatestFrom';
+import 'rxjs/add/operator/debounceTime';
 import { ProjectService, TaskListService } from '../services';
 import * as actions from '../actions/project.action';
 import * as fromRoot from '../reducers';
@@ -88,5 +89,6 @@ export class ProjectEffects{
   @Effect()
   selectProject$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.SELECT)
-    .map(_ => go(['/tasklists']));
+    .map(toPayload)
+    .map(project => go(['/tasklists', {'projectId': project.id}]));
 }

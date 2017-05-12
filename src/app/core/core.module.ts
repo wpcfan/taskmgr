@@ -11,6 +11,7 @@ import {
 import { SharedModule } from "../shared";
 import { AppEffectsModule } from "../effects";
 import { ServicesModule } from '../services';
+import { AppRoutingModule } from "../app-routing.module";
 import { AppStoreModule } from '../reducers/app-store.module';
 import { HeaderComponent } from './header';
 import { FooterComponent } from './footer';
@@ -19,15 +20,17 @@ import 'hammerjs';
 @NgModule({
   imports: [
     HttpModule,
-    ServicesModule.forRoot(),
-    BrowserAnimationsModule,
     MdSidenavModule,
     MdToolbarModule,
-    AppStoreModule,
+    SharedModule,
+    AppRoutingModule,
     AppEffectsModule,
-    SharedModule
+    ServicesModule.forRoot(),
+    AppStoreModule,
+    BrowserAnimationsModule
   ],
   exports: [
+    AppRoutingModule,
     MdSidenavContainer,
     MdSidenav,
     MdToolbar,

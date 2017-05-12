@@ -7,8 +7,7 @@ const routes: Routes = [
   { 
     path: 'projects', 
     component: ProjectListComponent,
-    canActivate: [ AuthGuardService ],
-    canLoad: [ AuthGuardService ]
+    canActivate: [ AuthGuardService ]
   }
 ];
 

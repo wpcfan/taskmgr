@@ -1,9 +1,14 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from '@angular/router';
 import { TaskListComponent } from "./task-list";
+import { AuthGuardService } from "../services";
 
 const routes: Routes = [
-  { path: 'tasklists', component: TaskListComponent }
+  { 
+    path: '', 
+    component: TaskListComponent, 
+    canLoad: [AuthGuardService]
+  }
 ];
 
 @NgModule({
