@@ -1,4 +1,10 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { 
+  Component, 
+  Input, 
+  HostBinding, 
+  HostListener,
+  ChangeDetectionStrategy 
+} from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { Store } from '@ngrx/store';
 import * as entities from '../../domain';
@@ -14,16 +20,21 @@ import { foldAnim } from "../../anim";
   styleUrls: ['./project-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [foldAnim],
-  host: {'[@fold]':'in'} // 绑定动画到宿主元素，即<app-project-item>
 })
-export class ProjectItemComponent implements OnInit {
+export class ProjectItemComponent {
+  @HostBinding("@fold") fold; 
+  @HostListener('mouseenter', ['$event.target']) 
+  onMouseEnter(target) {
+    this.fold = 'hover';
+  }
+  @HostListener('mouseleave', ['$event.target']) 
+  onMouseLeave(target) {
+    this.fold = 'out';
+  }
   @Input('item') project: entities.Project;
   constructor(
     private dialog: MdDialog,
     private store$: Store<fromRoot.State>) { }
-
-  ngOnInit() {
-  }
 
   openUpdateDialog(){
     this.dialog.open(NewProjectComponent, {data: {project: this.project}});

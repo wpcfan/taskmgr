@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, HostBinding, ChangeDetectionStrategy } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -13,10 +13,10 @@ import { dropFromTopAnim } from '../../anim';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.scss'],
-  animations: [dropFromTopAnim],
-  host: {'[@dropFromTop]': 'in'}
+  animations: [dropFromTopAnim]
 })
-export class ProjectListComponent implements OnInit {
+export class ProjectListComponent {
+  
   projects$: Observable<entities.Project>;
 
   constructor(
@@ -24,9 +24,6 @@ export class ProjectListComponent implements OnInit {
     private dialog: MdDialog) { 
     this.store$.dispatch({type: actions.ActionTypes.LOADS});
     this.projects$ = this.store$.select(fromRoot.getProjects);
-  }
-
-  ngOnInit() {
   }
 
   selectProject(project: entities.Project){
