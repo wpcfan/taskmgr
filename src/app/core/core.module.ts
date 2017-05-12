@@ -11,7 +11,6 @@ import {
 import { SharedModule } from "../shared";
 import { AppEffectsModule } from "../effects";
 import { ServicesModule } from '../services';
-import { AppRoutingModule } from "../app-routing.module";
 import { AppStoreModule } from '../reducers/app-store.module';
 import { HeaderComponent } from './header';
 import { FooterComponent } from './footer';
@@ -23,14 +22,12 @@ import 'hammerjs';
     MdSidenavModule,
     MdToolbarModule,
     SharedModule,
-    AppRoutingModule,
     AppEffectsModule,
     ServicesModule.forRoot(),
     AppStoreModule,
     BrowserAnimationsModule
   ],
   exports: [
-    AppRoutingModule,
     MdSidenavContainer,
     MdSidenav,
     MdToolbar,

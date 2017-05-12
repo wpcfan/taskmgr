@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
   CanActivate,
-  CanLoad,
   Route,
   ActivatedRouteSnapshot,
   RouterStateSnapshot
@@ -17,7 +16,7 @@ import * as fromRoot from '../reducers';
 import * as actions from '../actions/auth.action';
 
 @Injectable()
-export class AuthGuardService implements CanActivate, CanLoad {
+export class AuthGuardService implements CanActivate {
 
   private _authSubject: BehaviorSubject<boolean>= new BehaviorSubject<boolean>(false);
   /**
@@ -43,13 +42,6 @@ export class AuthGuardService implements CanActivate, CanLoad {
    * @param route 
    */
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-    return this.checkAuth();
-  }
-
-  /**
-   * 用于惰性路由，判断是否可以加载
-   */
-  canLoad(route: Route): Observable<boolean>{
     return this.checkAuth();
   }
 

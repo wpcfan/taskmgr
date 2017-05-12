@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuardService } from "./services";
 import { PageNotFoundComponent } from "./page-not-found";
 
 const routes: Routes = [
@@ -10,7 +11,8 @@ const routes: Routes = [
   },
   {
     path: 'tasklists',
-    loadChildren: 'app/task/task.module#TaskModule'
+    loadChildren: 'app/task/task.module#TaskModule',
+    canActivate: [AuthGuardService]
   },
   {
     path: '**', component: PageNotFoundComponent

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { AppRoutingModule } from "./app-routing.module";
 import { CoreModule } from './core';
 import { TodoModule } from './todo/todo.module';
 import { LoginModule } from './login';
@@ -18,6 +19,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     LoginModule,
     ProjectModule,
     CoreModule,
+    AppRoutingModule
   ],
   bootstrap: [AppComponent]
 })
