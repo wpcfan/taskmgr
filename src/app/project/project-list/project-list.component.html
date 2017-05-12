@@ -1,5 +1,9 @@
 <div class="projects">
-  <app-project-item class="card" *ngFor="let project of (projects$ | async)" [item]="project">
+  <app-project-item 
+    class="card" 
+    *ngFor="let project of (projects$ | async)" 
+    [item]="project"
+    (click)="selectProject(project)">
   </app-project-item>
   <md-card (click)="openNewProjectDialog()">
     <md-card-header>

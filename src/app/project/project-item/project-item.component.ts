@@ -32,19 +32,23 @@ export class ProjectItemComponent {
     this.fold = 'out';
   }
   @Input('item') project: entities.Project;
+
   constructor(
     private dialog: MdDialog,
     private store$: Store<fromRoot.State>) { }
+  
 
-  openUpdateDialog(){
+  openUpdateDialog(ev: Event){
+    ev.preventDefault();
     this.dialog.open(NewProjectComponent, {data: {project: this.project}});
   }
 
-  openInviteDialog(){
-
+  openInviteDialog(ev: Event){
+    ev.preventDefault();
   }
 
-  openDeleteDialog(){
+  openDeleteDialog(ev: Event){
+    ev.preventDefault();
     const confirm: entities.ConfirmDialog = {
       title: '删除项目：',
       content: '确认要删除该项目？',

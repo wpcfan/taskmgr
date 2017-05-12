@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import * as entities from '../../domain';
 
@@ -8,7 +8,7 @@ import * as entities from '../../domain';
   styleUrls: ['./confirm-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ConfirmDialogComponent implements OnInit {
+export class ConfirmDialogComponent{
   dialog: entities.ConfirmDialog;
   constructor(
     @Inject(MD_DIALOG_DATA) private data: any,
@@ -16,10 +16,6 @@ export class ConfirmDialogComponent implements OnInit {
       if(this.data.dialog !== undefined || this.data.dialog !== null)
         this.dialog = this.data.dialog;
     }
-
-  ngOnInit() {
-
-  }
 
   handleAction(result: boolean){
     this.dialogRef.close(result);

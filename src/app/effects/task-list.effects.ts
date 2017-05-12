@@ -71,5 +71,9 @@ export class TaskListEffects{
       .map(taskList => new actions.DeleteTaskListSuccessAction(taskList))
       .catch(err => of(new actions.DeleteTaskListFailAction(JSON.stringify(err))))
     );
-  
+
+  @Effect()
+  navigateToTaskLists$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.LOADS_SUCCESS)
+    .map(() => go(['/tasklists']));
 }

@@ -7,7 +7,11 @@
     <md-input-container class="full-width">
       <input mdInput placeholder="项目简介（选填）" formControlName="desc">
     </md-input-container>
-    <app-image-list-select cols=6 [items]="thumbnails$ | async" formControlName="coverImg"></app-image-list-select>
+    <app-image-list-select 
+      cols=6 
+      [items]="thumbnails$ | async" 
+      formControlName="coverImg">
+    </app-image-list-select>
   </div>
   <div md-dialog-actions>
     <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">保存</button>

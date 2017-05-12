@@ -1,5 +1,4 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { 
@@ -19,7 +18,6 @@ import 'hammerjs';
 
 @NgModule({
   imports: [
-    CommonModule,
     HttpModule,
     ServicesModule.forRoot(),
     BrowserAnimationsModule,

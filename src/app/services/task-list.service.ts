@@ -41,13 +41,8 @@ export class TaskListService {
     // GET /tasklist
   get(projectId: string): Observable<models.TaskList[]>{
     const uri = `${this.config.uri}/${this.domain}`;
-    const whereClause = `{"projectId": "${projectId}"}`;
     return this.http
-      .get(uri, {params: {'where': whereClause}, headers: this.headers})
-      .map(res => {
-        const results = res.json().results;
-        return results.map(tl => Object.assign({}, 
-          {id: tl.objectId, name: tl.name}))
-      });
+      .get(uri, {params: {'projectId': projectId}, headers: this.headers})
+      .map(res => res.json());
   }
 }

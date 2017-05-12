@@ -3,7 +3,7 @@ import { MdDialog } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as fromRoot from '../../reducers';
-import * as entities from '../../domain';
+import * as models from '../../domain';
 import * as actions from '../../actions/project.action';
 import { NewProjectComponent } from '../new-project';
 import { dropFromTopAnim } from '../../anim';
@@ -17,17 +17,17 @@ import { dropFromTopAnim } from '../../anim';
 })
 export class ProjectListComponent {
   
-  projects$: Observable<entities.Project>;
+  projects$: Observable<models.Project>;
 
   constructor(
     private store$: Store<fromRoot.State>,
     private dialog: MdDialog) { 
-    this.store$.dispatch({type: actions.ActionTypes.LOADS});
+    this.store$.dispatch(new actions.LoadProjectsAction({}));
     this.projects$ = this.store$.select(fromRoot.getProjects);
   }
 
-  selectProject(project: entities.Project){
- 
+  selectProject(project: models.Project){
+    this.store$.dispatch(new actions.SelectProjectAction(project));
   }
 
   openNewProjectDialog(){

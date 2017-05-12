@@ -8,17 +8,14 @@ const routes: Routes = [
   { 
     path: 'login', 
     component: LoginComponent,
-    pathMatch: 'full'
   },
   { 
     path: 'register', 
     component: RegisterComponent,
-    pathMatch: 'full'
   },
   { 
     path: 'forgot', 
     component: ForgotComponent,
-    pathMatch: 'full'
   }
 ];
 
