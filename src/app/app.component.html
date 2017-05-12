@@ -1,8 +1,8 @@
 <md-sidenav-container>
-  <md-sidenav mode="push">Drawer content</md-sidenav>
+  <md-sidenav #sidenav>Drawer content</md-sidenav>
   <div class="site">
     <header>
-      <app-header></app-header>
+      <app-header (toggle)="sidenav.toggle()"></app-header>
     </header>
     <main>
       <div class="content">

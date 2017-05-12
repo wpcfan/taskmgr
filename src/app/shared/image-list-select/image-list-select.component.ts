@@ -3,7 +3,7 @@ import {
   Input, 
   forwardRef, 
   Output,
-  EventEmitter
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { 
   ControlValueAccessor, 
@@ -27,11 +27,14 @@ import {
       useExisting: forwardRef(() => ImageListSelectComponent),
       multi: true,
     }
-  ]    
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,    
 })
 export class ImageListSelectComponent implements ControlValueAccessor {
   @Input() selected: string;
   @Input() items: string[] = [];
+  @Input() cols: number = 8;
+  @Input() rowHeight: string = '64px';
 
   // the method set in registerOnChange, it is just 
   // a placeholder for a method that takes one parameter, 

@@ -2,7 +2,7 @@
   <span>选择封面：</span><img class="cover" [src]="selected">
 </div>
 <div class="scroll-container">
-  <md-grid-list cols="10" rowHeight="100px">
+  <md-grid-list [cols]="cols" [rowHeight]="rowHeight">
     <md-grid-tile *ngFor="let item of items; let i = index;">
       <div class="image-container" (click)="onChange(i)">
         <img 
