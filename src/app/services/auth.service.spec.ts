@@ -47,9 +47,10 @@ describe('测试鉴权服务：AuthService', () => {
       email: 'someuser@dev.local'
     };
     const mockResponse = {
-      sessionToken: 'tokenSet',
-      objectId: 'obj123abc',
-      username: 'someuser@dev.local'
+      id: 'obj123abc',
+      name: 'someuser@dev.local',
+      email: 'someuser@dev.local',
+      password: '123abc'
     };
     mockBackend.connections.subscribe(conn => {
       conn.mockRespond(new Response(new ResponseOptions({
@@ -57,7 +58,7 @@ describe('测试鉴权服务：AuthService', () => {
       })))
     });
     service.register(mockUser).subscribe(auth => {
-      expect(auth.token).toEqual('tokenSet');
+      expect(auth.token).toBeDefined();
       expect(auth.user.email).toEqual(mockUser.email);
     });
   })));

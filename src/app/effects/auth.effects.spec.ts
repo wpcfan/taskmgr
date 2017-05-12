@@ -64,7 +64,7 @@ describe('测试 AuthEffects', () => {
       runner.queue(new actions.LoginAction({email: 'wang@dev.local', password: '123abc'}));
 
       authEffects.login$.subscribe(result => {
-        expect(result).toEqual(expectedResult);
+        expect(result.payload.status).toEqual(501);
       });
     });
   });

@@ -7,7 +7,7 @@
       <div class="image-container" (click)="onChange(i)">
         <img 
           [src]="item" 
-          class="thumbnail" >
+          [ngStyle]="{'width': itemWidth }" >
         <div class="after">
           <span class="zoom">
             <md-icon>checked</md-icon>

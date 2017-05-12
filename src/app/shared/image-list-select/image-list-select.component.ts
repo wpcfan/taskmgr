@@ -35,19 +35,19 @@ export class ImageListSelectComponent implements ControlValueAccessor {
   @Input() items: string[] = [];
   @Input() cols: number = 8;
   @Input() rowHeight: string = '64px';
+  @Input() itemWidth: string = '80px';
 
-  // the method set in registerOnChange, it is just 
-  // a placeholder for a method that takes one parameter, 
-  // we use it to emit changes back to the form
+  // 这里是做一个空函数体，真正使用的方法在 registerOnChange 中
+  // 由框架注册，然后我们使用它把变化发回表单
   private propagateChange = (_: any) => { };
-  // this is the initial value set to the component
+  // 设置初始值
   public writeValue(obj: any) {
     if (obj && obj !== '') {
       this.selected = obj;
     } 
   }
-  // registers 'fn' that will be fired when changes are made
-  // this is how we emit the changes back to the form
+  // 当表单控件值改变时，函数 fn 会被调用
+  // 这也是我们把变化 emit 回表单的机制
   public registerOnChange(fn: any) {
     this.propagateChange = fn;
   }
@@ -59,7 +59,7 @@ export class ImageListSelectComponent implements ControlValueAccessor {
       },
     };
   }
-  // not used, used for touch input
+  // 这里没有使用，用于注册 touched 状态
   public registerOnTouched() { }
   // 列表元素选择发生改变触发
   private onChange(i) {
