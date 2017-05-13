@@ -18,9 +18,7 @@ export class TaskListHeaderComponent implements OnInit {
 
   ngOnInit() {
   }
-  onDragStart(e){
-    console.log(e);
-  }
+  
   showGrabIndicator(show: boolean): void{
     this.showGrab = show;
   }

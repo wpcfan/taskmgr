@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'tasklists/:id',
-    loadChildren: 'app/task/task.module#TaskModule',
+    loadChildren: 'app/task#TaskModule',
     canActivate: [AuthGuardService]
   },
   {

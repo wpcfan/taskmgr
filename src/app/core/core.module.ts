@@ -11,7 +11,7 @@ import {
 import { SharedModule } from "../shared";
 import { AppEffectsModule } from "../effects";
 import { ServicesModule } from '../services';
-import { AppStoreModule } from '../reducers/app-store.module';
+import { AppStoreModule } from '../reducers';
 import { HeaderComponent } from './header';
 import { FooterComponent } from './footer';
 import 'hammerjs';

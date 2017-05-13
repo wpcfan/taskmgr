@@ -6,7 +6,7 @@ import { TodoModule } from './todo/todo.module';
 import { LoginModule } from './login';
 import { AppComponent } from './app.component';
 import { ProjectModule } from './project';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from './page-not-found';
 
 @NgModule({
   declarations: [

@@ -1,6 +1,11 @@
 <div 
   class="list-container" 
-  *ngFor="let list of lists" >
+  *ngFor="let list of lists" 
+  draggable="true"
+  (dragover)="onDragOver($event)"
+  (drag)="onDrag($event.target)"
+  (dragend)="onDragEnd($event.target)"
+  (dragstart)="onDragStart($event.target)">
   <md-list dense>
     <app-task-list-header [header]="list.name"></app-task-list-header>
     <md-divider></md-divider>

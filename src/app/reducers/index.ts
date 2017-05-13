@@ -1,8 +1,14 @@
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { routerReducer, RouterStoreModule } from '@ngrx/router-store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { createSelector } from 'reselect';
 import { ActionReducer } from '@ngrx/store';
 import * as fromRouter from '@ngrx/router-store';
 import { environment } from '../../environments/environment';
 import * as models from '../domain';
+
 /**
  * The compose function is one of our most handy tools. In basic terms, you give
  * it any number of functions and it returns a function. This new function
@@ -102,3 +108,23 @@ export const getSelectedProjectId = createSelector(getProjectsState, fromProject
 export const getSelectedProject = createSelector(getProjectEntities, getSelectedProjectId, (entities, id)=>{
   return entities[id];
 });
+
+
+@NgModule({
+  imports: [
+    /**
+     * StoreModule.provideStore is imported once in the root module, accepting a reducer
+     * function or object map of reducer functions. If passed an object of
+     * reducers, combineReducers will be run creating your application
+     * meta-reducer. This returns all providers for an @ngrx/store
+     * based application.
+     */
+    StoreModule.provideStore(reducer),
+    RouterStoreModule.connectRouter(),
+    // Note that you must instrument after importing StoreModule
+    StoreDevtoolsModule.instrumentOnlyWithExtension({
+      maxAge: 5
+    })
+  ]
+})
+export class AppStoreModule {}

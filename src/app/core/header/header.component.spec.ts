@@ -5,7 +5,7 @@ import {
   MdToolbarModule, 
   MdToolbar 
 } from '@angular/material';
-import { HeaderComponent } from './header.component';
+import { HeaderComponent } from './';
 
 describe('测试顶部组件：HeaderComponent', () => {
   let component: HeaderComponent;
