@@ -11,6 +11,7 @@ import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/defaultIfEmpty';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Store } from '@ngrx/store';
+import { go } from "@ngrx/router-store";
 import { Actions } from "@ngrx/effects";
 import * as fromRoot from '../reducers';
 import * as actions from '../actions/auth.action';
@@ -33,6 +34,7 @@ export class AuthGuardService implements CanActivate {
       .subscribe(auth => {
         const result = (auth.user !== undefined);
         this._authSubject.next(result);
+        if(!result) this.store$.dispatch(go(['/login']));
       });
     }
 
