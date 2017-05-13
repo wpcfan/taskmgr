@@ -1,0 +1,20 @@
+.drag-handle {
+  cursor: move; /* fallback if grab cursor is unsupported */
+  cursor: grab;
+}
+
+.drag-handle:active { 
+  cursor: grabbing;
+}
+
+.fill-remaining-space {
+  // This fills the remaining space, by using flexbox. 
+  // Every toolbar row uses a flexbox row layout.
+  flex: 1 1 auto;
+}
+
+:host {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}

@@ -10,12 +10,11 @@ import {
   MdDialogModule,
   MdMenuModule,
   MdIconModule,
-  MdGridListModule
+  MdGridListModule,
+  MdListModule,
 } from '@angular/material';
 import { ConfirmDialogComponent } from './confirm-dialog';
 import { ImageListSelectComponent } from './image-list-select/image-list-select.component';
-
-export {ConfirmDialogComponent}
 
 @NgModule({
   imports: [
@@ -29,6 +28,7 @@ export {ConfirmDialogComponent}
     MdButtonModule,
     MdDialogModule,
     MdGridListModule,
+    MdListModule,
     MdMenuModule,
     MdIconModule,
   ],
@@ -43,12 +43,18 @@ export {ConfirmDialogComponent}
     MdButtonModule,
     MdDialogModule,
     MdGridListModule,
+    MdListModule,
     MdMenuModule,
     MdIconModule,
     ConfirmDialogComponent,
-    ImageListSelectComponent
+    ImageListSelectComponent,
   ],
-  declarations: [ConfirmDialogComponent, ImageListSelectComponent],
+  declarations: [
+    ConfirmDialogComponent, 
+    ImageListSelectComponent,
+    ],
   entryComponents: [ConfirmDialogComponent]
 })
 export class SharedModule { }
+
+export { ConfirmDialogComponent }

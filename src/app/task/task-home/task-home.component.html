@@ -1,0 +1,19 @@
+<div 
+  class="list-container" 
+  *ngFor="let list of lists" >
+  <md-list dense>
+    <app-task-list-header [header]="list.name"></app-task-list-header>
+    <md-divider></md-divider>
+    <md-list-item *ngFor="let item of list.items">
+      <md-icon md-list-icon>folder</md-icon>
+      <h4 md-line>{{item.desc}}</h4>
+      <p md-line> {{item.updated | date}} </p>
+    </md-list-item>
+  </md-list>
+</div>
+<div class="list-container">
+  <md-list dense>
+    <h3 md-subheader>新增</h3>
+  </md-list>
+</div>
+

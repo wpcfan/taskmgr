@@ -1,0 +1,9 @@
+<h3 md-subheader>{{header}}</h3>
+<span class="fill-remaining-space drag-handle"
+  (mouseenter)="showGrabIndicator(true)"
+  (mouseleave)="showGrabIndicator(false)" 
+  draggable="true" 
+  (dragstart)="onDragStart($event.target)">
+  <md-icon *ngIf="showGrab" svgIcon="hand-grab-o"></md-icon>
+</span>
+<button md-button><md-icon>keyboard_arrow_down</md-icon></button>

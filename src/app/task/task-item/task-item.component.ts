@@ -11,5 +11,7 @@ export class TaskItemComponent implements OnInit {
 
   ngOnInit() {
   }
+  onClick(ev){
 
+  }
 }
