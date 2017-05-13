@@ -1,62 +1,69 @@
-import { Component, OnInit } from '@angular/core';
+import { 
+  Component, 
+  Renderer2,
+  ElementRef,
+  ViewChild 
+} from '@angular/core';
+import { Observable } from "rxjs/Observable";
+import { ActivatedRoute } from '@angular/router';
+import { Store } from "@ngrx/store";
+import 'rxjs/add/operator/pluck';
+import * as fromRoot from "../../reducers";
+import * as actions from '../../actions/task-list.action';
+import * as models from '../../domain';
 
 @Component({
   selector: 'app-task-home',
   templateUrl: './task-home.component.html',
   styleUrls: ['./task-home.component.scss'],
 })
-export class TaskHomeComponent implements OnInit {
-
-  lists = [
-    {
-      id: 1,
-      name: '待办',
-      projectId: 1,
-      items: [
-        {
-          desc: '吃晚餐',
-          updated: new Date()
-        }
-      ]
-    },
-    {
-      id: 2,
-      name: '进行中',
-      projectId: 1,
-      items: [
-        {
-          desc: '写文档',
-          updated: new Date()
-        }
-      ]
-    },
-    {
-      id: 3,
-      name: '已完成',
-      projectId: 1,
-      items: [
-        {
-          desc: '做演示',
-          updated: new Date()
-        }
-      ]
-    }
-  ]
-  constructor() { }
-
-  ngOnInit() {
+export class TaskHomeComponent {
+  dragged;
+  lists$: Observable<models.TaskList[]>;
+  constructor(
+    private renderer: Renderer2, 
+    private element: ElementRef,
+    private route: ActivatedRoute,
+    private store$: Store<fromRoot.State>) { 
+      this.route.params.pluck('id').subscribe(
+        (id:string) => this.store$.dispatch(new actions.LoadTaskListsAction(id)));
+      this.lists$ = this.store$.select(fromRoot.getTaskLists);
   }
-  onDrag(e){
-    console.log('drag:'+ e);
-  }
-  onDragStart(e){
-    e.style.opacity=.5;
-    console.log('drag start:' + e);
+
+  onDragStart(e, src){
+    this.store$.dispatch(new actions.DragAction(src.id));
+    this.dragged = event.target;
+    e.target.style.opacity=.5;
   }
   onDragEnd(e){
-    console.log('drag end:' + e);
+    e.target.style.opacity=1;
+    e.target.style.background = "#EEEEEE";
   }
-  onDragOver(e: Event){
+  onDragOver(e){
     e.preventDefault();
+  }
+  onDrop(e, target){
+    // prevent default action
+    e.preventDefault();
+    this.store$.dispatch(new actions.DropAction(target.id));
+    // move dragged elem to the selected drop target
+    if (e.target.className == "list-container") {
+      const temp = this.dragged.style.order;
+      this.dragged.style.order = e.target.style.order;
+      e.target.style.order = temp;
+      e.target.style.background = "#EEEEEE";
+    }
+  }
+  onDragEnter(e){
+    // highlight potential drop target when the draggable element enters it
+    if (e.target.className == "list-container" ) {
+      e.target.style.background = "purple";
+    }
+  }
+  onDragLeave(e){
+    // reset background of potential drop target when the draggable element leaves it
+    if (e.target.className == "list-container" ) {
+      e.target.style.background = "#EEEEEE";
+    }
   }
 }

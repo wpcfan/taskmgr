@@ -3,18 +3,22 @@ import { type } from '../utils/type.util';
 import * as models from '../domain';
 
 export const ActionTypes = {
-  ADD:             type('[TaskList] Add'),
-  ADD_SUCCESS:     type('[TaskList] Add Success'),
-  ADD_FAIL:        type('[TaskList] Add Fail'),
-  UPDATE:          type('[TaskList] Update'),
-  UPDATE_SUCCESS:  type('[TaskList] Update Success'),
-  UPDATE_FAIL:     type('[TaskList] Update Fail'),
-  DELETE:          type('[TaskList] Delete'),
-  DELETE_SUCCESS:  type('[TaskList] Delete Success'),
-  DELETE_FAIL:     type('[TaskList] Delete Fail'),  
-  LOADS:           type('[TaskList] Load'),
-  LOADS_SUCCESS:   type('[TaskList] Load Success'),
-  LOADS_FAIL:      type('[TaskList] Load Fail')
+  ADD:                    type('[TaskList] Add'),
+  ADD_SUCCESS:            type('[TaskList] Add Success'),
+  ADD_FAIL:               type('[TaskList] Add Fail'),
+  UPDATE:                 type('[TaskList] Update'),
+  UPDATE_SUCCESS:         type('[TaskList] Update Success'),
+  UPDATE_FAIL:            type('[TaskList] Update Fail'),
+  DELETE:                 type('[TaskList] Delete'),
+  DELETE_SUCCESS:         type('[TaskList] Delete Success'),
+  DELETE_FAIL:            type('[TaskList] Delete Fail'),  
+  LOADS:                  type('[TaskList] Load'),
+  LOADS_SUCCESS:          type('[TaskList] Load Success'),
+  LOADS_FAIL:             type('[TaskList] Load Fail'),
+  DRAG:                   type('[TaskList] Drag'),
+  DROP:                   type('[TaskList] Drop'),
+  SWAP_ORDER_SUCCESS:     type('[TaskList] Swap Order Success'),
+  SWAP_ORDER_FAIL:        type('[TaskList] Swap Order Fail'),  
 };
 
 export class AddTaskListAction implements Action {
@@ -64,7 +68,7 @@ export class DeleteTaskListFailAction implements Action {
 
 export class LoadTaskListsAction implements Action {
   type = ActionTypes.LOADS;
-  constructor(public payload: any){}
+  constructor(public payload: string){}
 }
 
 export class LoadTaskListsSuccessAction implements Action {
@@ -77,6 +81,25 @@ export class LoadTaskListsFailAction implements Action {
   constructor(public payload: models.Err){}
 }
 
+export class DragAction implements Action {
+  type = ActionTypes.DRAG;
+  constructor(public payload: string){}
+}
+
+export class DropAction implements Action {
+  type = ActionTypes.DROP;
+  constructor(public payload: string){}
+}
+
+export class SwapOrderSuccessAction implements Action {
+  type = ActionTypes.SWAP_ORDER_SUCCESS;
+  constructor(public payload: any){}
+}
+
+export class SwapOrderFailAction implements Action {
+  type = ActionTypes.SWAP_ORDER_FAIL;
+  constructor(public payload: models.Err){}
+}
 
 export type Actions
   = AddTaskListAction
@@ -90,4 +113,8 @@ export type Actions
   | DeleteTaskListFailAction
   | LoadTaskListsAction
   | LoadTaskListsSuccessAction
-  | LoadTaskListsFailAction;
+  | LoadTaskListsFailAction
+  | DragAction
+  | DropAction
+  | SwapOrderSuccessAction
+  | SwapOrderFailAction;

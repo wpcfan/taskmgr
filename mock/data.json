@@ -31,32 +31,38 @@
     {
       "name": "待办",
       "projectId": "1",
-      "id": "1"
+      "id": "1",
+      "order": 1
     },
     {
       "name": "进行中",
       "projectId": "1",
-      "id": "2"
+      "id": "2",
+      "order": 2
     },
     {
       "name": "已完成",
       "projectId": "1",
-      "id": "3"
+      "id": "3",
+      "order": 3
     },
     {
       "name": "待办",
       "projectId": "2",
-      "id": "4"
+      "id": "4",
+      "order": 1
     },
     {
       "name": "进行中",
       "projectId": "2",
-      "id": "5"
+      "id": "5",
+      "order": 2
     },
     {
       "name": "已完成",
       "projectId": "2",
-      "id": "6"
+      "id": "6",
+      "order": 3
     }
   ],
   "tasks": [],

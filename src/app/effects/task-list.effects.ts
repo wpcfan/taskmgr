@@ -32,8 +32,7 @@ export class TaskListEffects{
   loadTaskLists$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.LOADS)
     .map(toPayload)
-    .withLatestFrom(this.store$.select(fromRoot.getSelectedProjectId))
-    .switchMap(([_, projectId]) => this.service$
+    .switchMap((projectId) => this.service$
       .get(projectId)
       .map(taskLists => new actions.LoadTaskListsSuccessAction(taskLists))
       .catch(err => of(new actions.LoadTaskListsFailAction(JSON.stringify(err))))
@@ -73,7 +72,13 @@ export class TaskListEffects{
     );
 
   @Effect()
-  navigateToTaskLists$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.LOADS_SUCCESS)
-    .map(() => go(['/tasklists']));
+  dragDrop$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.DROP)
+    .switchMap(_ => this.store$.select(fromRoot.getTaskDrag))
+    .withLatestFrom(this.store$.select(fromRoot.getTaskDrop))
+    .switchMap(([drag, drop])=>{
+      return this.service$.swapOrder(drag, drop)
+        .map(_ => new actions.SwapOrderSuccessAction({}))
+        .catch(err => of(new actions.SwapOrderFailAction(JSON.stringify(err))));
+    })
 }

@@ -103,7 +103,14 @@ export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
 export const getProjects = createSelector(getProjectsState, fromProjects.getAll);
 export const getProjectEntities = createSelector(getProjectsState, fromProjects.getEntities);
 export const getTaskLists = createSelector(getTaskListsState, fromTaskLists.getTaskLists);
-
+export const getTaskListEntities = createSelector(getTaskListsState, fromTaskLists.getEntities);
+export const getTaskListIds = createSelector(getTaskListsState, fromTaskLists.getIds);
+export const getTaskDrag = createSelector(getTaskListEntities, fromTaskLists.getDrag, (entities, id)=>{
+  return entities[id];
+});
+export const getTaskDrop = createSelector(getTaskListEntities, fromTaskLists.getDrop, (entities, id)=>{
+  return entities[id];
+});
 export const getSelectedProjectId = createSelector(getProjectsState, fromProjects.getSelectedId);
 export const getSelectedProject = createSelector(getProjectEntities, getSelectedProjectId, (entities, id)=>{
   return entities[id];

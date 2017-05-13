@@ -1,11 +1,14 @@
 <div 
   class="list-container" 
-  *ngFor="let list of lists" 
+  *ngFor="let list of lists$ | async" 
   draggable="true"
   (dragover)="onDragOver($event)"
-  (drag)="onDrag($event.target)"
-  (dragend)="onDragEnd($event.target)"
-  (dragstart)="onDragStart($event.target)">
+  (dragenter)="onDragEnter($event)"
+  (dragleave)="onDragLeave($event)"
+  (dragend)="onDragEnd($event)"
+  (dragstart)="onDragStart($event, list)"
+  (drop)="onDrop($event, list)"
+  [ngStyle]="{'order': list.order}">
   <md-list dense>
     <app-task-list-header [header]="list.name"></app-task-list-header>
     <md-divider></md-divider>
@@ -16,7 +19,7 @@
     </md-list-item>
   </md-list>
 </div>
-<div class="list-container">
+<div class="list-container" [ngStyle]="{'order': 100000}">
   <md-list dense>
     <h3 md-subheader>新增</h3>
   </md-list>

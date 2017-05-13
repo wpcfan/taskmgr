@@ -60,6 +60,7 @@ export interface TaskList{
   id?: string;
   name: string;
   projectId: string;
+  order: number;
 }
 
 export interface Project{

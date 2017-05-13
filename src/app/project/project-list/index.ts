@@ -17,7 +17,7 @@ import { dropFromTopAnim } from '../../anim';
 })
 export class ProjectListComponent {
   
-  projects$: Observable<models.Project>;
+  projects$: Observable<models.Project[]>;
 
   constructor(
     private store$: Store<fromRoot.State>,
