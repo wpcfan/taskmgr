@@ -13,7 +13,7 @@
     <app-task-list-header [header]="list.name"></app-task-list-header>
     <md-divider></md-divider>
     <md-list-item *ngFor="let item of list.items">
-      <md-icon md-list-icon>folder</md-icon>
+      <md-icon md-list-icon>check_circle</md-icon>
       <h4 md-line>{{item.desc}}</h4>
       <p md-line> {{item.updated | date}} </p>
     </md-list-item>

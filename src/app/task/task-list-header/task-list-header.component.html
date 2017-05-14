@@ -4,4 +4,28 @@
   (mouseleave)="showGrabIndicator(false)" >
   <md-icon *ngIf="showGrab" svgIcon="hand-grab-o"></md-icon>
 </span>
-<button md-button><md-icon>keyboard_arrow_down</md-icon></button>
+<button md-button [mdMenuTriggerFor]="menu"><md-icon>keyboard_arrow_down</md-icon></button>
+<md-menu #menu="mdMenu">
+  <button md-menu-item (click)="changeListName()"> 
+    <md-icon>mode_edit</md-icon>
+    <span> 修改列表名称 </span> 
+  </button>
+  <button md-menu-item (click)="addListAfter()"> 
+    <md-icon>playlist_add</md-icon>
+    <span> 在此后添加新列表 </span> 
+  </button>
+  <md-divider></md-divider>
+  <button md-menu-item (click)="deleteList()"> 
+    <md-icon>content_copy</md-icon>
+    <span> 复制本列表所有任务 </span>
+  </button>
+  <button md-menu-item (click)="deleteList()"> 
+    <md-icon svgIcon="move" class="material-icon">content_copy</md-icon>
+    <span> 移动本列表所有任务 </span>
+  </button>  
+  <md-divider></md-divider>
+  <button md-menu-item (click)="deleteList()"> 
+    <md-icon>delete_forever</md-icon>
+    <span> 删除列表 </span>
+  </button>
+</md-menu>

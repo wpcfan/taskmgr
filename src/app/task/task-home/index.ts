@@ -49,12 +49,10 @@ export class TaskHomeComponent {
   onDrop(e, target){
     // prevent default action
     e.preventDefault();
-    this.store$.dispatch(new actions.DropAction(target.id));
+    
     // move dragged elem to the selected drop target
     if (e.target.className == "list-container") {
-      const temp = this.dragged.style.order;
-      this.dragged.style.order = e.target.style.order;
-      e.target.style.order = temp;
+      this.store$.dispatch(new actions.DropAction(target.id));
       e.target.style.background = "#EEEEEE";
     }
   }
