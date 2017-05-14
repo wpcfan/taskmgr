@@ -59,11 +59,12 @@ export function reducer(
       const srcId = state.drag;
       const target = state.entities[targetId];
       const src = state.entities[srcId];
-      const newTarget = Object.assign({}, target, {order: src.id});
-      const newSrc = Object.assign({}, src, {id: target.id});
+      const newTarget = Object.assign({}, target, {order: src.order});
+      const newSrc = Object.assign({}, src, {order: target.order});
       return Object.assign({}, state, {
+        drop: targetId,
         entities: Object.assign({}, state.entities, {
-          srcId: newSrc, targetId: newTarget})});
+          [srcId]: newSrc, [targetId]: newTarget})});
     }
     case actions.ActionTypes.LOADS_FAIL:
     case actions.ActionTypes.ADD_FAIL:
@@ -81,3 +82,9 @@ export const getTaskLists = createSelector(getEntities, getIds, (entities, ids) 
 });
 export const getDrag = (state) => state.drag;
 export const getDrop = (state) => state.drop;
+export const getDragTask = createSelector(getEntities, getDrag, (entities, id) => {
+  return entities[id];
+});
+export const getDropTask = createSelector(getEntities, getDrop, (entities, id) => {
+  return entities[id];
+});

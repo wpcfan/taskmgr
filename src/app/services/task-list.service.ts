@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/concat';
+import { concat } from 'rxjs/observable/concat';
 import * as models from '../domain';
 
 @Injectable()
@@ -47,14 +47,17 @@ export class TaskListService {
       .map(res => res.json());
   }
 
-  swapOrder(drag: models.TaskList, drop: models.TaskList): Observable<boolean>{
+  swapOrder(drag: models.TaskList, drop: models.TaskList): Observable<models.TaskList[]>{
     const dragUri = `${this.config.uri}/${this.domain}/${drag.id}`;
     const dropUri = `${this.config.uri}/${this.domain}/${drop.id}`;
-    return this.http
-      .patch(dragUri, JSON.stringify({order: drop.order}))
-      .map(res => res.json())
-      .switchMap(_ => this.http.patch(dropUri, JSON.stringify({order: drag.order})))
-      .map(res => res.json())
-      .mapTo(true);
+    const drag$ = this.http
+      .patch(dragUri, JSON.stringify({order: drag.order}), {headers: this.headers})
+      .map(res => res.json());
+    const drop$ = this.http
+      .patch(dropUri, JSON.stringify({order: drop.order}), {headers: this.headers})
+      .map(res => res.json());
+    return concat(drag$, drop$).reduce((r,x)=> {
+              return [...r, x];
+            },[]);
   }
 }

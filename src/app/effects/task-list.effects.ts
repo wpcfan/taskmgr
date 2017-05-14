@@ -8,6 +8,7 @@ import { concat } from 'rxjs/observable/concat';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/withLatestFrom';
+import 'rxjs/add/observable/zip';
 import { TaskListService } from '../services';
 import * as actions from '../actions/task-list.action';
 import * as fromRoot from '../reducers';
@@ -71,14 +72,28 @@ export class TaskListEffects{
       .catch(err => of(new actions.DeleteTaskListFailAction(JSON.stringify(err))))
     );
 
+  // @Effect()
+  // dragDrop$: Observable<Action> = this.actions$
+  //   .ofType(actions.ActionTypes.DROP)
+  //   .switchMap(_ => {
+  //     const drag$ = this.store$.select(fromRoot.getTaskDrag);
+  //     const drop$ = this.store$.select(fromRoot.getTaskDrop);
+  //     return Observable.zip(drag$, drop$, (_drag, _drop) => {
+  //       return this.service$.swapOrder(_drag, _drop);
+  //     })
+  //     .map(_ => new actions.SwapOrderSuccessAction(true))
+  //     .catch(err => of(new actions.SwapOrderFailAction(JSON.stringify(err))))
+  //   })
+
   @Effect()
   dragDrop$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.DROP)
     .switchMap(_ => this.store$.select(fromRoot.getTaskDrag))
-    .withLatestFrom(this.store$.select(fromRoot.getTaskDrop))
-    .switchMap(([drag, drop])=>{
-      return this.service$.swapOrder(drag, drop)
-        .map(_ => new actions.SwapOrderSuccessAction({}))
-        .catch(err => of(new actions.SwapOrderFailAction(JSON.stringify(err))));
-    })
+    .switchMap(drag => this.service$.update(drag)
+      .map(_ => new actions.SwapOrderSuccessAction(true))
+      .catch(err => of(new actions.SwapOrderFailAction(JSON.stringify(err)))))
+    .switchMap(_ => this.store$.select(fromRoot.getTaskDrop))
+    .switchMap(drop => this.service$.update(drop)
+      .map(_ => new actions.SwapOrderSuccessAction(true))
+      .catch(err => of(new actions.SwapOrderFailAction(JSON.stringify(err)))))
 }

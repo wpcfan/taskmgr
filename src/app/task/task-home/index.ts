@@ -20,6 +20,8 @@ import * as models from '../../domain';
 export class TaskHomeComponent {
   dragged;
   lists$: Observable<models.TaskList[]>;
+  drag$: Observable<models.TaskList>;
+  drop$: Observable<models.TaskList>;
   constructor(
     private renderer: Renderer2, 
     private element: ElementRef,
@@ -28,6 +30,8 @@ export class TaskHomeComponent {
       this.route.params.pluck('id').subscribe(
         (id:string) => this.store$.dispatch(new actions.LoadTaskListsAction(id)));
       this.lists$ = this.store$.select(fromRoot.getTaskLists);
+      this.drag$ = this.store$.select(fromRoot.getTaskDrag);
+      this.drop$ = this.store$.select(fromRoot.getTaskDrop);
   }
 
   onDragStart(e, src){
