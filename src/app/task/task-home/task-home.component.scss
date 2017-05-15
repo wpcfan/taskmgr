@@ -1,12 +1,9 @@
-.drag-over-border {
-  border: #ff525b dashed 2px;
-}
-
 .list-container {
-  flex: 0 1 22%;
+  flex: 0 1 25%;
   background-color: #EEEEEE;
   border-radius: 3px;
-  margin: 5px;
+  margin: 2px;
+  overflow-y: scroll; 
 }
 
 :host {
@@ -14,8 +11,9 @@
   height: 100%;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-wrap: nowrap;
+  justify-content: space-around;
   align-content: stretch;
   align-items: stretch;
+  overflow-x: scroll;
 }

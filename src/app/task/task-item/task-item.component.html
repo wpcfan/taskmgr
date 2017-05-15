@@ -1,5 +1,18 @@
-<md-card>
-  <md-card-content (click)="onClick($event)">
-    <p></p>
-  </md-card-content>
-</md-card>
+<span class="checkbox-section" >
+  <md-checkbox [checked]="'true'" (change)="checkboxChanged()"></md-checkbox>
+</span>
+<span class="content" (click)="itemClicked()">
+  <div class="desc">
+    This task has been set to a "high" priority: it will appear in orange in the task list.
+  </div>
+  <div class="bottom-bar">
+    <span class="duedate">4月11日截止</span>
+    <md-icon>alarm</md-icon>
+    <span class="chip">rxjs</span>
+    <span class="chip">angular</span>
+    <span class="chip">vue</span>
+  </div>
+</span>
+<span class="avatar">
+
+</span>

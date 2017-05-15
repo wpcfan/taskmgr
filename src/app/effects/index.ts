@@ -5,13 +5,15 @@ import { QuoteEffects } from './quote.effects';
 import { TodoEffects } from './todo.effects';
 import { ProjectEffects } from './project.effects';
 import { TaskListEffects } from "./task-list.effects";
+import { TaskEffects } from "./task.effects";
 
 export const effects = {
   auth: AuthEffects,
   quote: QuoteEffects,
   todos: TodoEffects,
   projects: ProjectEffects,
-  tasklists: TaskListEffects
+  tasklists: TaskListEffects,
+  tasks: TaskEffects
 }
 
 @NgModule({
@@ -21,6 +23,7 @@ export const effects = {
     EffectsModule.run(effects.quote),
     EffectsModule.run(effects.projects),
     EffectsModule.run(effects.tasklists),
+    EffectsModule.run(effects.tasks),
    ],
 })
 export class AppEffectsModule {}

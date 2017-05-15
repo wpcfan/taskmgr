@@ -19,6 +19,7 @@ import * as models from '../../domain';
 })
 export class TaskHomeComponent {
   dragged;
+  loading: boolean = true;
   lists$: Observable<models.TaskList[]>;
   drag$: Observable<models.TaskList>;
   drop$: Observable<models.TaskList>;
@@ -38,10 +39,12 @@ export class TaskHomeComponent {
     this.store$.dispatch(new actions.DragAction(src.id));
     this.dragged = event.target;
     e.target.style.opacity=.5;
+    e.target.style.border = "#ff525b dashed 2px"
   }
   onDragEnd(e){
     e.target.style.opacity=1;
     e.target.style.background = "#EEEEEE";
+    e.target.style.border = "";
   }
   onDragOver(e){
     e.preventDefault();

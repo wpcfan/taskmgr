@@ -12,6 +12,9 @@ import {
   MdIconModule,
   MdGridListModule,
   MdListModule,
+  MdProgressBarModule,
+  MdCheckboxModule,
+  MdChipsModule,
 } from '@angular/material';
 import { ConfirmDialogComponent } from './confirm-dialog';
 import { ImageListSelectComponent } from './image-list-select/image-list-select.component';
@@ -31,6 +34,9 @@ import { ImageListSelectComponent } from './image-list-select/image-list-select.
     MdListModule,
     MdMenuModule,
     MdIconModule,
+    MdProgressBarModule,
+    MdCheckboxModule,
+    MdChipsModule,
   ],
   exports: [
     CommonModule,
@@ -46,6 +52,9 @@ import { ImageListSelectComponent } from './image-list-select/image-list-select.
     MdListModule,
     MdMenuModule,
     MdIconModule,
+    MdProgressBarModule,
+    MdCheckboxModule,
+    MdChipsModule,
     ConfirmDialogComponent,
     ImageListSelectComponent,
   ],

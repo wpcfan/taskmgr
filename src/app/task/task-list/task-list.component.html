@@ -1,3 +1,9 @@
-<p>
-  task-list works!
-</p>
+  <md-list dense>
+    <app-task-list-header [header]="list.name"></app-task-list-header>
+    <md-divider></md-divider>
+    <md-progress-bar color="primary" mode="indeterminate" *ngIf="loading$ | async else listItems">
+    </md-progress-bar>
+  </md-list>
+  <ng-template #listItems>
+    <app-task-item *ngFor="let task of tasks$ | async"></app-task-item>
+  </ng-template>

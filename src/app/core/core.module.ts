@@ -32,7 +32,8 @@ import 'hammerjs';
     MdSidenav,
     MdToolbar,
     HeaderComponent,
-    FooterComponent],
+    FooterComponent
+    ],
   providers: [  
     {
       provide: 'BASE_CONFIG',
@@ -43,7 +44,8 @@ import 'hammerjs';
     ],
   declarations: [
     HeaderComponent, 
-    FooterComponent]
+    FooterComponent
+    ]
 })
 export class CoreModule {
   constructor (@Optional() @SkipSelf() parentModule: CoreModule) {

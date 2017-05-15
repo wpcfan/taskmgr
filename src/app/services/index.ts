@@ -4,6 +4,7 @@ import { ProjectService } from './project.service';
 import { QuoteService } from './quote.service';
 import { TodoService } from './todo.service';
 import { TaskListService } from './task-list.service';
+import { TaskService } from "./task.service";
 import { AuthGuardService } from './auth-guard.service';
 
 export  {
@@ -12,7 +13,8 @@ export  {
   ProjectService,
   QuoteService,
   TodoService,
-  TaskListService
+  TaskListService,
+  TaskService
 }
 
 @NgModule({})
@@ -26,7 +28,8 @@ export class ServicesModule {
         ProjectService, 
         QuoteService, 
         TodoService,
-        TaskListService
+        TaskListService,
+        TaskService
       ]
     }
   }
