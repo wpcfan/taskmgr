@@ -1,18 +1,18 @@
 <span class="checkbox-section" >
-  <md-checkbox [checked]="'true'" (change)="checkboxChanged()"></md-checkbox>
+  <md-checkbox [checked]="item.completed" (change)="checkboxChanged($event)"></md-checkbox>
 </span>
-<span class="content" (click)="itemClicked()">
+<span class="content" (click)="itemClicked($event)">
   <div class="desc">
-    This task has been set to a "high" priority: it will appear in orange in the task list.
+    {{item.desc}}
   </div>
   <div class="bottom-bar">
-    <span class="duedate">4月11日截止</span>
-    <md-icon>alarm</md-icon>
-    <span class="chip">rxjs</span>
-    <span class="chip">angular</span>
-    <span class="chip">vue</span>
+    <span class="duedate" *ngIf="item.dueDate">{{item.dueDate}}</span>
+    <md-icon *ngIf="item.reminder">alarm</md-icon>
+    <span class="chip" *ngFor="let tag of item.tags">{{tag}}</span>
   </div>
 </span>
-<span class="avatar">
-
-</span>
+<div class="avatar-circle">
+  <span class="initials">
+     PW  
+  </span>
+</div>

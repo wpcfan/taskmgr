@@ -3,7 +3,8 @@ import {
   Renderer2,
   ElementRef,
   ViewChild,
-  OnDestroy 
+  OnDestroy,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Observable } from "rxjs/Observable";
 import { ActivatedRoute } from '@angular/router';
@@ -18,6 +19,7 @@ import * as models from '../../domain';
   selector: 'app-task-home',
   templateUrl: './task-home.component.html',
   styleUrls: ['./task-home.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskHomeComponent implements OnDestroy{
   dragged;

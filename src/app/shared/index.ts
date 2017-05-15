@@ -15,6 +15,9 @@ import {
   MdProgressBarModule,
   MdCheckboxModule,
   MdChipsModule,
+  MdDatepickerModule,
+  MdNativeDateModule,
+  MdRadioModule,
 } from '@angular/material';
 import { ConfirmDialogComponent } from './confirm-dialog';
 import { ImageListSelectComponent } from './image-list-select/image-list-select.component';
@@ -37,6 +40,9 @@ import { ImageListSelectComponent } from './image-list-select/image-list-select.
     MdProgressBarModule,
     MdCheckboxModule,
     MdChipsModule,
+    MdDatepickerModule,
+    MdNativeDateModule,
+    MdRadioModule,
   ],
   exports: [
     CommonModule,
@@ -55,6 +61,9 @@ import { ImageListSelectComponent } from './image-list-select/image-list-select.
     MdProgressBarModule,
     MdCheckboxModule,
     MdChipsModule,
+    MdDatepickerModule,
+    MdNativeDateModule,
+    MdRadioModule,
     ConfirmDialogComponent,
     ImageListSelectComponent,
   ],

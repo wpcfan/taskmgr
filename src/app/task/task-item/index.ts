@@ -1,17 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { 
+  Component, 
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
+import * as models from '../../domain';
 
 @Component({
   selector: 'app-task-item',
   templateUrl: './task-item.component.html',
-  styleUrls: ['./task-item.component.scss']
+  styleUrls: ['./task-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskItemComponent implements OnInit {
+export class TaskItemComponent {
+  @Output() taskComplete = new EventEmitter<string>();
+  @Output() taskClick = new EventEmitter<string>();
+  @Input() item: models.Task;
 
   constructor() { }
 
-  ngOnInit() {
+  checkboxChanged(ev: Event){
+    ev.preventDefault();
+    this.taskComplete.emit(this.item.id);
   }
-  onClick(ev){
 
+  itemClicked(ev: Event){
+    ev.preventDefault();
+    this.taskClick.emit(this.item.id);
   }
 }

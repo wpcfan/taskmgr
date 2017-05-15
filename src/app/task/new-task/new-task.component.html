@@ -1,0 +1,66 @@
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)" novalidate>
+  <span md-dialog-title>{{dialogTitle}}</span>
+  <div md-dialog-content>
+    <md-input-container class="full-width">
+      <textarea mdInput placeholder="任务内容" formControlName="desc"></textarea>
+    </md-input-container>
+    <div class="full-width">
+      <label>任务执行者：</label>
+      <span class="avatar-circle">
+        <span class="initials">
+          PW  
+        </span>
+      </span>
+      <button md-raised-button type="button">更改</button>
+    </div>
+    <div class="full-width chips-holder">
+      <span>任务参与者：</span>
+      <span>
+        <div class="avatar-circle">
+          <span class="initials">
+            PW  
+          </span>
+        </div>
+      </span>
+      <span>
+        <div class="avatar-circle">
+          <span class="initials">
+            PW  
+          </span>
+        </div>
+      </span>
+      <span>
+        <button md-raised-button type="button">更改</button>
+      </span>
+    </div>
+    <md-radio-group class="full-width" formControlName="priority">
+      <md-radio-button value=3>普通</md-radio-button>
+      <md-radio-button value=2>优先</md-radio-button>
+      <md-radio-button value=1>紧急</md-radio-button>
+    </md-radio-group>
+    <md-input-container class="full-width">
+      <input mdInput [mdDatepicker]="dueDatePicker" placeholder="选择截止日期" formControlName="dueDate">
+      <button mdSuffix [mdDatepickerToggle]="dueDatePicker"></button>
+    </md-input-container>
+    <md-datepicker #dueDatePicker></md-datepicker>
+    <md-input-container class="full-width">
+      <input mdInput [mdDatepicker]="reminderPicker" placeholder="选择提醒日期" formControlName="reminder">
+      <button mdSuffix [mdDatepickerToggle]="reminderPicker"></button>
+    </md-input-container>
+    <md-datepicker #reminderPicker></md-datepicker>
+    <md-input-container class="full-width">
+      <textarea mdInput placeholder="备注" formControlName="desc"></textarea>
+    </md-input-container>
+    <span class="full-width">
+      <md-chip-list>
+        <md-chip color="primary">Primary fish</md-chip>
+        <md-chip color="primary">Primary fish</md-chip>
+        <md-chip color="primary">Primary fish</md-chip>
+      </md-chip-list>
+    </span>
+  </div>
+  <div md-dialog-actions>
+    <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">保存</button>
+    <button md-dialog-close md-raised-button type="button">关闭</button>
+  </div>
+</form>

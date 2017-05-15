@@ -43,17 +43,19 @@ export interface TaskDiscussion{
 }
 
 export interface Task{
-  id: string;
+  id?: string;
   taskListId: string;
   desc: string;
   completed: boolean;
   ownerId: string;
   participantIds: string[];
-  dueDate: Date;
+  dueDate?: Date;
   priority: number;
-  remark: string;
-  tags: string[];
-  reminder: Date;
+  order: number;
+  remark?: string;
+  tags?: string[];
+  reminder?: Date;
+  createDate: Date;
 }
 
 export interface TaskList{

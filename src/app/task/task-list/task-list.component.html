@@ -1,9 +1,31 @@
   <md-list dense>
-    <app-task-list-header [header]="list.name"></app-task-list-header>
+    <app-task-list-header 
+      [header]="list.name"
+      (changeListName)="onChangeListName($event)"
+      (deleteList)="onDeleteList($event)"
+      (addListAfter)="onAddListAfter($event)"
+      (copyAllTasks)="onCopyAllTasks($event)"
+      (moveAllTasks)="onMoveAllTasks($event)">
+    </app-task-list-header>
     <md-divider></md-divider>
-    <md-progress-bar color="primary" mode="indeterminate" *ngIf="loading$ | async else listItems">
+    <md-progress-bar 
+      color="primary" 
+      mode="indeterminate" 
+      *ngIf="loading$ | async else listItems">
     </md-progress-bar>
   </md-list>
   <ng-template #listItems>
-    <app-task-item *ngFor="let task of tasks$ | async"></app-task-item>
+    <md-list-item>
+      <button md-button type="button" (click)="addNewTask($event)">
+        <md-icon>add_circle_outline</md-icon>
+        <span>添加新任务</span>
+      </button>
+    </md-list-item>
+    <md-list-item *ngFor="let task of tasks$ | async">
+      <app-task-item  
+        [item]="task" 
+        (taskComplete)="onTaskComplete($event)" 
+        (taskClick)="onTaskClick($event)">
+      </app-task-item>
+    </md-list-item>
   </ng-template>
