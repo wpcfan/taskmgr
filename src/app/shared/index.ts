@@ -20,7 +20,8 @@ import {
   MdRadioModule,
 } from '@angular/material';
 import { ConfirmDialogComponent } from './confirm-dialog';
-import { ImageListSelectComponent } from './image-list-select/image-list-select.component';
+import { ImageListSelectComponent } from './image-list-select';
+import { ChipsListComponent } from './chips-list';
 
 @NgModule({
   imports: [
@@ -70,6 +71,7 @@ import { ImageListSelectComponent } from './image-list-select/image-list-select.
   declarations: [
     ConfirmDialogComponent, 
     ImageListSelectComponent,
+    ChipsListComponent,
     ],
   entryComponents: [ConfirmDialogComponent]
 })
