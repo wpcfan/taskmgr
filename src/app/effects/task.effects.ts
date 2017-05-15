@@ -33,7 +33,7 @@ export class TaskEffects{
   loadTasks$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.LOAD)
     .map(toPayload)
-    .debounceTime(300)
+    .debounceTime(300) //TODO: remove this when used in production
     .switchMap((taskListId) => this.service$
       .get(taskListId)
       .map(tasks => new actions.LoadTasksSuccessAction(tasks))

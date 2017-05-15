@@ -2,12 +2,14 @@ import {
   Component, 
   Renderer2,
   ElementRef,
-  ViewChild 
+  ViewChild,
+  OnDestroy 
 } from '@angular/core';
 import { Observable } from "rxjs/Observable";
 import { ActivatedRoute } from '@angular/router';
 import { Store } from "@ngrx/store";
 import 'rxjs/add/operator/pluck';
+import { Subscription } from "rxjs/Subscription";
 import * as fromRoot from "../../reducers";
 import * as actions from '../../actions/task-list.action';
 import * as models from '../../domain';
@@ -17,22 +19,29 @@ import * as models from '../../domain';
   templateUrl: './task-home.component.html',
   styleUrls: ['./task-home.component.scss'],
 })
-export class TaskHomeComponent {
+export class TaskHomeComponent implements OnDestroy{
   dragged;
   loading: boolean = true;
   lists$: Observable<models.TaskList[]>;
   drag$: Observable<models.TaskList>;
   drop$: Observable<models.TaskList>;
+  routeParamSub: Subscription;
   constructor(
     private renderer: Renderer2, 
     private element: ElementRef,
     private route: ActivatedRoute,
     private store$: Store<fromRoot.State>) { 
-      this.route.params.pluck('id').subscribe(
+      this.routeParamSub = this.route.params.pluck('id').subscribe(
         (id:string) => this.store$.dispatch(new actions.LoadTaskListsAction(id)));
       this.lists$ = this.store$.select(fromRoot.getTaskLists);
       this.drag$ = this.store$.select(fromRoot.getTaskDrag);
       this.drop$ = this.store$.select(fromRoot.getTaskDrop);
+  }
+
+  ngOnDestroy(){
+    // 取消订阅以免内存泄露
+    if(this.routeParamSub !== undefined && this.routeParamSub !== null)
+      this.routeParamSub.unsubscribe();
   }
 
   onDragStart(e, src){
