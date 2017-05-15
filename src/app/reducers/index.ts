@@ -43,7 +43,6 @@ import { combineReducers } from '@ngrx/store';
  * notation packages up all of the exports into a single object.
  */
 import * as fromAuth from './auth.reducer';
-import * as fromTodos from './todo.reducer';
 import * as fromQuote from './quote.reducer';
 import * as fromProjects from './project.reducer';
 import * as fromTaskLists from './task-list.reducer';
@@ -55,7 +54,6 @@ import * as fromTasks from './task.reducer';
  */
 export interface State {
   auth: models.Auth;
-  todos: fromTodos.State;
   quote: fromQuote.State;
   projects: fromProjects.State;
   taskLists: fromTaskLists.State;
@@ -72,7 +70,6 @@ export interface State {
  */
 const reducers = {
   auth: fromAuth.reducer,
-  todos: fromTodos.reducer,
   quote: fromQuote.reducer,
   projects: fromProjects.reducer,
   taskLists: fromTaskLists.reducer,
@@ -92,7 +89,6 @@ export function reducer(state: any, action: any) {
 }
 
 export const getAuthState = (state: State) => state.auth;
-export const getTodosState = (state: State) => state.todos;
 export const getQuoteState = (state: State) => state.quote;
 export const getProjectsState = (state: State) => state.projects;
 export const getTaskListsState = (state: State) => state.taskLists;
@@ -100,9 +96,6 @@ export const getTasksState = (state: State) => state.tasks;
 export const getRouterState = (state: State) => state.router;
 
 export const getAuth = createSelector(getAuthState, fromAuth.getAuth);
-export const getTodos = createSelector(getTodosState, fromTodos.getTodos);
-export const getVisibilityFilter = createSelector(getTodosState, fromTodos.getVisibilityFilter);
-export const getVisibleTodos = createSelector(getTodosState, fromTodos.getVisibleTodos);
 export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
 export const getProjects = createSelector(getProjectsState, fromProjects.getAll);
 export const getProjectEntities = createSelector(getProjectsState, fromProjects.getEntities);

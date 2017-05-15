@@ -1,9 +1,0 @@
-<ul class="list-group">
-  <app-todo-item
-    *ngFor="let todo of todos" 
-    [completed]="todo.completed"
-    (toggle)="handleToggle(todo)"
-    (remove)="handleRemove(todo)"
-    [desc]="todo.desc">
-  </app-todo-item>
-</ul>
