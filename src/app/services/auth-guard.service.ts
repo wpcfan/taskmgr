@@ -43,7 +43,7 @@ export class AuthGuardService implements CanActivate {
    * 
    * @param route 
    */
-  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.checkAuth();
   }
 
