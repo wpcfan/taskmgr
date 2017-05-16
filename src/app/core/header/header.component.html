@@ -5,9 +5,5 @@
   <span>企业协作平台</span>
   <span class="fill-remaining-space"></span>
 
-  <span><a *ngIf="((auth$|async).user === undefined) else logoutRef" routerLink="/login">登录</a></span>
+  <span><a *ngIf="((auth$|async).user !== undefined)" (click)="logout()">退出</a></span>
 </md-toolbar>
-
-<ng-template #logoutRef>
-  <span><a (click)="logout()">退出</a></span>
-</ng-template>

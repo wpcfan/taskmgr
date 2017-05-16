@@ -1,18 +1,18 @@
-<div 
-  class="list-container" 
-  *ngFor="let taskList of lists$ | async" 
-  draggable="true"
-  (dragover)="onDragOver($event)"
-  (dragenter)="onDragEnter($event)"
-  (dragleave)="onDragLeave($event)"
-  (dragend)="onDragEnd($event)"
-  (dragstart)="onDragStart($event, taskList)"
-  (drop)="onDrop($event, taskList)"
-  [ngStyle]="{'order': taskList.order}">
-  <app-task-list [list]="taskList"></app-task-list>
+<div class="task-lists">
+  <div 
+    class="list-container" 
+    *ngFor="let taskList of lists$ | async" 
+    draggable="true"
+    (dragover)="onDragOver($event)"
+    (dragenter)="onDragEnter($event)"
+    (dragleave)="onDragLeave($event)"
+    (dragend)="onDragEnd($event)"
+    (dragstart)="onDragStart($event, taskList)"
+    (drop)="onDrop($event, taskList)"
+    [ngStyle]="{'order': taskList.order}">
+    <app-task-list [list]="taskList"></app-task-list>
+  </div>
 </div>
-<div class="list-container" [ngStyle]="{'order': 100000}">
-  <md-list dense>
-    <h3 md-subheader>新增</h3>
-  </md-list>
-</div>
+<button md-fab (click)="openNewProjectDialog()" type="button" class="fab-button">
+  <md-icon>add</md-icon>
+</button>

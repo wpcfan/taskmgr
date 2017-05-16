@@ -5,10 +5,7 @@
     [item]="project"
     (itemSelected)="selectProject(project)">
   </app-project-item>
-  <md-card class="new-card" (click)="openNewProjectDialog()">
-    <md-card-header>
-      <md-card-title> 新增项目 </md-card-title>
-    </md-card-header>
-    <img md-card-image src="/assets/img/icons/add.svg">
-  </md-card>
 </div> 
+<button md-fab (click)="openNewProjectDialog()" type="button" class="fab-button">
+  <md-icon>add</md-icon>
+</button>

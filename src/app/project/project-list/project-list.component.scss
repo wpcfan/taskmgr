@@ -8,10 +8,13 @@
 }
 
 .card {
-  width: 320px;
+  flex: 1 1 320px;
   margin-right: 10px;
 }
 
-.new-card {
-  width: 200px;
+.fab-button{
+  position: fixed;
+  right: 32px;
+  bottom: 96px;
+  z-index: 998;
 }

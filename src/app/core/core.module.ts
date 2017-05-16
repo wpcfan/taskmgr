@@ -9,11 +9,14 @@ import {
   MdToolbar 
 } from '@angular/material';
 import { SharedModule } from "../shared";
+import { AppRoutingModule } from "./app-routing.module";
 import { AppEffectsModule } from "../effects";
 import { ServicesModule } from '../services';
 import { AppStoreModule } from '../reducers';
 import { HeaderComponent } from './header';
 import { FooterComponent } from './footer';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { PageNotFoundComponent } from './page-not-found';
 import 'hammerjs';
 
 @NgModule({
@@ -25,6 +28,7 @@ import 'hammerjs';
     AppEffectsModule,
     ServicesModule.forRoot(),
     AppStoreModule,
+    AppRoutingModule,
     BrowserAnimationsModule
   ],
   exports: [
@@ -32,7 +36,9 @@ import 'hammerjs';
     MdSidenav,
     MdToolbar,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    SidebarComponent,
+    AppRoutingModule,
     ],
   providers: [  
     {
@@ -44,7 +50,9 @@ import 'hammerjs';
     ],
   declarations: [
     HeaderComponent, 
-    FooterComponent
+    FooterComponent, 
+    SidebarComponent,
+    PageNotFoundComponent,
     ]
 })
 export class CoreModule {
