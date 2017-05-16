@@ -6,7 +6,7 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/reduce';
 import 'rxjs/add/observable/from';
-import * as models from '../domain';
+import { Project, User } from '../domain';
 
 @Injectable()
 export class ProjectService {
@@ -22,7 +22,7 @@ export class ProjectService {
     }
 
   // POST /projects
-  add(project: models.Project): Observable<models.Project>{
+  add(project: Project): Observable<Project>{
     const uri =  `${this.config.uri}/${this.domain}`;
     return this.http
       .post(uri, JSON.stringify(project), {headers: this.headers})
@@ -30,7 +30,7 @@ export class ProjectService {
   }
 
   // PUT /projects
-  update(project: models.Project): Observable<models.Project>{
+  update(project: Project): Observable<Project>{
     const uri =  `${this.config.uri}/${this.domain}/${project.id}`;
     return this.http
       .put(uri, JSON.stringify(project), {headers: this.headers})
@@ -38,7 +38,7 @@ export class ProjectService {
   }
 
   // DELETE /projects instead of deleting the records
-  delete(project: models.Project): Observable<models.Project>{
+  delete(project: Project): Observable<Project>{
     const uri =  `${this.config.uri}/${this.domain}/${project.id}`;
     return this.http
       .delete(uri, {headers: this.headers})
@@ -46,11 +46,17 @@ export class ProjectService {
   }
 
   // GET /projects
-  get(userId: string): Observable<models.Project[]>{
+  get(userId: string): Observable<Project[]>{
     const uri =  `${this.config.uri}/${this.domain}`;
     // const whereClause = `{"members": "${userId}"}`;
     return this.http
       .get(uri, {params: {'members': userId}, headers: this.headers})
       .map(res => res.json());
+  }
+
+  getUsersByProject(projectId: string): Observable<User[]>{
+    const uri = `${this.config.uri}/users`;
+    return this.http.get(uri, {params: {'projectIds': projectId}})
+      .map(res => res.json() as User[]);
   }
 }

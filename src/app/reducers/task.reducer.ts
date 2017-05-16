@@ -25,7 +25,7 @@ export function reducer(
     case actions.ActionTypes.ADD_SUCCESS:{
       const task = <models.Task>action.payload;
       const ids = [...state.ids, task.id];
-      const entities = Object.assign({}, state.entities, {[task.id]: task})
+      const entities = Object.assign({}, state.entities, {[task.id]: task});
       return Object.assign({}, state, {ids: ids, entities: entities, loading: false});
     }
     case actions.ActionTypes.DELETE_SUCCESS:{

@@ -67,7 +67,8 @@ export class NewProjectComponent implements OnInit {
       this.store$.dispatch(
         new actions.AddProjectAction({
           name: value.name,
-          desc: value.desc
+          desc: value.desc,
+          coverImg: value.coverImg
         }));
     else
       this.store$.dispatch(

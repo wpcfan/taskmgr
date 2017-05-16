@@ -1,17 +1,19 @@
-import * as models from '../domain';
+import { Project, User } from '../domain';
 import { createSelector } from 'reselect';
 import * as actions from '../actions/project.action';
 
 export interface State{
   ids: string[];
-  entities: { [id: string]: models.Project };
+  entities: { [id: string]: Project };
   selectedId: string | null;
+  userEntities: {[id: string]: User};
 }
 
 const initialState: State = {
   ids: [],
   entities: {},
-  selectedId: null
+  selectedId: null,
+  userEntities: {}
 };
 
 export function reducer(
@@ -26,7 +28,7 @@ export function reducer(
     case actions.ActionTypes.DELETE_SUCCESS: {
       const project = action.payload;
       const ids = state.ids.filter(id => id !== project.id);
-      const entities = ids.reduce((entities: { [id: string]: models.Project }, id) => {
+      const entities = ids.reduce((entities: { [id: string]: Project }, id) => {
         return Object.assign(entities, {
           [id]: state.entities[id]
         })
@@ -42,7 +44,7 @@ export function reducer(
       const projects = action.payload;
       // if projects is null then return the orginal state
       if(projects === null) return state; 
-      const entities = projects.reduce((entities: { [id: string]: models.Project }, project) => {
+      const entities = projects.reduce((entities: { [id: string]: Project }, project) => {
         return Object.assign(entities, {
           [project.id]: project
         })
@@ -52,10 +54,23 @@ export function reducer(
     case actions.ActionTypes.SELECT: {
       return Object.assign({}, state, {selectedId: action.payload.id});
     }
+    case actions.ActionTypes.LOAD_USERS_BY_PRJ_SUCCESS:{
+      const users = <User[]>action.payload;
+      // if task is null then return the orginal state
+      if(users === null) return state; 
+      const entities = users.reduce((entities: { [id: string]: User }, user) => {
+        return Object.assign(entities, {
+          [user.id]: user
+        })
+      },{});
+      return Object.assign({}, state, 
+        { userEntities: entities});
+    }
     case actions.ActionTypes.LOADS_FAIL:
     case actions.ActionTypes.ADD_FAIL:
     case actions.ActionTypes.UPDATE_FAIL:
     case actions.ActionTypes.DELETE_FAIL:
+    case actions.ActionTypes.LOAD_USERS_BY_PRJ_FAIL:
     default:
       return state;
   }

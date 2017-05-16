@@ -96,6 +96,7 @@ export const getTasksState = (state: State) => state.tasks;
 export const getRouterState = (state: State) => state.router;
 
 export const getAuth = createSelector(getAuthState, fromAuth.getAuth);
+export const getAuthUser = createSelector(getAuthState, fromAuth.getAuthUser);
 export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
 export const getProjects = createSelector(getProjectsState, fromProjects.getAll);
 export const getProjectEntities = createSelector(getProjectsState, fromProjects.getEntities);
