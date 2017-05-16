@@ -36,7 +36,7 @@ export class NewProjectComponent implements OnInit {
 
   ngOnInit() {
     if(this.data.project === undefined || this.data.project === null) {
-      const img = `/assets/img/covers/${Math.floor(Math.random()*39).toFixed(0)}.jpg`
+      const img = `/assets/img/covers/${Math.floor(Math.random()*39).toFixed(0)}_tn.jpg`
       this.form = this.fb.group({
         name: ['', Validators.required],
         desc: [''],
@@ -68,7 +68,7 @@ export class NewProjectComponent implements OnInit {
         new actions.AddProjectAction({
           name: value.name,
           desc: value.desc,
-          coverImg: value.coverImg
+          coverImg: value.coverImg.split('_', 1)[0]+'.jpg'
         }));
     else
       this.store$.dispatch(
@@ -76,7 +76,7 @@ export class NewProjectComponent implements OnInit {
           id: this.data.project.id,
           name: value.name,
           desc: value.desc,
-          coverImg: value.coverImg
+          coverImg: value.coverImg.split('_', 1)[0]+'.jpg'
         }));
     this.dialogRef.close();
   }
