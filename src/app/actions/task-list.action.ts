@@ -19,6 +19,9 @@ export const ActionTypes = {
   DROP:                   type('[TaskList] Drop'),
   SWAP_ORDER_SUCCESS:     type('[TaskList] Swap Order Success'),
   SWAP_ORDER_FAIL:        type('[TaskList] Swap Order Fail'),  
+  INITIALIZE:             type('[TaskList] Init TaskLists'),
+  INITIALIZE_SUCCESS:     type('[TaskList] Init TaskLists Success'),
+  INITIALIZE_FAIL:        type('[TaskList] Init TaskLists Fail')
 };
 
 export class AddTaskListAction implements Action {
@@ -101,6 +104,21 @@ export class SwapOrderFailAction implements Action {
   constructor(public payload: models.Err){}
 }
 
+export class InitTaskListsAction implements Action {
+  type = ActionTypes.INITIALIZE;
+  constructor(public payload: models.Project){}
+}
+
+export class InitTaskListsSuccessAction implements Action {
+  type = ActionTypes.INITIALIZE_SUCCESS;
+  constructor(public payload: models.Project){}
+}
+
+export class InitTaskListsFailAction implements Action{
+  type = ActionTypes.INITIALIZE_FAIL;
+  constructor(public payload: models.Err){}
+}
+
 export type Actions
   = AddTaskListAction
   | AddTaskListSuccessAction
@@ -117,4 +135,7 @@ export type Actions
   | DragAction
   | DropAction
   | SwapOrderSuccessAction
-  | SwapOrderFailAction;
+  | SwapOrderFailAction
+  | InitTaskListsAction
+  | InitTaskListsSuccessAction
+  | InitTaskListsFailAction;

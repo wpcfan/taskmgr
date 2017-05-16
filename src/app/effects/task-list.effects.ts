@@ -11,6 +11,7 @@ import 'rxjs/add/operator/withLatestFrom';
 import 'rxjs/add/observable/zip';
 import { TaskListService } from '../services';
 import * as actions from '../actions/task-list.action';
+import * as prjActions from '../actions/project.action';
 import * as fromRoot from '../reducers';
 import * as models from '../domain';
 
@@ -71,6 +72,22 @@ export class TaskListEffects{
       .map(taskList => new actions.DeleteTaskListSuccessAction(taskList))
       .catch(err => of(new actions.DeleteTaskListFailAction(JSON.stringify(err))))
     );
+
+  @Effect()
+  initializeTaskLists$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.INITIALIZE)
+    .map(toPayload)
+    .switchMap(prj => {
+      return this.service$.initializeTaskLists(prj)
+        .map(project => new actions.InitTaskListsSuccessAction(project))
+        .catch(err => of(new actions.InitTaskListsFailAction(JSON.stringify(err))))
+    })
+  
+  @Effect()
+  updateProjectRef$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.INITIALIZE_SUCCESS)
+    .map(toPayload)
+    .map(prj => new prjActions.UpdateProjectAction(prj));
 
   // @Effect()
   // dragDrop$: Observable<Action> = this.actions$

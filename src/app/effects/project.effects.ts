@@ -9,8 +9,9 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/withLatestFrom';
 import 'rxjs/add/operator/debounceTime';
-import { ProjectService, TaskListService } from '../services';
+import { ProjectService } from '../services';
 import * as actions from '../actions/project.action';
+import * as tasklistActions from '../actions/task-list.action';
 import * as fromRoot from '../reducers';
 import * as models from '../domain';
 
@@ -24,7 +25,6 @@ export class ProjectEffects{
   constructor(
     private actions$: Actions, 
     private service: ProjectService,
-    private taskService: TaskListService,
     private store$: Store<fromRoot.State>) { }
   /**
    * 
@@ -49,18 +49,6 @@ export class ProjectEffects{
       const added = Object.assign({}, project, {members: [`${auth.user.id}`]});
       return this.service
         .add(added)
-        .switchMap(prj => {
-          const id = prj.id;
-          return concat(
-            this.taskService.add('待办', id), 
-            this.taskService.add('进行中', id),
-            this.taskService.add('已完成', id))
-            .reduce((r,x)=> {
-              return [...r, x];
-            },[])
-            .map(tls => Object.assign({}, prj, {taskLists: tls.map(tl=>tl.id)}))
-            .switchMap(prj => this.service.update(prj))
-        })
         .map(project => new actions.AddProjectSuccessAction(project))
         .catch(err => of(new actions.AddProjectFailAction(JSON.stringify(err))))
       }
@@ -91,4 +79,10 @@ export class ProjectEffects{
     .ofType(actions.ActionTypes.SELECT)
     .map(toPayload)
     .map(project => go([`/tasklists/${project.id}`]));
+
+  @Effect()
+  startInitTaskLists$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.ADD_SUCCESS)
+    .map(toPayload)
+    .map(project => new tasklistActions.InitTaskListsAction(project));
 }
