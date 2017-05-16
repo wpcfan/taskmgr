@@ -68,7 +68,10 @@ export class TaskListComponent implements OnInit{
     ev.preventDefault();
     this.dialog.open(NewTaskComponent, {data:{
       taskListId: this.list.id,
-      userId: "1"
+      user: {
+        id: "1",
+        name: "Peng Wang"
+      }
     }});
   }
 }

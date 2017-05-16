@@ -18,10 +18,12 @@ import {
   MdDatepickerModule,
   MdNativeDateModule,
   MdRadioModule,
+  MdAutocompleteModule,
 } from '@angular/material';
 import { ConfirmDialogComponent } from './confirm-dialog';
 import { ImageListSelectComponent } from './image-list-select';
 import { ChipsListComponent } from './chips-list';
+import { InitialsPipe } from './initials.pipe';
 
 @NgModule({
   imports: [
@@ -44,6 +46,7 @@ import { ChipsListComponent } from './chips-list';
     MdDatepickerModule,
     MdNativeDateModule,
     MdRadioModule,
+    MdAutocompleteModule,
   ],
   exports: [
     CommonModule,
@@ -65,6 +68,7 @@ import { ChipsListComponent } from './chips-list';
     MdDatepickerModule,
     MdNativeDateModule,
     MdRadioModule,
+    MdAutocompleteModule,
     ConfirmDialogComponent,
     ImageListSelectComponent,
   ],
@@ -72,6 +76,7 @@ import { ChipsListComponent } from './chips-list';
     ConfirmDialogComponent, 
     ImageListSelectComponent,
     ChipsListComponent,
+    InitialsPipe,
     ],
   entryComponents: [ConfirmDialogComponent]
 })

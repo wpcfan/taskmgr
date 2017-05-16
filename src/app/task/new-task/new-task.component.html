@@ -4,50 +4,40 @@
     <md-input-container class="full-width">
       <textarea mdInput placeholder="任务内容" formControlName="desc"></textarea>
     </md-input-container>
-    <div class="full-width">
-      <label>任务执行者：</label>
-      <span class="avatar-circle">
-        <span class="initials">
-          PW  
-        </span>
-      </span>
-      <button md-raised-button type="button">更改</button>
-    </div>
-    <div class="full-width chips-holder">
-      <span>任务参与者：</span>
-      <span>
-        <div class="avatar-circle">
-          <span class="initials">
-            PW  
-          </span>
-        </div>
-      </span>
-      <span>
-        <div class="avatar-circle">
-          <span class="initials">
-            PW  
-          </span>
-        </div>
-      </span>
-      <span>
-        <button md-raised-button type="button">更改</button>
-      </span>
-    </div>
+    <md-input-container class="full-width">
+      <input mdInput [mdDatepicker]="dueDatePicker" placeholder="选择截止日期" formControlName="dueDate">
+      <button mdSuffix [mdDatepickerToggle]="dueDatePicker"></button>
+    </md-input-container>
+    <md-datepicker touchUi="true" #dueDatePicker></md-datepicker>
+    <md-input-container class="full-width">
+      <input mdInput [mdDatepicker]="reminderPicker" placeholder="选择提醒日期" formControlName="reminder">
+      <button mdSuffix [mdDatepickerToggle]="reminderPicker"></button>
+    </md-input-container>
+    <md-datepicker touchUi="true" #reminderPicker></md-datepicker>
     <md-radio-group class="full-width" formControlName="priority">
       <md-radio-button value=3>普通</md-radio-button>
       <md-radio-button value=2>优先</md-radio-button>
       <md-radio-button value=1>紧急</md-radio-button>
     </md-radio-group>
     <md-input-container class="full-width">
-      <input mdInput [mdDatepicker]="dueDatePicker" placeholder="选择截止日期" formControlName="dueDate">
-      <button mdSuffix [mdDatepickerToggle]="dueDatePicker"></button>
+      <md-chip-list mdPrefix>
+        <md-chip>
+          {{username}}  <span (click)="removeEnteredTag(tag)" class="remove-tag">x</span>
+        </md-chip>
+      </md-chip-list>
+      <input mdInput placeholder="更改执行者" formControlName="ownerId" [mdAutocomplete]="auto">
     </md-input-container>
-    <md-datepicker #dueDatePicker></md-datepicker>
+
     <md-input-container class="full-width">
-      <input mdInput [mdDatepicker]="reminderPicker" placeholder="选择提醒日期" formControlName="reminder">
-      <button mdSuffix [mdDatepickerToggle]="reminderPicker"></button>
+      <md-chip-list mdPrefix>
+        <md-chip>
+          {{username}}  <span (click)="removeTag(tag)" class="remove-tag">x</span>
+        </md-chip>
+      </md-chip-list>
+      <input mdInput placeholder="添加参与者" formControlName="ownerId" [mdAutocomplete]="autoFollower">
     </md-input-container>
-    <md-datepicker #reminderPicker></md-datepicker>
+
+    
     <md-input-container class="full-width">
       <textarea mdInput placeholder="备注" formControlName="desc"></textarea>
     </md-input-container>
@@ -64,3 +54,25 @@
     <button md-dialog-close md-raised-button type="button">关闭</button>
   </div>
 </form>
+<md-autocomplete #autoFollower="mdAutocomplete" [displayWith]="displayUser">
+  <md-option>
+    Peng Wang
+  </md-option>
+  <md-option>
+    Faye Wang
+  </md-option>
+  <md-option>
+    Zecheng Yu
+  </md-option>
+</md-autocomplete>
+    <md-autocomplete #auto="mdAutocomplete" [displayWith]="displayUser">
+  <md-option>
+    Peng Wang
+  </md-option>
+  <md-option>
+    Faye Wang
+  </md-option>
+  <md-option>
+    Zecheng Yu
+  </md-option>
+</md-autocomplete>

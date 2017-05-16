@@ -32,7 +32,10 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush, 
 })
 export class ChipsListComponent implements ControlValueAccessor {
-
+  @Input()
+  items: string[];
+  @Output()
+  deleteChip = new EventEmitter<void>(); 
   constructor() { }
 
   // 这里是做一个空函数体，真正使用的方法在 registerOnChange 中
@@ -42,7 +45,7 @@ export class ChipsListComponent implements ControlValueAccessor {
   // 设置初始值
   public writeValue(obj: any) {
     if (obj && obj !== '') {
-      this.selected = obj;
+      this.items = obj;
     } 
   }
   // 当表单控件值改变时，函数 fn 会被调用
@@ -52,7 +55,7 @@ export class ChipsListComponent implements ControlValueAccessor {
   }
   // 验证表单，验证结果正确返回 null 否则返回一个验证结果对象
   public validate(c: FormControl) {
-    return this.selected ? null : {
+    return this.items ? null : {
       imageListSelect: {
         valid: false,
       },
@@ -60,12 +63,11 @@ export class ChipsListComponent implements ControlValueAccessor {
   }
   // 这里没有使用，用于注册 touched 状态
   public registerOnTouched() { }
-  // 列表元素选择发生改变触发
-  private onChange(i) {
-    this.selected = this.items[i];
-    // 更新表单
-    this.propagateChange(this.items[i]);
-    this.change.emit(this.items[i]);
-  }
 
+  private removeChip(ev: Event, i: number){
+    ev.preventDefault();
+    this.items = [...this.items.slice(0, i), ...this.items.slice(i+1)];
+    this.deleteChip.emit();
+    this.propagateChange(this.items);
+  }
 }

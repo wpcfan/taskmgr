@@ -39,7 +39,7 @@ export class NewTaskComponent implements OnInit {
         priority: [3],
         dueDate: [new Date()],
         reminder:[new Date()],
-
+        ownerId: [this.data.user.id]
       });
       this.dialogTitle = '创建任务：';
     }
@@ -49,6 +49,8 @@ export class NewTaskComponent implements OnInit {
         priority: [this.data.task.priority],
         dueDate: [this.data.task.dueDate],
         reminder: [this.data.task.reminder],
+        ownerId: [this.data.user.id],
+
       });
       this.dialogTitle = '修改任务：';
     }
@@ -62,7 +64,7 @@ export class NewTaskComponent implements OnInit {
         new actions.AddTaskAction({
           desc: value.desc,
           taskListId: this.data.taskListId,
-          ownerId: this.data.userId,
+          ownerId: this.data.user.id,
           completed: false,
           participantIds: ["1"],
           dueDate: value.dueDate,
@@ -79,7 +81,7 @@ export class NewTaskComponent implements OnInit {
           id: this.data.task.id,
           desc: value.desc,
           taskListId: this.data.taskListId,
-          ownerId: this.data.userId,
+          ownerId: this.data.user.id,
           completed: false,
           participantIds: ["1"],
           dueDate: value.dueDate,
