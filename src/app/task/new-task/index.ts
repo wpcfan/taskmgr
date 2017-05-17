@@ -45,7 +45,8 @@ export class NewTaskComponent implements OnInit {
         dueDate: [new Date()],
         reminder:[new Date()],
         ownerChip: [[{name: this.data.user.name, value: this.data.user.id}]],
-        ownerSearch: ['']
+        ownerSearch: [''],
+        remark: ['']
       });
       this.dialogTitle = '创建任务：';
     }
@@ -56,7 +57,8 @@ export class NewTaskComponent implements OnInit {
         dueDate: [this.data.task.dueDate],
         reminder: [this.data.task.reminder],
         ownerChip: [{name: this.data.user.name, value: this.data.user.id}],
-        ownerSearch: ['']
+        ownerSearch: [''],
+        remark: [this.data.task.remark]
       });
       this.dialogTitle = '修改任务：';
     }
