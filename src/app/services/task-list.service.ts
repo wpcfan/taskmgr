@@ -14,12 +14,8 @@ export class TaskListService {
     @Inject('BASE_CONFIG') private config,
     private http: Http) { }
 
-  add(name: string, projectId: string): Observable<TaskList> {
+  add(taskList: TaskList): Observable<TaskList> {
     const uri = `${this.config.uri}/${this.domain}`;
-    const taskList = {
-      name: name,
-      projectId: projectId
-    };
     return this.http
       .post(uri, JSON.stringify(taskList), {headers: this.headers})
       .map(res => res.json());
@@ -64,9 +60,9 @@ export class TaskListService {
   initializeTaskLists(prj: Project): Observable<Project>{
     const id = prj.id;
     return concat(
-      this.add('待办', id), 
-      this.add('进行中', id),
-      this.add('已完成', id))
+      this.add({name: '待办', projectId: id, order: 1}), 
+      this.add({name: '进行中', projectId: id, order: 2}),
+      this.add({name: '已完成', projectId: id, order: 3}))
       .reduce((r,x)=> {
         return [...r, x];
       },[])

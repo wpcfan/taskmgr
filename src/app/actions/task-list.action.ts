@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { type } from '../utils/type.util';
-import * as models from '../domain';
+import { TaskList, Err, Project } from '../domain';
 
 export const ActionTypes = {
   ADD:                    type('[TaskList] Add'),
@@ -26,47 +26,47 @@ export const ActionTypes = {
 
 export class AddTaskListAction implements Action {
   type = ActionTypes.ADD;
-  constructor(public payload: models.TaskList){}
+  constructor(public payload: TaskList){}
 }
 
 export class AddTaskListSuccessAction implements Action {
   type = ActionTypes.ADD_SUCCESS;
-  constructor(public payload: models.TaskList){}
+  constructor(public payload: TaskList){}
 }
 
 export class AddTaskListFailAction implements Action {
   type = ActionTypes.ADD_FAIL;
-  constructor(public payload: models.Err){}
+  constructor(public payload: Err){}
 }
 
 export class UpdateTaskListAction implements Action {
   type = ActionTypes.UPDATE;
-  constructor(public payload: models.TaskList){}
+  constructor(public payload: TaskList){}
 }
 
 export class UpdateTaskListSuccessAction implements Action {
   type = ActionTypes.UPDATE_SUCCESS;
-  constructor(public payload: models.TaskList){}
+  constructor(public payload: TaskList){}
 }
 
 export class UpdateTaskListFailAction implements Action {
   type = ActionTypes.UPDATE_FAIL;
-  constructor(public payload: models.Err){}
+  constructor(public payload: Err){}
 }
 
 export class DeleteTaskListAction implements Action {
   type = ActionTypes.DELETE;
-  constructor(public payload: models.TaskList){}
+  constructor(public payload: TaskList){}
 }
 
 export class DeleteTaskListSuccessAction implements Action {
   type = ActionTypes.DELETE_SUCCESS;
-  constructor(public payload: models.TaskList){}
+  constructor(public payload: TaskList){}
 }
 
 export class DeleteTaskListFailAction implements Action {
   type = ActionTypes.DELETE_FAIL;
-  constructor(public payload: models.Err){}
+  constructor(public payload: Err){}
 }
 
 export class LoadTaskListsAction implements Action {
@@ -76,12 +76,12 @@ export class LoadTaskListsAction implements Action {
 
 export class LoadTaskListsSuccessAction implements Action {
   type = ActionTypes.LOADS_SUCCESS;
-  constructor(public payload: models.TaskList[]){}
+  constructor(public payload: TaskList[]){}
 }
 
 export class LoadTaskListsFailAction implements Action {
   type = ActionTypes.LOADS_FAIL;
-  constructor(public payload: models.Err){}
+  constructor(public payload: Err){}
 }
 
 export class DragAction implements Action {
@@ -101,22 +101,22 @@ export class SwapOrderSuccessAction implements Action {
 
 export class SwapOrderFailAction implements Action {
   type = ActionTypes.SWAP_ORDER_FAIL;
-  constructor(public payload: models.Err){}
+  constructor(public payload: Err){}
 }
 
 export class InitTaskListsAction implements Action {
   type = ActionTypes.INITIALIZE;
-  constructor(public payload: models.Project){}
+  constructor(public payload: Project){}
 }
 
 export class InitTaskListsSuccessAction implements Action {
   type = ActionTypes.INITIALIZE_SUCCESS;
-  constructor(public payload: models.Project){}
+  constructor(public payload: Project){}
 }
 
 export class InitTaskListsFailAction implements Action{
   type = ActionTypes.INITIALIZE_FAIL;
-  constructor(public payload: models.Err){}
+  constructor(public payload: Err){}
 }
 
 export type Actions

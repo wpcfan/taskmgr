@@ -44,10 +44,9 @@ export class TaskListEffects{
   addTaskList$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.ADD)
     .map(toPayload)
-    .withLatestFrom(this.store$.select(fromRoot.getSelectedProjectId))
-    .switchMap(([taskList, projectId]) => {
+    .switchMap((taskList) => {
       return this.service$
-        .add(taskList, projectId)
+        .add(taskList)
         .map(taskList => new actions.AddTaskListSuccessAction(taskList))
         .catch(err => of(new actions.AddTaskListFailAction(JSON.stringify(err))))
       }
