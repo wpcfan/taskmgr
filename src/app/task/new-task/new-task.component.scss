@@ -1,24 +1,19 @@
-.chips-holder{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
 .chip {
+  margin-top: 5px;
   display: inline-block;
-  padding: 0 25px;
-  height: 50px;
+  padding: 0 20px;
+  height: 40px;
   font-size: 18px;
-  line-height: 50px;
-  border-radius: 25px;
+  line-height: 40px;
+  border-radius: 20px;
   background-color: #f1f1f1;
 }
 
 .chip img {
   float: left;
-  margin: 0 10px 0 -25px;
-  height: 50px;
-  width: 50px;
+  margin: 0 10px 0 -20px;
+  height: 40px;
+  width: 40px;
   border-radius: 50%;
 }
 
@@ -35,10 +30,6 @@
   color: #000;
 }
 
-.show-chip{
-  
-}
-
-.hide-chip{
+.hide{
   display: none;
 }

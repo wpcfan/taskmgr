@@ -34,10 +34,13 @@ import { User, Task } from "../../domain";
 export class NewTaskComponent implements OnInit {
   form: FormGroup;
   dialogTitle: string;
-  searchResults: Observable<User[]>;
+  ownerResults: Observable<User[]>;
+  followerResults: Observable<User[]>;
   showOwner$: Observable<boolean>;
   showAuto$: Observable<boolean>;
   owners: User[];
+  followers: User[];
+  tags: string[];
   @ViewChild("assignee") trigger: MdAutocompleteTrigger;
 
   constructor(    
@@ -51,14 +54,19 @@ export class NewTaskComponent implements OnInit {
     if(!this.data.task) {
       this.form = this.fb.group({
         desc: ['', Validators.required],
-        priority: [3],
-        dueDate: [new Date()],
-        reminder:[new Date()],
+        priority: ['3'],
+        dueDate: [],
+        reminder:[],
         ownerChip: [[{name: this.data.user.name, value: this.data.user.id}]],
         ownerSearch: [''],
+        followerSearch: [''],
+        // tagsInput: [''],
         remark: ['']
       });
       this.dialogTitle = '创建任务：';
+      this.followers = [this.data.user];
+      this.owners = [this.data.user];
+      // this.tags = [];
     }
     else {
       this.form = this.fb.group({
@@ -68,21 +76,22 @@ export class NewTaskComponent implements OnInit {
         reminder: [this.data.task.reminder],
         ownerChip: [{name: this.data.user.name, value: this.data.user.id}, Validators.required],
         ownerSearch: [''],
+        followerSearch: [''],
+        // tagsInput: [''],
         remark: [this.data.task.remark]
       });
       this.dialogTitle = '修改任务：';
+      this.followers = this.data.followers;
+      this.owners = [this.data.owner];
+      // this.tags = this.data.tags;
     }
-    this.searchResults = this.form.controls['ownerSearch'].valueChanges
-      .startWith(null)
-      .debounceTime(300)
-      .distinctUntilChanged()
-      .filter(s => s && s.length>1)
-      .switchMap(str => this.service.searchUsers(str));
+    this.ownerResults = this.searchUsers(this.form.controls['ownerSearch'].valueChanges);
+    this.followerResults = this.searchUsers(this.form.controls['followerSearch'].valueChanges);
     const ownerChip$ = this.form.controls['ownerChip'].valueChanges.map(a => {
       return a.length === 0 ? false: true
     }).startWith(true);
     this.showOwner$ = ownerChip$;
-    this.owners = [this.data.user];
+    
   }
 
   onSubmit({value, valid}, event: Event){
@@ -101,7 +110,7 @@ export class NewTaskComponent implements OnInit {
           createDate: new Date(),
           priority: value.priority,
           order: 4,
-          tags: ['something'],
+          // tags: ['something'],
           remark: value.remark
         }));
     else
@@ -118,7 +127,7 @@ export class NewTaskComponent implements OnInit {
           createDate: new Date(),
           priority: value.priority,
           order: 4,
-          tags: ['something'],
+          // tags: ['something'],
           remark: value.remark
         }));
     this.dialogRef.close();
@@ -130,9 +139,45 @@ export class NewTaskComponent implements OnInit {
 
   handleAssigneeSelection(user: User){
     this.owners = [user];
+    this.form.patchValue({ownerSearch: user.name});
+    // 注意必须发射事件后才可以影响其他控件
+    this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
+  }
+
+  handleFollowerSelection(user: User){
+    if(this.followers.map(fl => fl.id).indexOf(user.id)>=0) return;
+    this.followers = [...this.followers, user];
+    this.form.patchValue({followerSearch: user.name});
+    // 注意必须发射事件后才可以影响其他控件
+    this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
   }
 
   removeOwner(owner: User){
     this.owners = [];
   }
+
+  removeFollower(follower: User){
+    this.followers = this.followers.filter(fl => fl.id !== follower.id);
+  }
+
+  searchUsers(obs: Observable<string>): Observable<User[]>{
+    return obs.startWith(null)
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .filter(s => s && s.length>1)
+      .switchMap(str => this.service.searchUsers(str));
+  }
+
+  // addTag(ev: Event){
+  //   ev.preventDefault();
+  //   const val = this.form.value.tagsInput;
+  //   if(this.followers.indexOf(val)>=0) return;
+  //   this.tags = [...this.tags, val];
+  //   this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
+  // }
+
+  // removeTag(ev: Event, tag: string){
+  //   ev.preventDefault();
+  //   this.tags = this.tags.filter(str => str != tag);
+  // }
 }

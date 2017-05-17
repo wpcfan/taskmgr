@@ -54,7 +54,7 @@ export interface Task{
   priority: number;
   order: number;
   remark?: string;
-  tags?: string[];
+  // tags?: string[];
   reminder?: Date;
   createDate: Date;
 }
