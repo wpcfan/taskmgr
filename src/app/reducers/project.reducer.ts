@@ -45,6 +45,7 @@ export function reducer(
       // if projects is null then return the orginal state
       if(projects === null) return state; 
       const newProjects = projects.filter(project => !state.entities[project.id]);
+      if(newProjects.length === 0) return state;
       const entities = newProjects.reduce((entities: { [id: string]: Project }, project) => {
         return Object.assign(entities, {
           [project.id]: project
