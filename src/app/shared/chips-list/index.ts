@@ -50,8 +50,8 @@ export class ChipsListComponent implements ControlValueAccessor {
   private propagateChange = (_: any) => { };
   // 设置初始值
   public writeValue(obj: any) {
-    if (obj && obj !== '') {
-      this.items = obj;
+    if (obj && obj !== []) {
+      this.items = [...this.items, ...obj]
     } 
   }
   // 当表单控件值改变时，函数 fn 会被调用
@@ -72,7 +72,7 @@ export class ChipsListComponent implements ControlValueAccessor {
 
   private removeChip(ev: Event, i: number){
     ev.preventDefault();
-    this.items = [...this.items.slice(0, i), ...this.items.slice(i)];
+    this.items = [...this.items.slice(0, i), ...this.items.slice(i+1)];
     this.deleteChip.emit();
     this.propagateChange(this.items);
   }

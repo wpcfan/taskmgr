@@ -19,10 +19,17 @@
       <md-radio-button value=2>优先</md-radio-button>
       <md-radio-button value=1>紧急</md-radio-button>
     </md-radio-group>
-    <app-chips-list formControlName="ownerChip"></app-chips-list>
-    <md-input-container class="full-width">
-      <input mdInput placeholder="更改执行者" formControlName="ownerSearch" [mdAutocomplete]="assignee">
-    </md-input-container>
+    <div class="full-width">
+      <div class="chip" *ngFor="let owner of owners">
+        <!--<img src="img_avatar.png" alt="Person" width="96" height="96">-->
+        {{owner.name}}
+        <span class="closebtn" (click)="removeOwner(owner)" >&times;</span>
+      </div>
+      <md-input-container class="full-width">
+        <input mdInput placeholder="更改执行者" formControlName="ownerSearch" [mdAutocomplete]="assignee">
+      </md-input-container>
+    </div>  
+
 
     <!--<md-input-container class="full-width">
       <md-chip-list mdPrefix>
@@ -51,10 +58,11 @@
   </div>
 </form>
 <md-autocomplete #assignee="mdAutocomplete" [displayWith]="displayUser">
-  <md-option *ngFor="let item of searchResults | async" [value]="item">
+  <md-option *ngFor="let item of searchResults | async" [value]="item" (click)="handleAssigneeSelection(item)">
     {{item.name}}
   </md-option>
 </md-autocomplete>
+
 <!--<md-autocomplete #auto="mdAutocomplete" [displayWith]="displayUser">
   <md-option>
     Peng Wang

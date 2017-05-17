@@ -2,6 +2,7 @@ import {
   Component, 
   OnInit, 
   Inject, 
+  ViewChild,
   ChangeDetectionStrategy 
 } from '@angular/core';
 import { 
@@ -10,10 +11,15 @@ import {
   FormControl,
   Validators 
 } from '@angular/forms';
-import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { 
+  MdDialogRef, 
+  MD_DIALOG_DATA,
+  MdAutocompleteTrigger 
+} from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/distinctUntilChanged";
+import "rxjs/add/observable/concat";
 import { UserService } from "../../services";
 import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/task.action';
@@ -29,6 +35,10 @@ export class NewTaskComponent implements OnInit {
   form: FormGroup;
   dialogTitle: string;
   searchResults: Observable<User[]>;
+  showOwner$: Observable<boolean>;
+  showAuto$: Observable<boolean>;
+  owners: User[];
+  @ViewChild("assignee") trigger: MdAutocompleteTrigger;
 
   constructor(    
     private fb: FormBuilder,
@@ -56,7 +66,7 @@ export class NewTaskComponent implements OnInit {
         priority: [this.data.task.priority],
         dueDate: [this.data.task.dueDate],
         reminder: [this.data.task.reminder],
-        ownerChip: [{name: this.data.user.name, value: this.data.user.id}],
+        ownerChip: [{name: this.data.user.name, value: this.data.user.id}, Validators.required],
         ownerSearch: [''],
         remark: [this.data.task.remark]
       });
@@ -68,6 +78,11 @@ export class NewTaskComponent implements OnInit {
       .distinctUntilChanged()
       .filter(s => s && s.length>1)
       .switchMap(str => this.service.searchUsers(str));
+    const ownerChip$ = this.form.controls['ownerChip'].valueChanges.map(a => {
+      return a.length === 0 ? false: true
+    }).startWith(true);
+    this.showOwner$ = ownerChip$;
+    this.owners = [this.data.user];
   }
 
   onSubmit({value, valid}, event: Event){
@@ -111,5 +126,13 @@ export class NewTaskComponent implements OnInit {
 
   displayUser(user: User): string {
     return user ? user.name : '';
+  }
+
+  handleAssigneeSelection(user: User){
+    this.owners = [user];
+  }
+
+  removeOwner(owner: User){
+    this.owners = [];
   }
 }
