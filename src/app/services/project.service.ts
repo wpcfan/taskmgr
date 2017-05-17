@@ -54,9 +54,4 @@ export class ProjectService {
       .map(res => res.json());
   }
 
-  getUsersByProject(projectId: string): Observable<User[]>{
-    const uri = `${this.config.uri}/users`;
-    return this.http.get(uri, {params: {'projectIds': projectId}})
-      .map(res => res.json() as User[]);
-  }
 }

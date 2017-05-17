@@ -25,6 +25,9 @@ export const ActionTypes = {
   LOAD_ALL_USERS:                type('[User] Load All Users'),  
   LOAD_ALL_USERS_SUCCESS:        type('[User] Load All Users Success'),  
   LOAD_ALL_USERS_FAIL:           type('[User] Load All Users Fail'),  
+  LOAD_USERS_BY_PRJ:             type('[User] Load Users By Projects'),  
+  LOAD_USERS_BY_PRJ_SUCCESS:     type('[User] Load Users By Projects Success'),  
+  LOAD_USERS_BY_PRJ_FAIL:        type('[User] Load Users By Projects Fail'), 
 };
 
 /**
@@ -86,7 +89,23 @@ export class LoadAllUsersFailAction implements Action {
   constructor(public payload: Err) { }
 }
 
+export class LoadUsersByPrjAction implements Action {
+  type = ActionTypes.LOAD_USERS_BY_PRJ;
 
+  constructor(public payload: string) { }
+}
+
+export class LoadUsersByPrjSuccessAction implements Action {
+  type = ActionTypes.LOAD_USERS_BY_PRJ_SUCCESS;
+
+  constructor(public payload: User[]) { }
+}
+
+export class LoadUsersByPrjFailAction implements Action {
+  type = ActionTypes.LOAD_USERS_BY_PRJ_FAIL;
+
+  constructor(public payload: Err) { }
+}
 
 /**
  * Export a type alias of all actions in this action group
@@ -102,4 +121,7 @@ export type Actions
   | RemoveUserProjectAction
   | RemoveUserProjectSuccessAction
   | RemoveUserProjectFailAction
+  | LoadUsersByPrjAction
+  | LoadUsersByPrjSuccessAction
+  | LoadUsersByPrjFailAction
   ;

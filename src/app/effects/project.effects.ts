@@ -95,22 +95,4 @@ export class ProjectEffects{
     .withLatestFrom(this.store$.select(fromRoot.getAuth).map(auth => auth.user), (projectId, user) => {
       return new userActions.AddUserProjectAction({user: user, projectId: projectId})
     })
-
-
-  @Effect()
-  toLoadUser$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.LOADS_SUCCESS)
-    .map(toPayload)
-    .switchMap((prjs:Project[]) => Observable.from(prjs.map(prj => prj.id)))
-    .map((projectId:string) => new actions.LoadUsersByPrjAction(projectId))
-  
-  @Effect()
-  loadProjectUsers$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.LOAD_USERS_BY_PRJ)
-    .map(toPayload)
-    .switchMap(projectId => 
-      this.service.getUsersByProject(projectId)
-        .map(users => new actions.LoadUsersByPrjSuccessAction(users))
-        .catch(err => of(new actions.LoadUsersByPrjFailAction(JSON.stringify(err))))
-      );
 }

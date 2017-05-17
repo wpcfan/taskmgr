@@ -11,6 +11,7 @@ import 'rxjs/add/operator/withLatestFrom';
 import 'rxjs/add/observable/zip';
 import { UserService } from '../services';
 import * as actions from '../actions/user.action';
+import * as prjActions from '../actions/project.action';
 import * as fromRoot from '../reducers';
 import { Project, User } from '../domain';
 
@@ -62,5 +63,22 @@ export class UserEffects{
         .catch(err => of(new actions.RemoveUserProjectFailAction(JSON.stringify(err))))
       }
     );
+
+  @Effect()
+  toLoadUser$: Observable<Action> = this.actions$
+    .ofType(prjActions.ActionTypes.LOADS_SUCCESS)
+    .map(toPayload)
+    .switchMap((prjs:Project[]) => Observable.from(prjs.map(prj => prj.id)))
+    .map((projectId:string) => new actions.LoadUsersByPrjAction(projectId))
+  
+  @Effect()
+  loadProjectUsers$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.LOAD_USERS_BY_PRJ)
+    .map(toPayload)
+    .switchMap(projectId => 
+      this.service$.getUsersByProject(projectId)
+        .map(users => new actions.LoadUsersByPrjSuccessAction(users))
+        .catch(err => of(new actions.LoadUsersByPrjFailAction(JSON.stringify(err))))
+      );
 
 }

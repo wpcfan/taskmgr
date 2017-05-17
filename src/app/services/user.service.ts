@@ -20,6 +20,12 @@ export class UserService {
       .map(res => res.json() as User[]);
   }
 
+  getUsersByProject(projectId: string): Observable<User[]>{
+    const uri = `${this.config.uri}/users`;
+    return this.http.get(uri, {params: {'projectIds': projectId}})
+      .map(res => res.json() as User[]);
+  }
+
   addProjectRef(user: User, projectId: string): Observable<User>{
     const uri = `${this.config.uri}/${this.domain}/${user.id}`;
     const projectIds = (user.projectIds)? user.projectIds : [];

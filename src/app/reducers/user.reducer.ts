@@ -1,5 +1,6 @@
 import * as actions from '../actions/user.action';
 import { User } from '../domain';
+import { createSelector } from 'reselect';
 
 export interface State {
   ids: string [];
@@ -41,8 +42,27 @@ export function reducer(state = initialState, action: actions.Actions ): State {
       return Object.assign({}, state, 
         {ids: users.map(user => user.id), entities: entities});
     }
+    case actions.ActionTypes.LOAD_USERS_BY_PRJ_SUCCESS:{
+      const users = <User[]>action.payload;
+      if(users === null) return state; 
+      const newUsers = users.filter(user => !state.entities[user.id]);
+      const entities = newUsers.reduce((entities: { [id: string]: User }, user) => {
+        return Object.assign(entities, {
+          [user.id]: user
+        })
+      },{});
+      return Object.assign({}, state, 
+        { ids: newUsers.map(user => user.id), entities: entities});
+    }
+    case actions.ActionTypes.LOAD_USERS_BY_PRJ_FAIL:
     default: {
       return state;
     }
   }
 }
+
+export const getEntities = (state) => state.entities;
+export const getIds = (state) => state.ids;
+export const getUsers = createSelector(getEntities, getIds, (entities, ids) => {
+  return ids.map(id => entities[id]);
+});
