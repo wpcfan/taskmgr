@@ -38,13 +38,13 @@ export class NewTaskComponent implements OnInit {
     private dialogRef: MdDialogRef<NewTaskComponent>) { }
 
   ngOnInit(){
-    if(this.data.task === undefined || this.data.task === null) {
+    if(!this.data.task) {
       this.form = this.fb.group({
         desc: ['', Validators.required],
         priority: [3],
         dueDate: [new Date()],
         reminder:[new Date()],
-        ownerChip: [{name: this.data.user.name, value: this.data.user.id}],
+        ownerChip: [[{name: this.data.user.name, value: this.data.user.id}]],
         ownerSearch: ['']
       });
       this.dialogTitle = '创建任务：';

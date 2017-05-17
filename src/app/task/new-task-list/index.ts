@@ -34,7 +34,7 @@ export class NewTaskListComponent implements OnInit {
     private dialogRef: MdDialogRef<NewTaskListComponent>) { }
 
   ngOnInit() {
-    if(this.data.taskList.id === undefined || this.data.taskList.id === null) {
+    if(!this.data.taskList.id) {
       this.form = this.fb.group({
         name: ['', Validators.required]
       });
@@ -51,7 +51,7 @@ export class NewTaskListComponent implements OnInit {
   onSubmit({value, valid}, event: Event){
     event.preventDefault();
     if(!valid) return;
-    if(this.data.taskList.id === undefined || this.data.taskList.id === null)
+    if(!this.data.taskList.id)
       this.store$.dispatch(
         new actions.AddTaskListAction({
           name: value.name,

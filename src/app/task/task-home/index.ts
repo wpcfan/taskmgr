@@ -54,9 +54,9 @@ export class TaskHomeComponent implements OnDestroy{
 
   ngOnDestroy(){
     // 取消订阅以免内存泄露
-    if(this.routeParamSub !== undefined && this.routeParamSub !== null)
+    if(this.routeParamSub)
       this.routeParamSub.unsubscribe();
-    if(this.listSub !== undefined && this.listSub !== null)
+    if(this.listSub)
       this.listSub.unsubscribe();
   }
 
