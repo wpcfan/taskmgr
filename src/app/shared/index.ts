@@ -71,6 +71,7 @@ import { InitialsPipe } from './initials.pipe';
     MdAutocompleteModule,
     ConfirmDialogComponent,
     ImageListSelectComponent,
+    ChipsListComponent
   ],
   declarations: [
     ConfirmDialogComponent, 
@@ -78,7 +79,9 @@ import { InitialsPipe } from './initials.pipe';
     ChipsListComponent,
     InitialsPipe,
     ],
-  entryComponents: [ConfirmDialogComponent]
+  entryComponents: [
+    ConfirmDialogComponent
+    ]
 })
 export class SharedModule { }
 

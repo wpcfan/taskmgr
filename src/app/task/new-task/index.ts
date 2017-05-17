@@ -13,8 +13,11 @@ import {
 import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Observable } from "rxjs/Observable";
+import "rxjs/add/operator/distinctUntilChanged";
+import { UserService } from "../../services";
 import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/task.action';
+import { User, Task } from "../../domain";
 
 @Component({
   selector: 'app-new-task',
@@ -25,10 +28,12 @@ import * as actions from '../../actions/task.action';
 export class NewTaskComponent implements OnInit {
   form: FormGroup;
   dialogTitle: string;
+  searchResults: Observable<User[]>;
 
   constructor(    
     private fb: FormBuilder,
     private store$: Store<fromRoot.State>,
+    private service: UserService,
     @Inject(MD_DIALOG_DATA) private data: any,
     private dialogRef: MdDialogRef<NewTaskComponent>) { }
 
@@ -39,7 +44,8 @@ export class NewTaskComponent implements OnInit {
         priority: [3],
         dueDate: [new Date()],
         reminder:[new Date()],
-        ownerId: [this.data.user.id]
+        ownerChip: [{name: this.data.user.name, value: this.data.user.id}],
+        ownerSearch: ['']
       });
       this.dialogTitle = '创建任务：';
     }
@@ -49,11 +55,17 @@ export class NewTaskComponent implements OnInit {
         priority: [this.data.task.priority],
         dueDate: [this.data.task.dueDate],
         reminder: [this.data.task.reminder],
-        ownerId: [this.data.user.id],
-
+        ownerChip: [{name: this.data.user.name, value: this.data.user.id}],
+        ownerSearch: ['']
       });
       this.dialogTitle = '修改任务：';
     }
+    this.searchResults = this.form.controls['ownerSearch'].valueChanges
+      .startWith(null)
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .filter(s => s && s.length>1)
+      .switchMap(str => this.service.searchUsers(str));
   }
 
   onSubmit({value, valid}, event: Event){
@@ -93,5 +105,9 @@ export class NewTaskComponent implements OnInit {
           remark: value.remark
         }));
     this.dialogRef.close();
+  }
+
+  displayUser(user: User): string {
+    return user ? user.name : '';
   }
 }

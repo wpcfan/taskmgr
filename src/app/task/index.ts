@@ -6,6 +6,7 @@ import { TaskRoutingModule } from "./task-routing.module";
 import { TaskHomeComponent } from './task-home';
 import { TaskListHeaderComponent } from './task-list-header';
 import { NewTaskComponent } from "./new-task";
+import { NewTaskListComponent } from './new-task-list';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { NewTaskComponent } from "./new-task";
     TaskHomeComponent, 
     TaskListHeaderComponent,
     NewTaskComponent,
+    NewTaskListComponent,
   ],
-  entryComponents: [NewTaskComponent]
+  entryComponents: [NewTaskComponent, NewTaskListComponent]
 })
 export class TaskModule { }

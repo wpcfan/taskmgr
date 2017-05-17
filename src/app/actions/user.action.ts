@@ -22,9 +22,9 @@ export const ActionTypes = {
   REMOVE_USER_PROJECT:           type('[User] Remove User Project'),
   REMOVE_USER_PROJECT_SUCCESS:   type('[User] Remove User Project Success'),
   REMOVE_USER_PROJECT_FAIL:      type('[User] Remove User Project Fail'),  
-  LOAD_ALL_USERS:                type('[User] Load All Users'),  
-  LOAD_ALL_USERS_SUCCESS:        type('[User] Load All Users Success'),  
-  LOAD_ALL_USERS_FAIL:           type('[User] Load All Users Fail'),  
+  SEARCH_USERS:                  type('[User] Search Users'),  
+  SEARCH_USERS_SUCCESS:          type('[User] Search Users Success'),  
+  SEARCH_USERS_FAIL:             type('[User] Search Users Fail'),  
   LOAD_USERS_BY_PRJ:             type('[User] Load Users By Projects'),  
   LOAD_USERS_BY_PRJ_SUCCESS:     type('[User] Load Users By Projects Success'),  
   LOAD_USERS_BY_PRJ_FAIL:        type('[User] Load Users By Projects Fail'), 
@@ -71,20 +71,20 @@ export class RemoveUserProjectFailAction implements Action {
   constructor(public payload: Err) { }
 }
 
-export class LoadAllUsersAction implements Action {
-  type = ActionTypes.LOAD_ALL_USERS;
+export class SearchUsersAction implements Action {
+  type = ActionTypes.SEARCH_USERS;
 
-  constructor(public payload: any) { }
+  constructor(public payload: string) { }
 }
 
-export class LoadAllUsersSuccessAction implements Action {
-  type = ActionTypes.LOAD_ALL_USERS_SUCCESS;
+export class SearchUsersSuccessAction implements Action {
+  type = ActionTypes.SEARCH_USERS_SUCCESS;
 
   constructor(public payload: User[]) { }
 }
 
-export class LoadAllUsersFailAction implements Action {
-  type = ActionTypes.LOAD_ALL_USERS_FAIL;
+export class SearchUsersFailAction implements Action {
+  type = ActionTypes.SEARCH_USERS_FAIL;
 
   constructor(public payload: Err) { }
 }
@@ -115,9 +115,9 @@ export type Actions
   = AddUserProjectAction
   | AddUserProjectSuccessAction
   | AddUserProjectFailAction
-  | LoadAllUsersAction
-  | LoadAllUsersSuccessAction
-  | LoadAllUsersFailAction
+  | SearchUsersAction
+  | SearchUsersSuccessAction
+  | SearchUsersFailAction
   | RemoveUserProjectAction
   | RemoveUserProjectSuccessAction
   | RemoveUserProjectFailAction

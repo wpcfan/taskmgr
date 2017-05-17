@@ -13,6 +13,11 @@ import {
   FormControl 
 } from '@angular/forms';
 
+export interface Item{
+  name: string;
+  value?: any;
+}
+
 @Component({
   selector: 'app-chips-list',
   templateUrl: './chips-list.component.html',
@@ -32,8 +37,9 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush, 
 })
 export class ChipsListComponent implements ControlValueAccessor {
+  
   @Input()
-  items: string[];
+  items: Item[] = [];
   @Output()
   deleteChip = new EventEmitter<void>(); 
   constructor() { }
@@ -66,7 +72,7 @@ export class ChipsListComponent implements ControlValueAccessor {
 
   private removeChip(ev: Event, i: number){
     ev.preventDefault();
-    this.items = [...this.items.slice(0, i), ...this.items.slice(i+1)];
+    this.items = [...this.items.slice(0, i), ...this.items.slice(i)];
     this.deleteChip.emit();
     this.propagateChange(this.items);
   }

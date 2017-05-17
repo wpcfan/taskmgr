@@ -76,17 +76,8 @@
     {
       "name": "待办",
       "projectId": "Sy8E4Y_g-",
-      "id": "Bke8N4tdeb"
-    },
-    {
-      "name": "进行中",
-      "projectId": "Sy8E4Y_g-",
-      "id": "SyZ8N4Ful-"
-    },
-    {
-      "name": "已完成",
-      "projectId": "Sy8E4Y_g-",
-      "id": "BkfIN4Ydxb"
+      "order": 1,
+      "id": "B1MQe8KxZ"
     }
   ],
   "tasks": [],

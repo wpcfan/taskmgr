@@ -14,9 +14,9 @@ export class UserService {
     private http: Http){}
 
 
-  getAllUsers(): Observable<User[]> {
+  searchUsers(filter: string): Observable<User[]> {
     const uri = `${this.config.uri}/${this.domain}`;
-    return this.http.get(uri)
+    return this.http.get(uri, { params: {'name_like': filter, 'email_like': filter}})
       .map(res => res.json() as User[]);
   }
 

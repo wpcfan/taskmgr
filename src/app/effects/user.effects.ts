@@ -32,11 +32,12 @@ export class UserEffects{
    */
   @Effect()
   loadAllUsers$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.LOAD_ALL_USERS)
-    .switchMap(() => this.service$
-      .getAllUsers()
-      .map(users => new actions.LoadAllUsersSuccessAction(users))
-      .catch(err => of(new actions.LoadAllUsersFailAction(JSON.stringify(err))))
+    .ofType(actions.ActionTypes.SEARCH_USERS)
+    .map(toPayload)
+    .switchMap((str) => this.service$
+      .searchUsers(str)
+      .map(users => new actions.SearchUsersSuccessAction(users))
+      .catch(err => of(new actions.SearchUsersFailAction(JSON.stringify(err))))
     );
 
   @Effect()

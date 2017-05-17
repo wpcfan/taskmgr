@@ -16,6 +16,7 @@ export function reducer(state = initialState, action: actions.Actions ): State {
   switch (action.type) {
     case actions.ActionTypes.ADD_USER_PROJECT_SUCCESS: {
       const user = <User>action.payload;
+      if(state.entities[user.id]) return state;
       const ids = [...state.ids, user.id];
       const entities = Object.assign({}, state.entities, {[user.id]: user});
       return Object.assign({}, state, {ids: ids, entities: entities});
@@ -30,17 +31,18 @@ export function reducer(state = initialState, action: actions.Actions ): State {
       },{});
       return Object.assign({}, state, {ids: ids, entities: entities});
     }
-    case actions.ActionTypes.LOAD_ALL_USERS_SUCCESS:{
+    case actions.ActionTypes.SEARCH_USERS_SUCCESS:{
       const users = <User[]>action.payload;
       // if task is null then return the orginal state
       if(users === null) return state; 
-      const entities = users.reduce((entities: { [id: string]: User }, user) => {
+      const newUsers = users.filter(user => !state.entities[user.id]);
+      const entities = newUsers.reduce((entities: { [id: string]: User }, user) => {
         return Object.assign(entities, {
           [user.id]: user
         })
       },{});
       return Object.assign({}, state, 
-        {ids: users.map(user => user.id), entities: entities});
+        {ids: newUsers.map(user => user.id), entities: entities});
     }
     case actions.ActionTypes.LOAD_USERS_BY_PRJ_SUCCESS:{
       const users = <User[]>action.payload;
