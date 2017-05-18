@@ -33,7 +33,6 @@ export class TaskListComponent implements OnInit, OnDestroy{
   constructor(
     private dialog: MdDialog,
     private store$: Store<fromRoot.State>) { 
-      this.tasks$ = this.store$.select(fromRoot.getTasks);
       this.loading$ = this.store$.select(fromRoot.getTaskLoading);
       this.userSub = this.store$.select(fromRoot.getAuth)
         .subscribe(auth => this.user = auth.user);
@@ -43,38 +42,41 @@ export class TaskListComponent implements OnInit, OnDestroy{
     // 由于@Input 是在 Init 时候才设置进来的，这句要放在这里
     // 如果在 constructor 中会报错
     this.store$.dispatch(new actions.LoadTasksAction(this.list.id));
+    this.tasks$ = this.store$
+      .select(fromRoot.getTasks)
+      .filter(tasks => tasks.filter(task => task.taskListId === this.list.id).length>0);
   }
 
   ngOnDestroy(){
     if(this.userSub) this.userSub.unsubscribe();
   }
 
-  onChangeListName(ev: Event){
-    ev.preventDefault();
+  onChangeListName(){
+    
   }
 
-  onAddListAfter(ev: Event){
-    ev.preventDefault();
+  onAddListAfter(){
+    
   }
 
-  onCopyAllTasks(ev: Event){
-    ev.preventDefault();
+  onCopyAllTasks(){
+    
   }
 
-  onMoveAllTasks(ev: Event){
-    ev.preventDefault();
+  onMoveAllTasks(){
+    
   }
 
-  onDeleteList(ev: Event){
-    ev.preventDefault();
+  onDeleteList(){
+    
   }
 
-  onTaskComplete(ev: Event){
-    ev.preventDefault();
+  onTaskComplete(){
+    
   }
 
-  onTaskClick(ev: Event){
-    ev.preventDefault();
+  onTaskClick(){
+    
   }
 
   addNewTask(ev: Event){

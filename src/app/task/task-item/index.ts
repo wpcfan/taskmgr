@@ -20,8 +20,7 @@ export class TaskItemComponent {
 
   constructor() { }
 
-  checkboxChanged(ev: Event){
-    ev.preventDefault();
+  checkboxChanged(){
     this.taskComplete.emit(this.item.id);
   }
 

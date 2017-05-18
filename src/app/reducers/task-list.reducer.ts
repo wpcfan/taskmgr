@@ -1,10 +1,10 @@
-import * as models from '../domain';
+import { TaskList } from '../domain';
 import { createSelector } from 'reselect';
 import * as actions from '../actions/task-list.action';
 
 export interface State{
   ids: string [];
-  entities: { [id: string]: models.TaskList };
+  entities: { [id: string]: TaskList };
   drag: string | null;
   drop: string | null;
 }
@@ -20,15 +20,15 @@ export function reducer(
   state = initialState, action: actions.Actions): State {
   switch (action.type) {
     case actions.ActionTypes.ADD_SUCCESS:{
-      const taskList = <models.TaskList>action.payload;
+      const taskList = <TaskList>action.payload;
       const ids = [...state.ids, taskList.id];
       const entities = Object.assign({}, state.entities, {[taskList.id]: taskList})
       return Object.assign({}, state, {ids: ids, entities: entities});
     }    
     case actions.ActionTypes.DELETE_SUCCESS:{
-      const taskList = <models.TaskList>action.payload;
+      const taskList = <TaskList>action.payload;
       const ids = state.ids.filter(id => id !== taskList.id);
-      const entities = ids.reduce((entities: { [id: string]: models.TaskList }, id) => {
+      const entities = ids.reduce((entities: { [id: string]: TaskList }, id) => {
         return Object.assign(entities, {
           [id]: state.entities[id]
         })
@@ -36,20 +36,27 @@ export function reducer(
       return Object.assign({}, state, {ids: ids, entities: entities});
     }
     case actions.ActionTypes.UPDATE_SUCCESS:{
-      const taskList = <models.TaskList>action.payload;
+      const taskList = <TaskList>action.payload;
       const entities = Object.assign({}, state.entities, {[taskList.id]: taskList});
       return Object.assign({}, state, {entities: entities});
     }
     case actions.ActionTypes.LOADS_SUCCESS:{
-      const taskList = <models.TaskList[]>action.payload;
+      const taskLists = <TaskList[]>action.payload;
       // if taskList is null then return the orginal state
-      if(taskList === null) return state; 
-      const entities = taskList.reduce((entities: { [id: string]: models.TaskList }, taskList) => {
+      if(taskLists === null) return state; 
+      const newTaskLists = taskLists.filter(taskList => !state.entities[taskList.id]);
+      const newIds = newTaskLists.map(taskList => taskList.id);
+      const newEntities = newTaskLists.reduce((entities: { [id: string]: TaskList }, taskList: TaskList) => {
         return Object.assign(entities, {
           [taskList.id]: taskList
         })
       },{});
-      return Object.assign({}, state, {ids: taskList.map(taskList => taskList.id), entities: entities});
+      return {
+        ids: [...state.ids, ...newIds],
+        entities: Object.assign({}, state.entities, newEntities),
+        drag: state.drag,
+        drop: state.drop
+      }
     }
     case actions.ActionTypes.DRAG:
       return Object.assign({}, state, {drag: action.payload});

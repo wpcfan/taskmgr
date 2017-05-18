@@ -1,10 +1,10 @@
-import * as models from '../domain';
+import { Task } from '../domain';
 import { createSelector } from 'reselect';
 import * as actions from '../actions/task.action';
 
 export interface State{
   ids: string[];
-  entities: {[id: string]: models.Task};
+  entities: {[id: string]: Task};
   loading: boolean;
 }
 
@@ -23,15 +23,16 @@ export function reducer(
     case actions.ActionTypes.ADD:
       return Object.assign({}, state, {loading: true});
     case actions.ActionTypes.ADD_SUCCESS:{
-      const task = <models.Task>action.payload;
+      const task = <Task>action.payload;
+      if(state.entities[task.id]) return state;
       const ids = [...state.ids, task.id];
       const entities = Object.assign({}, state.entities, {[task.id]: task});
       return Object.assign({}, state, {ids: ids, entities: entities, loading: false});
     }
     case actions.ActionTypes.DELETE_SUCCESS:{
-      const task = <models.Task>action.payload;
+      const task = <Task>action.payload;
       const ids = state.ids.filter(id => id !== task.id);
-      const entities = ids.reduce((entities: { [id: string]: models.Task }, id) => {
+      const entities = ids.reduce((entities: { [id: string]: Task }, id) => {
         return Object.assign(entities, {
           [id]: state.entities[id]
         })
@@ -39,21 +40,26 @@ export function reducer(
       return Object.assign({}, state, {ids: ids, entities: entities, loading: false});
     }
     case actions.ActionTypes.UPDATE_SUCCESS:{
-      const task = <models.Task>action.payload;
+      const task = <Task>action.payload;
       const entities = Object.assign({}, state.entities, {[task.id]: task});
       return Object.assign({}, state, {entities: entities, loading: false});
     }
     case actions.ActionTypes.LOAD_SUCCESS:{
-      const task = <models.Task[]>action.payload;
+      const tasks = <Task[]>action.payload;
       // if task is null then return the orginal state
-      if(task === null) return state; 
-      const entities = task.reduce((entities: { [id: string]: models.Task }, task) => {
+      if(tasks === null) return state; 
+      const newTasks = tasks.filter(task => !state.entities[task.id]);
+      const newIds = newTasks.map(task => task.id);
+      const newEntities = newTasks.reduce((entities: { [id: string]: Task }, task) => {
         return Object.assign(entities, {
           [task.id]: task
         })
       },{});
-      return Object.assign({}, state, 
-        {ids: task.map(task => task.id), entities: entities, loading: false});
+      return Object.assign({}, state, {
+        ids: [...state.ids, ...newIds],
+        entities: Object.assign({}, state.entities, newEntities),
+        loading: false
+      });
     }
     case actions.ActionTypes.LOAD_FAIL:
     case actions.ActionTypes.ADD_FAIL:

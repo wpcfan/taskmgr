@@ -19,6 +19,8 @@ import {
   MdNativeDateModule,
   MdRadioModule,
   MdAutocompleteModule,
+  MdSidenavModule, 
+  MdToolbarModule, 
 } from '@angular/material';
 import { ConfirmDialogComponent } from './confirm-dialog';
 import { ImageListSelectComponent } from './image-list-select';
@@ -47,6 +49,8 @@ import { InitialsPipe } from './initials.pipe';
     MdNativeDateModule,
     MdRadioModule,
     MdAutocompleteModule,
+    MdSidenavModule, 
+    MdToolbarModule, 
   ],
   exports: [
     CommonModule,
@@ -69,6 +73,8 @@ import { InitialsPipe } from './initials.pipe';
     MdNativeDateModule,
     MdRadioModule,
     MdAutocompleteModule,
+    MdSidenavModule, 
+    MdToolbarModule, 
     ConfirmDialogComponent,
     ImageListSelectComponent,
     ChipsListComponent

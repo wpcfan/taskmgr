@@ -2,8 +2,6 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { 
-  MdSidenavModule, 
-  MdToolbarModule, 
   MdSidenavContainer, 
   MdSidenav, 
   MdToolbar 
@@ -22,8 +20,6 @@ import 'hammerjs';
 @NgModule({
   imports: [
     HttpModule,
-    MdSidenavModule,
-    MdToolbarModule,
     SharedModule,
     AppEffectsModule,
     ServicesModule.forRoot(),

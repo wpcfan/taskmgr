@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from "@ngrx/store";
 import 'rxjs/add/operator/pluck';
 import 'rxjs/add/operator/count';
+import 'rxjs/add/observable/combineLatest';
 import { Subscription } from "rxjs/Subscription";
 import * as fromRoot from "../../reducers";
 import * as actions from '../../actions/task-list.action';
@@ -39,13 +40,19 @@ export class TaskHomeComponent implements OnDestroy{
     private element: ElementRef,
     private route: ActivatedRoute,
     private dialog: MdDialog,
-    private store$: Store<fromRoot.State>) { 
-      this.routeParamSub = this.route.params.pluck('id').subscribe(
+    private store$: Store<fromRoot.State>) {
+      const routeParam$ = this.route.params.pluck('id');
+      this.routeParamSub = routeParam$.subscribe(
         (id:string) => {
           this.store$.dispatch(new actions.LoadTaskListsAction(id));
           this.projectId = id;
         });
-      this.lists$ = this.store$.select(fromRoot.getTaskLists);
+      this.lists$ = Observable.combineLatest(
+        this.store$.select(fromRoot.getTaskLists),
+        routeParam$, 
+        (lists, id) => {
+          return lists.filter(list => list.projectId === id)
+        });
       this.drag$ = this.store$.select(fromRoot.getTaskDrag);
       this.drop$ = this.store$.select(fromRoot.getTaskDrop);
       this.listSub = this.store$.select(fromRoot.getTaskLists)

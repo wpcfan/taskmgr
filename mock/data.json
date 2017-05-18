@@ -78,6 +78,12 @@
       "projectId": "Sy8E4Y_g-",
       "order": 1,
       "id": "B1MQe8KxZ"
+    },
+    {
+      "name": "进行中",
+      "projectId": "Sy8E4Y_g-",
+      "order": 2,
+      "id": "ry_SWe5e-"
     }
   ],
   "tasks": [
@@ -94,8 +100,11 @@
       "createDate": "2017-05-17T14:10:01.159Z",
       "priority": "3",
       "order": 4,
+      "tags": [
+        "something"
+      ],
       "remark": "",
-      "id": "1"
+      "id": 1
     }
   ],
   "quotes": [

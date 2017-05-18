@@ -1,11 +1,11 @@
   <md-list dense>
     <app-task-list-header 
       [header]="list.name"
-      (changeListName)="onChangeListName($event)"
-      (deleteList)="onDeleteList($event)"
-      (addListAfter)="onAddListAfter($event)"
-      (copyAllTasks)="onCopyAllTasks($event)"
-      (moveAllTasks)="onMoveAllTasks($event)">
+      (changeListName)="onChangeListName()"
+      (deleteList)="onDeleteList()"
+      (addListAfter)="onAddListAfter()"
+      (copyAllTasks)="onCopyAllTasks()"
+      (moveAllTasks)="onMoveAllTasks()">
     </app-task-list-header>
     <md-divider></md-divider>
     <md-progress-bar 
@@ -24,8 +24,8 @@
     <md-list-item *ngFor="let task of tasks$ | async">
       <app-task-item  
         [item]="task" 
-        (taskComplete)="onTaskComplete($event)" 
-        (taskClick)="onTaskClick($event)">
+        (taskComplete)="onTaskComplete()" 
+        (taskClick)="onTaskClick()">
       </app-task-item>
     </md-list-item>
   </ng-template>

@@ -33,11 +33,12 @@ export class TaskEffects{
   loadTasks$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.LOAD)
     .map(toPayload)
-    .debounceTime(300) //TODO: remove this when used in production
-    .switchMap((taskListId) => this.service$
-      .get(taskListId)
-      .map(tasks => new actions.LoadTasksSuccessAction(tasks))
-      .catch(err => of(new actions.LoadTasksFailAction(JSON.stringify(err))))
+    .mergeMap((taskListId) => {
+      return this.service$
+        .get(taskListId)
+        .map(tasks => new actions.LoadTasksSuccessAction(tasks))
+        .catch(err => of(new actions.LoadTasksFailAction(JSON.stringify(err))))
+    }
     );
 
   @Effect()
