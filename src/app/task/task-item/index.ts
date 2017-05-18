@@ -3,7 +3,8 @@ import {
   Input,
   Output,
   EventEmitter,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  HostListener
 } from '@angular/core';
 import * as models from '../../domain';
 
@@ -17,7 +18,7 @@ export class TaskItemComponent {
   @Output() taskComplete = new EventEmitter<string>();
   @Output() taskClick = new EventEmitter<string>();
   @Input() item: models.Task;
-
+  widerPriority: boolean = false;
   constructor() { }
 
   checkboxChanged(){
@@ -27,5 +28,15 @@ export class TaskItemComponent {
   itemClicked(ev: Event){
     ev.preventDefault();
     this.taskClick.emit(this.item.id);
+  }
+
+  @HostListener('mouseenter')
+  handleMouseEnter(){
+    this.widerPriority = true;
+  }
+
+  @HostListener('mouseleave')
+  handleMouseLeave(){
+    this.widerPriority = false;
   }
 }

@@ -1,3 +1,11 @@
+<span 
+  class="priority" 
+  [ngClass]="{
+    'priority-big': widerPriority, 
+    'priority-normal': item.priority ==='3',
+    'priority-important': item.priority === '2',
+    'priority-emergency': item.priority === '1'}">
+</span>
 <span class="checkbox-section" >
   <md-checkbox [checked]="item.completed" (change)="checkboxChanged()"></md-checkbox>
 </span>
@@ -11,7 +19,7 @@
     <span class="chip" *ngFor="let tag of item.tags">{{tag}}</span>
   </div>
 </span>
-<div class="avatar-circle">
+<div class="avatar-circle initial">
   <span class="initials">
      PW  
   </span>

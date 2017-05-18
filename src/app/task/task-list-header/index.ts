@@ -15,7 +15,6 @@ import { MdIconRegistry } from '@angular/material';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskListHeaderComponent {
-  showGrab: boolean = false;
   @Output() changeListName = new EventEmitter<void>();
   @Output() deleteList = new EventEmitter<void>();
   @Output() addListAfter = new EventEmitter<void>();
@@ -29,10 +28,6 @@ export class TaskListHeaderComponent {
     iconRegistry.addSvgIcon(
         'move',
         sanitizer.bypassSecurityTrustResourceUrl('assets/img/icons/move.svg'));
-  }
-  
-  showGrabIndicator(show: boolean): void{
-    this.showGrab = show;
   }
 
   onChangeListName(ev: Event){

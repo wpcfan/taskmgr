@@ -44,7 +44,11 @@ export class TaskListComponent implements OnInit, OnDestroy{
     this.store$.dispatch(new actions.LoadTasksAction(this.list.id));
     this.tasks$ = this.store$
       .select(fromRoot.getTasks)
-      .filter(tasks => tasks.filter(task => task.taskListId === this.list.id).length>0);
+      // 此处需要小心 Observable 的 filter 和数组的 filter 此处的作用是不同的
+      // 数组的 filter 返回的新数组需要长度大于 0 才满足 true/false
+      // 很容易直接写成 .filter(tasks => tasks.filter(...) 
+      // 但这样就变成判断返回数组是否不为空了，就永远为 true 了
+      .filter(tasks => tasks.filter(task => task.taskListId === this.list.id).length > 0);
   }
 
   ngOnDestroy(){
