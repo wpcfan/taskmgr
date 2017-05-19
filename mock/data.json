@@ -104,7 +104,7 @@
       "dueDate": null,
       "reminder": null,
       "createDate": "2017-05-17T14:10:01.159Z",
-      "priority": "3",
+      "priority": 3,
       "order": 4,
       "tags": [
         "something"
@@ -124,7 +124,7 @@
       "dueDate": "2017-05-10T16:00:00.000Z",
       "reminder": null,
       "createDate": "2017-05-19T10:03:58.794Z",
-      "priority": "2",
+      "priority": 2,
       "order": null,
       "remark": "something"
     },
@@ -139,7 +139,7 @@
       "dueDate": "2017-05-10T16:00:00.000Z",
       "reminder": "2017-05-16T16:00:00.000Z",
       "createDate": "2017-05-18T10:31:54.978Z",
-      "priority": "1",
+      "priority": 1,
       "remark": "",
       "id": 3
     },
@@ -154,7 +154,7 @@
       "dueDate": "2017-05-23T16:00:00.000Z",
       "reminder": null,
       "createDate": "2017-05-19T10:04:40.296Z",
-      "priority": "1",
+      "priority": 1,
       "order": 1,
       "remark": "",
       "id": 4

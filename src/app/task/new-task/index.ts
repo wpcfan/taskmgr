@@ -34,6 +34,20 @@ import { User, Task } from "../../domain";
 export class NewTaskComponent implements OnInit {
   form: FormGroup;
   dialogTitle: string;
+  priorities: {label:string; value: number}[] = [
+    {
+      label: '普通',
+      value: 3
+    },
+    {
+      label: '重要',
+      value: 2
+    },
+    {
+      label: '紧急',
+      value: 1
+    },
+  ]
   ownerResults: Observable<User[]>;
   followerResults: Observable<User[]>;
   showOwner$: Observable<boolean>;
@@ -54,7 +68,7 @@ export class NewTaskComponent implements OnInit {
     if(!this.data.task) {
       this.form = this.fb.group({
         desc: ['', Validators.required],
-        priority: ['3'],
+        priority: [3],
         dueDate: [],
         reminder:[],
         ownerChip: [[{name: this.data.owner.name, value: this.data.owner.id}]],

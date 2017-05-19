@@ -5,9 +5,9 @@
       <input mdInput type="text" placeholder="任务内容" formControlName="desc">
     </md-input-container>
     <md-radio-group class="full-width" formControlName="priority">
-      <md-radio-button value="3">普通</md-radio-button>
-      <md-radio-button value="2">优先</md-radio-button>
-      <md-radio-button value="1">紧急</md-radio-button>
+      <md-radio-button *ngFor="let priorityItem of priorities" [value]="priorityItem.value">
+        {{priorityItem.label}}
+      </md-radio-button>
     </md-radio-group>
     <div class="full-width">
       <span>执行者：</span>
