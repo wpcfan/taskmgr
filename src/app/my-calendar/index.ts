@@ -9,8 +9,7 @@ import { CalendarHomeComponent } from "./calendar-home";
   imports: [ 
     SharedModule, 
     CalendarRoutingModule,
-    CalendarModule.forRoot() ],
-  providers: [],
-  bootstrap: []
+    CalendarModule.forRoot() 
+    ]
 })
 export class MyCalendarModule {}

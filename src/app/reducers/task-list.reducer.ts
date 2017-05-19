@@ -9,7 +9,7 @@ export interface State{
   drop: string | null;
 }
 
-const initialState: State = {
+export const initialState: State = {
   ids: [],
   entities: {},
   drag: null,

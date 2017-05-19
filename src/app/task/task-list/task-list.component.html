@@ -1,7 +1,7 @@
-  <md-list dense>
+  <md-list>
     <app-task-list-header 
       [header]="list.name"
-      (changeListName)="onChangeListName()"
+      (changeListName)="onChangeListName(list)"
       (deleteList)="onDeleteList()"
       (addListAfter)="onAddListAfter()"
       (copyAllTasks)="onCopyAllTasks()"
@@ -21,11 +21,11 @@
         <span>添加新任务</span>
       </button>
     </md-list-item>
-    <md-list-item *ngFor="let task of tasks$ | async">
+    <md-list-item *ngFor="let task of tasks$ | async" class="list-item">
       <app-task-item  
         [item]="task" 
         (taskComplete)="onTaskComplete()" 
-        (taskClick)="onTaskClick()">
+        (taskClick)="onTaskClick(task)">
       </app-task-item>
     </md-list-item>
   </ng-template>

@@ -12,8 +12,6 @@ export function reducer (state: models.Auth = initialState, action: actions.Acti
       return Object.assign({}, {
         err: action.payload
       });
-    case actions.ActionTypes.LOGOUT:
-      return initialState;
     case actions.ActionTypes.REGISTER_SUCCESS:
       return Object.assign({}, state, action.payload);
     case actions.ActionTypes.REGISTER_FAIL:

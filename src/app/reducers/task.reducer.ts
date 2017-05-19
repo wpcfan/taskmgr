@@ -8,7 +8,7 @@ export interface State{
   loading: boolean;
 }
 
-const initialState: State = {
+export const initialState: State = {
   ids: [],
   entities: {},
   loading: false,

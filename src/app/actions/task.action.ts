@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { type } from '../utils/type.util';
-import * as models from '../domain';
+import { Task, Err } from '../domain';
 
 export const ActionTypes = {
   ADD:             type('[Task] Add'),
@@ -19,47 +19,47 @@ export const ActionTypes = {
 
 export class AddTaskAction implements Action {
   type = ActionTypes.ADD;
-  constructor(public payload: models.Task){}
+  constructor(public payload: Task){}
 }
 
 export class AddTaskSuccessAction implements Action {
   type = ActionTypes.ADD_SUCCESS;
-  constructor(public payload: models.Task){}
+  constructor(public payload: Task){}
 }
 
 export class AddTaskFailAction implements Action {
   type = ActionTypes.ADD_FAIL;
-  constructor(public payload: models.Err){}
+  constructor(public payload: Err){}
 }
 
 export class UpdateTaskAction implements Action {
   type = ActionTypes.UPDATE;
-  constructor(public payload: models.Task){}
+  constructor(public payload: Task){}
 }
 
 export class UpdateTaskSuccessAction implements Action {
   type = ActionTypes.UPDATE_SUCCESS;
-  constructor(public payload: models.Task){}
+  constructor(public payload: Task){}
 }
 
 export class UpdateTaskFailAction implements Action {
   type = ActionTypes.UPDATE_FAIL;
-  constructor(public payload: models.Err){}
+  constructor(public payload: Err){}
 }
 
 export class DeleteTaskAction implements Action {
   type = ActionTypes.DELETE;
-  constructor(public payload: models.Task){}
+  constructor(public payload: Task){}
 }
 
 export class DeleteTaskSuccessAction implements Action {
   type = ActionTypes.DELETE_SUCCESS;
-  constructor(public payload: models.Task){}
+  constructor(public payload: Task){}
 }
 
 export class DeleteTaskFailAction implements Action {
   type = ActionTypes.DELETE_FAIL;
-  constructor(public payload: models.Err){}
+  constructor(public payload: Err){}
 }
 
 export class LoadTasksAction implements Action {
@@ -69,12 +69,12 @@ export class LoadTasksAction implements Action {
 
 export class LoadTasksSuccessAction implements Action {
   type = ActionTypes.LOAD_SUCCESS;
-  constructor(public payload: models.Task[]){}
+  constructor(public payload: Task[]){}
 }
 
 export class LoadTasksFailAction implements Action {
   type = ActionTypes.LOAD_FAIL;
-  constructor(public payload: models.Err){}
+  constructor(public payload: Err){}
 }
 
 

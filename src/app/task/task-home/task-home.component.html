@@ -10,7 +10,9 @@
     (dragstart)="onDragStart($event, taskList)"
     (drop)="onDrop($event, taskList)"
     [ngStyle]="{'order': taskList.order}">
-    <app-task-list [list]="taskList"></app-task-list>
+    <app-task-list [list]="taskList">
+      
+    </app-task-list>
   </div>
 </div>
 <button md-fab (click)="openNewTaskList($event)" type="button" class="fab-button">

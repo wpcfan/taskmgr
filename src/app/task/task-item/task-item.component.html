@@ -2,9 +2,9 @@
   class="priority" 
   [ngClass]="{
     'priority-big': widerPriority, 
-    'priority-normal': item.priority ==='3',
-    'priority-important': item.priority === '2',
-    'priority-emergency': item.priority === '1'}">
+    'priority-normal': item.priority === 3,
+    'priority-important': item.priority === 2,
+    'priority-emergency': item.priority === 1}">
 </span>
 <span class="checkbox-section" >
   <md-checkbox [checked]="item.completed" (change)="checkboxChanged()"></md-checkbox>
@@ -14,9 +14,9 @@
     {{item.desc}}
   </div>
   <div class="bottom-bar">
-    <span class="duedate" *ngIf="item.dueDate">{{item.dueDate}}</span>
+    <span class="duedate" *ngIf="item.dueDate">{{item.dueDate | date:"yy-MM-dd"}}</span>
     <md-icon *ngIf="item.reminder">alarm</md-icon>
-    <span class="chip" *ngFor="let tag of item.tags">{{tag}}</span>
+    <!--<span class="chip" *ngFor="let tag of item.tags">{{tag}}</span>-->
   </div>
 </span>
 <div class="avatar-circle initial">

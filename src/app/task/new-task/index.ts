@@ -57,15 +57,15 @@ export class NewTaskComponent implements OnInit {
         priority: ['3'],
         dueDate: [],
         reminder:[],
-        ownerChip: [[{name: this.data.user.name, value: this.data.user.id}]],
+        ownerChip: [[{name: this.data.owner.name, value: this.data.owner.id}]],
         ownerSearch: [''],
         followerSearch: [''],
         // tagsInput: [''],
         remark: ['']
       });
       this.dialogTitle = '创建任务：';
-      this.followers = [this.data.user];
-      this.owners = [this.data.user];
+      this.followers = [this.data.owner];
+      this.owners = [this.data.owner];
       // this.tags = [];
     }
     else {
@@ -74,14 +74,14 @@ export class NewTaskComponent implements OnInit {
         priority: [this.data.task.priority],
         dueDate: [this.data.task.dueDate],
         reminder: [this.data.task.reminder],
-        ownerChip: [{name: this.data.user.name, value: this.data.user.id}, Validators.required],
+        ownerChip: [{name: this.data.owner.name, value: this.data.owner.id}, Validators.required],
         ownerSearch: [''],
         followerSearch: [''],
         // tagsInput: [''],
         remark: [this.data.task.remark]
       });
       this.dialogTitle = '修改任务：';
-      this.followers = this.data.followers;
+      this.followers = [...this.data.paticipants];
       this.owners = [this.data.owner];
       // this.tags = this.data.tags;
     }
@@ -97,19 +97,19 @@ export class NewTaskComponent implements OnInit {
   onSubmit({value, valid}, event: Event){
     event.preventDefault();
     if(!valid) return;
-    if(this.data.task === undefined || this.data.task === null)
+    if(!this.data.task)
       this.store$.dispatch(
         new actions.AddTaskAction({
           desc: value.desc,
           taskListId: this.data.taskListId,
-          ownerId: this.data.user.id,
+          ownerId: this.data.owner.id,
           completed: false,
-          participantIds: ["1"],
+          participantIds: [this.data.owner.id],
           dueDate: value.dueDate,
           reminder: value.reminder,
           createDate: new Date(),
           priority: value.priority,
-          order: 4,
+          order: this.data.order,
           // tags: ['something'],
           remark: value.remark
         }));
@@ -118,15 +118,15 @@ export class NewTaskComponent implements OnInit {
         new actions.UpdateTaskAction({
           id: this.data.task.id,
           desc: value.desc,
-          taskListId: this.data.taskListId,
-          ownerId: this.data.user.id,
+          taskListId: this.data.task.taskListId,
+          ownerId: value.ownerChip,
           completed: false,
-          participantIds: ["1"],
+          participantIds: this.followers.map(user => user.id),
           dueDate: value.dueDate,
           reminder: value.reminder,
           createDate: new Date(),
           priority: value.priority,
-          order: 4,
+          order: this.data.task.order,
           // tags: ['something'],
           remark: value.remark
         }));

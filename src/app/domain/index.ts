@@ -21,13 +21,6 @@ export interface User {
   projectIds?: string[];
 }
 
-export interface Todo{
-  id?: string;
-  desc?: string;
-  completed?: boolean;
-  userId?: string;
-}
-
 export interface Quote{
   id?: string;
   cn: string;
@@ -64,6 +57,7 @@ export interface TaskList{
   name: string;
   projectId: string;
   order: number;
+  taskIds?: string[];
 }
 
 export interface Project{

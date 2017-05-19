@@ -7,7 +7,8 @@ import { createSelector } from 'reselect';
 import { ActionReducer } from '@ngrx/store';
 import * as fromRouter from '@ngrx/router-store';
 import { environment } from '../../environments/environment';
-import * as models from '../domain';
+import { Auth } from '../domain';
+import * as authActions from "../actions/auth.action";
 
 /**
  * The compose function is one of our most handy tools. In basic terms, you give
@@ -48,18 +49,20 @@ import * as fromProjects from './project.reducer';
 import * as fromTaskLists from './task-list.reducer';
 import * as fromTasks from './task.reducer';
 import * as fromUsers from './user.reducer';
+import * as fromTaskForm from "./task-form.reducer";
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
  * our top level state interface is just a map of keys to inner state types.
  */
 export interface State {
-  auth: models.Auth;
+  auth: Auth;
   quote: fromQuote.State;
   projects: fromProjects.State;
   taskLists: fromTaskLists.State;
   tasks: fromTasks.State;
   users: fromUsers.State;
+  taskForm: fromTaskForm.State;
   router: fromRouter.RouterState;
 }
 
@@ -77,13 +80,27 @@ const reducers = {
   taskLists: fromTaskLists.reducer,
   tasks: fromTasks.reducer,
   users: fromUsers.reducer,
+  taskForm: fromTaskForm.reducer,
   router: fromRouter.routerReducer,
 };
 
 const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
 const productionReducer: ActionReducer<State> = combineReducers(reducers);
 
+const initState = {
+  auth: fromAuth.initialState,
+  quote: fromQuote.initialState,
+  projects: fromProjects.initialState,
+  taskLists: fromTaskLists.initialState,
+  tasks: fromTasks.initialState,
+  users: fromUsers.initialState,
+  taskForm: fromTaskForm.initialState,
+  router: fromRouter.initialState
+}
+
 export function reducer(state: any, action: any) {
+  if(action.type === authActions.ActionTypes.LOGOUT)
+    return initState;
   if (environment.production) {
     return productionReducer(state, action);
   } else {
@@ -97,6 +114,7 @@ export const getProjectsState = (state: State) => state.projects;
 export const getTaskListsState = (state: State) => state.taskLists;
 export const getTasksState = (state: State) => state.tasks;
 export const getUserState = (state: State) => state.users;
+export const getTaskFormState = (state: State) => state.taskForm;
 export const getRouterState = (state: State) => state.router;
 
 export const getAuth = createSelector(getAuthState, fromAuth.getAuth);
@@ -119,6 +137,7 @@ export const getTaskIds = createSelector(getTasksState, fromTasks.getIds);
 export const getTaskLoading = createSelector(getTasksState, fromTasks.getLoading);
 export const getUsers = createSelector(getUserState, fromUsers.getUsers);
 export const getUserIds = createSelector(getUserState, fromUsers.getIds);
+export const getUserEntities = createSelector(getUserState, fromUsers.getEntities);
 
 @NgModule({
   imports: [

@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { type } from '../utils/type.util';
-import * as models from '../domain';
+import { Auth, Err, User } from '../domain';
 
 export const ActionTypes = {
   LOGIN:             type('[Auth] Login'),
@@ -19,32 +19,32 @@ export class LoginAction implements Action {
 
 export class LoginSuccessAction implements Action {
   type = ActionTypes.LOGIN_SUCCESS;
-  constructor(public payload: models.Auth){}
+  constructor(public payload: Auth){}
 }
 
 export class LoginFailAction implements Action {
   type = ActionTypes.LOGIN_FAIL;
-  constructor(public payload: models.Err){}
+  constructor(public payload: Err){}
 }
 
 export class RegisterAction implements Action {
   type = ActionTypes.REGISTER;
-  constructor(public payload: models.User){}
+  constructor(public payload: User){}
 }
 
 export class RegisterSuccessAction implements Action {
   type = ActionTypes.REGISTER_SUCCESS;
-  constructor(public payload: models.Auth){}
+  constructor(public payload: Auth){}
 }
 
 export class RegisterFailAction implements Action {
   type = ActionTypes.REGISTER_FAIL;
-  constructor(public payload: models.Err){}
+  constructor(public payload: Err){}
 }
 
 export class LogoutAction implements Action {
   type = ActionTypes.LOGOUT;
-  constructor(public payload: models.Auth){}
+  constructor(public payload: Auth){}
 }
 
 export type Actions

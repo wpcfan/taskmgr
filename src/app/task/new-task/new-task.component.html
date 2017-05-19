@@ -28,7 +28,7 @@
         [mdDatepicker]="dueDatePicker" 
         placeholder="选择截止日期" 
         formControlName="dueDate">
-      <button mdSuffix [mdDatepickerToggle]="dueDatePicker"></button>
+      <button mdSuffix [mdDatepickerToggle]="dueDatePicker" type="button"></button>
     </md-input-container>
     <md-datepicker touchUi="true" #dueDatePicker></md-datepicker>
     <md-input-container class="full-width">
@@ -36,7 +36,7 @@
         [mdDatepicker]="reminderPicker" 
         placeholder="选择提醒日期" 
         formControlName="reminder">
-      <button mdSuffix [mdDatepickerToggle]="reminderPicker"></button>
+      <button mdSuffix [mdDatepickerToggle]="reminderPicker" type="button"></button>
     </md-input-container>
     <md-datepicker touchUi="true" #reminderPicker></md-datepicker>
 

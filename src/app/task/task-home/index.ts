@@ -1,8 +1,6 @@
 import { 
   Component, 
   Renderer2,
-  ElementRef,
-  ViewChild,
   OnDestroy,
   ChangeDetectionStrategy
 } from '@angular/core';
@@ -16,7 +14,7 @@ import 'rxjs/add/observable/combineLatest';
 import { Subscription } from "rxjs/Subscription";
 import * as fromRoot from "../../reducers";
 import * as actions from '../../actions/task-list.action';
-import * as models from '../../domain';
+import { TaskList } from '../../domain';
 import { NewTaskListComponent } from "../new-task-list";
 
 @Component({
@@ -28,16 +26,15 @@ import { NewTaskListComponent } from "../new-task-list";
 export class TaskHomeComponent implements OnDestroy{
   dragged;
   loading: boolean = true;
-  lists$: Observable<models.TaskList[]>;
-  private drag$: Observable<models.TaskList>;
-  private drop$: Observable<models.TaskList>;
+  lists$: Observable<TaskList[]>;
+  private drag$: Observable<TaskList>;
+  private drop$: Observable<TaskList>;
   private routeParamSub: Subscription;
   private listSub: Subscription;
   private projectId: string;
   private count: number;
   constructor(
     private renderer: Renderer2, 
-    private element: ElementRef,
     private route: ActivatedRoute,
     private dialog: MdDialog,
     private store$: Store<fromRoot.State>) {
