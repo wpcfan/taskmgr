@@ -105,7 +105,7 @@
       "reminder": null,
       "createDate": "2017-05-17T14:10:01.159Z",
       "priority": 3,
-      "order": 4,
+      "order": 1,
       "tags": [
         "something"
       ],
@@ -116,7 +116,7 @@
       "id": 2,
       "desc": "赶快出发去万达",
       "taskListId": "B1MQe8KxZ",
-      "ownerId": {},
+      "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
       "completed": false,
       "participantIds": [
         "37489e0c-df34-c261-71c4-ce75357e3035"
@@ -125,7 +125,7 @@
       "reminder": null,
       "createDate": "2017-05-19T10:03:58.794Z",
       "priority": 2,
-      "order": null,
+      "order": 2,
       "remark": "something"
     },
     {
@@ -139,6 +139,7 @@
       "dueDate": "2017-05-10T16:00:00.000Z",
       "reminder": "2017-05-16T16:00:00.000Z",
       "createDate": "2017-05-18T10:31:54.978Z",
+      "order":3,
       "priority": 1,
       "remark": "",
       "id": 3
