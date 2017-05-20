@@ -10,6 +10,8 @@ import { Observable } from "rxjs/Observable";
 import { Subscription } from "rxjs/Subscription";
 import { Subject } from "rxjs/Subject";
 import { TaskList, Task } from '../../domain';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/filter';
 import * as fromRoot from '../../reducers';
 import * as taskActions from '../../actions/task.action';
 import * as listActions from '../../actions/task-list.action';
@@ -51,6 +53,7 @@ export class TaskListComponent implements OnInit, OnDestroy{
       .map(tasks => tasks.filter(task => task.taskListId === this.list.id));
     this.taskSub = this.store$.select(fromRoot.getTaskFormState)
       .filter(state =>  state.owner !== null && state.taskListId === this.list.id)
+      .take(1)
       .subscribe(data => this.dialog.open(NewTaskComponent, {data: data}));
   }
 
