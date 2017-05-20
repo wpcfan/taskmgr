@@ -66,6 +66,16 @@ $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 //   }
 // }
 
+// 如果希望改变默认的字体，可以采用下面的形式
+
+// Includes the default typography styles.
+// @include mat-typography();
+
+// Overrides one of the typography levels
+// @include mat-typography(
+//   
+// );
+
 html, body, material-app, md-sidenav-container, .site {
   margin: 0;
   width: 100%;
