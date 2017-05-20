@@ -1,5 +1,7 @@
 import { 
   Component, 
+  Output,
+  EventEmitter,
   ChangeDetectionStrategy 
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -17,6 +19,7 @@ import { Project, Auth } from "../../domain";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent {
+  @Output() navClicked = new EventEmitter<void>();
   days=[
     1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31
   ];
@@ -55,5 +58,10 @@ export class SidebarComponent {
         this.sanitizer.bypassSecurityTrustResourceUrl(`assets/img/days/day${day}.svg`));
     })
 
+  }
+
+  handleClicked(ev: Event){
+    ev.preventDefault();
+    this.navClicked.emit();
   }
 }

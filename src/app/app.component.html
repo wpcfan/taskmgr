@@ -1,6 +1,6 @@
 <md-sidenav-container [ngClass]="{'myapp-dark-theme': dark}">
   <md-sidenav #sidenav>
-    <app-sidebar></app-sidebar>
+    <app-sidebar (navClicked)="sidenav.close()"></app-sidebar>
   </md-sidenav>
   <div class="site">
     <header>
