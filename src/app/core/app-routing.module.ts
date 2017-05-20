@@ -15,8 +15,9 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'mycal',
-    loadChildren: 'app/my-calendar#MyCalendarModule'
+    path: 'mycal/:view',
+    loadChildren: 'app/my-calendar#MyCalendarModule',
+    canActivate: [AuthGuardService]
   },
   {
     path: '**', component: PageNotFoundComponent

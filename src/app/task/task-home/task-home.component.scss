@@ -1,9 +1,7 @@
 .list-container {
   flex: 1 1 20em;
-  background-color: #EEEEEE;
-  border-radius: 3px;
-  margin: 2px;
   overflow-y: scroll; 
+  overflow-x: hidden;
 }
 
 .task-lists {

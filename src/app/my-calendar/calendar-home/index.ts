@@ -14,6 +14,9 @@ import {
   isSameMonth,
   addHours
 } from 'date-fns';
+import { Observable } from "rxjs/Observable";
+import { ActivatedRoute } from '@angular/router';
+import 'rxjs/add/operator/pluck';
 
 const colors: any = {
   red: {
@@ -33,15 +36,37 @@ const colors: any = {
 @Component({
   selector: 'app-cal-home',
   template: `
-    <mwl-calendar-month-view 
-      [viewDate]="viewDate" 
-      [locale]="'zh'"
-      [events]="events"
-      [activeDayIsOpen]="activeDayIsOpen"
-      (dayClicked)="dayClicked($event.day)"
-      (eventClicked)="handleEvent('Clicked', $event.event)"
-      >
-    </mwl-calendar-month-view>
+    <div [ngSwitch]="view$ | async">
+      <mwl-calendar-month-view
+        *ngSwitchCase="'month'"
+        [viewDate]="viewDate"
+        [locale]="'zh'"
+        [events]="events"
+        [refresh]="refresh"
+        [activeDayIsOpen]="activeDayIsOpen"
+        (dayClicked)="dayClicked($event.day)"
+        (eventClicked)="handleEvent('Clicked', $event.event)"
+        (eventTimesChanged)="eventTimesChanged($event)">
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view
+        *ngSwitchCase="'week'"
+        [viewDate]="viewDate"
+        [locale]="'zh'"        
+        [events]="events"
+        [refresh]="refresh"
+        (eventClicked)="handleEvent('Clicked', $event.event)"
+        (eventTimesChanged)="eventTimesChanged($event)">
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view
+        *ngSwitchCase="'day'"
+        [viewDate]="viewDate"
+        [locale]="'zh'"        
+        [events]="events"
+        [refresh]="refresh"
+        (eventClicked)="handleEvent('Clicked', $event.event)"
+        (eventTimesChanged)="eventTimesChanged($event)">
+      </mwl-calendar-day-view>
+    </div>
   `,
   styles:[`
     :host{
@@ -53,6 +78,7 @@ const colors: any = {
 })
 export class CalendarHomeComponent implements OnInit {
   viewDate: Date;
+  view$: Observable<string>;
   modalData: {
     action: string,
     event: CalendarEvent
@@ -99,9 +125,9 @@ export class CalendarHomeComponent implements OnInit {
     draggable: true
   }];
   activeDayIsOpen: boolean = true;
-  constructor() { 
+  constructor(private route: ActivatedRoute) { 
     this.viewDate = new Date();
-
+    this.view$ = this.route.params.pluck('view')
   }
 
   ngOnInit() { }
