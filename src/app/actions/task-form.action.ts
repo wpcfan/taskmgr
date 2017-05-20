@@ -8,7 +8,7 @@ export const ActionTypes = {
   PREPARE_ADD_FAIL:        type('[TaskForm] Prepare Add Dialog Fail'),
   PREPARE_UPDATE:          type('[TaskForm] Prepare Update Dialog'),
   PREPARE_UPDATE_SUCCESS:  type('[TaskForm] Prepare Update Dialog Success'),
-  PREPARE_UPDATE_FAIL:          type('[TaskForm] Prepare Update Dialog Fail'),
+  PREPARE_UPDATE_FAIL:     type('[TaskForm] Prepare Update Dialog Fail'),
 };
 
 export class PrepareAddAction implements Action {

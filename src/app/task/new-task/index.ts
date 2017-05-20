@@ -47,7 +47,8 @@ export class NewTaskComponent implements OnInit {
       label: '紧急',
       value: 1
     },
-  ]
+  ];
+  data$: Observable<any>;
   ownerResults: Observable<User[]>;
   followerResults: Observable<User[]>;
   showOwner$: Observable<boolean>;
@@ -62,7 +63,10 @@ export class NewTaskComponent implements OnInit {
     private store$: Store<fromRoot.State>,
     private service: UserService,
     @Inject(MD_DIALOG_DATA) private data: any,
-    private dialogRef: MdDialogRef<NewTaskComponent>) { }
+    private dialogRef: MdDialogRef<NewTaskComponent>) { 
+      this.store$.select(fromRoot.getTaskFormState)
+        .subscribe(data => this.data = data);
+    }
 
   ngOnInit(){
     if(!this.data.task) {
@@ -98,6 +102,7 @@ export class NewTaskComponent implements OnInit {
       this.followers = [...this.data.paticipants];
       this.owners = [this.data.owner];
       // this.tags = this.data.tags;
+      console.log(this.data.participants)
     }
     this.ownerResults = this.searchUsers(this.form.controls['ownerSearch'].valueChanges);
     this.followerResults = this.searchUsers(this.form.controls['followerSearch'].valueChanges);
@@ -110,6 +115,7 @@ export class NewTaskComponent implements OnInit {
 
   onSubmit({value, valid}, event: Event){
     event.preventDefault();
+    console.log(JSON.stringify(value));
     if(!valid) return;
     if(!this.data.task)
       this.store$.dispatch(
@@ -118,7 +124,7 @@ export class NewTaskComponent implements OnInit {
           taskListId: this.data.taskListId,
           ownerId: this.data.owner.id,
           completed: false,
-          participantIds: [this.data.owner.id],
+          participantIds: this.followers.map(user => user.id),
           dueDate: value.dueDate,
           reminder: value.reminder,
           createDate: new Date(),

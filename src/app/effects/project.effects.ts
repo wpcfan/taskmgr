@@ -82,6 +82,12 @@ export class ProjectEffects{
     .map(project => go([`/tasklists/${project.id}`]));
 
   @Effect()
+  toLoadUsersByPrj$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.SELECT)
+    .map(toPayload)
+    .map(project => new userActions.LoadUsersByPrjAction(project.id));
+
+  @Effect()
   startInitTaskLists$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.ADD_SUCCESS)
     .map(toPayload)

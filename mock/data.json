@@ -6,14 +6,21 @@
       "email": "wpcfan@163.com",
       "id": "37489e0c-df34-c261-71c4-ce75357e3035",
       "projectIds": [
-        "Sy8E4Y_g-"
+        "Sy8E4Y_g-",
+        "1",
+        "2",
+        "Sk2HaTagb"
       ]
     },
     {
       "password": "Ls123456",
       "name": "李四",
       "email": "wang@163.com",
-      "id": "BkkDvwee-"
+      "id": "BkkDvwee-",
+      "projectIds": [
+        "Sy8E4Y_g-",
+        "Sk2HaTagb"
+      ]
     }
   ],
   "projects": [
@@ -21,101 +28,87 @@
       "id": "1",
       "name": "微信",
       "desc": "全国最大的社交软件",
-      "coverImg": "/assets/img/covers/6.jpg"
+      "coverImg": "/assets/img/covers/6.jpg",
+      "members": [
+        "37489e0c-df34-c261-71c4-ce75357e3035"
+      ]
     },
     {
       "id": "2",
       "name": "缺陷跟踪系统",
       "desc": "用于企业内部的缺陷跟踪和汇总报告",
-      "coverImg": "/assets/img/covers/9.jpg"
+      "coverImg": "/assets/img/covers/9.jpg",
+      "members": [
+        "37489e0c-df34-c261-71c4-ce75357e3035"
+      ]
     },
     {
       "id": "Sy8E4Y_g-",
       "name": "有一个项目",
       "desc": "这是一个使用 Angular 4 开发的新项目",
-      "coverImg": "/assets/img/covers/2.jpg"
+      "coverImg": "/assets/img/covers/2.jpg",
+      "members": [
+        "37489e0c-df34-c261-71c4-ce75357e3035"
+      ]
+    },
+    {
+      "name": "测试项目",
+      "desc": "这是一个测试项目",
+      "coverImg": "/assets/img/covers/8.jpg",
+      "members": [
+        "37489e0c-df34-c261-71c4-ce75357e3035"
+      ],
+      "id": "Sk2HaTagb",
+      "taskLists": [
+        "BkenST66lb",
+        "HJb2HT6TgW",
+        "SkG3Ba6Tgb"
+      ]
     }
   ],
   "tasklists": [
+    
     {
       "name": "待办",
-      "projectId": "1",
-      "id": "1",
-      "order": 1
+      "projectId": "Sk2HaTagb",
+      "order": 1,
+      "id": "BkenST66lb"
     },
     {
       "name": "进行中",
-      "projectId": "1",
-      "id": "2",
-      "order": 2
-    },
-    {
-      "name": "已完成",
-      "projectId": "1",
-      "id": "3",
-      "order": 3
-    },
-    {
-      "name": "待办",
-      "projectId": "2",
-      "id": "4",
-      "order": 1
-    },
-    {
-      "name": "进行中",
-      "projectId": "2",
-      "id": "5",
-      "order": 2
-    },
-    {
-      "name": "已完成",
-      "projectId": "2",
-      "id": "6",
-      "order": 3
-    },
-    {
-      "id": "B1MQe8KxZ",
-      "name": "待办",
-      "projectId": "Sy8E4Y_g-",
-      "order": 1
-    },
-    {
-      "name": "进行中",
-      "projectId": "Sy8E4Y_g-",
+      "projectId": "Sk2HaTagb",
       "order": 2,
-      "id": "ry_SWe5e-"
+      "id": "HJb2HT6TgW"
     },
     {
       "name": "已完成",
-      "projectId": "Sy8E4Y_g-",
+      "projectId": "Sk2HaTagb",
       "order": 3,
-      "id": "B16kkrhg-"
+      "id": "SkG3Ba6Tgb"
     }
   ],
   "tasks": [
     {
       "desc": "吃晚餐",
-      "taskListId": "B1MQe8KxZ",
+      "taskListId": "BkenST66lb",
       "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
       "completed": false,
       "participantIds": [
-        "1"
+        "BkkDvwee-",
+        "37489e0c-df34-c261-71c4-ce75357e3035"
       ],
       "dueDate": null,
       "reminder": null,
       "createDate": "2017-05-17T14:10:01.159Z",
       "priority": 3,
       "order": 1,
-      "tags": [
-        "something"
-      ],
       "remark": "",
       "id": 1
     },
     {
       "id": 2,
       "desc": "赶快出发去万达",
-      "taskListId": "B1MQe8KxZ",
+      "taskListId": "BkenST66lb",
       "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
       "completed": false,
       "participantIds": [
@@ -130,7 +123,7 @@
     },
     {
       "desc": "什么情况啊",
-      "taskListId": "B1MQe8KxZ",
+      "taskListId": "BkenST66lb",
       "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
       "completed": false,
       "participantIds": [
@@ -146,7 +139,7 @@
     },
     {
       "desc": "不知道你要干啥",
-      "taskListId": "ry_SWe5e-",
+      "taskListId": "HJb2HT6TgW",
       "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
       "completed": false,
       "participantIds": [
@@ -163,15 +156,16 @@
     {
       "id": 5,
       "desc": "不知道到底做什么，有什么值得做的",
-      "taskListId": "ry_SWe5e-",
+      "taskListId": "HJb2HT6TgW",
       "ownerId": {},
       "completed": false,
       "participantIds": [
-        "37489e0c-df34-c261-71c4-ce75357e3035"
+        "37489e0c-df34-c261-71c4-ce75357e3035",
+        "BkkDvwee-"
       ],
       "dueDate": "2017-05-23T16:00:00.000Z",
       "reminder": "2017-05-24T16:00:00.000Z",
-      "createDate": "2017-05-20T01:54:45.342Z",
+      "createDate": "2017-05-20T13:36:12.849Z",
       "priority": 3,
       "order": 2,
       "remark": ""

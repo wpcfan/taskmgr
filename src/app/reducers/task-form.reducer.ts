@@ -15,7 +15,7 @@ export const initialState: State = {
   owner: null,
   paticipants: [],
   task: null,
-  order: -1,
+  order: null,
 };
 
 export function reducer(
@@ -23,6 +23,7 @@ export function reducer(
   switch (action.type) {
     case actions.ActionTypes.PREPARE_ADD_SUCCESS:{
       const data = action.payload;
+      if(data.owner === null) return state;
       return {
         taskListId: data.taskListId,
         owner: Object.assign({}, data.owner),
@@ -33,6 +34,7 @@ export function reducer(
     }
     case actions.ActionTypes.PREPARE_UPDATE_SUCCESS:{
       const data = action.payload;
+      if(data.owner === null) return state;
       return {
         task: Object.assign({}, data.task),
         paticipants: [...data.paticipants],

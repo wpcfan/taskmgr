@@ -2,7 +2,7 @@ import {
   Component, 
   Input,
   Output,
-  OnInit,
+  AfterViewInit,
   OnDestroy,
   ChangeDetectionStrategy
 } from '@angular/core';
@@ -28,7 +28,7 @@ import { User } from "../../domain";
   styleUrls: ['./task-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskListComponent implements OnInit, OnDestroy{
+export class TaskListComponent implements AfterViewInit, OnDestroy{
   
   @Input() 
   list: TaskList;
@@ -36,7 +36,6 @@ export class TaskListComponent implements OnInit, OnDestroy{
   tasks$: Observable<Task[]>;
   taskForm$: Observable<any>;
   taskCount: number;
-  private taskSub: Subscription;
   private user: User;
   constructor(
     private dialog: MdDialog,
@@ -44,23 +43,16 @@ export class TaskListComponent implements OnInit, OnDestroy{
       this.loading$ = this.store$.select(fromRoot.getTaskLoading);
     }
   
-  ngOnInit(){
+  ngAfterViewInit(){
     // 由于@Input 是在 Init 时候才设置进来的，这句要放在这里
     // 如果在 constructor 中会报错
     this.store$.dispatch(new taskActions.LoadTasksAction(this.list.id));
     this.tasks$ = this.store$
       .select(fromRoot.getTasks)
       .map(tasks => tasks.filter(task => task.taskListId === this.list.id));
-    this.taskSub = this.store$.select(fromRoot.getTaskFormState)
-      .filter(state =>  state.owner !== null && state.taskListId === this.list.id)
-      .take(1)
-      .subscribe(data => this.dialog.open(NewTaskComponent, {data: data}));
   }
 
   ngOnDestroy(){
-    if(this.taskSub) {
-        this.taskSub.unsubscribe();
-    }
   }
 
   onChangeListName(list: TaskList){
@@ -90,9 +82,11 @@ export class TaskListComponent implements OnInit, OnDestroy{
 
   onTaskClick(task: Task){
     this.store$.dispatch(new taskFormActions.PrepareUpdateAction(task));
+    this.dialog.open(NewTaskComponent);
   }
 
   addNewTask(){
     this.store$.dispatch(new taskFormActions.PrepareAddAction(this.list.id));
+    this.dialog.open(NewTaskComponent);
   }
 }

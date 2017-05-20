@@ -31,7 +31,7 @@ export class UserEffects{
    * 
    */
   @Effect()
-  loadAllUsers$: Observable<Action> = this.actions$
+  searchUsers$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.SEARCH_USERS)
     .map(toPayload)
     .switchMap((str) => this.service$

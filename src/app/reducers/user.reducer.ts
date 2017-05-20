@@ -36,25 +36,33 @@ export function reducer(state = initialState, action: actions.Actions ): State {
       // if task is null then return the orginal state
       if(users === null) return state; 
       const newUsers = users.filter(user => !state.entities[user.id]);
-      const entities = newUsers.reduce((entities: { [id: string]: User }, user) => {
+      const newIds = newUsers.map(user => user.id);
+      if(newIds.length === 0) return state;
+      const newEntities = newUsers.reduce((entities: { [id: string]: User }, user: User) => {
         return Object.assign(entities, {
           [user.id]: user
         })
       },{});
-      return Object.assign({}, state, 
-        {ids: newUsers.map(user => user.id), entities: entities});
+      return {
+        ids: [...state.ids, ...newIds], 
+        entities: Object.assign({}, state.entities, newEntities)
+      };
     }
     case actions.ActionTypes.LOAD_USERS_BY_PRJ_SUCCESS:{
       const users = <User[]>action.payload;
       if(users === null) return state; 
       const newUsers = users.filter(user => !state.entities[user.id]);
-      const entities = newUsers.reduce((entities: { [id: string]: User }, user) => {
+      const newIds = newUsers.map(user => user.id);
+      if(newIds.length === 0) return state;
+      const newEntities = newUsers.reduce((entities: { [id: string]: User }, user: User) => {
         return Object.assign(entities, {
           [user.id]: user
         })
       },{});
-      return Object.assign({}, state, 
-        { ids: newUsers.map(user => user.id), entities: entities});
+      return {
+        ids: [...state.ids, ...newIds], 
+        entities: Object.assign({}, state.entities, newEntities)
+      };
     }
     case actions.ActionTypes.LOAD_USERS_BY_PRJ_FAIL:
     default: {

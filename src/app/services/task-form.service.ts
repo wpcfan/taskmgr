@@ -16,6 +16,7 @@ export class TaskFormService {
       .withLatestFrom(
         this.store$.select(fromRoot.getUserEntities), 
         (ids, entities) => {
+          console.log(JSON.stringify(entities))
           return ids.map(id => entities[id] as User)
         });
     const owner$ = this.store$.select(fromRoot.getUserEntities);

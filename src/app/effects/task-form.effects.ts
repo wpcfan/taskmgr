@@ -34,7 +34,7 @@ export class TaskFormEffects{
   launchAdd$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.PREPARE_ADD)
     .map(toPayload)
-    .mergeMap((taskListId:string) => {
+    .switchMap((taskListId:string) => {
       return this.service$.prepareAddTask(taskListId)
         .map(data => new actions.PrepareAddSuccessAction(data))
         .catch(err => of(new actions.PrepareAddFailAction(JSON.stringify(err))))
@@ -45,7 +45,7 @@ export class TaskFormEffects{
   launchUpdate$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.PREPARE_UPDATE)
     .map(toPayload)
-    .mergeMap((task) => {
+    .switchMap((task) => {
       const final$ = this.service$.prepareUpdateTask(task);
       return final$.map(data => new actions.PrepareUpdateSuccessAction(data))
         .catch(err => of(new actions.PrepareUpdateFailAction(JSON.stringify(err))))
