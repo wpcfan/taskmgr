@@ -20,6 +20,7 @@ export class TaskListHeaderComponent {
   @Output() addListAfter = new EventEmitter<void>();
   @Output() copyAllTasks = new EventEmitter<void>();
   @Output() moveAllTasks = new EventEmitter<void>();
+  @Output() newTask = new EventEmitter<void>();
   @Input() header = '';
   constructor(iconRegistry: MdIconRegistry, sanitizer: DomSanitizer) { 
     iconRegistry.addSvgIcon(
@@ -53,5 +54,10 @@ export class TaskListHeaderComponent {
   onDeleteList(ev: Event){
     ev.preventDefault();
     this.deleteList.emit();
+  }
+
+  addNewTask(ev: Event){
+    ev.preventDefault();
+    this.newTask.emit();
   }
 }

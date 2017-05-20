@@ -1,6 +1,7 @@
   <md-list>
     <app-task-list-header 
       [header]="list.name"
+      (newTask)="addNewTask()"
       (changeListName)="onChangeListName(list)"
       (deleteList)="onDeleteList()"
       (addListAfter)="onAddListAfter()"
@@ -15,12 +16,6 @@
     </md-progress-bar>
   </md-list>
   <ng-template #listItems>
-    <md-list-item>
-      <button md-button type="button" (click)="addNewTask($event)">
-        <md-icon>add_circle_outline</md-icon>
-        <span>添加新任务</span>
-      </button>
-    </md-list-item>
     <md-divider></md-divider>
     <app-task-item  
       *ngFor="let task of tasks$ | async"

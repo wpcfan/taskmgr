@@ -89,8 +89,7 @@ export class TaskListComponent implements OnInit, OnDestroy{
     this.store$.dispatch(new taskFormActions.PrepareUpdateAction(task));
   }
 
-  addNewTask(ev: Event){
-    ev.preventDefault();
+  addNewTask(){
     this.store$.dispatch(new taskFormActions.PrepareAddAction(this.list.id));
   }
 }

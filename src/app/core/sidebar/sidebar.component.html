@@ -6,9 +6,9 @@
       <span md-line>项目首页</span>
       <span md-line class="nav-secondary-text"> 查看您参与的全部项目 </span>
     </md-list-item>  
-    <md-list-item *ngFor="let prj of projects$ | async" (click)="handleClicked($event)">
+    <md-list-item *ngFor="let prj of projects$ | async" (click)="handlePrjClicked($event, prj)">
       <md-icon md-list-icon svgIcon="project"></md-icon>
-      <a md-line [routerLink]="['/tasklists/'+prj.id]">
+      <a md-line>
         {{prj.name}}
       </a>
       <span md-line class="nav-secondary-text"> {{prj.desc}} </span>

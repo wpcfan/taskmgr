@@ -11,6 +11,7 @@ import { Store } from "@ngrx/store";
 import * as fromRoot from "../../reducers";
 import { Observable } from "rxjs/Observable";
 import { Project, Auth } from "../../domain";
+import * as actions from '../../actions/project.action';
 
 @Component({
   selector: 'app-sidebar',
@@ -62,6 +63,12 @@ export class SidebarComponent {
 
   handleClicked(ev: Event){
     ev.preventDefault();
+    this.navClicked.emit();
+  }
+
+  handlePrjClicked(ev: Event, prj: Project){
+    ev.preventDefault();
+    this.store$.dispatch(new actions.SelectProjectAction(prj));
     this.navClicked.emit();
   }
 }
