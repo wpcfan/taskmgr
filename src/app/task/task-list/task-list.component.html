@@ -21,11 +21,12 @@
         <span>添加新任务</span>
       </button>
     </md-list-item>
-    <md-list-item *ngFor="let task of tasks$ | async" class="list-item">
-      <app-task-item  
-        [item]="task" 
-        (taskComplete)="onTaskComplete()" 
-        (taskClick)="onTaskClick(task)">
-      </app-task-item>
-    </md-list-item>
+    <md-divider></md-divider>
+    <app-task-item  
+      *ngFor="let task of tasks$ | async"
+      md-line
+      [item]="task" 
+      (taskComplete)="onTaskComplete()" 
+      (taskClick)="onTaskClick(task)">
+    </app-task-item>
   </ng-template>

@@ -1,49 +1,30 @@
-.priority{
-  width: 3px;
-  margin-right: 5px;
-}
-
-.priority-big{
-  width: 5px;
-}
 
 .priority-normal{
-  background-color: #A6A6A6;
+  border-left: 3px solid #A6A6A6;
 }
 
 .priority-important{
-  background-color: #FFAF38;
+  border-left: 3px solid #FFAF38;
 }
 
 .priority-emergency{
-  background-color: red;
+  border-left: 3px solid red;
 }
 
 .checkbox-section{
   border: 0px solid #A6A6A6;
 }
 
-.initial {
-  align-self: center;
-}
-
 .bottom-bar{
   margin-top: 3px;
   margin-bottom: 2px;
   font-size: 10px;
+  width: 100%;
+  order: 1;
 }
 
-.content{
-  margin-left: 5px;
-  margin-bottom: 2px;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  flex: 1 1 auto;
-}
-
-.desc{
-  font-size: 16px;
+.avatar-right{
+  order: 3;
 }
 
 .duedate{
@@ -51,12 +32,30 @@
   color: #fff;
 }
 
-:host {
-  display: inline-flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  background: #fff;
+.alarm{
+  font-size: 18px;
+}
+
+.desc{
+  white-space: normal;
+}
+
+.main {
+  width: 100%;
+  padding: 5px;
+}
+
+.content{
+  order: 1;
+}
+
+.container {
+  width: 100%;
+  background-color: #fff;
   border-radius: 3px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+:host {
   width: 100%;
 }

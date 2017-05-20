@@ -1,26 +1,27 @@
-<span 
-  class="priority" 
+<md-list-item 
+  class="container"
   [ngClass]="{
-    'priority-big': widerPriority, 
     'priority-normal': item.priority === 3,
     'priority-important': item.priority === 2,
     'priority-emergency': item.priority === 1}">
-</span>
-<span class="checkbox-section" >
-  <md-checkbox [checked]="item.completed" (change)="checkboxChanged()"></md-checkbox>
-</span>
-<span class="content" (click)="itemClicked($event)">
-  <div class="desc">
-    {{item.desc}}
-  </div>
-  <div class="bottom-bar">
-    <span class="duedate" *ngIf="item.dueDate">{{item.dueDate | date:"yy-MM-dd"}}</span>
-    <md-icon *ngIf="item.reminder">alarm</md-icon>
-    <!--<span class="chip" *ngFor="let tag of item.tags">{{tag}}</span>-->
-  </div>
-</span>
-<div class="avatar-circle initial">
-  <span class="initials">
-     PW  
-  </span>
-</div>
+ 
+    <div md-line class="content">
+      <div class="main">
+        <md-checkbox [checked]="item.completed" (change)="checkboxChanged()">
+        </md-checkbox>
+        <span (click)="itemClicked($event)" class="desc">
+          {{item.desc}}
+        </span>
+      </div>
+    </div>
+    <div md-line class="bottom-bar" (click)="itemClicked($event)"> 
+      <span class="duedate" *ngIf="item.dueDate">{{item.dueDate | date:"yy-MM-dd"}}</span>
+      <md-icon *ngIf="item.reminder" class="alarm">alarm</md-icon> 
+    </div>
+    <img 
+      class="avatar-right" 
+      md-list-avatar src="assets/img/avatar/02.svg" 
+      alt="text"
+      (click)="itemClicked($event)">
+
+</md-list-item>
