@@ -1,31 +1,34 @@
-<md-nav-list>
-  <h3 md-subheader>项目</h3>
-  <md-list-item [routerLink]="['/projects']">
-    <md-icon md-list-icon svgIcon="projects"></md-icon>
-    <span md-line>项目首页</span>
-    <span md-line class="nav-secondary-text"> 查看您参与的全部项目 </span>
-  </md-list-item>  
-  <md-list-item *ngFor="let path of projectPaths">
-    <a md-line [routerLink]="path">
-      项目
-    </a>
-    <md-icon md-list-icon>info</md-icon>
-  </md-list-item>
-  <md-divider></md-divider>
-  <h3 md-subheader>日历</h3>
-  <md-list-item [routerLink]="['/mycal/month']">
-    <md-icon md-list-icon svgIcon="month"></md-icon>
-    <span md-line>月视图</span>
-    <span md-line class="nav-secondary-text"> 按月方式查看事件 </span>
-  </md-list-item>
-  <md-list-item [routerLink]="['/mycal/week']">
-    <md-icon md-list-icon svgIcon="week"></md-icon>
-    <span md-line>星期视图</span>
-    <span md-line class="nav-secondary-text"> 按星期方式查看事件 </span>
-  </md-list-item>
-  <md-list-item>
-    <md-icon md-list-icon [svgIcon]="today"></md-icon>
-    <span md-line>当日视图</span>
-    <span md-line class="nav-secondary-text"> 按天方式查看事件 </span>
-  </md-list-item>
-</md-nav-list>
+<div *ngIf="(auth$ | async)?.user">
+  <md-nav-list>
+    <h3 md-subheader>项目</h3>
+    <md-list-item [routerLink]="['/projects']">
+      <md-icon md-list-icon svgIcon="projects"></md-icon>
+      <span md-line>项目首页</span>
+      <span md-line class="nav-secondary-text"> 查看您参与的全部项目 </span>
+    </md-list-item>  
+    <md-list-item *ngFor="let prj of projects$ | async">
+      <md-icon md-list-icon svgIcon="project"></md-icon>
+      <a md-line [routerLink]="['/tasklists/'+prj.id]">
+        {{prj.name}}
+      </a>
+      <span md-line class="nav-secondary-text"> {{prj.desc}} </span>
+    </md-list-item>
+    <md-divider></md-divider>
+    <h3 md-subheader>日历</h3>
+    <md-list-item [routerLink]="['/mycal/month']">
+      <md-icon md-list-icon svgIcon="month"></md-icon>
+      <span md-line>月视图</span>
+      <span md-line class="nav-secondary-text"> 按月方式查看事件 </span>
+    </md-list-item>
+    <md-list-item [routerLink]="['/mycal/week']">
+      <md-icon md-list-icon svgIcon="week"></md-icon>
+      <span md-line>星期视图</span>
+      <span md-line class="nav-secondary-text"> 按星期方式查看事件 </span>
+    </md-list-item>
+    <md-list-item [routerLink]="['/mycal/day']">
+      <md-icon md-list-icon [svgIcon]="today"></md-icon>
+      <span md-line>当日视图</span>
+      <span md-line class="nav-secondary-text"> 按天方式查看事件 </span>
+    </md-list-item>
+  </md-nav-list>
+</div>
