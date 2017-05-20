@@ -1,8 +1,27 @@
 <md-nav-list>
+  <h3 md-subheader>项目</h3>
   <md-list-item>
-    <a md-line [routerLink]="['/projects']">项目</a>
-    <button md-icon-button>
-        <md-icon>info</md-icon>
-    </button>
+    <a md-line [routerLink]="['/projects']">所有项目</a>
+    <md-icon md-list-icon>info</md-icon>
+  </md-list-item>  
+  <md-list-item *ngFor="let path of projectPaths">
+    <a md-line [routerLink]="path">
+      项目
+    </a>
+    <md-icon md-list-icon>info</md-icon>
+  </md-list-item>
+  <md-divider></md-divider>
+  <h3 md-subheader>日历</h3>
+  <md-list-item>
+    <a md-line [routerLink]="['/mycal/month']">月视图</a>
+    <md-icon md-list-icon>info</md-icon>
+  </md-list-item>
+  <md-list-item>
+    <a md-line [routerLink]="['/mycal/week']">星期视图</a>
+    <md-icon md-list-icon>info</md-icon>
+  </md-list-item>
+  <md-list-item>
+    <a md-line [routerLink]="['/mycal/day']">星期视图</a>
+    <md-icon md-list-icon>info</md-icon>
   </md-list-item>
 </md-nav-list>
