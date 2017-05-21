@@ -3,6 +3,7 @@
     {
       "password": "Wp770521",
       "name": "王芃",
+      "avatar": "/assets/img/avatar/10.svg",
       "email": "wpcfan@163.com",
       "id": "37489e0c-df34-c261-71c4-ce75357e3035",
       "projectIds": [
@@ -15,6 +16,7 @@
     {
       "password": "Ls123456",
       "name": "李四",
+      "avatar": "/assets/img/avatar/12.svg",
       "email": "wang@163.com",
       "id": "BkkDvwee-",
       "projectIds": [
@@ -24,15 +26,6 @@
     }
   ],
   "projects": [
-    {
-      "id": "1",
-      "name": "微信",
-      "desc": "全国最大的社交软件",
-      "coverImg": "/assets/img/covers/6.jpg",
-      "members": [
-        "37489e0c-df34-c261-71c4-ce75357e3035"
-      ]
-    },
     {
       "id": "2",
       "name": "缺陷跟踪系统",
@@ -67,7 +60,6 @@
     }
   ],
   "tasklists": [
-    
     {
       "name": "待办",
       "projectId": "Sk2HaTagb",

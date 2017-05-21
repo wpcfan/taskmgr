@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { concat } from 'rxjs/observable/concat';
-import * as models from '../domain';
+import { Task, User } from '../domain';
 
 @Injectable()
 export class TaskService {
@@ -14,21 +14,21 @@ export class TaskService {
     @Inject('BASE_CONFIG') private config,
     private http: Http) { }
 
-  add(task: models.Task): Observable<models.Task> {
+  add(task: Task): Observable<Task> {
     const uri = `${this.config.uri}/${this.domain}`;
     return this.http
       .post(uri, JSON.stringify(task), {headers: this.headers})
       .map(res => res.json());
   }
 
-  update(task: models.Task): Observable<models.Task>{
+  update(task: Task): Observable<Task>{
     const uri = `${this.config.uri}/${this.domain}/${task.id}`;
     return this.http
       .put(uri, JSON.stringify(task), {headers: this.headers})
       .map(res => res.json());
   }
 
-  delete(task: models.Task): Observable<models.Task>{
+  delete(task: Task): Observable<Task>{
     const uri = `${this.config.uri}/${this.domain}/${task.id}`;
     return this.http
       .delete(uri)
@@ -36,7 +36,7 @@ export class TaskService {
   }
 
     // GET /tasklist
-  get(taskListId: string): Observable<models.Task[]>{
+  get(taskListId: string): Observable<Task[]>{
     const uri = `${this.config.uri}/${this.domain}`;
     return this.http
       .get(uri, {params: {'taskListId': taskListId}, headers: this.headers})

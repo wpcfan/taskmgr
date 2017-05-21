@@ -33,6 +33,7 @@ import {
 })
 export class ImageListSelectComponent implements ControlValueAccessor {
   @Input() selected: string;
+  @Input() title: string = '选择封面：';
   @Input() items: string[] = [];
   @Input() cols: number = 8;
   @Input() rowHeight: string = '64px';

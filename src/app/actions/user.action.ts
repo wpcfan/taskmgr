@@ -7,6 +7,11 @@ export interface UserProject {
   projectId: string;
 }
 
+export interface UserTask {
+  user: User;
+  taskId: string;
+}
+
 /**
  * For each action type in an action group, make a simple
  * enum object for all of this group's action types.
@@ -21,7 +26,7 @@ export const ActionTypes = {
   ADD_USER_PROJECT_FAIL:         type('[User] Add User Project Fail'),  
   REMOVE_USER_PROJECT:           type('[User] Remove User Project'),
   REMOVE_USER_PROJECT_SUCCESS:   type('[User] Remove User Project Success'),
-  REMOVE_USER_PROJECT_FAIL:      type('[User] Remove User Project Fail'),  
+  REMOVE_USER_PROJECT_FAIL:      type('[User] Remove User Project Fail'),
   SEARCH_USERS:                  type('[User] Search Users'),  
   SEARCH_USERS_SUCCESS:          type('[User] Search Users Success'),  
   SEARCH_USERS_FAIL:             type('[User] Search Users Fail'),  
@@ -56,7 +61,7 @@ export class AddUserProjectFailAction implements Action {
 export class RemoveUserProjectAction implements Action {
   type = ActionTypes.REMOVE_USER_PROJECT;
 
-  constructor(public payload: {user: User, projectId: string}) { }
+  constructor(public payload: UserProject) { }
 }
 
 export class RemoveUserProjectSuccessAction implements Action {

@@ -42,4 +42,22 @@ export class UserService {
       .patch(uri, JSON.stringify({projectIds: [...projectIds.slice(0, index), projectIds.slice(index)]}), {headers: this.headers})
       .map(res => res.json() as User);
   }
+
+  addTaskRef(user: User, taskId: string){
+    const uri = `${this.config.uri}/users/${user.id}`;
+    const taskIds = (user.taskIds)? user.taskIds : [];
+    const index = taskIds.indexOf(taskId);
+    return this.http
+      .patch(uri, JSON.stringify({taskIds: [...taskIds, taskId]}), {headers: this.headers})
+      .map(res => res.json() as User);
+  }
+
+  removeTaskRef(user: User, taskId: string){
+    const uri = `${this.config.uri}/users/${user.id}`;
+    const taskIds = (user.taskIds)? user.taskIds : [];
+    const index = taskIds.indexOf(taskId);
+    return this.http
+      .patch(uri, JSON.stringify({taskIds: [...taskIds.slice(0, index), taskIds.slice(index)]}), {headers: this.headers})
+      .map(res => res.json() as User);
+  }
 }

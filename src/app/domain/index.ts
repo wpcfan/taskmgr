@@ -18,7 +18,9 @@ export interface User {
   email: string;
   name?: string;
   password?: string;
+  avatar?: string;
   projectIds?: string[];
+  taskIds?: string[];
 }
 
 export interface Quote{
