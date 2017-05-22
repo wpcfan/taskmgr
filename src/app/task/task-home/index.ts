@@ -38,18 +38,13 @@ export class TaskHomeComponent implements OnDestroy{
     private route: ActivatedRoute,
     private dialog: MdDialog,
     private store$: Store<fromRoot.State>) {
-      const routeParam$ = this.route.params.pluck('id');
-      this.routeParamSub = routeParam$.subscribe(
-        (id:string) => {
-          this.store$.dispatch(new actions.LoadTaskListsAction(id));
-          this.projectId = id;
-        });
-      this.lists$ = Observable.combineLatest(
-        this.store$.select(fromRoot.getTaskLists),
-        routeParam$, 
-        (lists, id) => {
-          return lists.filter(list => list.projectId === id)
-        });
+      // const routeParam$ = this.route.params.pluck('id');
+      // this.routeParamSub = routeParam$.subscribe(
+      //   (id:string) => {
+      //     this.store$.dispatch(new actions.LoadTaskListsAction(id));
+      //     this.projectId = id;
+      //   });
+      this.lists$ = this.store$.select(fromRoot.getProjectTaskList);
       this.drag$ = this.store$.select(fromRoot.getTaskDrag);
       this.drop$ = this.store$.select(fromRoot.getTaskDrop);
       this.listSub = this.store$.select(fromRoot.getTaskLists)

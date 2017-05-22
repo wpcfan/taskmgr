@@ -131,6 +131,9 @@ export const getSelectedProjectId = createSelector(getProjectsState, fromProject
 export const getSelectedProject = createSelector(getProjectEntities, getSelectedProjectId, (entities, id)=>{
   return entities[id];
 });
+export const getProjectTaskList = createSelector(getSelectedProjectId, getTaskLists, (projectId, taskLists) => {
+  return taskLists.filter(taskList => taskList.projectId === projectId);
+});
 export const getTasks = createSelector(getTasksState, fromTasks.getTasks);
 export const getTaskEntities = createSelector(getTasksState, fromTasks.getEntities);
 export const getTaskIds = createSelector(getTasksState, fromTasks.getIds);

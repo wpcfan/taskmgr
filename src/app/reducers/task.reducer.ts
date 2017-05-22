@@ -77,3 +77,4 @@ export const getLoading = (state) => state.loading;
 export const getTasks = createSelector(getEntities, getIds, (entities, ids) => {
   return ids.map(id => entities[id]);
 });
+export const getTasksByListId = (state, listId) => state.ids.map(id => state.entities[id].taskListId === listId)
