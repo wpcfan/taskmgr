@@ -104,4 +104,10 @@ export class TaskHomeComponent implements OnDestroy{
       }
     }});
   }
+
+  tasksByList(listId:string){
+    return this.store$
+      .select(fromRoot.getTasksWithOwner)
+      .map(tasks => tasks.filter(task => task.taskListId === listId));
+  }
 }

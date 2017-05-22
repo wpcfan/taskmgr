@@ -92,15 +92,15 @@ export class NewTaskComponent implements OnInit {
         priority: [this.data.task.priority],
         dueDate: [this.data.task.dueDate],
         reminder: [this.data.task.reminder],
-        ownerChip: [{name: this.data.owner.name, value: this.data.owner.id}, Validators.required],
+        ownerChip: [{name: this.data.task.owner.name, value: this.data.task.owner.id}, Validators.required],
         ownerSearch: [''],
         followerSearch: [''],
         // tagsInput: [''],
         remark: [this.data.task.remark]
       });
       this.dialogTitle = '修改任务：';
-      this.followers = [...this.data.paticipants];
-      this.owners = [this.data.owner];
+      this.followers = [...this.data.task.paticipants];
+      this.owners = [this.data.task.owner];
       // this.tags = this.data.tags;
       console.log(this.data.participants)
     }

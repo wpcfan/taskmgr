@@ -43,8 +43,10 @@ export interface Task{
   taskListId: string;
   desc: string;
   completed: boolean;
+  owner?: User;
   ownerId: string;
   participantIds: string[];
+  participants?: User[];
   dueDate?: Date;
   priority: number;
   order: number;

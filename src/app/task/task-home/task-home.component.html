@@ -10,7 +10,7 @@
     (dragstart)="onDragStart($event, taskList)"
     (drop)="onDrop($event, taskList)"
     [ngStyle]="{'order': taskList.order}">
-    <app-task-list [list]="taskList">
+    <app-task-list [list]="taskList" [tasks] = "tasksByList(taskList.id) | async">
       
     </app-task-list>
   </div>

@@ -30,10 +30,9 @@ import { User } from "../../domain";
 })
 export class TaskListComponent implements AfterViewInit, OnDestroy{
   
-  @Input() 
-  list: TaskList;
+  @Input() list: TaskList;
   loading$: Observable<boolean>;
-  tasks$: Observable<Task[]>;
+  @Input() tasks: Task[];
   taskForm$: Observable<any>;
   taskCount: number;
   private user: User;
@@ -47,9 +46,6 @@ export class TaskListComponent implements AfterViewInit, OnDestroy{
     // 由于@Input 是在 Init 时候才设置进来的，这句要放在这里
     // 如果在 constructor 中会报错
     this.store$.dispatch(new taskActions.LoadTasksAction(this.list.id));
-    this.tasks$ = this.store$
-      .select(fromRoot.getTasks)
-      .map(tasks => tasks.filter(task => task.taskListId === this.list.id));
   }
 
   ngOnDestroy(){

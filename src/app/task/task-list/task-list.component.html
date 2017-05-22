@@ -18,7 +18,7 @@
   <ng-template #listItems>
     <md-divider></md-divider>
     <app-task-item  
-      *ngFor="let task of tasks$ | async"
+      *ngFor="let task of tasks"
       md-line
       [item]="task" 
       (taskComplete)="onTaskComplete()" 

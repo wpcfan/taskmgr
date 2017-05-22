@@ -141,6 +141,13 @@ export const getTaskLoading = createSelector(getTasksState, fromTasks.getLoading
 export const getUsers = createSelector(getUserState, fromUsers.getUsers);
 export const getUserIds = createSelector(getUserState, fromUsers.getIds);
 export const getUserEntities = createSelector(getUserState, fromUsers.getEntities);
+export const getTasksWithOwner = createSelector(getTasks, getUserEntities, (tasks, entities) => {
+  return tasks.map(task => {
+    const owner = entities[task.ownerId];
+    const participants = task.participantIds.map(id => entities[id]);
+    return Object.assign({}, task, {owner: owner}, {participants: [...participants]});
+  })
+})
 
 @NgModule({
   imports: [

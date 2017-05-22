@@ -4,7 +4,8 @@ import {
   Output,
   EventEmitter,
   ChangeDetectionStrategy,
-  HostListener
+  HostListener,
+  OnInit
 } from '@angular/core';
 import * as models from '../../domain';
 
@@ -14,12 +15,17 @@ import * as models from '../../domain';
   styleUrls: ['./task-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskItemComponent {
+export class TaskItemComponent implements OnInit{
   @Output() taskComplete = new EventEmitter<string>();
   @Output() taskClick = new EventEmitter<string>();
   @Input() item: models.Task;
+  avatar: string;
   widerPriority: boolean = false;
   constructor() { }
+
+  ngOnInit(){
+    this.avatar = (this.item.owner) ? this.item.owner.avatar : '/assets/img/avatar/unassigned.svg';
+  }
 
   checkboxChanged(){
     this.taskComplete.emit(this.item.id);
