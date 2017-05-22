@@ -1,16 +1,14 @@
 <md-list-item 
   class="container"
   draggable="true"
-  (dragover)="onDragOver($event)"
-  (dragenter)="onDragEnter($event)"
-  (dragleave)="onDragLeave($event)"
   (dragend)="onDragEnd($event)"
-  (dragstart)="onDragStart($event, taskList)"
-  (drop)="onDrop($event, taskList)"
+  (dragstart)="onDragStart($event)"
   [ngClass]="{
     'priority-normal': item.priority === 3,
     'priority-important': item.priority === 2,
-    'priority-emergency': item.priority === 1}">
+    'priority-emergency': item.priority === 1,
+    'drag-start': draggingStatus === 'start',
+    'drag-end': draggingStatus === 'end'}">
  
     <div md-line class="content">
       <div class="main">

@@ -1,10 +1,14 @@
-  <md-list>
+  <md-list     
+    [ngClass]="{
+      'drag-enter': draggingStatus === 'enter',
+      'drag-leave': draggingStatus === 'leave',
+      'drop': draggingStatus === 'drop'
+      }">
     <app-task-list-header 
       [header]="list.name"
       (newTask)="addNewTask()"
-      (changeListName)="onChangeListName(list)"
+      (changeListName)="onChangeListName()"
       (deleteList)="onDeleteList()"
-      (addListAfter)="onAddListAfter()"
       (copyAllTasks)="onCopyAllTasks()"
       (moveAllTasks)="onMoveAllTasks()">
     </app-task-list-header>
@@ -12,7 +16,7 @@
     <md-progress-bar 
       color="primary" 
       mode="indeterminate" 
-      *ngIf="loading$ | async else listItems">
+      *ngIf="loading else listItems">
     </md-progress-bar>
   </md-list>
   <ng-template #listItems>
@@ -21,7 +25,8 @@
       *ngFor="let task of tasks"
       md-line
       [item]="task" 
-      (taskComplete)="onTaskComplete()" 
-      (taskClick)="onTaskClick(task)">
+      (taskComplete)="onTaskComplete(task.id)" 
+      (taskClick)="onTaskClick(task)"
+      (draggingTaskId)="handleDragging($event)">
     </app-task-item>
   </ng-template>

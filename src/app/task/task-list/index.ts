@@ -3,7 +3,8 @@ import {
   Input,
   Output,
   AfterViewInit,
-  OnDestroy,
+  HostListener,
+  EventEmitter,
   ChangeDetectionStrategy
 } from '@angular/core';
 import { Observable } from "rxjs/Observable";
@@ -28,18 +29,23 @@ import { User } from "../../domain";
   styleUrls: ['./task-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskListComponent implements AfterViewInit, OnDestroy{
-  
-  @Input() list: TaskList;
-  loading$: Observable<boolean>;
-  @Input() tasks: Task[];
-  taskForm$: Observable<any>;
+export class TaskListComponent implements AfterViewInit{
+  draggingStatus: string;
+  dragTaskId:string;
   taskCount: number;
+  @Input() loading: boolean;
+  @Input() list: TaskList;
+  @Input() tasks: Task[];
+  @Output() moveTask = new EventEmitter<{taskId:string; taskListId: string}>();
+  @Output() delList: EventEmitter<string>;
+  @Output() moveList: EventEmitter<string>;
+  @Output() copyList: EventEmitter<string>;
+  @Output() completeTask: EventEmitter<string>;
+  @Output() renameList: EventEmitter<TaskList>;
   private user: User;
   constructor(
     private dialog: MdDialog,
     private store$: Store<fromRoot.State>) { 
-      this.loading$ = this.store$.select(fromRoot.getTaskLoading);
     }
   
   ngAfterViewInit(){
@@ -48,32 +54,24 @@ export class TaskListComponent implements AfterViewInit, OnDestroy{
     this.store$.dispatch(new taskActions.LoadTasksAction(this.list.id));
   }
 
-  ngOnDestroy(){
-  }
-
-  onChangeListName(list: TaskList){
-    this.dialog.open(NewTaskListComponent, {data: {
-      taskList: Object.assign({}, list)
-    }})
-  }
-
-  onAddListAfter(){
+  onChangeListName(){
+    this.renameList.emit(this.list)
   }
 
   onCopyAllTasks(){
-    
+    this.copyList.emit(this.list.id);
   }
 
   onMoveAllTasks(){
-    
+    this.moveList.emit(this.list.id);
   }
 
   onDeleteList(){
-    
+    this.delList.emit(this.list.id);
   }
 
-  onTaskComplete(){
-    
+  onTaskComplete(taskId: string){
+    this.completeTask.emit(taskId);
   }
 
   onTaskClick(task: Task){
@@ -84,5 +82,33 @@ export class TaskListComponent implements AfterViewInit, OnDestroy{
   addNewTask(){
     this.store$.dispatch(new taskFormActions.PrepareAddAction(this.list.id));
     this.dialog.open(NewTaskComponent);
+  }
+
+  @HostListener('dragover', ['$event'])
+  onDragOver(e){
+    e.preventDefault();
+    this.draggingStatus = 'enter';
+  }
+
+  @HostListener('drop', ['$event'])
+  onDrop(e){
+    this.draggingStatus = 'drop';
+    if(this.dragTaskId){
+      this.moveTask.emit({taskId: this.dragTaskId, taskListId: this.list.id});
+    }
+  }
+
+  @HostListener('dragenter', ['$event'])
+  onDragEnter(e){
+    this.draggingStatus = 'enter';
+  }
+
+  @HostListener('dragleave', ['$event'])
+  onDragLeave(e){
+    this.draggingStatus = 'leave';
+  }
+
+  handleDragging(taskId: string){
+    this.dragTaskId = taskId;
   }
 }

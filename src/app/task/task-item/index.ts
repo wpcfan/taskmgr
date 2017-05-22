@@ -7,7 +7,7 @@ import {
   HostListener,
   OnInit
 } from '@angular/core';
-import * as models from '../../domain';
+import { Task } from '../../domain';
 
 @Component({
   selector: 'app-task-item',
@@ -18,8 +18,10 @@ import * as models from '../../domain';
 export class TaskItemComponent implements OnInit{
   @Output() taskComplete = new EventEmitter<string>();
   @Output() taskClick = new EventEmitter<string>();
-  @Input() item: models.Task;
+  @Input() item: Task;
   avatar: string;
+  draggingStatus: string;
+  @Output() draggingTaskId = new EventEmitter<string>();
   widerPriority: boolean = false;
   constructor() { }
 
@@ -46,41 +48,12 @@ export class TaskItemComponent implements OnInit{
     this.widerPriority = false;
   }
   
-  onDragStart(e, src){
-    // this.store$.dispatch(new actions.DragAction(src.id));
-    // this.dragged = e.target;
-    e.target.style.opacity=.5;
-    e.target.style.border = "#ff525b dashed 2px"
+  onDragStart(e){
+    this.draggingStatus = 'start';
+    this.draggingTaskId.emit(this.item.id);
   }
-  
+
   onDragEnd(e){
-    e.target.style.opacity=1;
-    e.target.style.background = "#EEEEEE";
-    e.target.style.border = "";
-  }
-  onDragOver(e){
-    e.preventDefault();
-  }
-  onDrop(e, target){
-    // prevent default action
-    e.preventDefault();
-    
-    // move dragged elem to the selected drop target
-    if (e.target.className == "list-container") {
-      // this.store$.dispatch(new actions.DropAction(target.id));
-      e.target.style.background = "#EEEEEE";
-    }
-  }
-  onDragEnter(e){
-    // highlight potential drop target when the draggable element enters it
-    if (e.target.className == "list-container" ) {
-      e.target.style.background = "purple";
-    }
-  }
-  onDragLeave(e){
-    // reset background of potential drop target when the draggable element leaves it
-    if (e.target.className == "list-container" ) {
-      e.target.style.background = "#EEEEEE";
-    }
+    this.draggingStatus = 'end';
   }
 }

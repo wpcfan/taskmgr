@@ -6,11 +6,10 @@ import {
 } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { Observable } from "rxjs/Observable";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/pluck';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from "@ngrx/store";
-import 'rxjs/add/operator/pluck';
-import 'rxjs/add/operator/count';
-import 'rxjs/add/observable/combineLatest';
 import { Subscription } from "rxjs/Subscription";
 import * as fromRoot from "../../reducers";
 import * as actions from '../../actions/task-list.action';
@@ -24,47 +23,63 @@ import { NewTaskListComponent } from "../new-task-list";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskHomeComponent implements OnDestroy{
-  dragged;
-  loading: boolean = true;
+  loading$: Observable<boolean>;
   lists$: Observable<TaskList[]>;
-  private drag$: Observable<TaskList>;
-  private drop$: Observable<TaskList>;
   private routeParamSub: Subscription;
-  private listSub: Subscription;
   private projectId: string;
-  private count: number;
   constructor(
     private renderer: Renderer2, 
     private route: ActivatedRoute,
     private dialog: MdDialog,
     private store$: Store<fromRoot.State>) {
-      // const routeParam$ = this.route.params.pluck('id');
-      // this.routeParamSub = routeParam$.subscribe(
-      //   (id:string) => {
-      //     this.store$.dispatch(new actions.LoadTaskListsAction(id));
-      //     this.projectId = id;
-      //   });
+      const routeParam$ = this.route.params.pluck('id');
+      this.routeParamSub = routeParam$.subscribe(
+        (id:string) => {
+          this.projectId = id;
+        });
       this.lists$ = this.store$.select(fromRoot.getProjectTaskList);
-      this.listSub = this.store$.select(fromRoot.getTaskLists)
-        .subscribe(lists => this.count = lists.length);
+      this.loading$ = this.store$.select(fromRoot.getTaskLoading);
   }
 
   ngOnDestroy(){
     // 取消订阅以免内存泄露
     if(this.routeParamSub)
       this.routeParamSub.unsubscribe();
-    if(this.listSub)
-      this.listSub.unsubscribe();
   }
 
-  openNewTaskList(ev: Event){
+  handleRenameList(list: TaskList){
+    this.dialog.open(NewTaskListComponent, {data: {
+      taskList: Object.assign({}, list)
+    }})
+  }
+
+  handleNewTaskList(ev: Event){
     ev.preventDefault();
     this.dialog.open(NewTaskListComponent, {data:{
       taskList: {
-        projectId: this.projectId,
-        order: this.count+1
+        projectId: this.projectId
       }
     }});
+  }
+
+  handleMoveList(listId: string){
+
+  }
+
+  handleCopyList(listId: string){
+
+  }
+
+  handleDelList(listId: string){
+
+  }
+
+  handleMoveTask(listId: string){
+
+  }
+
+  handleCompleteTask(listId: string){
+
   }
 
   tasksByList(listId:string){

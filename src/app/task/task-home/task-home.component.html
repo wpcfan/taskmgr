@@ -1,13 +1,18 @@
 <div class="task-lists">
-  <div 
-    class="list-container" 
-    *ngFor="let taskList of lists$ | async" 
-    [ngStyle]="{'order': taskList.order}">
-    <app-task-list [list]="taskList" [tasks] = "tasksByList(taskList.id) | async">
-      
+  <div *ngFor="let taskList of lists$ | async" class="list-container" >
+    <app-task-list 
+      [list]="taskList" 
+      [tasks]="tasksByList(taskList.id) | async"
+      [loading]="loading$ | async"
+      (moveTask)="handleMoveTask($event)"
+      (completeTask)="handleCompleteTask($event)"
+      (renameList)="handleRenameList($event)"
+      (delList)="handleDelList($event)"
+      (moveList)="handleMoveList($event)"
+      (copyList)="handleCopyList($event)">
     </app-task-list>
   </div>
 </div>
-<button md-fab (click)="openNewTaskList($event)" type="button" class="fab-button">
+<button md-fab (click)="handleNewTaskList($event)" type="button" class="fab-button">
   <md-icon>add</md-icon>
 </button>
