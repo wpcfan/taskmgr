@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from "@ngrx/store";
 import { Subscription } from "rxjs/Subscription";
 import * as fromRoot from "../../reducers";
-import * as actions from '../../actions/task-list.action';
+import * as listActions from '../../actions/task-list.action';
 import { TaskList } from '../../domain';
 import { NewTaskListComponent } from "../new-task-list";
 
@@ -70,8 +70,8 @@ export class TaskHomeComponent implements OnDestroy{
 
   }
 
-  handleDelList(listId: string){
-
+  handleDelList(list: TaskList){
+    this.store$.dispatch(new listActions.DeleteTaskListAction(list))
   }
 
   handleMoveTask(listId: string){

@@ -37,7 +37,7 @@ export class TaskListComponent implements AfterViewInit{
   @Input() list: TaskList;
   @Input() tasks: Task[];
   @Output() moveTask = new EventEmitter<{taskId:string; taskListId: string}>();
-  @Output() delList = new EventEmitter<string>();
+  @Output() delList = new EventEmitter<TaskList>();
   @Output() moveList = new EventEmitter<string>();
   @Output() copyList = new EventEmitter<string>();
   @Output() completeTask = new EventEmitter<string>();
@@ -67,7 +67,7 @@ export class TaskListComponent implements AfterViewInit{
   }
 
   onDeleteList(){
-    this.delList.emit(this.list.id);
+    this.delList.emit(this.list);
   }
 
   onTaskComplete(taskId: string){

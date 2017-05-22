@@ -20,7 +20,6 @@ export interface User {
   password?: string;
   avatar?: string;
   projectIds?: string[];
-  taskIds?: string[];
 }
 
 export interface Quote{

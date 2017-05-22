@@ -67,12 +67,6 @@
       "id": "BkenST66lb"
     },
     {
-      "name": "进行中",
-      "projectId": "Sk2HaTagb",
-      "order": 2,
-      "id": "HJb2HT6TgW"
-    },
-    {
       "name": "已完成",
       "projectId": "Sk2HaTagb",
       "order": 3,
@@ -128,55 +122,6 @@
       "priority": 1,
       "remark": "",
       "id": 3
-    },
-    {
-      "desc": "不知道你要干啥",
-      "taskListId": "HJb2HT6TgW",
-      "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
-      "completed": false,
-      "participantIds": [
-        "37489e0c-df34-c261-71c4-ce75357e3035"
-      ],
-      "dueDate": "2017-05-23T16:00:00.000Z",
-      "reminder": null,
-      "createDate": "2017-05-19T10:04:40.296Z",
-      "priority": 1,
-      "order": 1,
-      "remark": "",
-      "id": 4
-    },
-    {
-      "id": 5,
-      "desc": "不知道到底做什么，有什么值得做的",
-      "taskListId": "HJb2HT6TgW",
-      "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
-      "completed": false,
-      "participantIds": [
-        "37489e0c-df34-c261-71c4-ce75357e3035",
-        "BkkDvwee-"
-      ],
-      "dueDate": "2017-05-23T16:00:00.000Z",
-      "reminder": "2017-05-24T16:00:00.000Z",
-      "createDate": "2017-05-20T13:36:12.849Z",
-      "priority": 3,
-      "order": 2,
-      "remark": ""
-    },
-    {
-      "desc": "这个用户提出了傻逼需求",
-      "taskListId": "HJb2HT6TgW",
-      "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
-      "completed": false,
-      "participantIds": [
-        "37489e0c-df34-c261-71c4-ce75357e3035"
-      ],
-      "dueDate": null,
-      "reminder": null,
-      "createDate": "2017-05-22T04:25:27.184Z",
-      "priority": 3,
-      "order": 3,
-      "remark": "",
-      "id": 6
     }
   ],
   "quotes": [

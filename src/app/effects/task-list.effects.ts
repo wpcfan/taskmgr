@@ -12,8 +12,9 @@ import 'rxjs/add/observable/zip';
 import { TaskListService } from '../services';
 import * as actions from '../actions/task-list.action';
 import * as prjActions from '../actions/project.action';
+import * as taskActions from '../actions/task.action';
 import * as fromRoot from '../reducers';
-import * as models from '../domain';
+import {TaskList, Task} from '../domain';
 
 @Injectable()
 export class TaskListEffects{
@@ -71,6 +72,17 @@ export class TaskListEffects{
       .map(taskList => new actions.DeleteTaskListSuccessAction(taskList))
       .catch(err => of(new actions.DeleteTaskListFailAction(JSON.stringify(err))))
     );
+
+  @Effect()
+  removeTasksInList$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.DELETE_SUCCESS)
+    .map(toPayload)
+    .switchMap((taskList: TaskList) => {
+      return this.store$.select(fromRoot.getTasks)
+        .switchMap((tasks: Task[]) => 
+          Observable.from(tasks.filter(t => t.taskListId === taskList.id)))
+        .map(task => new taskActions.DeleteTaskAction(task));
+    });
 
   @Effect()
   initializeTaskLists$: Observable<Action> = this.actions$
