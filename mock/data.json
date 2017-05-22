@@ -76,9 +76,9 @@
   "tasks": [
     {
       "desc": "吃晚餐",
-      "taskListId": "BkenST66lb",
+      "taskListId": "SkG3Ba6Tgb",
       "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
-      "completed": false,
+      "completed": true,
       "participantIds": [
         "BkkDvwee-",
         "37489e0c-df34-c261-71c4-ce75357e3035"

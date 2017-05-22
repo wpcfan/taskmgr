@@ -73,4 +73,24 @@ export class TaskEffects{
       .catch(err => of(new actions.DeleteTaskFailAction(JSON.stringify(err))))
     );
 
+  @Effect()
+  completeTaskList$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.COMPLETE)
+    .map(toPayload)
+    .switchMap(task => this.service$
+      .complete(task)
+      .map(task => new actions.CompleteTaskSuccessAction(task))
+      .catch(err => of(new actions.CompleteTaskFailAction(JSON.stringify(err))))
+    );
+
+  @Effect()
+  moveTaskList$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.MOVE)
+    .map(toPayload)
+    .switchMap(({taskId, taskListId}) => this.service$
+      .move(taskId, taskListId)
+      .map(task => new actions.MoveTaskSuccessAction(task))
+      .catch(err => of(new actions.MoveTaskFailAction(JSON.stringify(err))))
+    );
+
 }

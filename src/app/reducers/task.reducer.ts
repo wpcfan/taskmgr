@@ -39,6 +39,8 @@ export function reducer(
       },{});
       return Object.assign({}, state, {ids: ids, entities: entities, loading: false});
     }
+    case actions.ActionTypes.MOVE_SUCCESS:
+    case actions.ActionTypes.COMPLETE_SUCCESS:
     case actions.ActionTypes.UPDATE_SUCCESS:{
       const task = <Task>action.payload;
       const entities = Object.assign({}, state.entities, {[task.id]: task});
@@ -61,6 +63,8 @@ export function reducer(
         loading: false
       });
     }
+    case actions.ActionTypes.COMPLETE_FAIL:
+    case actions.ActionTypes.MOVE_FAIL:
     case actions.ActionTypes.LOAD_FAIL:
     case actions.ActionTypes.ADD_FAIL:
     case actions.ActionTypes.UPDATE_FAIL:

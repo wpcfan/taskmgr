@@ -14,7 +14,7 @@
       <div class="main">
         <md-checkbox [checked]="item.completed" (change)="checkboxChanged()">
         </md-checkbox>
-        <span (click)="itemClicked($event)" class="desc">
+        <span (click)="itemClicked($event)" class="desc" [ngClass]="{'completed': item.completed}">
           {{item.desc}}
         </span>
       </div>

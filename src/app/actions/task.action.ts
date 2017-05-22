@@ -14,7 +14,13 @@ export const ActionTypes = {
   DELETE_FAIL:     type('[Task] Delete Fail'),  
   LOAD:            type('[Task] Load'),
   LOAD_SUCCESS:    type('[Task] Load Success'),
-  LOAD_FAIL:       type('[Task] Load Fail')
+  LOAD_FAIL:       type('[Task] Load Fail'),
+  MOVE:            type('[Task] Move'),
+  MOVE_SUCCESS:    type('[Task] Move Success'),
+  MOVE_FAIL:       type('[Task] Move Fail'),
+  COMPLETE:        type('[Task] Complete'),
+  COMPLETE_SUCCESS:type('[Task] Complete Success'),
+  COMPLETE_FAIL:   type('[Task] Complete Fail')
 };
 
 export class AddTaskAction implements Action {
@@ -77,6 +83,36 @@ export class LoadTasksFailAction implements Action {
   constructor(public payload: Err){}
 }
 
+export class MoveTaskAction implements Action {
+  type = ActionTypes.MOVE;
+  constructor(public payload: {taskId:string; taskListId:string}){}
+}
+
+export class MoveTaskSuccessAction implements Action {
+  type = ActionTypes.MOVE_SUCCESS;
+  constructor(public payload: Task){}
+}
+
+export class MoveTaskFailAction implements Action {
+  type = ActionTypes.MOVE_FAIL;
+  constructor(public payload: Err){}
+}
+
+export class CompleteTaskAction implements Action {
+  type = ActionTypes.COMPLETE;
+  constructor(public payload: Task){}
+}
+
+export class CompleteTaskSuccessAction implements Action {
+  type = ActionTypes.COMPLETE_SUCCESS;
+  constructor(public payload: Task){}
+}
+
+export class CompleteTaskFailAction implements Action {
+  type = ActionTypes.COMPLETE_FAIL;
+  constructor(public payload: Err){}
+}
+
 
 export type Actions
   = AddTaskAction
@@ -90,4 +126,11 @@ export type Actions
   | DeleteTaskFailAction
   | LoadTasksAction
   | LoadTasksSuccessAction
-  | LoadTasksFailAction;
+  | LoadTasksFailAction
+  | MoveTaskAction
+  | MoveTaskSuccessAction
+  | MoveTaskFailAction
+  | CompleteTaskAction
+  | CompleteTaskSuccessAction
+  | CompleteTaskFailAction
+  ;

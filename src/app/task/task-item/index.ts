@@ -16,7 +16,7 @@ import { Task } from '../../domain';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskItemComponent implements OnInit{
-  @Output() taskComplete = new EventEmitter<string>();
+  @Output() taskComplete = new EventEmitter<Task>();
   @Output() taskClick = new EventEmitter<string>();
   @Output() draggingTaskId = new EventEmitter<string>();
   @Input() item: Task;
@@ -30,7 +30,7 @@ export class TaskItemComponent implements OnInit{
   }
 
   checkboxChanged(){
-    this.taskComplete.emit(this.item.id);
+    this.taskComplete.emit(this.item);
   }
 
   itemClicked(ev: Event){

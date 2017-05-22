@@ -30,17 +30,16 @@ import { User } from "../../domain";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskListComponent implements AfterViewInit{
-  draggingStatus: string;
-  dragTaskId:string;
+
   taskCount: number;
   @Input() loading: boolean;
   @Input() list: TaskList;
   @Input() tasks: Task[];
-  @Output() moveTask = new EventEmitter<{taskId:string; taskListId: string}>();
+  @Output() dragTask = new EventEmitter<string>();
   @Output() delList = new EventEmitter<TaskList>();
   @Output() moveList = new EventEmitter<string>();
   @Output() copyList = new EventEmitter<string>();
-  @Output() completeTask = new EventEmitter<string>();
+  @Output() completeTask = new EventEmitter<Task>();
   @Output() renameList = new EventEmitter<TaskList>();
   private user: User;
   constructor(
@@ -70,8 +69,8 @@ export class TaskListComponent implements AfterViewInit{
     this.delList.emit(this.list);
   }
 
-  onTaskComplete(taskId: string){
-    this.completeTask.emit(taskId);
+  onTaskComplete(task: Task){
+    this.completeTask.emit(task);
   }
 
   onTaskClick(task: Task){
@@ -84,31 +83,7 @@ export class TaskListComponent implements AfterViewInit{
     this.dialog.open(NewTaskComponent);
   }
 
-  @HostListener('dragover', ['$event'])
-  onDragOver(e){
-    e.preventDefault();
-    this.draggingStatus = 'enter';
-  }
-
-  @HostListener('drop', ['$event'])
-  onDrop(e){
-    this.draggingStatus = 'drop';
-    if(this.dragTaskId){
-      this.moveTask.emit({taskId: this.dragTaskId, taskListId: this.list.id});
-    }
-  }
-
-  @HostListener('dragenter', ['$event'])
-  onDragEnter(e){
-    this.draggingStatus = 'enter';
-  }
-
-  @HostListener('dragleave', ['$event'])
-  onDragLeave(e){
-    this.draggingStatus = 'leave';
-  }
-
   handleDragging(taskId: string){
-    this.dragTaskId = taskId;
+    this.dragTask.emit(taskId);
   }
 }

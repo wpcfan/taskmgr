@@ -13,7 +13,8 @@ import { Store } from "@ngrx/store";
 import { Subscription } from "rxjs/Subscription";
 import * as fromRoot from "../../reducers";
 import * as listActions from '../../actions/task-list.action';
-import { TaskList } from '../../domain';
+import * as taskActions from '../../actions/task.action';
+import { TaskList, Task } from '../../domain';
 import { NewTaskListComponent } from "../new-task-list";
 
 @Component({
@@ -23,10 +24,13 @@ import { NewTaskListComponent } from "../new-task-list";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskHomeComponent implements OnDestroy{
+  draggingStatus: string;
+  dragTaskId:string;
   loading$: Observable<boolean>;
   lists$: Observable<TaskList[]>;
   private routeParamSub: Subscription;
   private projectId: string;
+
   constructor(
     private renderer: Renderer2, 
     private route: ActivatedRoute,
@@ -74,17 +78,41 @@ export class TaskHomeComponent implements OnDestroy{
     this.store$.dispatch(new listActions.DeleteTaskListAction(list))
   }
 
-  handleMoveTask(listId: string){
-
+  handleMoveTask({taskId, taskListId}){
+    this.store$.dispatch(new taskActions.MoveTaskAction({taskId, taskListId}));
   }
 
-  handleCompleteTask(listId: string){
-
+  handleCompleteTask(task: Task){
+    this.store$.dispatch(new taskActions.CompleteTaskAction(task));
   }
 
   tasksByList(listId:string){
     return this.store$
       .select(fromRoot.getTasksWithOwner)
       .map(tasks => tasks.filter(task => task.taskListId === listId));
+  }
+
+  onDragOver(e){
+    e.preventDefault();
+    this.draggingStatus = 'enter';
+  }
+
+  onDrop(taskListId){
+    this.draggingStatus = 'drop';
+    if(this.dragTaskId){
+      this.store$.dispatch(new taskActions.MoveTaskAction({taskId: this.dragTaskId, taskListId: taskListId}))
+    }
+  }
+
+  onDragEnter(e){
+    this.draggingStatus = 'enter';
+  }
+
+  onDragLeave(e){
+    this.draggingStatus = 'leave';
+  }
+
+  handleDragTask(taskId){
+    this.dragTaskId = taskId;
   }
 }

@@ -47,6 +47,20 @@ export class TaskService {
       .map(res => res.json());
   }
 
+  move(taskId:string, taskListId: string){
+    const uri = `${this.config.uri}/${this.domain}/${taskId}`;
+    return this.http
+      .patch(uri, JSON.stringify({taskListId: taskListId}), {headers: this.headers})
+      .map(res => res.json());
+  }
+
+  complete(task: Task){
+    const uri = `${this.config.uri}/${this.domain}/${task.id}`;
+    return this.http
+      .patch(uri, JSON.stringify({completed: !task.completed}), {headers: this.headers})
+      .map(res => res.json());
+  }
+
   addTaskRef(user: User, taskId: string){
     const uri = `${this.config.uri}/users/${user.id}`;
     const taskIds = (user.taskIds)? user.taskIds : [];
@@ -61,7 +75,7 @@ export class TaskService {
     const taskIds = (user.taskIds)? user.taskIds : [];
     const index = taskIds.indexOf(taskId);
     return this.http
-      .patch(uri, JSON.stringify({taskIds: [...taskIds.slice(0, index), taskIds.slice(index)]}), {headers: this.headers})
+      .patch(uri, JSON.stringify({taskIds: [...taskIds.slice(0, index), taskIds.slice(index+1)]}), {headers: this.headers})
       .map(res => res.json() as User);
   }
 }

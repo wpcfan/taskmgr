@@ -1,15 +1,21 @@
 <div class="task-lists">
-  <div *ngFor="let taskList of lists$ | async" class="list-container" >
+  <div 
+    *ngFor="let taskList of lists$ | async" 
+    class="list-container" 
+    (dragover)="onDragOver($event)"
+    (dragenter)="onDragEnter($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop(taskList.id)">
     <app-task-list 
       [list]="taskList" 
       [tasks]="tasksByList(taskList.id) | async"
       [loading]="loading$ | async"
-      (moveTask)="handleMoveTask($event)"
       (completeTask)="handleCompleteTask($event)"
       (renameList)="handleRenameList($event)"
       (delList)="handleDelList($event)"
       (moveList)="handleMoveList($event)"
-      (copyList)="handleCopyList($event)">
+      (copyList)="handleCopyList($event)"
+      (dragTask)="handleDragTask($event)">
     </app-task-list>
   </div>
 </div>
