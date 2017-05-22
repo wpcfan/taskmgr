@@ -18,10 +18,10 @@ import { Task } from '../../domain';
 export class TaskItemComponent implements OnInit{
   @Output() taskComplete = new EventEmitter<string>();
   @Output() taskClick = new EventEmitter<string>();
+  @Output() draggingTaskId = new EventEmitter<string>();
   @Input() item: Task;
   avatar: string;
   draggingStatus: string;
-  @Output() draggingTaskId = new EventEmitter<string>();
   widerPriority: boolean = false;
   constructor() { }
 

@@ -37,11 +37,11 @@ export class TaskListComponent implements AfterViewInit{
   @Input() list: TaskList;
   @Input() tasks: Task[];
   @Output() moveTask = new EventEmitter<{taskId:string; taskListId: string}>();
-  @Output() delList: EventEmitter<string>;
-  @Output() moveList: EventEmitter<string>;
-  @Output() copyList: EventEmitter<string>;
-  @Output() completeTask: EventEmitter<string>;
-  @Output() renameList: EventEmitter<TaskList>;
+  @Output() delList = new EventEmitter<string>();
+  @Output() moveList = new EventEmitter<string>();
+  @Output() copyList = new EventEmitter<string>();
+  @Output() completeTask = new EventEmitter<string>();
+  @Output() renameList = new EventEmitter<TaskList>();
   private user: User;
   constructor(
     private dialog: MdDialog,
