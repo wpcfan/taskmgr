@@ -6,16 +6,12 @@ import * as prjActions from '../actions/project.action';
 export interface State{
   ids: string [];
   entities: { [id: string]: TaskList };
-  drag: string | null;
-  drop: string | null;
   selectedIds: string[];
 }
 
 export const initialState: State = {
   ids: [],
   entities: {},
-  drag: null,
-  drop: null,
   selectedIds: []
 };
 
@@ -68,25 +64,8 @@ export function reducer(
      return {
         ids: [...state.ids, ...newIds],
         entities: Object.assign({}, state.entities, newEntities),
-        drag: state.drag,
-        drop: state.drop,
         selectedIds: [...newIds]
       }
-    }
-    case actions.ActionTypes.DRAG:
-      return Object.assign({}, state, {drag: action.payload});
-    case actions.ActionTypes.DROP:{
-      if(state.drag === null || action.payload === null) return state;
-      const targetId = <string>action.payload;
-      const srcId = state.drag;
-      const target = state.entities[targetId];
-      const src = state.entities[srcId];
-      const newTarget = Object.assign({}, target, {order: src.order});
-      const newSrc = Object.assign({}, src, {order: target.order});
-      return Object.assign({}, state, {
-        drop: targetId,
-        entities: Object.assign({}, state.entities, {
-          [srcId]: newSrc, [targetId]: newTarget})});
     }
     case prjActions.ActionTypes.SELECT: {
       const selectedIds = state.ids.filter(id => state.entities[id].projectId === action.payload.id);
@@ -107,11 +86,3 @@ export const getTaskLists = createSelector(getEntities, getIds, (entities, ids) 
   return ids.map(id => entities[id]);
 });
 export const getSelectedIds = (state) => state.selectedIds;
-export const getDrag = (state) => state.drag;
-export const getDrop = (state) => state.drop;
-export const getDragTask = createSelector(getEntities, getDrag, (entities, id) => {
-  return entities[id];
-});
-export const getDropTask = createSelector(getEntities, getDrop, (entities, id) => {
-  return entities[id];
-});

@@ -15,8 +15,6 @@ export const ActionTypes = {
   LOADS:                  type('[TaskList] Load'),
   LOADS_SUCCESS:          type('[TaskList] Load Success'),
   LOADS_FAIL:             type('[TaskList] Load Fail'),
-  DRAG:                   type('[TaskList] Drag'),
-  DROP:                   type('[TaskList] Drop'),
   SWAP_ORDER_SUCCESS:     type('[TaskList] Swap Order Success'),
   SWAP_ORDER_FAIL:        type('[TaskList] Swap Order Fail'),  
   INITIALIZE:             type('[TaskList] Init TaskLists'),
@@ -84,16 +82,6 @@ export class LoadTaskListsFailAction implements Action {
   constructor(public payload: Err){}
 }
 
-export class DragAction implements Action {
-  type = ActionTypes.DRAG;
-  constructor(public payload: string){}
-}
-
-export class DropAction implements Action {
-  type = ActionTypes.DROP;
-  constructor(public payload: string){}
-}
-
 export class SwapOrderSuccessAction implements Action {
   type = ActionTypes.SWAP_ORDER_SUCCESS;
   constructor(public payload: any){}
@@ -132,8 +120,6 @@ export type Actions
   | LoadTaskListsAction
   | LoadTaskListsSuccessAction
   | LoadTaskListsFailAction
-  | DragAction
-  | DropAction
   | SwapOrderSuccessAction
   | SwapOrderFailAction
   | InitTaskListsAction

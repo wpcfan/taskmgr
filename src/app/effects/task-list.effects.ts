@@ -101,15 +101,4 @@ export class TaskListEffects{
   //     .catch(err => of(new actions.SwapOrderFailAction(JSON.stringify(err))))
   //   })
 
-  @Effect()
-  dragDrop$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.DROP)
-    .switchMap(_ => this.store$.select(fromRoot.getTaskDrag))
-    .switchMap(drag => this.service$.update(drag)
-      .map(_ => new actions.SwapOrderSuccessAction(true))
-      .catch(err => of(new actions.SwapOrderFailAction(JSON.stringify(err)))))
-    .switchMap(_ => this.store$.select(fromRoot.getTaskDrop))
-    .switchMap(drop => this.service$.update(drop)
-      .map(_ => new actions.SwapOrderSuccessAction(true))
-      .catch(err => of(new actions.SwapOrderFailAction(JSON.stringify(err)))))
 }
