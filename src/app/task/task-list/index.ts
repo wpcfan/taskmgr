@@ -16,12 +16,7 @@ import 'rxjs/add/operator/filter';
 import * as fromRoot from '../../reducers';
 import * as taskActions from '../../actions/task.action';
 import * as listActions from '../../actions/task-list.action';
-import * as taskFormActions from '../../actions/task-form.action';
 import { Store } from "@ngrx/store";
-import { MdDialog } from '@angular/material';
-import { NewTaskComponent } from '../new-task';
-import { NewTaskListComponent } from "../new-task-list";
-import { User } from "../../domain";
 
 @Component({
   selector: 'app-task-list',
@@ -39,11 +34,11 @@ export class TaskListComponent implements AfterViewInit{
   @Output() delList = new EventEmitter<TaskList>();
   @Output() moveList = new EventEmitter<string>();
   @Output() copyList = new EventEmitter<string>();
-  @Output() completeTask = new EventEmitter<Task>();
   @Output() renameList = new EventEmitter<TaskList>();
-  private user: User;
+  @Output() completeTask = new EventEmitter<Task>();
+  @Output() addTask = new EventEmitter<string>();
+  @Output() updateTask = new EventEmitter<Task>();
   constructor(
-    private dialog: MdDialog,
     private store$: Store<fromRoot.State>) { 
     }
   
@@ -74,13 +69,11 @@ export class TaskListComponent implements AfterViewInit{
   }
 
   onTaskClick(task: Task){
-    this.store$.dispatch(new taskFormActions.PrepareUpdateAction(task));
-    this.dialog.open(NewTaskComponent);
+    this.updateTask.emit(task);
   }
 
   addNewTask(){
-    this.store$.dispatch(new taskFormActions.PrepareAddAction(this.list.id));
-    this.dialog.open(NewTaskComponent);
+    this.addTask.emit(this.list.id);
   }
 
   handleDragging(taskId: string){

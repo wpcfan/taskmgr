@@ -49,7 +49,6 @@ import * as fromProjects from './project.reducer';
 import * as fromTaskLists from './task-list.reducer';
 import * as fromTasks from './task.reducer';
 import * as fromUsers from './user.reducer';
-import * as fromTaskForm from "./task-form.reducer";
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -62,7 +61,6 @@ export interface State {
   taskLists: fromTaskLists.State;
   tasks: fromTasks.State;
   users: fromUsers.State;
-  taskForm: fromTaskForm.State;
   router: fromRouter.RouterState;
 }
 
@@ -80,7 +78,6 @@ const reducers = {
   taskLists: fromTaskLists.reducer,
   tasks: fromTasks.reducer,
   users: fromUsers.reducer,
-  taskForm: fromTaskForm.reducer,
   router: fromRouter.routerReducer,
 };
 
@@ -94,7 +91,6 @@ const initState = {
   taskLists: fromTaskLists.initialState,
   tasks: fromTasks.initialState,
   users: fromUsers.initialState,
-  taskForm: fromTaskForm.initialState,
   router: fromRouter.initialState
 }
 
@@ -114,7 +110,6 @@ export const getProjectsState = (state: State) => state.projects;
 export const getTaskListsState = (state: State) => state.taskLists;
 export const getTasksState = (state: State) => state.tasks;
 export const getUserState = (state: State) => state.users;
-export const getTaskFormState = (state: State) => state.taskForm;
 export const getRouterState = (state: State) => state.router;
 
 export const getAuth = createSelector(getAuthState, fromAuth.getAuth);

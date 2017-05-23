@@ -49,11 +49,11 @@ export interface Task{
   participants?: User[];
   dueDate?: Date;
   priority: number;
-  order: number;
+  // order: number;
   remark?: string;
   // tags?: string[];
   reminder?: Date;
-  createDate: Date;
+  createDate?: Date;
 }
 
 export interface TaskList{

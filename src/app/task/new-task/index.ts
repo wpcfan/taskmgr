@@ -48,7 +48,6 @@ export class NewTaskComponent implements OnInit {
       value: 1
     },
   ];
-  data$: Observable<any>;
   ownerResults: Observable<User[]>;
   followerResults: Observable<User[]>;
   showOwner$: Observable<boolean>;
@@ -63,10 +62,7 @@ export class NewTaskComponent implements OnInit {
     private store$: Store<fromRoot.State>,
     private service: UserService,
     @Inject(MD_DIALOG_DATA) private data: any,
-    private dialogRef: MdDialogRef<NewTaskComponent>) { 
-      this.store$.select(fromRoot.getTaskFormState)
-        .subscribe(data => this.data = data);
-    }
+    private dialogRef: MdDialogRef<NewTaskComponent>) { }
 
   ngOnInit(){
     if(!this.data.task) {
@@ -75,15 +71,15 @@ export class NewTaskComponent implements OnInit {
         priority: [3],
         dueDate: [],
         reminder:[],
-        ownerChip: [[{name: this.data.owner.name, value: this.data.owner.id}]],
+        ownerChip: [[]],
         ownerSearch: [''],
         followerSearch: [''],
         // tagsInput: [''],
         remark: ['']
       });
       this.dialogTitle = '创建任务：';
-      this.followers = [this.data.owner];
-      this.owners = [this.data.owner];
+      this.followers = [];
+      this.owners = [];
       // this.tags = [];
     }
     else {
@@ -92,17 +88,16 @@ export class NewTaskComponent implements OnInit {
         priority: [this.data.task.priority],
         dueDate: [this.data.task.dueDate],
         reminder: [this.data.task.reminder],
-        ownerChip: [{name: this.data.task.owner.name, value: this.data.task.owner.id}, Validators.required],
+        ownerChip: [this.data.task.owner?[{name: this.data.task.owner.name, value: this.data.task.owner.id}]:[]],
         ownerSearch: [''],
         followerSearch: [''],
         // tagsInput: [''],
         remark: [this.data.task.remark]
       });
       this.dialogTitle = '修改任务：';
-      this.followers = [...this.data.task.paticipants];
-      this.owners = [this.data.task.owner];
+      this.followers = this.data.task.paticipants?[...this.data.task.paticipants]:[];
+      this.owners = this.data.task.owner?[this.data.task.owner]:[];
       // this.tags = this.data.tags;
-      console.log(this.data.participants)
     }
     this.ownerResults = this.searchUsers(this.form.controls['ownerSearch'].valueChanges);
     this.followerResults = this.searchUsers(this.form.controls['followerSearch'].valueChanges);
@@ -115,21 +110,20 @@ export class NewTaskComponent implements OnInit {
 
   onSubmit({value, valid}, event: Event){
     event.preventDefault();
-    console.log(JSON.stringify(value));
     if(!valid) return;
     if(!this.data.task)
       this.store$.dispatch(
         new actions.AddTaskAction({
           desc: value.desc,
           taskListId: this.data.taskListId,
-          ownerId: this.data.owner.id,
+          ownerId: this.owners.length === 1? this.owners[0].id: null,
           completed: false,
           participantIds: this.followers.map(user => user.id),
           dueDate: value.dueDate,
           reminder: value.reminder,
           createDate: new Date(),
           priority: value.priority,
-          order: this.data.order,
+          // order: this.data.order,
           // tags: ['something'],
           remark: value.remark
         }));
@@ -139,14 +133,14 @@ export class NewTaskComponent implements OnInit {
           id: this.data.task.id,
           desc: value.desc,
           taskListId: this.data.task.taskListId,
-          ownerId: value.ownerChip,
+          ownerId: this.owners.length === 1? this.owners[0].id: null,
           completed: false,
           participantIds: this.followers.map(user => user.id),
           dueDate: value.dueDate,
           reminder: value.reminder,
-          createDate: new Date(),
+          createDate: this.data.task.createDate,
           priority: value.priority,
-          order: this.data.task.order,
+          // order: this.data.task.order,
           // tags: ['something'],
           remark: value.remark
         }));

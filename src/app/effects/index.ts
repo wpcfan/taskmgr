@@ -6,7 +6,6 @@ import { ProjectEffects } from './project.effects';
 import { TaskListEffects } from "./task-list.effects";
 import { TaskEffects } from "./task.effects";
 import { UserEffects } from "./user.effects";
-import { TaskFormEffects } from "./task-form.effects";
 
 export const effects = {
   auth: AuthEffects,
@@ -14,7 +13,6 @@ export const effects = {
   projects: ProjectEffects,
   tasklists: TaskListEffects,
   tasks: TaskEffects,
-  taskForm: TaskFormEffects,
   users: UserEffects
 }
 
@@ -25,7 +23,6 @@ export const effects = {
     EffectsModule.run(effects.projects),
     EffectsModule.run(effects.tasklists),
     EffectsModule.run(effects.tasks),
-    EffectsModule.run(effects.taskForm),
     EffectsModule.run(effects.users),
    ],
 })
