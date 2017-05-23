@@ -17,6 +17,9 @@ import {
 import { Observable } from "rxjs/Observable";
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/pluck';
+import { MyCalService } from "../../services";
+import { Store } from "@ngrx/store";
+import * as fromRoot from '../../reducers';
 
 const colors: any = {
   red: {
@@ -36,12 +39,13 @@ const colors: any = {
 @Component({
   selector: 'app-cal-home',
   template: `
+  <div *ngIf="(events$ | async) as calEvents">
     <div [ngSwitch]="view$ | async">
       <mwl-calendar-month-view
         *ngSwitchCase="'month'"
         [viewDate]="viewDate"
         [locale]="'zh'"
-        [events]="events"
+        [events]="calEvents"
         [refresh]="refresh"
         [activeDayIsOpen]="activeDayIsOpen"
         (dayClicked)="dayClicked($event.day)"
@@ -52,7 +56,7 @@ const colors: any = {
         *ngSwitchCase="'week'"
         [viewDate]="viewDate"
         [locale]="'zh'"        
-        [events]="events"
+        [events]="calEvents"
         [refresh]="refresh"
         (eventClicked)="handleEvent('Clicked', $event.event)"
         (eventTimesChanged)="eventTimesChanged($event)">
@@ -61,12 +65,13 @@ const colors: any = {
         *ngSwitchCase="'day'"
         [viewDate]="viewDate"
         [locale]="'zh'"        
-        [events]="events"
+        [events]="calEvents"
         [refresh]="refresh"
         (eventClicked)="handleEvent('Clicked', $event.event)"
         (eventTimesChanged)="eventTimesChanged($event)">
       </mwl-calendar-day-view>
     </div>
+   </div>
   `,
   styles:[`
     :host{
@@ -79,55 +84,16 @@ const colors: any = {
 export class CalendarHomeComponent implements OnInit {
   viewDate: Date;
   view$: Observable<string>;
-  modalData: {
-    action: string,
-    event: CalendarEvent
-  };
-  actions: CalendarEventAction[] = [{
-    label: '<i class="fa fa-fw fa-pencil"></i>',
-    onClick: ({event}: {event: CalendarEvent}): void => {
-      this.handleEvent('Edited', event);
-    }
-  }, {
-    label: '<i class="fa fa-fw fa-times"></i>',
-    onClick: ({event}: {event: CalendarEvent}): void => {
-      this.events = this.events.filter(iEvent => iEvent !== event);
-      this.handleEvent('Deleted', event);
-    }
-  }];
-
-  events: CalendarEvent[] = [{
-    start: subDays(startOfDay(new Date()), 1),
-    end: addDays(new Date(), 1),
-    title: 'A 3 day event',
-    color: colors.red,
-    actions: this.actions
-  }, {
-    start: startOfDay(new Date()),
-    title: 'An event with no end date',
-    color: colors.yellow,
-    actions: this.actions
-  }, {
-    start: subDays(endOfMonth(new Date()), 3),
-    end: addDays(endOfMonth(new Date()), 3),
-    title: 'A long event that spans 2 months',
-    color: colors.blue
-  }, {
-    start: addHours(startOfDay(new Date()), 2),
-    end: new Date(),
-    title: 'A draggable and resizable event',
-    color: colors.yellow,
-    actions: this.actions,
-    resizable: {
-      beforeStart: true,
-      afterEnd: true
-    },
-    draggable: true
-  }];
   activeDayIsOpen: boolean = true;
-  constructor(private route: ActivatedRoute) { 
+  events$: Observable<CalendarEvent[]>;
+  constructor(
+    private route: ActivatedRoute, 
+    private service$: MyCalService,
+    private store$: Store<fromRoot.State>) { 
     this.viewDate = new Date();
-    this.view$ = this.route.params.pluck('view')
+    this.view$ = this.route.params.pluck('view');
+    this.events$ = this.store$.select(fromRoot.getAuthUser)
+      .switchMap(user => this.service$.getUserTasks(user.id));
   }
 
   ngOnInit() { }
