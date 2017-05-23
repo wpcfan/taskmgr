@@ -7,10 +7,12 @@
       "email": "wpcfan@163.com",
       "id": "37489e0c-df34-c261-71c4-ce75357e3035",
       "projectIds": [
-        "Sy8E4Y_g-",
-        "1",
-        "2",
-        "Sk2HaTagb"
+        [
+          "Sy8E4Y_g-",
+          "1",
+          "2",
+          "Sk2HaTagb"
+        ]
       ]
     },
     {
@@ -26,24 +28,6 @@
     }
   ],
   "projects": [
-    {
-      "id": "2",
-      "name": "缺陷跟踪系统",
-      "desc": "用于企业内部的缺陷跟踪和汇总报告",
-      "coverImg": "/assets/img/covers/9.jpg",
-      "members": [
-        "37489e0c-df34-c261-71c4-ce75357e3035"
-      ]
-    },
-    {
-      "id": "Sy8E4Y_g-",
-      "name": "有一个项目",
-      "desc": "这是一个使用 Angular 4 开发的新项目",
-      "coverImg": "/assets/img/covers/2.jpg",
-      "members": [
-        "37489e0c-df34-c261-71c4-ce75357e3035"
-      ]
-    },
     {
       "name": "测试项目",
       "desc": "这是一个测试项目",

@@ -74,6 +74,16 @@ export class ProjectEffects{
       .map(project => new actions.DeleteProjectSuccessAction(project))
       .catch(err => of(new actions.DeleteProjectFailAction(JSON.stringify(err))))
     );
+  
+  @Effect()
+  afterRemoveProject$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.DELETE_SUCCESS)
+    .map(toPayload)
+    .switchMap(project => this.store$
+      .select(fromRoot.getProjectTaskList)
+      .switchMap(lists => Observable.from(lists))
+      .map((taskList: TaskList) => new tasklistActions.DeleteTaskListAction(taskList))
+      );
 
   @Effect()
   selectProject$: Observable<Action> = this.actions$
@@ -100,11 +110,20 @@ export class ProjectEffects{
     .map(project => new tasklistActions.InitTaskListsAction(project));
   
   @Effect()
-  currUserPrjRef$: Observable<Action> = this.actions$
+  addUserPrjRef$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.ADD_SUCCESS)
     .map(toPayload)
     .map((prj: Project) => prj.id)
     .withLatestFrom(this.store$.select(fromRoot.getAuth).map(auth => auth.user), (projectId, user) => {
       return new userActions.AddUserProjectAction({user: user, projectId: projectId})
-    })
+    });
+
+  @Effect()
+  delUserPrjRef$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.DELETE_SUCCESS)
+    .map(toPayload)
+    .map((prj: Project) => prj.id)
+    .withLatestFrom(this.store$.select(fromRoot.getAuth).map(auth => auth.user), (projectId, user) => {
+      return new userActions.RemoveUserProjectAction({user: user, projectId: projectId})
+    });
 }

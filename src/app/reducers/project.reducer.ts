@@ -32,8 +32,12 @@ export function reducer(
         return Object.assign(entities, {
           [id]: state.entities[id]
         })
-      },{});
-      return Object.assign({}, state, {ids: ids, entities: entities});
+      },{}); 
+      return Object.assign({}, state, {
+        ids: ids, 
+        entities: entities, 
+        selectedId: project.id === state.selectedId ? null:state.selectedId
+      });
     }
     case actions.ActionTypes.UPDATE_SUCCESS: {
       const project = action.payload;
@@ -55,7 +59,7 @@ export function reducer(
       return {
         ids: [...state.ids, ...newIds], 
         entities: Object.assign({}, state.entities, newEntities),
-        selectedId: state.selectedId
+        selectedId: null
       };
     }
     case actions.ActionTypes.SELECT: {
