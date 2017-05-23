@@ -12,7 +12,7 @@ import 'rxjs/add/observable/zip';
 import { TaskService } from '../services';
 import * as actions from '../actions/task.action';
 import * as fromRoot from '../reducers';
-import * as models from '../domain';
+import { Task } from '../domain';
 
 @Injectable()
 export class TaskEffects{
@@ -74,7 +74,7 @@ export class TaskEffects{
     );
 
   @Effect()
-  completeTaskList$: Observable<Action> = this.actions$
+  completeTask$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.COMPLETE)
     .map(toPayload)
     .switchMap(task => this.service$
@@ -84,7 +84,7 @@ export class TaskEffects{
     );
 
   @Effect()
-  moveTaskList$: Observable<Action> = this.actions$
+  moveTask$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.MOVE)
     .map(toPayload)
     .switchMap(({taskId, taskListId}) => this.service$
@@ -93,4 +93,13 @@ export class TaskEffects{
       .catch(err => of(new actions.MoveTaskFailAction(JSON.stringify(err))))
     );
 
+  @Effect()
+  moveAllTask$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.MOVE_ALL)
+    .map(toPayload)
+    .switchMap(({srcListId, targetListId}) => this.store$
+          .select(fromRoot.getTasks)
+          .switchMap((tasks: Task[]) => Observable.from(tasks.filter(task => task.taskListId === srcListId)))
+          .map(task => new actions.MoveTaskAction({taskId: task.id, taskListId: targetListId}))
+    );
 }

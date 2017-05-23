@@ -17,7 +17,6 @@ import { MdIconRegistry } from '@angular/material';
 export class TaskListHeaderComponent {
   @Output() changeListName = new EventEmitter<void>();
   @Output() deleteList = new EventEmitter<void>();
-  @Output() copyAllTasks = new EventEmitter<void>();
   @Output() moveAllTasks = new EventEmitter<void>();
   @Output() newTask = new EventEmitter<void>();
   @Input() header = '';
@@ -33,11 +32,6 @@ export class TaskListHeaderComponent {
   onChangeListName(ev: Event){
     ev.preventDefault();
     this.changeListName.emit();
-  }
-
-  onCopyAllTasks(ev: Event){
-    ev.preventDefault();
-    this.copyAllTasks.emit();
   }
 
   onMoveAllTasks(ev: Event){

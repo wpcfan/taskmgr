@@ -33,7 +33,6 @@ export class TaskListComponent implements AfterViewInit{
   @Output() dragTask = new EventEmitter<string>();
   @Output() delList = new EventEmitter<TaskList>();
   @Output() moveList = new EventEmitter<string>();
-  @Output() copyList = new EventEmitter<string>();
   @Output() renameList = new EventEmitter<TaskList>();
   @Output() completeTask = new EventEmitter<Task>();
   @Output() addTask = new EventEmitter<string>();
@@ -50,10 +49,6 @@ export class TaskListComponent implements AfterViewInit{
 
   onChangeListName(){
     this.renameList.emit(this.list)
-  }
-
-  onCopyAllTasks(){
-    this.copyList.emit(this.list.id);
   }
 
   onMoveAllTasks(){

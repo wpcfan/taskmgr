@@ -17,6 +17,7 @@ import * as taskActions from '../../actions/task.action';
 import { TaskList, Task } from '../../domain';
 import { NewTaskListComponent } from "../new-task-list";
 import { NewTaskComponent } from '../new-task';
+import { CopyTaskComponent } from "../copy-task";
 
 @Component({
   selector: 'app-task-home',
@@ -68,11 +69,9 @@ export class TaskHomeComponent implements OnDestroy{
   }
 
   handleMoveList(listId: string){
-
-  }
-
-  handleCopyList(listId: string){
-
+    this.dialog.open(CopyTaskComponent, {data: {
+      srcListId: listId
+    }});
   }
 
   handleDelList(list: TaskList){

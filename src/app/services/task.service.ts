@@ -17,8 +17,20 @@ export class TaskService {
 
   add(task: Task): Observable<Task> {
     const uri = `${this.config.uri}/${this.domain}`;
+    const toAdd = {
+      taskListId: task.taskListId,
+      desc: task.desc,
+      completed: task.completed,
+      ownerId: task.ownerId,
+      participantIds: task.participantIds,
+      dueDate: task.dueDate,
+      priority: task.priority,
+      remark: task.remark,
+      reminder: task.reminder,
+      createDate: task.createDate
+    }
     const addTask$ = this.http
-      .post(uri, JSON.stringify(task), {headers: this.headers})
+      .post(uri, JSON.stringify(toAdd), {headers: this.headers})
       .map(res => res.json());
     // const addTaskRef$ = this.addTaskRef()
     return addTask$;
@@ -43,7 +55,7 @@ export class TaskService {
   get(taskListId: string): Observable<Task[]>{
     const uri = `${this.config.uri}/${this.domain}`;
     return this.http
-      .get(uri, {params: {'taskListId': taskListId}, headers: this.headers})
+      .get(uri, {params: {'taskListId': taskListId}})
       .map(res => res.json());
   }
 
