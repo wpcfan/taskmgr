@@ -18,7 +18,6 @@ import * as actions from '../actions/auth.action';
 
 @Injectable()
 export class AuthGuardService implements CanActivate {
-
   private _authSubject: BehaviorSubject<boolean>= new BehaviorSubject<boolean>(false);
   /**
    * 构造函数用于注入服务的依赖以及进行必要的初始化
@@ -30,12 +29,12 @@ export class AuthGuardService implements CanActivate {
     private actions$: Actions,
     private store$: Store<fromRoot.State>) { 
       this.store$
-      .select(s => s.auth)
-      .subscribe(auth => {
-        const result = (auth.user !== undefined);
-        this._authSubject.next(result);
-        if(!result) this.store$.dispatch(go(['/login']));
-      });
+        .select(s => s.auth)
+        .subscribe(auth => {
+          const result = (auth.user !== undefined);
+          this._authSubject.next(result);
+          if(!result) this.store$.dispatch(go(['/login']));
+        });
     }
 
   /**
