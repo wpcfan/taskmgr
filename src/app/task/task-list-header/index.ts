@@ -22,9 +22,6 @@ export class TaskListHeaderComponent {
   @Input() header = '';
   constructor(iconRegistry: MdIconRegistry, sanitizer: DomSanitizer) { 
     iconRegistry.addSvgIcon(
-        'hand-grab-o',
-        sanitizer.bypassSecurityTrustResourceUrl('assets/img/icons/hand-grab-o.svg'));
-    iconRegistry.addSvgIcon(
         'move',
         sanitizer.bypassSecurityTrustResourceUrl('assets/img/icons/move.svg'));
   }
