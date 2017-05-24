@@ -58,7 +58,7 @@ export class ProjectItemComponent {
 
   openDeleteDialog(ev: Event){
     ev.preventDefault();
-    const confirm: entities.ConfirmDialog = {
+    const confirm = {
       title: '删除项目：',
       content: '确认要删除该项目？',
       confirmAction: '确认删除'

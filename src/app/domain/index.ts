@@ -74,12 +74,6 @@ export interface Project{
   members?: string[]; // 存储成员 key 为 ID， value 为角色
 }
 
-export interface ConfirmDialog{
-  title: string;
-  content: string;
-  confirmAction: string;
-}
-
 export interface MyTheme{
   id?: number;
   themeClass: string;
