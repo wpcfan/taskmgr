@@ -49,6 +49,7 @@ import * as fromProjects from './project.reducer';
 import * as fromTaskLists from './task-list.reducer';
 import * as fromTasks from './task.reducer';
 import * as fromUsers from './user.reducer';
+import * as fromTheme from './theme.reducer';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -61,6 +62,7 @@ export interface State {
   taskLists: fromTaskLists.State;
   tasks: fromTasks.State;
   users: fromUsers.State;
+  theme: fromTheme.State;
   router: fromRouter.RouterState;
 }
 
@@ -78,6 +80,7 @@ const reducers = {
   taskLists: fromTaskLists.reducer,
   tasks: fromTasks.reducer,
   users: fromUsers.reducer,
+  theme: fromTheme.reducer,
   router: fromRouter.routerReducer,
 };
 
@@ -91,6 +94,7 @@ const initState = {
   taskLists: fromTaskLists.initialState,
   tasks: fromTasks.initialState,
   users: fromUsers.initialState,
+  theme: fromTheme.initialState,
   router: fromRouter.initialState
 }
 
@@ -111,6 +115,7 @@ export const getTaskListsState = (state: State) => state.taskLists;
 export const getTasksState = (state: State) => state.tasks;
 export const getUserState = (state: State) => state.users;
 export const getRouterState = (state: State) => state.router;
+export const getThemeState = (state: State) => state.theme;
 
 export const getAuth = createSelector(getAuthState, fromAuth.getAuth);
 export const getAuthUser = createSelector(getAuthState, fromAuth.getAuthUser);
@@ -140,7 +145,8 @@ export const getTasksWithOwner = createSelector(getTasks, getUserEntities, (task
     const participants = task.participantIds.map(id => entities[id]);
     return Object.assign({}, task, {owner: owner}, {participants: [...participants]});
   })
-})
+});
+export const getTheme = createSelector(getThemeState, fromTheme.getTheme);
 
 @NgModule({
   imports: [

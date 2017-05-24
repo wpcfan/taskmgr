@@ -1,6 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Store } from "@ngrx/store";
+import { OverlayContainer } from "@angular/material";
 import { Observable } from "rxjs/Observable";
+import { Subscription } from "rxjs/Subscription";
 import * as fromRoot from "../../reducers";
 import * as actions from '../../actions/task.action';
 import { TaskList } from "../../domain";
@@ -38,15 +40,18 @@ import {
 export class CopyTaskComponent implements OnInit {
   form: FormGroup;
   dialogTitle: string;
-
+  subTheme: Subscription;
   lists$: Observable<TaskList>;
 
   constructor(
+    private oc: OverlayContainer,
     private store$: Store<fromRoot.State>,
     private fb: FormBuilder,
     @Inject(MD_DIALOG_DATA) private data: any,
     private dialogRef: MdDialogRef<CopyTaskComponent>) { 
-    
+      this.subTheme = this.store$.select(fromRoot.getTheme)
+        .filter(t => t)
+        .subscribe(result => oc.themeClass= 'myapp-dark-theme');
   }
 
   ngOnInit() { 
@@ -59,6 +64,13 @@ export class CopyTaskComponent implements OnInit {
     this.form = this.fb.group({
       targetList: ['', Validators.required]
     });
+  }
+
+  ngOnDestroy() {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.subTheme)
+      this.subTheme.unsubscribe();
   }
 
   onSubmit({value, valid}, $event){

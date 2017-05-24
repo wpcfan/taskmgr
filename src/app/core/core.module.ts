@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { 
   MdSidenavContainer, 
   MdSidenav, 
-  MdToolbar 
 } from '@angular/material';
 import { SharedModule } from "../shared";
 import { AppRoutingModule } from "./app-routing.module";
@@ -30,7 +29,6 @@ import 'hammerjs';
   exports: [
     MdSidenavContainer,
     MdSidenav,
-    MdToolbar,
     HeaderComponent,
     FooterComponent,
     SidebarComponent,

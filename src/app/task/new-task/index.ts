@@ -1,6 +1,7 @@
 import { 
   Component, 
   OnInit, 
+  OnDestroy,
   Inject, 
   ViewChild,
   ChangeDetectionStrategy 
@@ -14,10 +15,12 @@ import {
 import { 
   MdDialogRef, 
   MD_DIALOG_DATA,
-  MdAutocompleteTrigger 
+  MdAutocompleteTrigger,
+  OverlayContainer
 } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Observable } from "rxjs/Observable";
+import { Subscription } from "rxjs/Subscription";
 import "rxjs/add/operator/distinctUntilChanged";
 import "rxjs/add/observable/concat";
 import { UserService } from "../../services";
@@ -34,6 +37,7 @@ import { User, Task } from "../../domain";
 export class NewTaskComponent implements OnInit {
   form: FormGroup;
   dialogTitle: string;
+  subTheme: Subscription;
   priorities: {label:string; value: number}[] = [
     {
       label: '普通',
@@ -57,12 +61,17 @@ export class NewTaskComponent implements OnInit {
   tags: string[];
   @ViewChild("assignee") trigger: MdAutocompleteTrigger;
 
-  constructor(    
+  constructor(  
+    private oc: OverlayContainer,
     private fb: FormBuilder,
     private store$: Store<fromRoot.State>,
     private service: UserService,
     @Inject(MD_DIALOG_DATA) private data: any,
-    private dialogRef: MdDialogRef<NewTaskComponent>) { }
+    private dialogRef: MdDialogRef<NewTaskComponent>) { 
+      this.subTheme = this.store$.select(fromRoot.getTheme)
+        .filter(t => t)
+        .subscribe(result => oc.themeClass= 'myapp-dark-theme');
+    }
 
   ngOnInit(){
     if(!this.data.task) {
@@ -104,8 +113,12 @@ export class NewTaskComponent implements OnInit {
     const ownerChip$ = this.form.controls['ownerChip'].valueChanges.map(a => {
       return a.length === 0 ? false: true
     }).startWith(true);
-    this.showOwner$ = ownerChip$;
-    
+    this.showOwner$ = ownerChip$;   
+  }
+
+  ngOnDestroy(){
+    if(this.subTheme) 
+      this.subTheme.unsubscribe();
   }
 
   onSubmit({value, valid}, event: Event){

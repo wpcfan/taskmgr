@@ -79,3 +79,9 @@ export interface ConfirmDialog{
   content: string;
   confirmAction: string;
 }
+
+export interface MyTheme{
+  id?: number;
+  themeClass: string;
+  themeName: string;
+}

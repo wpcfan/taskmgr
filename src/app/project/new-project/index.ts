@@ -10,9 +10,10 @@ import {
   FormControl,
   Validators 
 } from '@angular/forms';
-import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { MdDialogRef, MD_DIALOG_DATA, OverlayContainer } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Observable } from "rxjs/Observable";
+import { Subscription } from "rxjs/Subscription";
 import 'rxjs/add/observable/range';
 import 'rxjs/add/operator/map';
 import * as fromRoot from '../../reducers';
@@ -26,13 +27,19 @@ import * as actions from '../../actions/project.action';
 })
 export class NewProjectComponent implements OnInit {
   form: FormGroup;
+  subTheme: Subscription;
   dialogTitle: string;
   thumbnails$: Observable<string[]>;
   constructor(
+    private oc: OverlayContainer,
     private fb: FormBuilder,
     private store$: Store<fromRoot.State>,
     @Inject(MD_DIALOG_DATA) private data: any,
-    private dialogRef: MdDialogRef<NewProjectComponent>) { }
+    private dialogRef: MdDialogRef<NewProjectComponent>) { 
+      this.subTheme = this.store$.select(fromRoot.getTheme)
+        .filter(t => t)
+        .subscribe(result => oc.themeClass= 'myapp-dark-theme');
+    }
 
   ngOnInit() {
     if(this.data.project === undefined || this.data.project === null) {
@@ -60,6 +67,14 @@ export class NewProjectComponent implements OnInit {
       }, []);
   }
 
+
+  ngOnDestroy() {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    if(this.subTheme)
+      this.subTheme.unsubscribe();
+  }
+  
   onSubmit({value, valid}, event: Event){
     event.preventDefault();
     if(!valid) return;
