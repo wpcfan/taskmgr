@@ -37,8 +37,8 @@ main{
 }
 
 .fill-remaining-space {
-  // This fills the remaining space, by using flexbox.
-  // Every toolbar row uses a flexbox row layout.
+  // 使用 flexbox 填充剩余空间
+  // @angular/material 中的很多控件使用了 flex 布局
   flex: 1 1 auto;
 }
 
