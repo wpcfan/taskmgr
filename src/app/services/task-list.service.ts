@@ -23,8 +23,11 @@ export class TaskListService {
 
   update(taskList: TaskList): Observable<TaskList>{
     const uri = `${this.config.uri}/${this.domain}/${taskList.id}`;
+    const toUpdate ={
+      name: taskList.name
+    }
     return this.http
-      .put(uri, JSON.stringify(taskList), {headers: this.headers})
+      .patch(uri, JSON.stringify(toUpdate), {headers: this.headers})
       .map(res => res.json());
   }
 
@@ -60,7 +63,7 @@ export class TaskListService {
   initializeTaskLists(prj: Project): Observable<Project>{
     const id = prj.id;
     return concat(
-      this.add({name: '待办', projectId: id, order: 1}), 
+      this.add({name: '待办', projectId: id, order: 1}),
       this.add({name: '进行中', projectId: id, order: 2}),
       this.add({name: '已完成', projectId: id, order: 3}))
       .reduce((r,x)=> {

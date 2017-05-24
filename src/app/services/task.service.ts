@@ -34,13 +34,23 @@ export class TaskService {
       .map(res => res.json());
     // const addTaskRef$ = this.addTaskRef()
     return addTask$;
-      
+
   }
 
   update(task: Task): Observable<Task>{
     const uri = `${this.config.uri}/${this.domain}/${task.id}`;
+    const toUpdate = {
+      taskListId: task.taskListId,
+      desc: task.desc,
+      ownerId: task.ownerId,
+      participantIds: task.participantIds,
+      dueDate: task.dueDate,
+      reminder: task.reminder,
+      priority: task.priority,
+      remark: task.remark
+    }
     return this.http
-      .put(uri, JSON.stringify(task), {headers: this.headers})
+      .patch(uri, JSON.stringify(toUpdate), {headers: this.headers})
       .map(res => res.json());
   }
 

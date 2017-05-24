@@ -16,7 +16,7 @@ export class ProjectService {
   })
   constructor(
     @Inject('BASE_CONFIG') private config,
-    private http: Http) { 
+    private http: Http) {
       // this.headers.append('X-LC-Id', config.LCId);
       // this.headers.append('X-LC-Key', config.LCKey);
     }
@@ -32,8 +32,13 @@ export class ProjectService {
   // PUT /projects
   update(project: Project): Observable<Project>{
     const uri =  `${this.config.uri}/${this.domain}/${project.id}`;
+    const toUpdate = {
+      name: project.name,
+      coverImg: project.coverImg,
+      desc: project.desc
+    }
     return this.http
-      .put(uri, JSON.stringify(project), {headers: this.headers})
+      .patch(uri, JSON.stringify(toUpdate), {headers: this.headers})
       .map(res => res.json());
   }
 
