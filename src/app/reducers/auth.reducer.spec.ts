@@ -1,6 +1,5 @@
 import { reducer } from './auth.reducer';
 import * as fromAuth from './auth.reducer';
-import * as models from '../domain';
 import * as actions from '../actions/auth.action';
 import { async } from '@angular/core/testing';
 
@@ -82,5 +81,5 @@ describe('测试 AuthReducer', () => {
       expect(result.user).toBeUndefined();
     }));
   });
-})
+});
 

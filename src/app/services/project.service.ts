@@ -13,7 +13,7 @@ export class ProjectService {
   private domain: string = 'projects';
   private headers = new Headers({
     'Content-Type': 'application/json'
-  })
+  });
   constructor(
     @Inject('BASE_CONFIG') private config,
     private http: Http) {
@@ -36,14 +36,14 @@ export class ProjectService {
       name: project.name,
       coverImg: project.coverImg,
       desc: project.desc
-    }
+    };
     return this.http
       .patch(uri, JSON.stringify(toUpdate), {headers: this.headers})
       .map(res => res.json());
   }
 
   // DELETE /projects instead of deleting the records
-  delete(project: Project): Observable<Project>{
+  del(project: Project): Observable<Project>{
     const uri =  `${this.config.uri}/${this.domain}/${project.id}`;
     return this.http
       .delete(uri, {headers: this.headers})

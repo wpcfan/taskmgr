@@ -2,6 +2,7 @@ import {
   Component,
   OnInit,
   Inject,
+  OnDestroy,
   ViewChild,
   ChangeDetectionStrategy
 } from '@angular/core';
@@ -24,7 +25,7 @@ import "rxjs/add/observable/concat";
 import { UserService } from "../../services";
 import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/task.action';
-import { User, Task } from "../../domain";
+import { User } from "../../domain";
 
 @Component({
   selector: 'app-new-task',
@@ -32,7 +33,7 @@ import { User, Task } from "../../domain";
   styleUrls: ['./new-task.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewTaskComponent implements OnInit {
+export class NewTaskComponent implements OnInit, OnDestroy {
   form: FormGroup;
   dialogTitle: string;
   subTheme: Subscription;
@@ -53,7 +54,6 @@ export class NewTaskComponent implements OnInit {
   ownerResults: Observable<User[]>;
   followerResults: Observable<User[]>;
   showOwner$: Observable<boolean>;
-  showAuto$: Observable<boolean>;
   owners: User[];
   followers: User[];
   tags: string[];
@@ -107,10 +107,9 @@ export class NewTaskComponent implements OnInit {
     }
     this.ownerResults = this.searchUsers(this.form.controls['ownerSearch'].valueChanges);
     this.followerResults = this.searchUsers(this.form.controls['followerSearch'].valueChanges);
-    const ownerChip$ = this.form.controls['ownerChip'].valueChanges.map(a => {
-      return a.length === 0 ? false: true
+    this.showOwner$ = this.form.controls['ownerChip'].valueChanges.map(a => {
+      return a.length !== 0
     }).startWith(true);
-    this.showOwner$ = ownerChip$;
   }
 
   ngOnDestroy(){
@@ -157,7 +156,7 @@ export class NewTaskComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  displayUser(user: User): string {
+  static displayUser(user: User): string {
     return user ? user.name : '';
   }
 

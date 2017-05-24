@@ -1,8 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent
+  CalendarEvent
 } from 'angular-calendar';
 import {
   startOfDay,
@@ -21,20 +19,6 @@ import { MyCalService } from "../../services";
 import { Store } from "@ngrx/store";
 import * as fromRoot from '../../reducers';
 
-const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3'
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF'
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA'
-  }
-};
 
 @Component({
   selector: 'app-cal-home',
@@ -87,9 +71,9 @@ export class CalendarHomeComponent implements OnInit {
   activeDayIsOpen: boolean = true;
   events$: Observable<CalendarEvent[]>;
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private service$: MyCalService,
-    private store$: Store<fromRoot.State>) { 
+    private store$: Store<fromRoot.State>) {
     this.viewDate = new Date();
     this.view$ = this.route.params.pluck('view');
     this.events$ = this.store$.select(fromRoot.getAuthUser)

@@ -8,7 +8,7 @@ export class TaskService {
   private domain: string = 'tasks';
   private headers = new Headers({
     'Content-Type': 'application/json'
-  })
+  });
   constructor(
     @Inject('BASE_CONFIG') private config,
     private http: Http) { }
@@ -26,12 +26,11 @@ export class TaskService {
       remark: task.remark,
       reminder: task.reminder,
       createDate: task.createDate
-    }
-    const addTask$ = this.http
+    };
+    // const addTaskRef$ = this.addTaskRef()
+    return this.http
       .post(uri, JSON.stringify(toAdd), {headers: this.headers})
       .map(res => res.json());
-    // const addTaskRef$ = this.addTaskRef()
-    return addTask$;
 
   }
 
@@ -46,13 +45,13 @@ export class TaskService {
       reminder: task.reminder,
       priority: task.priority,
       remark: task.remark
-    }
+    };
     return this.http
       .patch(uri, JSON.stringify(toUpdate), {headers: this.headers})
       .map(res => res.json());
   }
 
-  delete(task: Task): Observable<Task>{
+  del(task: Task): Observable<Task>{
     const uri = `${this.config.uri}/${this.domain}/${task.id}`;
     return this.http
       .delete(uri)
@@ -84,7 +83,6 @@ export class TaskService {
   addTaskRef(user: User, taskId: string){
     const uri = `${this.config.uri}/users/${user.id}`;
     const taskIds = (user.taskIds)? user.taskIds : [];
-    const index = taskIds.indexOf(taskId);
     return this.http
       .patch(uri, JSON.stringify({taskIds: [...taskIds, taskId]}), {headers: this.headers})
       .map(res => res.json() as User);

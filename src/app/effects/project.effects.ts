@@ -13,7 +13,7 @@ import * as actions from '../actions/project.action';
 import * as tasklistActions from '../actions/task-list.action';
 import * as userActions from '../actions/user.action';
 import * as fromRoot from '../reducers';
-import { Project, TaskList, Err, User } from '../domain';
+import { Project, TaskList } from '../domain';
 
 @Injectable()
 export class ProjectEffects{
@@ -69,7 +69,7 @@ export class ProjectEffects{
     .ofType(actions.ActionTypes.DELETE)
     .map(toPayload)
     .switchMap(project => this.service
-      .delete(project)
+      .del(project)
       .map(project => new actions.DeleteProjectSuccessAction(project))
       .catch(err => of(new actions.DeleteProjectFailAction(JSON.stringify(err))))
     );

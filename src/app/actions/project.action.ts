@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { type } from '../utils/type.util';
-import { User, Project, Err } from '../domain';
+import { Project, Err } from '../domain';
 
 export const ActionTypes = {
   ADD:                           type('[Project] Add'),
@@ -11,7 +11,7 @@ export const ActionTypes = {
   UPDATE_FAIL:                   type('[Project] Update Fail'),
   DELETE:                        type('[Project] Delete'),
   DELETE_SUCCESS:                type('[Project] Delete Success'),
-  DELETE_FAIL:                   type('[Project] Delete Fail'),  
+  DELETE_FAIL:                   type('[Project] Delete Fail'),
   LOADS:                         type('[Project] Load'),
   LOADS_SUCCESS:                 type('[Project] Load Success'),
   LOADS_FAIL:                    type('[Project] Load Fail'),

@@ -5,7 +5,7 @@ import { createSelector } from 'reselect';
 export interface State {
   ids: string [];
   entities: {[id: string]: User};
-};
+}
 
 export const initialState: State = {
   ids: [],
@@ -34,7 +34,7 @@ export function reducer(state = initialState, action: actions.Actions ): State {
     case actions.ActionTypes.SEARCH_USERS_SUCCESS:{
       const users = <User[]>action.payload;
       // if task is null then return the orginal state
-      if(users === null) return state; 
+      if(users === null) return state;
       const newUsers = users.filter(user => !state.entities[user.id]);
       const newIds = newUsers.map(user => user.id);
       if(newIds.length === 0) return state;
@@ -44,13 +44,13 @@ export function reducer(state = initialState, action: actions.Actions ): State {
         })
       },{});
       return {
-        ids: [...state.ids, ...newIds], 
+        ids: [...state.ids, ...newIds],
         entities: Object.assign({}, state.entities, newEntities)
       };
     }
     case actions.ActionTypes.LOAD_USERS_BY_PRJ_SUCCESS:{
       const users = <User[]>action.payload;
-      if(users === null) return state; 
+      if(users === null) return state;
       const newUsers = users.filter(user => !state.entities[user.id]);
       const newIds = newUsers.map(user => user.id);
       if(newIds.length === 0) return state;
@@ -60,7 +60,7 @@ export function reducer(state = initialState, action: actions.Actions ): State {
         })
       },{});
       return {
-        ids: [...state.ids, ...newIds], 
+        ids: [...state.ids, ...newIds],
         entities: Object.assign({}, state.entities, newEntities)
       };
     }

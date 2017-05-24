@@ -2,15 +2,6 @@
   line-height: 32px;
 }
 
-.drag-handle {
-  cursor: move; /* fallback if grab cursor is unsupported */
-  cursor: grab;
-}
-
-.drag-handle:active { 
-  cursor: grabbing;
-}
-
 :host {
   display: flex;
   flex-direction: row;

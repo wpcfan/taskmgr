@@ -8,13 +8,12 @@ export interface Config {
 
 const getFlags = (config: Config) => {
     const linuxTime = 3600 + Math.floor(Date.now() / 1000);
-    const flags = {"bucketname": config.bucketName, "deadline": linuxTime};
-    return flags;
-}
+  return {"bucketname": config.bucketName, "deadline": linuxTime};
+};
 
 const urlsafeBase64EncodeFlag = (config: Config) => {
     return base64_encode(JSON.stringify(getFlags(config)));
-}
+};
 
 const wordsToByteArray = (words) => {
   let bytes = [], i;
@@ -22,11 +21,11 @@ const wordsToByteArray = (words) => {
       bytes.push((words[i >>> 5] >>> (24 - i % 32)) & 0xFF);
   }
   return bytes;
-}
+};
 
 const base64ToUrlSafe = (v) => {
   return v.replace(/\//g, '_').replace(/\+/g, '-');
-}
+};
 
 const getToken = (config: Config) => {
   let encodedFlags = urlsafeBase64EncodeFlag(config);
@@ -35,9 +34,8 @@ const getToken = (config: Config) => {
   const words = hmac.finalize();
   const base64str = base64_encode(byteArrayToString(wordsToByteArray(words)));
   const encodedSign = base64ToUrlSafe(base64str);
-  const uploadToken = config.accessKey + ':' + encodedSign + ':' + encryptedFlags;
-  return uploadToken;
-}
+  return config.accessKey + ':' + encodedSign + ':' + encryptedFlags;
+};
 
 const byteArrayToString = (byteArray) => {
   let string = '', l = byteArray.length, i;
@@ -45,7 +43,7 @@ const byteArrayToString = (byteArray) => {
       string += String.fromCharCode(byteArray[i]);
   }
   return string;
-}
+};
 
 const base64_encode = (str) => {
   let c1, c2, c3;
@@ -76,4 +74,4 @@ const base64_encode = (str) => {
     string += base64EncodeChars.charAt(c3 & 0x3F);
   }
   return string;
-}
+};

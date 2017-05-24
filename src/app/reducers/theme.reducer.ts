@@ -2,7 +2,7 @@ import * as actions from '../actions/theme.action';
 
 export interface State {
   darkmode: boolean;
-};
+}
 
 export const initialState: State = {
   darkmode: false

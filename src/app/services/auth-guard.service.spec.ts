@@ -44,7 +44,7 @@ describe('测试路由守卫服务：AuthGuardService', () => {
         AuthGuardService,
         {provide: RouterStateSnapshot, useValue: mockSnapshot}
       ]
-    }).compileComponents();;
+    }).compileComponents();
   }));
 
   it('不应该允许绕过守卫',
@@ -54,7 +54,7 @@ describe('测试路由守卫服务：AuthGuardService', () => {
     const guard$ = service.canActivate(new ActivatedRouteSnapshot(), mockSnapshot);
     const auth$ = store$.select(getAuth);
     const merge$ = guard$.withLatestFrom(
-      auth$, (g, a) => Object.assign({}, {result: g, auth: a.err===undefined && a.user !== undefined}))
+      auth$, (g, a) => Object.assign({}, {result: g, auth: a.err===undefined && a.user !== undefined}));
     merge$.subscribe(r => {
       expect(r.result).toBe(r.auth);
     });

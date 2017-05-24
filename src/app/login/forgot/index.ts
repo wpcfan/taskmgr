@@ -1,15 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { 
-  FormGroup, 
-  FormBuilder, 
-  FormControl,
-  Validators 
+import {
+  FormGroup,
+  FormBuilder,
+  Validators
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import * as entities from '../../domain';
 import * as fromRoot from '../../reducers';
-import * as authActions from '../../actions/auth.action';
 
 @Component({
   selector: 'app-forgot',

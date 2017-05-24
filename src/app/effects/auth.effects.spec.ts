@@ -2,7 +2,7 @@ import { EffectsTestingModule, EffectsRunner } from '@ngrx/effects/testing';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 import { Observable } from "rxjs/Observable";
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, fakeAsync } from '@angular/core/testing';
 import { AuthEffects } from './auth.effects';
 import { AuthService } from "../services/auth.service";
 import * as actions from '../actions/auth.action';
@@ -58,8 +58,6 @@ describe('测试 AuthEffects', () => {
     it('登录失败逻辑：如果返回异常则发送 LoginFailAction', () => {
       const error = new Error('msg');
       const {runner, authEffects} = setup('login', {returnedAuth: Observable.throw(error)});
-
-      const expectedResult = new actions.LoginFailAction(error);
 
       runner.queue(new actions.LoginAction({email: 'wang@dev.local', password: '123abc'}));
 

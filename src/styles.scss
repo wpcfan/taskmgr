@@ -73,10 +73,10 @@ $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
 // Overrides one of the typography levels
 // @include mat-typography(
-//   
+//
 // );
 
-html, body, material-app, md-sidenav-container, .site {
+html, body, app-root, md-sidenav-container, .site {
   margin: 0;
   width: 100%;
   height: 100%;
@@ -113,7 +113,7 @@ main{
 }
 
 .fill-remaining-space {
-  // This fills the remaining space, by using flexbox. 
+  // This fills the remaining space, by using flexbox.
   // Every toolbar row uses a flexbox row layout.
   flex: 1 1 auto;
 }

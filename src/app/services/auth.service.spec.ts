@@ -5,7 +5,6 @@ import {
   Response,
   BaseResponseOptions,
   ResponseOptions,
-  XHRBackend
 } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { AuthService } from './auth.service';
@@ -24,22 +23,22 @@ describe('测试鉴权服务：AuthService', () => {
             LCKey: 'mwywiweRadXf6CztkUNyUsPS'
           }
         },
-        { 
-          provide: Http, 
+        {
+          provide: Http,
           useFactory: (mockBackend, options) => {
             return new Http(mockBackend, options);
           },
-          deps: [MockBackend, BaseResponseOptions] 
+          deps: [MockBackend, BaseResponseOptions]
         },
         MockBackend,
         BaseResponseOptions,
         AuthService
       ]
-    }).compileComponents();;
+    }).compileComponents();
   }));
 
-  it('注册后应该返回一个 Observable<Auth>', 
-    async(inject([AuthService, MockBackend], 
+  it('注册后应该返回一个 Observable<Auth>',
+    async(inject([AuthService, MockBackend],
       (service: AuthService, mockBackend: MockBackend) => {
     const mockUser: models.User = {
       name: 'someuser@dev.local',

@@ -17,7 +17,7 @@ export class TaskEffects{
   /**
    * 任务的 Effects
    * @param actions$ 注入 action 数据流
-   * @param service 注入任务服务
+   * @param service$ 注入任务服务
    * @param store$ 注入 redux store
    */
   constructor(
@@ -66,7 +66,7 @@ export class TaskEffects{
     .ofType(actions.ActionTypes.DELETE)
     .map(toPayload)
     .switchMap(task => this.service$
-      .delete(task)
+      .del(task)
       .map(task => new actions.DeleteTaskSuccessAction(task))
       .catch(err => of(new actions.DeleteTaskFailAction(JSON.stringify(err))))
     );

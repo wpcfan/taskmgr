@@ -1,7 +1,7 @@
 import * as models from '../domain';
 import * as actions from '../actions/auth.action';
 
-export const initialState: models.Auth = {}
+export const initialState: models.Auth = {};
 
 export function reducer (state: models.Auth = initialState, action: actions.Actions): models.Auth {
   switch (action.type) {
@@ -23,6 +23,4 @@ export function reducer (state: models.Auth = initialState, action: actions.Acti
 }
 
 export const getAuth = (state: models.Auth) => state;
-export const getAuthToken = (state: models.Auth) => state.token;
 export const getAuthUser = (state: models.Auth) => state.user;
-export const getAuthErr= (state: models.Auth) => state.err;
