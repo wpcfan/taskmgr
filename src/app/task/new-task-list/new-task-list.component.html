@@ -1,4 +1,4 @@
-<form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)" novalidate>
+<form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)" novalidate>
   <h3 md-dialog-title>{{dialogTitle}}</h3>
   <div md-dialog-content>
     <md-input-container class="full-width">

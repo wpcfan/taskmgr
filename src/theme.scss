@@ -44,6 +44,7 @@ $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
 $dark-primary: mat-palette($mat-blue-grey);
 $dark-accent:  mat-palette($mat-amber, A200, A100, A400);
 $dark-warn:    mat-palette($mat-deep-orange);
+// 这句是关键，Material 主题分为 light 和 dark 两种
 $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
 // 将深色主题包含在一个 css 类中，这样任何组件如果包含在一个应用此类的元素中
