@@ -50,8 +50,7 @@ export class CopyTaskComponent implements OnInit {
     @Inject(MD_DIALOG_DATA) private data: any,
     private dialogRef: MdDialogRef<CopyTaskComponent>) { 
       this.subTheme = this.store$.select(fromRoot.getTheme)
-        .filter(t => t)
-        .subscribe(result => oc.themeClass= 'myapp-dark-theme');
+        .subscribe(result => oc.themeClass = result? 'myapp-dark-theme': null);
   }
 
   ngOnInit() { 
