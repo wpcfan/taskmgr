@@ -1,10 +1,10 @@
-import { TodosPage } from './app.po';
+import { TaskMgrPage } from './app.po';
 
-describe('todos App', () => {
-  let page: TodosPage;
+describe('taskmgr App', () => {
+  let page: TaskMgrPage;
 
   beforeEach(() => {
-    page = new TodosPage();
+    page = new TaskMgrPage();
   });
 
   it('should display message saying app works', () => {
