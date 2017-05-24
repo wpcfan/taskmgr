@@ -5,5 +5,5 @@
   <span>企业协作平台</span>
   <span class="fill-remaining-space"></span>
   <md-slide-toggle (change)="onChange($event.checked)">黑夜模式</md-slide-toggle>
-  <span><a *ngIf="((auth$|async).user !== undefined)" (click)="logout()">退出</a></span>
+  <span><a md-button *ngIf="((auth$|async).user !== undefined)" (click)="logout()">退出</a></span>
 </md-toolbar>
