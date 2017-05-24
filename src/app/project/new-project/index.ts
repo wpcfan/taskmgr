@@ -82,7 +82,7 @@ export class NewProjectComponent implements OnInit {
         new actions.AddProjectAction({
           name: value.name,
           desc: value.desc,
-          coverImg: value.coverImg.split('_', 1)[0]+'.jpg'
+          coverImg: value.coverImg.indexOf('_')>-1?value.coverImg.split('_', 1)[0]+'.jpg': value.coverImg
         }));
     else
       this.store$.dispatch(
@@ -90,7 +90,7 @@ export class NewProjectComponent implements OnInit {
           id: this.data.project.id,
           name: value.name,
           desc: value.desc,
-          coverImg: value.coverImg.split('_', 1)[0]+'.jpg'
+          coverImg: value.coverImg.indexOf('_')>-1?value.coverImg.split('_', 1)[0]+'.jpg': value.coverImg
         }));
     this.dialogRef.close();
   }

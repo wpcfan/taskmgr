@@ -23,18 +23,10 @@
   ],
   "projects": [
     {
-      "name": "测试项目",
-      "desc": "这是一个测试项目",
-      "coverImg": "/assets/img/covers/8.jpg",
-      "members": [
-        "37489e0c-df34-c261-71c4-ce75357e3035"
-      ],
       "id": "Sk2HaTagb",
-      "taskLists": [
-        "BkenST66lb",
-        "HJb2HT6TgW",
-        "SkG3Ba6Tgb"
-      ]
+      "name": "Bug跟踪系统",
+      "desc": "用于 Bug 的内部跟踪和管理",
+      "coverImg": "/assets/img/covers/1.jpg"
     }
   ],
   "tasklists": [
