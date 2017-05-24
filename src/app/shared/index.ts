@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { 
   MdInputModule, 
@@ -31,7 +31,6 @@ import { InitialsPipe } from './initials.pipe';
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
     ReactiveFormsModule,
     MdInputModule,
     MdSelectModule,
@@ -56,7 +55,6 @@ import { InitialsPipe } from './initials.pipe';
   ],
   exports: [
     CommonModule,
-    FormsModule,
     ReactiveFormsModule,
     MdInputModule,
     MdSelectModule,
