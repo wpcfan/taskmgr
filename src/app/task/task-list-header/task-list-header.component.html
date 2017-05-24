@@ -1,9 +1,9 @@
 <h3 md-subheader>{{header}}</h3>
-<button md-button class="fill-remaining-space" type="button" (click)="addNewTask($event)">
+<button md-button class="fill-remaining-space" (click)="addNewTask($event)">
   <md-icon>add_circle_outline</md-icon>
   <span>新任务</span>
 </button>
-<button md-icon-button type="button" [mdMenuTriggerFor]="menu">  
+<button md-icon-button [mdMenuTriggerFor]="menu">  
   <md-icon>keyboard_arrow_down</md-icon>
 </button>
 <md-menu #menu="mdMenu">
