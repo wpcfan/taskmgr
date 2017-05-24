@@ -27,7 +27,10 @@
       "id": "Sk2HaTagb",
       "name": "问题跟踪系统",
       "desc": "用于 Bug 的内部跟踪和管理",
-      "coverImg": "/assets/img/covers/1.jpg"
+      "coverImg": "/assets/img/covers/1.jpg",
+      "members": [
+        "37489e0c-df34-c261-71c4-ce75357e3035"
+      ]
     },
     {
       "name": "某某公司 ERP 系统",
