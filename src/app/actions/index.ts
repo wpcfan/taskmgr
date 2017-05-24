@@ -14,4 +14,4 @@ export const ActionTypes = {
   task: taskActions.ActionTypes,
   user: userActions.ActionTypes,
   theme: themeActions.ActionTypes,
-}
+};
