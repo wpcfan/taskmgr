@@ -1,28 +1,25 @@
-# Todos
+# 多用户任务管理系统
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
+## 采用的技术
 
-## Development server
+- 基于 `@ngrx/store` 和 `@ngrx/effects` 管理状态以及状态产生的影响。
+- 使用 `rxjs` 实现响应式编程
+- 使用 `json-server` 生成原型 REST API
+- 使用 `@angular/material` 为界面组件库以及实现界面主题
+- 使用 `@angular/animations` 完成动画
+- 封装了若干自定义组件、表单组件、指令、管道等
+- 使用 `karma` 进行单元测试：组件、服务、effects 和 reducer 等。
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## 开发工具链
 
-## Code scaffolding
+- 使用 `yarn` 作为包管理工具
+- 使用 `@angular/cli` 作为脚手架
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+## 安装
 
-## Build
+1. fork 这个项目
+2. `cd taskmgr`
+3. `yarn install`
+4. `json-server ./mock/data.json`
+5. `ng serve`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
