@@ -25,13 +25,13 @@ export function reducer(state = initialState, action: actions.Actions): State {
     }
     case actions.ActionTypes.REMOVE_USER_PROJECT_SUCCESS: {
       const user = <User>action.payload;
-      const ids = state.ids.filter(id => id !== user.id);
-      const entities = ids.reduce((entities: { [id: string]: User }, id) => {
+      const newIds = state.ids.filter(id => id !== user.id);
+      const newEntities = newIds.reduce((entities: { [id: string]: User }, id) => {
         return Object.assign(entities, {
           [id]: state.entities[id]
         });
       }, {});
-      return Object.assign({}, state, {ids: ids, entities: entities});
+      return Object.assign({}, state, {ids: newIds, entities: newEntities});
     }
     case actions.ActionTypes.SEARCH_USERS_SUCCESS: {
       const users = <User[]>action.payload;

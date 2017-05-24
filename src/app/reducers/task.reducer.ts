@@ -26,19 +26,19 @@ export function reducer(state = initialState, action: actions.Actions): State {
       if (state.entities[task.id]) {
         return state;
       }
-      const ids = [...state.ids, task.id];
-      const entities = Object.assign({}, state.entities, {[task.id]: task});
-      return Object.assign({}, state, {ids: ids, entities: entities, loading: false});
+      const newIds = [...state.ids, task.id];
+      const newEntities = Object.assign({}, state.entities, {[task.id]: task});
+      return Object.assign({}, state, {ids: newIds, entities: newEntities, loading: false});
     }
     case actions.ActionTypes.DELETE_SUCCESS: {
       const task = <Task>action.payload;
-      const ids = state.ids.filter(id => id !== task.id);
-      const entities = ids.reduce((entities: { [id: string]: Task }, id) => {
+      const newIds = state.ids.filter(id => id !== task.id);
+      const newEntities = newIds.reduce((entities: { [id: string]: Task }, id) => {
         return Object.assign(entities, {
           [id]: state.entities[id]
         });
       }, {});
-      return Object.assign({}, state, {ids: ids, entities: entities, loading: false});
+      return Object.assign({}, state, {ids: newIds, entities: newEntities, loading: false});
     }
     case actions.ActionTypes.MOVE_SUCCESS:
     case actions.ActionTypes.COMPLETE_SUCCESS:
