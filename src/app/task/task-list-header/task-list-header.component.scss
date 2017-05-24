@@ -2,8 +2,24 @@
   line-height: 32px;
 }
 
-:host {
+.header-label{
+
+}
+
+.middle-btn{
+  flex: 1;
+}
+
+.right-btn{
+
+}
+
+.header-container {
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content:center;
+  align-items:center;
+  align-content: space-around;
+  width: 100%;
 }

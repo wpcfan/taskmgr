@@ -1,11 +1,11 @@
 <div class="projects">
-  <app-project-item 
-    class="card" 
-    *ngFor="let project of (projects$ | async)" 
+  <app-project-item
+    class="card"
+    *ngFor="let project of (projects$ | async)"
     [item]="project"
     (itemSelected)="selectProject(project)">
   </app-project-item>
-</div> 
+</div>
 <button md-fab (click)="openNewProjectDialog()" type="button" class="fab-button">
   <md-icon>add</md-icon>
 </button>

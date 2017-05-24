@@ -1,9 +1,9 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { 
-  MdSidenavContainer, 
-  MdSidenav, 
+import {
+  MdSidenavContainer,
+  MdSidenav,
 } from '@angular/material';
 import { SharedModule } from "../shared";
 import { AppRoutingModule } from "./app-routing.module";
@@ -34,7 +34,7 @@ import 'hammerjs';
     SidebarComponent,
     AppRoutingModule,
     ],
-  providers: [  
+  providers: [
     {
       provide: 'BASE_CONFIG',
       useValue: {
@@ -43,8 +43,8 @@ import 'hammerjs';
     }
     ],
   declarations: [
-    HeaderComponent, 
-    FooterComponent, 
+    HeaderComponent,
+    FooterComponent,
     SidebarComponent,
     PageNotFoundComponent,
     ]

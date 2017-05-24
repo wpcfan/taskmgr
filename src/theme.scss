@@ -1,0 +1,77 @@
+@import '~@angular/material/theming';
+// 引入其他依赖
+
+// 此处将公用的 Material 风格包含在此处是为了达成整个应用使用一个单一 css
+// 所以请确保只在此处包含一次即可，其他地方不要再包含了。
+@include mat-core();
+
+// 使用在 palette.scss 中定义的 Material Design 调色板来定义我们自有主题的调色板
+// 对于每个调色板，你可以指定默认、轻柔或更重的色调
+$my-app-primary: mat-palette($mat-indigo);
+$my-app-accent:  mat-palette($mat-pink, A200, A100, A400);
+
+// 警告的调色板此处定义其实是不必要的，因为默认就是红色，但列在这里便于以后的自定义。
+$my-app-warn:    mat-palette($mat-red);
+
+// 创建一个主题对象 (包含所有自定义的调色板).
+$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+
+// 包含主题风格和每个组件使用的风格。此处可以 @import 或 @include 你的自定义 mixins
+@include angular-material-theme($my-app-theme);
+
+// 如果不想全局应用主题，就需要像下面这样将主题应用到某些具体组件上
+// @include mat-core-theme($my-app-theme);
+// @include mat-button-theme($my-app-theme);
+// @include mat-checkbox-theme($my-app-theme);
+
+// 如果要把主题应用到自己的组件（而不是像上面那样是对某些 Material 组件的风格定义）
+// @import '~@angular/material/theming';
+// 定义一个 mixin，接受一个主题作为参数，输出组件的颜色风格
+// @mixin my-own-component-theme($theme) {
+//   使用 map-get 提取需要的调色板
+//   $primary: map-get($theme, primary);
+//   $accent: map-get($theme, accent);
+//   使用 mat-color 提取颜色
+//   .my-own-component {
+//     background-color: mat-color($primary);
+//     border-color: mat-color($accent, A400);
+//   }
+// }
+// 然后包含上面定义的主题
+// @include my-own-component-theme($theme);
+
+// 提供一个深色主题
+$dark-primary: mat-palette($mat-blue-grey);
+$dark-accent:  mat-palette($mat-amber, A200, A100, A400);
+$dark-warn:    mat-palette($mat-deep-orange);
+$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+// 将深色主题包含在一个 css 类中，这样任何组件如果包含在一个应用此类的元素中
+// 该组件就会应用这个主题风格
+.myapp-dark-theme {
+  @include angular-material-theme($dark-theme);
+}
+
+// 由于有一些组件是在一个全局的叠加容器中（比如 Menu，Select 和对话框等）
+// 这种情况下，应用黑夜主题（或其他非全局默认主题）需要一些额外步骤
+// 这种情况下我们需要定义一个全局样式类，例如上面的 my-dark-theme，然后
+// 在此类组件中讲 OverlayContainer 的样式指定成 my-dark-theme
+// import {OverlayContainer} from '@angular/material';
+// @NgModule({
+//   ...
+// })
+// export class MyAppModule {
+//   constructor(overlayContainer: OverlayContainer) {
+//     overlayContainer.themeClass = 'my-dark-theme';
+//   }
+// }
+
+// 如果希望改变默认的字体，可以采用下面的形式
+
+// Includes the default typography styles.
+// @include mat-typography();
+
+// Overrides one of the typography levels
+// @include mat-typography(
+//
+// );
