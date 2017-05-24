@@ -1,6 +1,4 @@
 import * as actions from '../actions/theme.action';
-import { createSelector } from 'reselect';
-import { MyTheme } from '../domain';
 
 export interface State {
   darkmode: boolean;
