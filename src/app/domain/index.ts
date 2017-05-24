@@ -30,14 +30,6 @@ export interface Quote{
   pic: string;
 }
 
-export interface TaskDiscussion{
-  id: string;
-  taskId: string;
-  message: string;
-  senderId: string;
-  sentDate: Date;
-}
-
 export interface Task{
   id?: string;
   taskListId: string;
@@ -72,10 +64,4 @@ export interface Project{
   enabled?: boolean;
   taskLists?: string[]; // 存储 TaskList ID
   members?: string[]; // 存储成员 key 为 ID， value 为角色
-}
-
-export interface MyTheme{
-  id?: number;
-  themeClass: string;
-  themeName: string;
 }

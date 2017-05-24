@@ -7,7 +7,8 @@
       "email": "wpcfan@163.com",
       "id": "37489e0c-df34-c261-71c4-ce75357e3035",
       "projectIds": [
-        "Sk2HaTagb"
+        "Sk2HaTagb",
+        "Hya1moGb-"
       ]
     },
     {
@@ -24,9 +25,23 @@
   "projects": [
     {
       "id": "Sk2HaTagb",
-      "name": "Bug跟踪系统",
+      "name": "问题跟踪系统",
       "desc": "用于 Bug 的内部跟踪和管理",
       "coverImg": "/assets/img/covers/1.jpg"
+    },
+    {
+      "name": "某某公司 ERP 系统",
+      "desc": "为某某公司开发的定制化 ERP 系统",
+      "coverImg": "/assets/img/covers/20.jpg",
+      "members": [
+        "37489e0c-df34-c261-71c4-ce75357e3035"
+      ],
+      "id": "Hya1moGb-",
+      "taskLists": [
+        "BylTyXiM-b",
+        "BkWpk7jGZb",
+        "H1fTyXjMWW"
+      ]
     }
   ],
   "tasklists": [
@@ -41,6 +56,24 @@
       "projectId": "Sk2HaTagb",
       "order": 3,
       "id": "SkG3Ba6Tgb"
+    },
+    {
+      "name": "待办",
+      "projectId": "Hya1moGb-",
+      "order": 1,
+      "id": "BylTyXiM-b"
+    },
+    {
+      "name": "进行中",
+      "projectId": "Hya1moGb-",
+      "order": 2,
+      "id": "BkWpk7jGZb"
+    },
+    {
+      "name": "已完成",
+      "projectId": "Hya1moGb-",
+      "order": 3,
+      "id": "H1fTyXjMWW"
     }
   ],
   "tasks": [
@@ -89,6 +122,75 @@
       "createDate": "2017-05-23T08:21:04.445Z",
       "priority": 1,
       "remark": ""
+    },
+    {
+      "taskListId": "BylTyXiM-b",
+      "desc": "登录鉴权过程中需携带 token 访问 API",
+      "completed": false,
+      "ownerId": "BkkDvwee-",
+      "participantIds": [
+        "37489e0c-df34-c261-71c4-ce75357e3035"
+      ],
+      "dueDate": "2017-05-30T16:00:00.000Z",
+      "priority": 2,
+      "remark": "",
+      "reminder": "2017-05-29T16:00:00.000Z",
+      "createDate": "2017-05-24T06:11:05.625Z",
+      "id": 4
+    },
+    {
+      "taskListId": "BylTyXiM-b",
+      "desc": "增加统计报表功能",
+      "completed": false,
+      "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
+      "participantIds": [],
+      "dueDate": "2017-05-24T16:00:00.000Z",
+      "priority": 1,
+      "remark": "",
+      "reminder": "2017-05-22T16:00:00.000Z",
+      "createDate": "2017-05-24T06:11:48.513Z",
+      "id": 5
+    },
+    {
+      "taskListId": "BylTyXiM-b",
+      "desc": "首页 banner 增加 2px 的 margin",
+      "completed": false,
+      "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
+      "participantIds": [],
+      "dueDate": null,
+      "priority": 3,
+      "remark": "",
+      "reminder": null,
+      "createDate": "2017-05-24T06:12:59.718Z",
+      "id": 6
+    },
+    {
+      "taskListId": "BkWpk7jGZb",
+      "desc": "库存管理 -- 出库操作 API",
+      "completed": false,
+      "ownerId": "BkkDvwee-",
+      "participantIds": [
+        "37489e0c-df34-c261-71c4-ce75357e3035"
+      ],
+      "dueDate": "2017-05-24T16:00:00.000Z",
+      "priority": 2,
+      "remark": "",
+      "reminder": "2017-05-23T16:00:00.000Z",
+      "createDate": "2017-05-24T06:14:47.575Z",
+      "id": 7
+    },
+    {
+      "taskListId": "H1fTyXjMWW",
+      "desc": "用户可以签入签出设备",
+      "completed": true,
+      "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
+      "participantIds": [],
+      "dueDate": "2017-05-20T16:00:00.000Z",
+      "priority": 1,
+      "remark": "",
+      "reminder": "2017-05-20T16:00:00.000Z",
+      "createDate": "2017-05-24T06:16:24.575Z",
+      "id": 8
     }
   ],
   "quotes": [
