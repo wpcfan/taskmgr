@@ -1,19 +1,17 @@
-import { 
-  Component, 
-  OnInit, 
-  OnDestroy,
-  Inject, 
+import {
+  Component,
+  OnInit,
+  Inject,
   ViewChild,
-  ChangeDetectionStrategy 
+  ChangeDetectionStrategy
 } from '@angular/core';
-import { 
-  FormGroup, 
-  FormBuilder, 
-  FormControl,
-  Validators 
+import {
+  FormGroup,
+  FormBuilder,
+  Validators
 } from '@angular/forms';
-import { 
-  MdDialogRef, 
+import {
+  MdDialogRef,
   MD_DIALOG_DATA,
   MdAutocompleteTrigger,
   OverlayContainer
@@ -61,13 +59,13 @@ export class NewTaskComponent implements OnInit {
   tags: string[];
   @ViewChild("assignee") trigger: MdAutocompleteTrigger;
 
-  constructor(  
+  constructor(
     private oc: OverlayContainer,
     private fb: FormBuilder,
     private store$: Store<fromRoot.State>,
     private service: UserService,
     @Inject(MD_DIALOG_DATA) private data: any,
-    private dialogRef: MdDialogRef<NewTaskComponent>) { 
+    private dialogRef: MdDialogRef<NewTaskComponent>) {
       this.subTheme = this.store$.select(fromRoot.getTheme)
         .subscribe(result => oc.themeClass = result? 'myapp-dark-theme': null);
     }
@@ -112,11 +110,11 @@ export class NewTaskComponent implements OnInit {
     const ownerChip$ = this.form.controls['ownerChip'].valueChanges.map(a => {
       return a.length === 0 ? false: true
     }).startWith(true);
-    this.showOwner$ = ownerChip$;   
+    this.showOwner$ = ownerChip$;
   }
 
   ngOnDestroy(){
-    if(this.subTheme) 
+    if(this.subTheme)
       this.subTheme.unsubscribe();
   }
 

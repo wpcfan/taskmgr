@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
-import { routerReducer, RouterStoreModule } from '@ngrx/router-store';
+import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { createSelector } from 'reselect';
 import { ActionReducer } from '@ngrx/store';

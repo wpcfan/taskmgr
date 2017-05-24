@@ -1,4 +1,3 @@
-import { Reducer, Action } from '@ngrx/store';
 import * as models from '../domain';
 import * as actions from '../actions/auth.action';
 

@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { 
-  TestBed, 
-  inject, 
-  async 
+import {
+  TestBed,
+  inject,
+  async
 } from '@angular/core/testing';
 import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  Route
 } from '@angular/router';
 import { RouterTestingModule } from "@angular/router/testing";
 import { AuthGuardService } from './auth-guard.service';
@@ -48,8 +47,8 @@ describe('测试路由守卫服务：AuthGuardService', () => {
     }).compileComponents();;
   }));
 
-  it('不应该允许绕过守卫', 
-    async(inject([AuthGuardService, Store], 
+  it('不应该允许绕过守卫',
+    async(inject([AuthGuardService, Store],
       (service: AuthGuardService, store$: Store<State>) => {
     let fixture = TestBed.createComponent(RoutingComponent);
     const guard$ = service.canActivate(new ActivatedRouteSnapshot(), mockSnapshot);
@@ -60,9 +59,9 @@ describe('测试路由守卫服务：AuthGuardService', () => {
       expect(r.result).toBe(r.auth);
     });
     store$.dispatch({
-      type: authActions.ActionTypes.LOGIN_SUCCESS, 
+      type: authActions.ActionTypes.LOGIN_SUCCESS,
       payload:{
-        token: 'xxxx', 
+        token: 'xxxx',
         user: { id: 'xxxx',email: 'abc@dev.local', name: 'xxxx', password: 'sssss'}}});
   })));
 

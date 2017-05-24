@@ -1,14 +1,13 @@
-import { 
-  Component, 
-  OnInit, 
-  Inject, 
-  ChangeDetectionStrategy 
+import {
+  Component,
+  OnInit,
+  Inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
-import { 
-  FormGroup, 
-  FormBuilder, 
-  FormControl,
-  Validators 
+import {
+  FormGroup,
+  FormBuilder,
+  Validators
 } from '@angular/forms';
 import { MdDialogRef, MD_DIALOG_DATA, OverlayContainer } from '@angular/material';
 import { Store } from '@ngrx/store';
@@ -35,7 +34,7 @@ export class NewProjectComponent implements OnInit {
     private fb: FormBuilder,
     private store$: Store<fromRoot.State>,
     @Inject(MD_DIALOG_DATA) private data: any,
-    private dialogRef: MdDialogRef<NewProjectComponent>) { 
+    private dialogRef: MdDialogRef<NewProjectComponent>) {
       this.subTheme = this.store$.select(fromRoot.getTheme)
         .subscribe(result => oc.themeClass = result? 'myapp-dark-theme': null);
     }
@@ -73,7 +72,7 @@ export class NewProjectComponent implements OnInit {
     if(this.subTheme)
       this.subTheme.unsubscribe();
   }
-  
+
   onSubmit({value, valid}, event: Event){
     event.preventDefault();
     if(!valid) return;

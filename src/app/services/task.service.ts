@@ -1,9 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { concat } from 'rxjs/observable/concat';
 import { Task, User } from '../domain';
-import { Store } from "@ngrx/store";
 
 @Injectable()
 export class TaskService {

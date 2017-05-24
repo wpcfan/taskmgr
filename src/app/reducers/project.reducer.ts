@@ -1,4 +1,4 @@
-import { Project, User } from '../domain';
+import { Project } from '../domain';
 import { createSelector } from 'reselect';
 import * as actions from '../actions/project.action';
 
@@ -32,10 +32,10 @@ export function reducer(
         return Object.assign(entities, {
           [id]: state.entities[id]
         })
-      },{}); 
+      },{});
       return Object.assign({}, state, {
-        ids: ids, 
-        entities: entities, 
+        ids: ids,
+        entities: entities,
         selectedId: project.id === state.selectedId ? null:state.selectedId
       });
     }
@@ -47,7 +47,7 @@ export function reducer(
     case actions.ActionTypes.LOADS_SUCCESS:{
       const projects = action.payload;
       // if projects is null then return the orginal state
-      if(projects === null) return state; 
+      if(projects === null) return state;
       const newProjects = projects.filter(project => !state.entities[project.id]);
       const newIds = newProjects.map(project => project.id);
       if(newProjects.length === 0) return state;
@@ -57,7 +57,7 @@ export function reducer(
         })
       },{});
       return {
-        ids: [...state.ids, ...newIds], 
+        ids: [...state.ids, ...newIds],
         entities: Object.assign({}, state.entities, newEntities),
         selectedId: null
       };
@@ -75,7 +75,7 @@ export function reducer(
 }
 
 export const getEntities = (state) => state.entities;
-export const getSelectedId = (state) => state.selectedId; 
+export const getSelectedId = (state) => state.selectedId;
 export const getIds = (state) => state.ids;
 export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
   return entities[selectedId];

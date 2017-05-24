@@ -1,9 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { 
-  FormGroup, 
-  FormBuilder, 
-  FormControl,
-  Validators 
+import {
+  FormGroup,
+  FormBuilder,
+  Validators
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -23,7 +22,7 @@ export class LoginComponent implements OnInit {
   quote$: Observable<entities.Quote>
   constructor(
     private fb: FormBuilder,
-    private store$: Store<fromRoot.State>) { 
+    private store$: Store<fromRoot.State>) {
       this.quote$ = this.store$.select(fromRoot.getQuote);
     }
 
@@ -39,7 +38,7 @@ export class LoginComponent implements OnInit {
     if(!valid) return;
     this.store$.dispatch(
       new authActions.LoginAction({
-        email: value.email, 
+        email: value.email,
         password: value.password
       }));
   }

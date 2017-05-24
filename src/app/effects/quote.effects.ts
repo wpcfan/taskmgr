@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, toPayload } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/switchMap';
@@ -13,14 +12,14 @@ import * as actions from '../actions/quote.action';
 @Injectable()
 export class QuoteEffects{
   /**
-   * 
-   * @param actions$ 
-   * @param authService 
+   *
+   * @param actions$
+   * @param authService
    */
   constructor(private actions$: Actions, private quoteService: QuoteService) { }
 
   /**
-   * 
+   *
    */
   @Effect()
   quote$: Observable<Action> = this.actions$

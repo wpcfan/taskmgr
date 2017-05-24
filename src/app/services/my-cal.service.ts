@@ -1,11 +1,9 @@
 import { Injectable, Inject } from '@angular/core';
-import { Http, Request } from "@angular/http";
+import { Http } from "@angular/http";
 import { Observable } from "rxjs/Observable";
 import { Task } from "../domain";
 import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent
+  CalendarEvent
 } from 'angular-calendar';
 import {
   startOfDay,

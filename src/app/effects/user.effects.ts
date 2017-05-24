@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, toPayload } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { concat } from 'rxjs/observable/concat';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/withLatestFrom';
@@ -13,7 +11,7 @@ import { UserService } from '../services';
 import * as actions from '../actions/user.action';
 import * as prjActions from '../actions/project.action';
 import * as fromRoot from '../reducers';
-import { Project, User } from '../domain';
+import { Project } from '../domain';
 
 @Injectable()
 export class UserEffects{
@@ -21,14 +19,14 @@ export class UserEffects{
    * 任务的 Effects
    * @param actions$ 注入 action 数据流
    * @param service 注入任务服务
-   * @param store$ 注入 redux store 
+   * @param store$ 注入 redux store
    */
   constructor(
-    private actions$: Actions, 
+    private actions$: Actions,
     private service$: UserService,
     private store$: Store<fromRoot.State>) { }
   /**
-   * 
+   *
    */
   @Effect()
   searchUsers$: Observable<Action> = this.actions$
@@ -52,7 +50,7 @@ export class UserEffects{
       }
     );
 
-  
+
   @Effect()
   removeUserProject$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.REMOVE_USER_PROJECT)
@@ -71,12 +69,12 @@ export class UserEffects{
     .map(toPayload)
     .switchMap((prjs:Project[]) => Observable.from(prjs.map(prj => prj.id)))
     .map((projectId:string) => new actions.LoadUsersByPrjAction(projectId))
-  
+
   @Effect()
   loadProjectUsers$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.LOAD_USERS_BY_PRJ)
     .map(toPayload)
-    .switchMap(projectId => 
+    .switchMap(projectId =>
       this.service$.getUsersByProject(projectId)
         .map(users => new actions.LoadUsersByPrjSuccessAction(users))
         .catch(err => of(new actions.LoadUsersByPrjFailAction(JSON.stringify(err))))

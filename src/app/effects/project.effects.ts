@@ -4,7 +4,6 @@ import { Action, Store } from '@ngrx/store';
 import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { concat } from 'rxjs/observable/concat';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/withLatestFrom';
@@ -19,16 +18,16 @@ import { Project, TaskList, Err, User } from '../domain';
 @Injectable()
 export class ProjectEffects{
   /**
-   * 
-   * @param actions$ 
-   * @param todoService 
+   *
+   * @param actions$
+   * @param todoService
    */
   constructor(
-    private actions$: Actions, 
+    private actions$: Actions,
     private service: ProjectService,
     private store$: Store<fromRoot.State>) { }
   /**
-   * 
+   *
    */
   @Effect()
   loadProjects$: Observable<Action> = this.actions$
@@ -64,7 +63,7 @@ export class ProjectEffects{
       .map(project => new actions.UpdateProjectSuccessAction(project))
       .catch(err => of(new actions.UpdateProjectFailAction(JSON.stringify(err))))
     );
-  
+
   @Effect()
   removeProject$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.DELETE)
@@ -74,7 +73,7 @@ export class ProjectEffects{
       .map(project => new actions.DeleteProjectSuccessAction(project))
       .catch(err => of(new actions.DeleteProjectFailAction(JSON.stringify(err))))
     );
-  
+
   @Effect()
   afterRemoveProject$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.DELETE_SUCCESS)
@@ -108,7 +107,7 @@ export class ProjectEffects{
     .ofType(actions.ActionTypes.ADD_SUCCESS)
     .map(toPayload)
     .map(project => new tasklistActions.InitTaskListsAction(project));
-  
+
   @Effect()
   addUserPrjRef$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.ADD_SUCCESS)

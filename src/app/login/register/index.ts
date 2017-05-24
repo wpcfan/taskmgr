@@ -1,9 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { 
-  FormGroup, 
-  FormBuilder, 
-  FormControl,
-  Validators 
+import {
+  FormGroup,
+  FormBuilder,
+  Validators
 } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from "rxjs/Observable";
@@ -21,7 +20,7 @@ export class RegisterComponent implements OnInit {
   avatars$: Observable<string[]>;
   constructor(
     private fb: FormBuilder,
-    private store$: Store<fromRoot.State>) { 
+    private store$: Store<fromRoot.State>) {
       this.avatars$ = Observable
         .range(0, 13)
         .map(i => `/assets/img/avatar/${i}.svg`)

@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, toPayload } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { go } from '@ngrx/router-store';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { concat } from 'rxjs/observable/concat';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/withLatestFrom';
@@ -20,14 +18,14 @@ export class TaskEffects{
    * 任务的 Effects
    * @param actions$ 注入 action 数据流
    * @param service 注入任务服务
-   * @param store$ 注入 redux store 
+   * @param store$ 注入 redux store
    */
   constructor(
-    private actions$: Actions, 
+    private actions$: Actions,
     private service$: TaskService,
     private store$: Store<fromRoot.State>) { }
   /**
-   * 
+   *
    */
   @Effect()
   loadTasks$: Observable<Action> = this.actions$
@@ -62,7 +60,7 @@ export class TaskEffects{
       .map(task => new actions.UpdateTaskSuccessAction(task))
       .catch(err => of(new actions.UpdateTaskFailAction(JSON.stringify(err))))
     );
-  
+
   @Effect()
   removeTaskList$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.DELETE)

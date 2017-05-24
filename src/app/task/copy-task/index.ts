@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Store } from "@ngrx/store";
 import { OverlayContainer } from "@angular/material";
 import { Observable } from "rxjs/Observable";
@@ -6,15 +6,14 @@ import { Subscription } from "rxjs/Subscription";
 import * as fromRoot from "../../reducers";
 import * as actions from '../../actions/task.action';
 import { TaskList } from "../../domain";
-import { 
-  FormGroup, 
-  FormBuilder, 
-  FormControl,
-  Validators 
+import {
+  FormGroup,
+  FormBuilder,
+  Validators
 } from '@angular/forms';
-import { 
-  MdDialogRef, 
-  MD_DIALOG_DATA 
+import {
+  MdDialogRef,
+  MD_DIALOG_DATA
 } from '@angular/material';
 
 @Component({
@@ -48,18 +47,18 @@ export class CopyTaskComponent implements OnInit {
     private store$: Store<fromRoot.State>,
     private fb: FormBuilder,
     @Inject(MD_DIALOG_DATA) private data: any,
-    private dialogRef: MdDialogRef<CopyTaskComponent>) { 
+    private dialogRef: MdDialogRef<CopyTaskComponent>) {
       this.subTheme = this.store$.select(fromRoot.getTheme)
         .subscribe(result => oc.themeClass = result? 'myapp-dark-theme': null);
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.lists$ = this.lists$ = this.store$
       .select(fromRoot.getProjectTaskList)
       .map(lists => lists.filter(list => list.id !== this.data.srcListId));
     if(this.data.type==='move'){
       this.dialogTitle = '移动所有任务';
-    } 
+    }
     this.form = this.fb.group({
       targetList: ['', Validators.required]
     });
