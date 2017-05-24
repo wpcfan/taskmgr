@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   dark: boolean = false;
+  switchDarkTheme(dark: boolean): void{
+    this.dark = dark;
+  }
 }

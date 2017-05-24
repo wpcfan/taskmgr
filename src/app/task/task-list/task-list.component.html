@@ -1,9 +1,4 @@
-  <md-list     
-    [ngClass]="{
-      'drag-enter': draggingStatus === 'enter',
-      'drag-leave': draggingStatus === 'leave',
-      'drop': draggingStatus === 'drop'
-      }">
+  <md-list>
     <app-task-list-header 
       [header]="list.name"
       (newTask)="addNewTask()"

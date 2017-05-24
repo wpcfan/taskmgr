@@ -15,7 +15,8 @@ export class HeaderComponent {
 
   auth$: Observable<entities.Auth>;
 
-  @Output("toggle") clickHandler: EventEmitter<void> = new EventEmitter<void>();
+  @Output("toggle") clickHandler = new EventEmitter<void>();
+  @Output() toggleDarkTheme = new EventEmitter<boolean>();
 
   constructor(private store$: Store<fromRoot.State>) { 
     this.auth$ = this.store$.select(fromRoot.getAuth);
@@ -27,5 +28,9 @@ export class HeaderComponent {
 
   logout(){
     this.store$.dispatch({type: actions.ActionTypes.LOGOUT});
+  }
+
+  onChange(checked){
+    this.toggleDarkTheme.emit(checked);
   }
 }

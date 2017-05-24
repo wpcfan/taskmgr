@@ -21,6 +21,7 @@ import {
   MdAutocompleteModule,
   MdSidenavModule, 
   MdToolbarModule, 
+  MdSlideToggleModule
 } from '@angular/material';
 import { ConfirmDialogComponent } from './confirm-dialog';
 import { ImageListSelectComponent } from './image-list-select';
@@ -51,6 +52,7 @@ import { InitialsPipe } from './initials.pipe';
     MdAutocompleteModule,
     MdSidenavModule, 
     MdToolbarModule, 
+    MdSlideToggleModule,
   ],
   exports: [
     CommonModule,
@@ -75,6 +77,7 @@ import { InitialsPipe } from './initials.pipe';
     MdAutocompleteModule,
     MdSidenavModule, 
     MdToolbarModule, 
+    MdSlideToggleModule,
     ConfirmDialogComponent,
     ImageListSelectComponent,
     ChipsListComponent

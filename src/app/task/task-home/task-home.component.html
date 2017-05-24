@@ -1,5 +1,10 @@
 <div class="task-lists">
   <div 
+    [ngClass]="{
+      'drag-enter': draggingStatus === 'enter',
+      'drag-leave': draggingStatus === 'leave',
+      'drop': draggingStatus === 'drop'
+      }"
     *ngFor="let taskList of lists$ | async" 
     class="list-container" 
     (dragover)="onDragOver($event)"

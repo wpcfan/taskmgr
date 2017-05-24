@@ -1,10 +1,10 @@
-<md-sidenav-container [ngClass]="{'myapp-dark-theme': dark}">
+<md-sidenav-container [class.myapp-dark-theme]="dark">
   <md-sidenav #sidenav mode="push">
     <app-sidebar (navClicked)="sidenav.close()"></app-sidebar>
   </md-sidenav>
   <div class="site">
     <header>
-      <app-header (toggle)="sidenav.toggle()"></app-header>
+      <app-header (toggle)="sidenav.toggle()" (toggleDarkTheme)="switchDarkTheme($event)"></app-header>
     </header>
     <main>
       <div class="content">
