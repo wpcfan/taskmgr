@@ -1,26 +1,26 @@
-.completed{
+.completed {
   opacity: 0.64;
   color: #d9d9d9;
   text-decoration: line-through;
 }
 
-.priority-normal{
+.priority-normal {
   border-left: 3px solid #A6A6A6;
 }
 
-.priority-important{
+.priority-important {
   border-left: 3px solid #FFAF38;
 }
 
-.priority-emergency{
+.priority-emergency {
   border-left: 3px solid red;
 }
 
-.checkbox-section{
+.checkbox-section {
   border: 0 solid #A6A6A6;
 }
 
-.bottom-bar{
+.bottom-bar {
   margin-top: 3px;
   margin-bottom: 2px;
   font-size: 10px;
@@ -28,20 +28,20 @@
   order: 1;
 }
 
-.avatar-right{
+.avatar-right {
   order: 3;
 }
 
-.duedate{
+.duedate {
   background-color: #FF4F3E;
   color: #fff;
 }
 
-.alarm{
+.alarm {
   font-size: 18px;
 }
 
-.desc{
+.desc {
   white-space: normal;
 }
 
@@ -50,7 +50,7 @@
   padding: 5px;
 }
 
-.content{
+.content {
   order: 1;
 }
 
@@ -60,12 +60,12 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.drag-start{
+.drag-start {
   opacity: 0.5;
   border: #ff525b dashed 2px;
 }
 
-.drag-end{
+.drag-end {
   opacity: 1;
   border: none;
 }

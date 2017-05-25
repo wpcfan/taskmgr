@@ -1,14 +1,8 @@
-import {
-  Component,
-  Output,
-  Input,
-  EventEmitter,
-  ChangeDetectionStrategy
-} from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
 import {MdIconRegistry, OverlayContainer} from '@angular/material';
-import {Subscription} from "rxjs/Subscription";
-import {Store} from "@ngrx/store";
+import {Subscription} from 'rxjs/Subscription';
+import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 
 @Component({
@@ -25,34 +19,33 @@ export class TaskListHeaderComponent {
   @Input() header = '';
   subTheme: Subscription;
 
-  constructor(
-    private store$: Store<fromRoot.State>,
-    oc: OverlayContainer,
-    iconRegistry: MdIconRegistry,
-    sanitizer: DomSanitizer) {
+  constructor(private store$: Store<fromRoot.State>,
+              oc: OverlayContainer,
+              iconRegistry: MdIconRegistry,
+              sanitizer: DomSanitizer) {
     this.subTheme = this.store$.select(fromRoot.getTheme)
-      .subscribe(result => oc.themeClass = result? 'myapp-dark-theme': null);
+      .subscribe(result => oc.themeClass = result ? 'myapp-dark-theme' : null);
     iconRegistry.addSvgIcon(
-        'move',
-        sanitizer.bypassSecurityTrustResourceUrl('assets/img/icons/move.svg'));
+      'move',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/icons/move.svg'));
   }
 
-  onChangeListName(ev: Event){
+  onChangeListName(ev: Event) {
     ev.preventDefault();
     this.changeListName.emit();
   }
 
-  onMoveAllTasks(ev: Event){
+  onMoveAllTasks(ev: Event) {
     ev.preventDefault();
     this.moveAllTasks.emit();
   }
 
-  onDeleteList(ev: Event){
+  onDeleteList(ev: Event) {
     ev.preventDefault();
     this.deleteList.emit();
   }
 
-  addNewTask(ev: Event){
+  addNewTask(ev: Event) {
     ev.preventDefault();
     this.newTask.emit();
   }

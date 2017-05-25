@@ -1,14 +1,9 @@
-import { Injectable, Inject } from '@angular/core';
-import { Http } from "@angular/http";
-import { Observable } from "rxjs/Observable";
-import { Task } from "../domain";
-import {
-  CalendarEvent
-} from 'angular-calendar';
-import {
-  startOfDay,
-  endOfDay
-} from 'date-fns';
+import {Inject, Injectable} from '@angular/core';
+import {Http} from '@angular/http';
+import {Observable} from 'rxjs/Observable';
+import {Task} from '../domain';
+import {CalendarEvent} from 'angular-calendar';
+import {endOfDay, startOfDay} from 'date-fns';
 
 const colors: any = {
   red: {
@@ -26,20 +21,24 @@ const colors: any = {
 };
 
 const getPriorityColor = (priority: number) => {
-  switch(priority){
-    case 1: return colors.red;
-    case 2: return colors.yellow;
+  switch (priority) {
+    case 1:
+      return colors.red;
+    case 2:
+      return colors.yellow;
     case 3:
     default:
       return colors.blue;
   }
-}
+};
 
 @Injectable()
 export class MyCalService {
-  constructor(@Inject('BASE_CONFIG') private config, private http: Http){}
-  getUserTasks(userId: string): Observable<CalendarEvent[]>{
-    const uri =  `${this.config.uri}/tasks`;
+  constructor(@Inject('BASE_CONFIG') private config, private http: Http) {
+  }
+
+  getUserTasks(userId: string): Observable<CalendarEvent[]> {
+    const uri = `${this.config.uri}/tasks`;
     return this.http
       .get(uri, {params: {'ownerId': userId}})
       .map(res => res.json() as Task[])
@@ -47,11 +46,11 @@ export class MyCalService {
         return tasks.map(task => {
           return {
             start: startOfDay(task.createDate),
-            end: task.dueDate? endOfDay(task.dueDate): endOfDay(task.createDate),
+            end: task.dueDate ? endOfDay(task.dueDate) : endOfDay(task.createDate),
             title: task.desc,
             color: getPriorityColor(task.priority)
-          }
-        })
+          };
+        });
       });
   }
 }

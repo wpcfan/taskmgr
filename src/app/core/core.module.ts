@@ -1,19 +1,16 @@
-import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { HttpModule } from '@angular/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  MdSidenavContainer,
-  MdSidenav,
-} from '@angular/material';
-import { SharedModule } from "../shared";
-import { AppRoutingModule } from "./app-routing.module";
-import { AppEffectsModule } from "../effects";
-import { ServicesModule } from '../services';
-import { AppStoreModule } from '../reducers';
-import { HeaderComponent } from './header';
-import { FooterComponent } from './footer';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { PageNotFoundComponent } from './page-not-found';
+import {NgModule, Optional, SkipSelf} from '@angular/core';
+import {HttpModule} from '@angular/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MdSidenav, MdSidenavContainer} from '@angular/material';
+import {SharedModule} from '../shared';
+import {AppRoutingModule} from './app-routing.module';
+import {AppEffectsModule} from '../effects';
+import {ServicesModule} from '../services';
+import {AppStoreModule} from '../reducers';
+import {HeaderComponent} from './header';
+import {FooterComponent} from './footer';
+import {SidebarComponent} from './sidebar/sidebar.component';
+import {PageNotFoundComponent} from './page-not-found';
 import 'hammerjs';
 
 @NgModule({
@@ -33,7 +30,7 @@ import 'hammerjs';
     FooterComponent,
     SidebarComponent,
     AppRoutingModule,
-    ],
+  ],
   providers: [
     {
       provide: 'BASE_CONFIG',
@@ -41,16 +38,16 @@ import 'hammerjs';
         uri: 'http://localhost:3000',
       }
     }
-    ],
+  ],
   declarations: [
     HeaderComponent,
     FooterComponent,
     SidebarComponent,
     PageNotFoundComponent,
-    ]
+  ]
 })
 export class CoreModule {
-  constructor (@Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     if (parentModule) {
       throw new Error('CoreModule is already loaded. Import it in the AppModule only');
     }

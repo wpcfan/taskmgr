@@ -1,18 +1,18 @@
 <div class="task-lists">
-  <div 
+  <div
     [ngClass]="{
       'drag-enter': draggingStatus === 'enter',
       'drag-leave': draggingStatus === 'leave',
       'drop': draggingStatus === 'drop'
       }"
-    *ngFor="let taskList of lists$ | async" 
-    class="list-container" 
+    *ngFor="let taskList of lists$ | async"
+    class="list-container"
     (dragover)="onDragOver($event)"
     (dragenter)="onDragEnter($event)"
     (dragleave)="onDragLeave($event)"
     (drop)="onDrop(taskList.id)">
-    <app-task-list 
-      [list]="taskList" 
+    <app-task-list
+      [list]="taskList"
       [tasks]="tasksByList(taskList.id) | async"
       [loading]="loading$ | async"
       (completeTask)="handleCompleteTask($event)"

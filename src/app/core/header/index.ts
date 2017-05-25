@@ -1,8 +1,8 @@
-import { Component, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import * as fromRoot from '../../reducers'
-import * as actions from '../../actions/auth.action'
+import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
+import * as fromRoot from '../../reducers';
+import * as actions from '../../actions/auth.action';
 import * as entities from '../../domain';
 
 @Component({
@@ -15,22 +15,22 @@ export class HeaderComponent {
 
   auth$: Observable<entities.Auth>;
 
-  @Output("toggle") clickHandler = new EventEmitter<void>();
+  @Output() toggle = new EventEmitter<void>();
   @Output() toggleDarkTheme = new EventEmitter<boolean>();
 
-  constructor(private store$: Store<fromRoot.State>) { 
+  constructor(private store$: Store<fromRoot.State>) {
     this.auth$ = this.store$.select(fromRoot.getAuth);
   }
 
-  onClick(){
-    this.clickHandler.emit();
+  onClick() {
+    this.toggle.emit();
   }
 
-  logout(){
+  logout() {
     this.store$.dispatch({type: actions.ActionTypes.LOGOUT});
   }
 
-  onChange(checked){
+  onChange(checked) {
     this.toggleDarkTheme.emit(checked);
   }
 }

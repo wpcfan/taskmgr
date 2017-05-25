@@ -5,9 +5,9 @@
   <md-grid-list [cols]="cols" [rowHeight]="rowHeight">
     <md-grid-tile *ngFor="let item of items; let i = index;">
       <div class="image-container" (click)="onChange(i)">
-        <img 
-          [src]="item" 
-          [ngStyle]="{'width': itemWidth }" >
+        <img
+          [src]="item"
+          [ngStyle]="{'width': itemWidth }">
         <div class="after">
           <span class="zoom">
             <md-icon>checked</md-icon>

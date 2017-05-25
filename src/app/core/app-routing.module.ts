@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AuthGuardService } from "../services";
-import { PageNotFoundComponent } from "./page-not-found";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {AuthGuardService} from '../services';
+import {PageNotFoundComponent} from './page-not-found';
 
 const routes: Routes = [
-  { 
-    path: '', 
+  {
+    path: '',
     redirectTo: '/login',
-    pathMatch: 'full' 
+    pathMatch: 'full'
   },
   {
     path: 'tasklists/:id',
@@ -28,4 +28,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

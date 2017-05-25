@@ -1,7 +1,7 @@
 import * as models from '../domain';
 import * as actions from '../actions/quote.action';
 
-export interface State{
+export interface State {
   quote: models.Quote;
 }
 
@@ -11,9 +11,9 @@ export const initialState: State = {
     en: 'Satisfaction lies in the effort, not in the attainment. Full effort is full victory. ',
     pic: 'assets/img/quote_fallback.jpg',
   }
-}
+};
 
-export function reducer (state: State = initialState, action: actions.Actions): State {
+export function reducer(state: State = initialState, action: actions.Actions): State {
   switch (action.type) {
     case actions.ActionTypes.QUOTE_SUCCESS:
       return Object.assign({}, state, {quote: action.payload});

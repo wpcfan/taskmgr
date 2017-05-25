@@ -1,17 +1,18 @@
-import { Injectable, Inject } from '@angular/core';
-import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import { Task, User } from '../domain';
+import {Inject, Injectable} from '@angular/core';
+import {Headers, Http} from '@angular/http';
+import {Observable} from 'rxjs/Observable';
+import {Task, User} from '../domain';
 
 @Injectable()
 export class TaskService {
-  private domain: string = 'tasks';
+  private domain = 'tasks';
   private headers = new Headers({
     'Content-Type': 'application/json'
   });
-  constructor(
-    @Inject('BASE_CONFIG') private config,
-    private http: Http) { }
+
+  constructor(@Inject('BASE_CONFIG') private config,
+              private http: Http) {
+  }
 
   add(task: Task): Observable<Task> {
     const uri = `${this.config.uri}/${this.domain}`;
@@ -34,7 +35,7 @@ export class TaskService {
 
   }
 
-  update(task: Task): Observable<Task>{
+  update(task: Task): Observable<Task> {
     const uri = `${this.config.uri}/${this.domain}/${task.id}`;
     const toUpdate = {
       taskListId: task.taskListId,
@@ -51,49 +52,49 @@ export class TaskService {
       .map(res => res.json());
   }
 
-  del(task: Task): Observable<Task>{
+  del(task: Task): Observable<Task> {
     const uri = `${this.config.uri}/${this.domain}/${task.id}`;
     return this.http
       .delete(uri)
       .mapTo(task);
   }
 
-    // GET /tasklist
-  get(taskListId: string): Observable<Task[]>{
+  // GET /tasklist
+  get(taskListId: string): Observable<Task[]> {
     const uri = `${this.config.uri}/${this.domain}`;
     return this.http
       .get(uri, {params: {'taskListId': taskListId}})
       .map(res => res.json());
   }
 
-  move(taskId:string, taskListId: string){
+  move(taskId: string, taskListId: string) {
     const uri = `${this.config.uri}/${this.domain}/${taskId}`;
     return this.http
       .patch(uri, JSON.stringify({taskListId: taskListId}), {headers: this.headers})
       .map(res => res.json());
   }
 
-  complete(task: Task){
+  complete(task: Task) {
     const uri = `${this.config.uri}/${this.domain}/${task.id}`;
     return this.http
       .patch(uri, JSON.stringify({completed: !task.completed}), {headers: this.headers})
       .map(res => res.json());
   }
 
-  addTaskRef(user: User, taskId: string){
+  addTaskRef(user: User, taskId: string) {
     const uri = `${this.config.uri}/users/${user.id}`;
-    const taskIds = (user.taskIds)? user.taskIds : [];
+    const taskIds = (user.taskIds) ? user.taskIds : [];
     return this.http
       .patch(uri, JSON.stringify({taskIds: [...taskIds, taskId]}), {headers: this.headers})
       .map(res => res.json() as User);
   }
 
-  removeTaskRef(user: User, taskId: string){
+  removeTaskRef(user: User, taskId: string) {
     const uri = `${this.config.uri}/users/${user.id}`;
-    const taskIds = (user.taskIds)? user.taskIds : [];
+    const taskIds = (user.taskIds) ? user.taskIds : [];
     const index = taskIds.indexOf(taskId);
     return this.http
-      .patch(uri, JSON.stringify({taskIds: [...taskIds.slice(0, index), taskIds.slice(index+1)]}), {headers: this.headers})
+      .patch(uri, JSON.stringify({taskIds: [...taskIds.slice(0, index), taskIds.slice(index + 1)]}), {headers: this.headers})
       .map(res => res.json() as User);
   }
 }

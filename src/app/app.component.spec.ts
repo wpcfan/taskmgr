@@ -1,9 +1,9 @@
-import { TestBed, async } from '@angular/core/testing';
-import { MdSidenavModule } from "@angular/material";
-import { APP_BASE_HREF } from "@angular/common";
-import { RouterModule } from '@angular/router';
-import { CoreModule } from './core';
-import { AppComponent } from './app.component';
+import {async, TestBed} from '@angular/core/testing';
+import {MdSidenavModule} from '@angular/material';
+import {APP_BASE_HREF} from '@angular/common';
+import {RouterModule} from '@angular/router';
+import {CoreModule} from './core';
+import {AppComponent} from './app.component';
 
 describe('测试根模块：AppComponent', () => {
   beforeEach(async(() => {
@@ -12,7 +12,7 @@ describe('测试根模块：AppComponent', () => {
         AppComponent
       ],
       imports: [MdSidenavModule, RouterModule.forRoot([]), CoreModule],
-      providers:[{
+      providers: [{
         provide: APP_BASE_HREF,
         useValue: '/'
       }]

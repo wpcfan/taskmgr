@@ -1,20 +1,12 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { Store } from "@ngrx/store";
-import { OverlayContainer } from "@angular/material";
-import { Observable } from "rxjs/Observable";
-import { Subscription } from "rxjs/Subscription";
-import * as fromRoot from "../../reducers";
+import {Component, Inject, OnInit, OnDestroy} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {MD_DIALOG_DATA, MdDialogRef, OverlayContainer} from '@angular/material';
+import {Observable} from 'rxjs/Observable';
+import {Subscription} from 'rxjs/Subscription';
+import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/task.action';
-import { TaskList } from "../../domain";
-import {
-  FormGroup,
-  FormBuilder,
-  Validators
-} from '@angular/forms';
-import {
-  MdDialogRef,
-  MD_DIALOG_DATA
-} from '@angular/material';
+import {TaskList} from '../../domain';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-copy-task',
@@ -36,27 +28,26 @@ import {
     `,
   styles: [``]
 })
-export class CopyTaskComponent implements OnInit {
+export class CopyTaskComponent implements OnInit, OnDestroy {
   form: FormGroup;
   dialogTitle: string;
   subTheme: Subscription;
   lists$: Observable<TaskList>;
 
-  constructor(
-    private oc: OverlayContainer,
-    private store$: Store<fromRoot.State>,
-    private fb: FormBuilder,
-    @Inject(MD_DIALOG_DATA) private data: any,
-    private dialogRef: MdDialogRef<CopyTaskComponent>) {
-      this.subTheme = this.store$.select(fromRoot.getTheme)
-        .subscribe(result => oc.themeClass = result? 'myapp-dark-theme': null);
+  constructor(private oc: OverlayContainer,
+              private store$: Store<fromRoot.State>,
+              private fb: FormBuilder,
+              @Inject(MD_DIALOG_DATA) private data: any,
+              private dialogRef: MdDialogRef<CopyTaskComponent>) {
+    this.subTheme = this.store$.select(fromRoot.getTheme)
+      .subscribe(result => oc.themeClass = result ? 'myapp-dark-theme' : null);
   }
 
   ngOnInit() {
     this.lists$ = this.lists$ = this.store$
       .select(fromRoot.getProjectTaskList)
       .map(lists => lists.filter(list => list.id !== this.data.srcListId));
-    if(this.data.type==='move'){
+    if (this.data.type === 'move') {
       this.dialogTitle = '移动所有任务';
     }
     this.form = this.fb.group({
@@ -65,15 +56,18 @@ export class CopyTaskComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
-    if(this.subTheme)
+    // Called once, before the instance is destroyed.
+    // Add 'implements OnDestroy' to the class.
+    if (this.subTheme) {
       this.subTheme.unsubscribe();
+    }
   }
 
-  onSubmit({value, valid}, $event){
+  onSubmit({value, valid}, $event) {
     event.preventDefault();
-    if(!valid) return;
+    if (!valid) {
+      return;
+    }
     this.store$.dispatch(new actions.MoveAllAction({srcListId: this.data.srcListId, targetListId: value.targetList}));
     this.dialogRef.close();
   }

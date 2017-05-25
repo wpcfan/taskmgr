@@ -1,4 +1,4 @@
-import { InitialsPipe } from './initials.pipe';
+import {InitialsPipe} from './initials.pipe';
 
 describe('InitialsPipe', () => {
   it('create an instance', () => {

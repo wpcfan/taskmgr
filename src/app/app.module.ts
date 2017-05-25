@@ -1,9 +1,9 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { CoreModule } from './core';
-import { LoginModule } from './login';
-import { AppComponent } from './app.component';
-import { ProjectModule } from './project';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {CoreModule} from './core';
+import {LoginModule} from './login';
+import {AppComponent} from './app.component';
+import {ProjectModule} from './project';
 
 @NgModule({
   declarations: [
@@ -17,4 +17,5 @@ import { ProjectModule } from './project';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

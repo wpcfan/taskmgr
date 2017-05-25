@@ -1,23 +1,18 @@
-import { 
-  Component, 
-  Renderer2,
-  OnDestroy,
-  ChangeDetectionStrategy
-} from '@angular/core';
-import { MdDialog } from '@angular/material';
-import { Observable } from "rxjs/Observable";
+import {ChangeDetectionStrategy, Component, OnDestroy, Renderer2} from '@angular/core';
+import {MdDialog} from '@angular/material';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/pluck';
-import { ActivatedRoute } from '@angular/router';
-import { Store } from "@ngrx/store";
-import { Subscription } from "rxjs/Subscription";
-import * as fromRoot from "../../reducers";
+import {ActivatedRoute} from '@angular/router';
+import {Store} from '@ngrx/store';
+import {Subscription} from 'rxjs/Subscription';
+import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/task-list.action';
 import * as taskActions from '../../actions/task.action';
-import { TaskList, Task } from '../../domain';
-import { NewTaskListComponent } from "../new-task-list";
-import { NewTaskComponent } from '../new-task';
-import { CopyTaskComponent } from "../copy-task";
+import {Task, TaskList} from '../../domain';
+import {NewTaskListComponent} from '../new-task-list';
+import {NewTaskComponent} from '../new-task';
+import {CopyTaskComponent} from '../copy-task';
 
 @Component({
   selector: 'app-task-home',
@@ -25,106 +20,116 @@ import { CopyTaskComponent } from "../copy-task";
   styleUrls: ['./task-home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskHomeComponent implements OnDestroy{
+export class TaskHomeComponent implements OnDestroy {
   draggingStatus: string;
-  dragTaskId:string;
+  dragTaskId: string;
   loading$: Observable<boolean>;
   lists$: Observable<TaskList[]>;
   private routeParamSub: Subscription;
   private projectId: string;
 
-  constructor(
-    private renderer: Renderer2, 
-    private route: ActivatedRoute,
-    private dialog: MdDialog,
-    private store$: Store<fromRoot.State>) {
-      const routeParam$ = this.route.params.pluck('id');
-      this.routeParamSub = routeParam$.subscribe(
-        (id:string) => {
-          this.projectId = id;
-        });
-      this.lists$ = this.store$.select(fromRoot.getProjectTaskList);
-      this.loading$ = this.store$.select(fromRoot.getTaskLoading);
+  constructor(private renderer: Renderer2,
+              private route: ActivatedRoute,
+              private dialog: MdDialog,
+              private store$: Store<fromRoot.State>) {
+    const routeParam$ = this.route.params.pluck('id');
+    this.routeParamSub = routeParam$.subscribe(
+      (id: string) => {
+        this.projectId = id;
+      });
+    this.lists$ = this.store$.select(fromRoot.getProjectTaskList);
+    this.loading$ = this.store$.select(fromRoot.getTaskLoading);
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     // 取消订阅以免内存泄露
-    if(this.routeParamSub)
+    if (this.routeParamSub) {
       this.routeParamSub.unsubscribe();
+    }
   }
 
-  handleRenameList(list: TaskList){
-    this.dialog.open(NewTaskListComponent, {data: {
-      taskList: Object.assign({}, list)
-    }})
-  }
-
-  handleNewTaskList(ev: Event){
-    ev.preventDefault();
-    this.dialog.open(NewTaskListComponent, {data:{
-      taskList: {
-        projectId: this.projectId
+  handleRenameList(list: TaskList) {
+    this.dialog.open(NewTaskListComponent, {
+      data: {
+        taskList: Object.assign({}, list)
       }
-    }});
+    });
   }
 
-  handleMoveList(listId: string){
-    this.dialog.open(CopyTaskComponent, {data: {
-      srcListId: listId
-    }});
+  handleNewTaskList(ev: Event) {
+    ev.preventDefault();
+    this.dialog.open(NewTaskListComponent, {
+      data: {
+        taskList: {
+          projectId: this.projectId
+        }
+      }
+    });
   }
 
-  handleDelList(list: TaskList){
-    this.store$.dispatch(new listActions.DeleteTaskListAction(list))
+  handleMoveList(listId: string) {
+    this.dialog.open(CopyTaskComponent, {
+      data: {
+        srcListId: listId
+      }
+    });
   }
 
-  handleMoveTask({taskId, taskListId}){
+  handleDelList(list: TaskList) {
+    this.store$.dispatch(new listActions.DeleteTaskListAction(list));
+  }
+
+  handleMoveTask({taskId, taskListId}) {
     this.store$.dispatch(new taskActions.MoveTaskAction({taskId, taskListId}));
   }
 
-  handleCompleteTask(task: Task){
+  handleCompleteTask(task: Task) {
     this.store$.dispatch(new taskActions.CompleteTaskAction(task));
   }
 
-  tasksByList(listId:string){
+  tasksByList(listId: string) {
     return this.store$
       .select(fromRoot.getTasksWithOwner)
       .map(tasks => tasks.filter(task => task.taskListId === listId));
   }
 
-  onDragOver(e){
+  onDragOver(e) {
     e.preventDefault();
     this.draggingStatus = 'enter';
   }
 
-  onDrop(taskListId){
+  onDrop(taskListId) {
     this.draggingStatus = 'drop';
-    if(this.dragTaskId){
-      this.store$.dispatch(new taskActions.MoveTaskAction({taskId: this.dragTaskId, taskListId: taskListId}))
+    if (this.dragTaskId) {
+      this.store$.dispatch(new taskActions.MoveTaskAction({taskId: this.dragTaskId, taskListId: taskListId}));
     }
   }
 
-  onDragEnter(e){
+  onDragEnter(e) {
     this.draggingStatus = 'enter';
   }
 
-  onDragLeave(e){
+  onDragLeave(e) {
     this.draggingStatus = 'leave';
   }
 
-  handleDragTask(taskId){
+  handleDragTask(taskId) {
     this.dragTaskId = taskId;
   }
 
-  handleAddTask(listId: string){
-    this.dialog.open(NewTaskComponent, {data: {
-      taskListId: listId
-    }});
+  handleAddTask(listId: string) {
+    this.dialog.open(NewTaskComponent, {
+      data: {
+        taskListId: listId
+      }
+    });
   }
 
-  handleUpdateTask(task: Task){
-    this.dialog.open(NewTaskComponent, {data: {
-      task: task
-    }})
+  handleUpdateTask(task: Task) {
+    this.dialog.open(NewTaskComponent, {
+      data: {
+        task: task
+      }
+    });
   }
 }

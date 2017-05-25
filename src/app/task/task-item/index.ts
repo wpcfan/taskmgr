@@ -1,13 +1,5 @@
-import { 
-  Component, 
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-  HostListener,
-  OnInit
-} from '@angular/core';
-import { Task } from '../../domain';
+import {ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
+import {Task} from '../../domain';
 
 @Component({
   selector: 'app-task-item',
@@ -15,45 +7,47 @@ import { Task } from '../../domain';
   styleUrls: ['./task-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskItemComponent implements OnInit{
+export class TaskItemComponent implements OnInit {
   @Output() taskComplete = new EventEmitter<Task>();
   @Output() taskClick = new EventEmitter<string>();
   @Output() draggingTaskId = new EventEmitter<string>();
   @Input() item: Task;
   avatar: string;
   draggingStatus: string;
-  widerPriority: boolean = false;
-  constructor() { }
+  widerPriority = false;
 
-  ngOnInit(){
+  constructor() {
+  }
+
+  ngOnInit() {
     this.avatar = (this.item.owner) ? this.item.owner.avatar : '/assets/img/avatar/unassigned.svg';
   }
 
-  checkboxChanged(){
+  checkboxChanged() {
     this.taskComplete.emit(this.item);
   }
 
-  itemClicked(ev: Event){
+  itemClicked(ev: Event) {
     ev.preventDefault();
     this.taskClick.emit(this.item.id);
   }
 
   @HostListener('mouseenter')
-  handleMouseEnter(){
+  handleMouseEnter() {
     this.widerPriority = true;
   }
 
   @HostListener('mouseleave')
-  handleMouseLeave(){
+  handleMouseLeave() {
     this.widerPriority = false;
   }
-  
-  onDragStart(e){
+
+  onDragStart(e) {
     this.draggingStatus = 'start';
     this.draggingTaskId.emit(this.item.id);
   }
 
-  onDragEnd(e){
+  onDragEnd(e) {
     this.draggingStatus = 'end';
   }
 }

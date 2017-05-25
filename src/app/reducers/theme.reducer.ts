@@ -8,9 +8,9 @@ export const initialState: State = {
   darkmode: false
 };
 
-export function reducer(state = initialState, action: actions.Actions ): State {
+export function reducer(state = initialState, action: actions.Actions): State {
   switch (action.type) {
-    case actions.ActionTypes.SWITCH_THEME:{
+    case actions.ActionTypes.SWITCH_THEME: {
       return Object.assign({}, state, {darkmode: action.payload});
     }
     default: {

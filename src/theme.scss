@@ -8,10 +8,10 @@
 // 使用在 palette.scss 中定义的 Material Design 调色板来定义我们自有主题的调色板
 // 对于每个调色板，你可以指定默认、轻柔或更重的色调
 $my-app-primary: mat-palette($mat-indigo);
-$my-app-accent:  mat-palette($mat-pink, A200, A100, A400);
+$my-app-accent: mat-palette($mat-pink, A200, A100, A400);
 
 // 警告的调色板此处定义其实是不必要的，因为默认就是红色，但列在这里便于以后的自定义。
-$my-app-warn:    mat-palette($mat-red);
+$my-app-warn: mat-palette($mat-red);
 
 // 创建一个主题对象 (包含所有自定义的调色板).
 $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
@@ -42,10 +42,10 @@ $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
 
 // 提供一个深色主题
 $dark-primary: mat-palette($mat-blue-grey);
-$dark-accent:  mat-palette($mat-amber, A200, A100, A400);
-$dark-warn:    mat-palette($mat-deep-orange);
+$dark-accent: mat-palette($mat-amber, A200, A100, A400);
+$dark-warn: mat-palette($mat-deep-orange);
 // 这句是关键，Material 主题分为 light 和 dark 两种
-$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
 // 将深色主题包含在一个 css 类中，这样任何组件如果包含在一个应用此类的元素中
 // 该组件就会应用这个主题风格

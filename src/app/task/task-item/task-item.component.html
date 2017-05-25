@@ -1,4 +1,4 @@
-<md-list-item 
+<md-list-item
   class="container"
   draggable="true"
   (dragend)="onDragEnd($event)"
@@ -9,25 +9,25 @@
     'priority-emergency': item.priority === 1,
     'drag-start': draggingStatus === 'start',
     'drag-end': draggingStatus === 'end'}">
- 
-    <div md-line class="content">
-      <div class="main">
-        <md-checkbox [checked]="item.completed" (change)="checkboxChanged()">
-        </md-checkbox>
-        <span (click)="itemClicked($event)" class="desc" [ngClass]="{'completed': item.completed}">
+
+  <div md-line class="content">
+    <div class="main">
+      <md-checkbox [checked]="item.completed" (change)="checkboxChanged()">
+      </md-checkbox>
+      <span (click)="itemClicked($event)" class="desc" [ngClass]="{'completed': item.completed}">
           {{item.desc}}
         </span>
-      </div>
     </div>
-    <div md-line class="bottom-bar" (click)="itemClicked($event)"> 
-      <span class="duedate" *ngIf="item.dueDate">{{item.dueDate | date:"yy-MM-dd"}}</span>
-      <md-icon *ngIf="item.reminder" class="alarm">alarm</md-icon> 
-    </div>
-    <img 
-      class="avatar-right" 
-      md-list-avatar 
-      [src]="avatar" 
-      alt="text"
-      (click)="itemClicked($event)">
+  </div>
+  <div md-line class="bottom-bar" (click)="itemClicked($event)">
+    <span class="duedate" *ngIf="item.dueDate">{{item.dueDate | date:"yy-MM-dd"}}</span>
+    <md-icon *ngIf="item.reminder" class="alarm">alarm</md-icon>
+  </div>
+  <img
+    class="avatar-right"
+    md-list-avatar
+    [src]="avatar"
+    alt="text"
+    (click)="itemClicked($event)">
 
 </md-list-item>

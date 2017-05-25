@@ -1,12 +1,12 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { MdDialog } from '@angular/material';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {MdDialog} from '@angular/material';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
 import * as fromRoot from '../../reducers';
 import * as models from '../../domain';
 import * as actions from '../../actions/project.action';
-import { NewProjectComponent } from '../new-project';
-import { dropFromTopAnim } from '../../anim';
+import {NewProjectComponent} from '../new-project';
+import {dropFromTopAnim} from '../../anim';
 
 @Component({
   selector: 'app-project-list',
@@ -16,21 +16,20 @@ import { dropFromTopAnim } from '../../anim';
   animations: [dropFromTopAnim]
 })
 export class ProjectListComponent {
-  
+
   projects$: Observable<models.Project[]>;
 
-  constructor(
-    private store$: Store<fromRoot.State>,
-    private dialog: MdDialog) { 
+  constructor(private store$: Store<fromRoot.State>,
+              private dialog: MdDialog) {
     this.store$.dispatch(new actions.LoadProjectsAction({}));
     this.projects$ = this.store$.select(fromRoot.getProjects);
   }
 
-  selectProject(project: models.Project){
+  selectProject(project: models.Project) {
     this.store$.dispatch(new actions.SelectProjectAction(project));
   }
 
-  openNewProjectDialog(){
-    this.dialog.open(NewProjectComponent, {data:{}});
+  openNewProjectDialog() {
+    this.dialog.open(NewProjectComponent, {data: {}});
   }
 }

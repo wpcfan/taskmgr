@@ -1,11 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { StoreModule } from '@ngrx/store';
-import { reducer } from '../../reducers';
-import {
-  MdSlideToggleModule,
-  MdToolbarModule,
-} from '@angular/material';
-import { HeaderComponent } from './';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {StoreModule} from '@ngrx/store';
+import {reducer} from '../../reducers';
+import {MdSlideToggleModule, MdToolbarModule} from '@angular/material';
+import {HeaderComponent} from './';
 
 describe('测试顶部组件：HeaderComponent', () => {
   let component: HeaderComponent;
@@ -13,14 +10,14 @@ describe('测试顶部组件：HeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ],
+      declarations: [HeaderComponent],
       imports: [
         StoreModule.provideStore(reducer),
         MdToolbarModule,
         MdSlideToggleModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

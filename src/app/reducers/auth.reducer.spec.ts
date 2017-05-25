@@ -1,7 +1,7 @@
-import { reducer } from './auth.reducer';
 import * as fromAuth from './auth.reducer';
+import {reducer} from './auth.reducer';
 import * as actions from '../actions/auth.action';
-import { async } from '@angular/core/testing';
+import {async} from '@angular/core/testing';
 
 describe('测试 AuthReducer', () => {
   describe('未定义Action', () => {

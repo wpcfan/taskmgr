@@ -1,4 +1,4 @@
-import { trigger, state, animate, transition, style, group } from '@angular/animations';
+import {animate, group, state, style, transition, trigger} from '@angular/animations';
 
 export const foldAnim = trigger('fold', [
   state('in', style({transform: 'translateX(0)', opacity: 1})),
@@ -6,7 +6,7 @@ export const foldAnim = trigger('fold', [
     transform: 'scale(1)',
     'box-shadow': 'none'
   })),
-  state('hover',   style({
+  state('hover', style({
     transform: 'scale(1.1)',
     'box-shadow': '3px 3px 5px 6px #ccc'
   })),

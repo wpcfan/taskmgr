@@ -1,32 +1,32 @@
-import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { 
-  MdInputModule, 
-  MdSelectModule, 
+import {NgModule} from '@angular/core';
+import {ReactiveFormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {
+  MdAutocompleteModule,
+  MdButtonModule,
   MdButtonToggleModule,
   MdCardModule,
-  MdButtonModule,
-  MdDialogModule,
-  MdMenuModule,
-  MdIconModule,
-  MdGridListModule,
-  MdListModule,
-  MdProgressBarModule,
   MdCheckboxModule,
   MdChipsModule,
   MdDatepickerModule,
+  MdDialogModule,
+  MdGridListModule,
+  MdIconModule,
+  MdInputModule,
+  MdListModule,
+  MdMenuModule,
   MdNativeDateModule,
+  MdProgressBarModule,
   MdRadioModule,
-  MdAutocompleteModule,
-  MdSidenavModule, 
-  MdToolbarModule, 
-  MdSlideToggleModule
+  MdSelectModule,
+  MdSidenavModule,
+  MdSlideToggleModule,
+  MdToolbarModule
 } from '@angular/material';
-import { ConfirmDialogComponent } from './confirm-dialog';
-import { ImageListSelectComponent } from './image-list-select';
-import { ChipsListComponent } from './chips-list';
-import { InitialsPipe } from './initials.pipe';
+import {ConfirmDialogComponent} from './confirm-dialog';
+import {ImageListSelectComponent} from './image-list-select';
+import {ChipsListComponent} from './chips-list';
+import {InitialsPipe} from './initials.pipe';
 
 @NgModule({
   imports: [
@@ -49,8 +49,8 @@ import { InitialsPipe } from './initials.pipe';
     MdNativeDateModule,
     MdRadioModule,
     MdAutocompleteModule,
-    MdSidenavModule, 
-    MdToolbarModule, 
+    MdSidenavModule,
+    MdToolbarModule,
     MdSlideToggleModule,
   ],
   exports: [
@@ -73,23 +73,24 @@ import { InitialsPipe } from './initials.pipe';
     MdNativeDateModule,
     MdRadioModule,
     MdAutocompleteModule,
-    MdSidenavModule, 
-    MdToolbarModule, 
+    MdSidenavModule,
+    MdToolbarModule,
     MdSlideToggleModule,
     ConfirmDialogComponent,
     ImageListSelectComponent,
     ChipsListComponent
   ],
   declarations: [
-    ConfirmDialogComponent, 
+    ConfirmDialogComponent,
     ImageListSelectComponent,
     ChipsListComponent,
     InitialsPipe,
-    ],
+  ],
   entryComponents: [
     ConfirmDialogComponent
-    ]
+  ]
 })
-export class SharedModule { }
+export class SharedModule {
+}
 
-export { ConfirmDialogComponent }
+export {ConfirmDialogComponent}

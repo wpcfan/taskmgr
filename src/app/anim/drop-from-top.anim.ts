@@ -1,4 +1,4 @@
-import { trigger, state, animate, transition, style } from '@angular/animations';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 export const dropFromTopAnim = trigger('dropFromTop', [
   state('in', style({transform: 'translateX(0)', opacity: 1})),

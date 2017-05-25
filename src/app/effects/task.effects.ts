@@ -1,29 +1,19 @@
-import { Injectable } from '@angular/core';
-import { Effect, Actions, toPayload } from '@ngrx/effects';
-import { Action, Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import {Injectable} from '@angular/core';
+import {Actions, Effect, toPayload} from '@ngrx/effects';
+import {Action, Store} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
+import {of} from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/withLatestFrom';
 import 'rxjs/add/observable/zip';
-import { TaskService } from '../services';
+import {TaskService} from '../services';
 import * as actions from '../actions/task.action';
 import * as fromRoot from '../reducers';
-import { Task } from '../domain';
+import {Task} from '../domain';
 
 @Injectable()
-export class TaskEffects{
-  /**
-   * 任务的 Effects
-   * @param actions$ 注入 action 数据流
-   * @param service$ 注入任务服务
-   * @param store$ 注入 redux store
-   */
-  constructor(
-    private actions$: Actions,
-    private service$: TaskService,
-    private store$: Store<fromRoot.State>) { }
+export class TaskEffects {
   /**
    *
    */
@@ -32,11 +22,11 @@ export class TaskEffects{
     .ofType(actions.ActionTypes.LOAD)
     .map(toPayload)
     .mergeMap((taskListId) => {
-      return this.service$
-        .get(taskListId)
-        .map(tasks => new actions.LoadTasksSuccessAction(tasks))
-        .catch(err => of(new actions.LoadTasksFailAction(JSON.stringify(err))))
-    }
+        return this.service$
+          .get(taskListId)
+          .map(tasks => new actions.LoadTasksSuccessAction(tasks))
+          .catch(err => of(new actions.LoadTasksFailAction(JSON.stringify(err))));
+      }
     );
 
   @Effect()
@@ -44,10 +34,10 @@ export class TaskEffects{
     .ofType(actions.ActionTypes.ADD)
     .map(toPayload)
     .switchMap((task) => {
-      return this.service$
-        .add(task)
-        .map(task => new actions.AddTaskSuccessAction(task))
-        .catch(err => of(new actions.AddTaskFailAction(JSON.stringify(err))))
+        return this.service$
+          .add(task)
+          .map(t => new actions.AddTaskSuccessAction(t))
+          .catch(err => of(new actions.AddTaskFailAction(JSON.stringify(err))));
       }
     );
 
@@ -57,7 +47,7 @@ export class TaskEffects{
     .map(toPayload)
     .switchMap(task => this.service$
       .update(task)
-      .map(task => new actions.UpdateTaskSuccessAction(task))
+      .map(t => new actions.UpdateTaskSuccessAction(t))
       .catch(err => of(new actions.UpdateTaskFailAction(JSON.stringify(err))))
     );
 
@@ -67,7 +57,7 @@ export class TaskEffects{
     .map(toPayload)
     .switchMap(task => this.service$
       .del(task)
-      .map(task => new actions.DeleteTaskSuccessAction(task))
+      .map(t => new actions.DeleteTaskSuccessAction(t))
       .catch(err => of(new actions.DeleteTaskFailAction(JSON.stringify(err))))
     );
 
@@ -77,7 +67,7 @@ export class TaskEffects{
     .map(toPayload)
     .switchMap(task => this.service$
       .complete(task)
-      .map(task => new actions.CompleteTaskSuccessAction(task))
+      .map(t => new actions.CompleteTaskSuccessAction(t))
       .catch(err => of(new actions.CompleteTaskFailAction(JSON.stringify(err))))
     );
 
@@ -96,8 +86,18 @@ export class TaskEffects{
     .ofType(actions.ActionTypes.MOVE_ALL)
     .map(toPayload)
     .switchMap(({srcListId, targetListId}) => this.store$
-          .select(fromRoot.getTasks)
-          .switchMap((tasks: Task[]) => Observable.from(tasks.filter(task => task.taskListId === srcListId)))
-          .map(task => new actions.MoveTaskAction({taskId: task.id, taskListId: targetListId}))
+      .select(fromRoot.getTasks)
+      .switchMap((tasks: Task[]) => Observable.from(tasks.filter(task => task.taskListId === srcListId)))
+      .map(task => new actions.MoveTaskAction({taskId: task.id, taskListId: targetListId}))
     );
+
+  /**
+   * 任务的 Effects
+   * @param actions$ 注入 action 数据流
+   * @param service$ 注入任务服务
+   * @param store$ 注入 redux store
+   */
+  constructor(private actions$: Actions,
+              private service$: TaskService,
+              private store$: Store<fromRoot.State>) {}
 }

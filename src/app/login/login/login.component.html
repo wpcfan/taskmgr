@@ -19,12 +19,12 @@
   </md-card>
   <md-card class="card">
     <md-card-header>
-      <md-card-title> 佳句 </md-card-title>
+      <md-card-title> 佳句</md-card-title>
       <md-card-subtitle>
         {{(quote$|async).cn}}
       </md-card-subtitle>
     </md-card-header>
-    <img md-card-image [src]="(quote$|async).pic" >
+    <img md-card-image [src]="(quote$|async).pic">
     <md-card-content>
       <p> {{(quote$|async).en}}</p>
     </md-card-content>

@@ -1,5 +1,4 @@
 
-
 .scroll-container {
   overflow-y: scroll;
   height: 200px;
@@ -9,7 +8,11 @@
   position: relative;
   display: inline-block;
 }
-.image-container img {display: block;}
+
+.image-container img {
+  display: block;
+}
+
 .image-container .after {
   position: absolute;
   top: 0;
@@ -19,6 +22,7 @@
   display: none;
   color: #FFF;
 }
+
 .image-container:hover .after {
   display: block;
   background: rgba(0, 0, 0, .6);
@@ -35,6 +39,7 @@
   width: 45px;
   cursor: pointer;
 }
+
 .image-container .after .zoom:hover {
   color: #FFF;
 }

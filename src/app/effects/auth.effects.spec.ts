@@ -1,10 +1,10 @@
-import { EffectsTestingModule, EffectsRunner } from '@ngrx/effects/testing';
+import {EffectsRunner, EffectsTestingModule} from '@ngrx/effects/testing';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
-import { Observable } from "rxjs/Observable";
-import { TestBed, fakeAsync } from '@angular/core/testing';
-import { AuthEffects } from './auth.effects';
-import { AuthService } from "../services/auth.service";
+import {Observable} from 'rxjs/Observable';
+import {fakeAsync, TestBed} from '@angular/core/testing';
+import {AuthEffects} from './auth.effects';
+import {AuthService} from '../services/auth.service';
 import * as actions from '../actions/auth.action';
 
 describe('测试 AuthEffects', () => {
@@ -21,13 +21,14 @@ describe('测试 AuthEffects', () => {
     ]
   }));
 
-  function setup(methodName: string,params?: {returnedAuth: any}) {
+  function setup(methodName: string, params?: { returnedAuth: any }) {
     const authService = TestBed.get(AuthService);
     if (params) {
-      if(methodName === 'login')
+      if (methodName === 'login') {
         authService.login.and.returnValue(params.returnedAuth);
-      else
+      } else {
         authService.register.and.returnValue(params.returnedAuth);
+      }
     }
 
     return {

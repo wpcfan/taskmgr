@@ -1,11 +1,11 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from '@angular/router';
-import { TaskHomeComponent } from "./task-home";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {TaskHomeComponent} from './task-home';
 
 const routes: Routes = [
-  { 
-    path: '', 
-    component: TaskHomeComponent, 
+  {
+    path: '',
+    component: TaskHomeComponent,
   }
 ];
 
@@ -13,4 +13,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TaskRoutingModule {}
+export class TaskRoutingModule {
+}

@@ -1,31 +1,24 @@
-import { Injectable } from '@angular/core';
-import { Effect, Actions, toPayload } from '@ngrx/effects';
-import { Action, Store } from '@ngrx/store';
-import { go } from '@ngrx/router-store';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import {Injectable} from '@angular/core';
+import {Actions, Effect, toPayload} from '@ngrx/effects';
+import {Action, Store} from '@ngrx/store';
+import {go} from '@ngrx/router-store';
+import {Observable} from 'rxjs/Observable';
+import {of} from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/withLatestFrom';
 import 'rxjs/add/operator/debounceTime';
-import { ProjectService } from '../services';
+import {ProjectService} from '../services';
 import * as actions from '../actions/project.action';
 import * as tasklistActions from '../actions/task-list.action';
 import * as userActions from '../actions/user.action';
 import * as fromRoot from '../reducers';
-import { Project, TaskList } from '../domain';
+import {Project, TaskList} from '../domain';
 
 @Injectable()
-export class ProjectEffects{
-  /**
-   *
-   * @param actions$
-   * @param todoService
-   */
-  constructor(
-    private actions$: Actions,
-    private service: ProjectService,
-    private store$: Store<fromRoot.State>) { }
+export class ProjectEffects {
+
+
   /**
    *
    */
@@ -46,11 +39,11 @@ export class ProjectEffects{
     .map(toPayload)
     .withLatestFrom(this.store$.select(fromRoot.getAuth))
     .switchMap(([project, auth]) => {
-      const added = Object.assign({}, project, {members: [`${auth.user.id}`]});
-      return this.service
-        .add(added)
-        .map(project => new actions.AddProjectSuccessAction(project))
-        .catch(err => of(new actions.AddProjectFailAction(JSON.stringify(err))))
+        const added = Object.assign({}, project, {members: [`${auth.user.id}`]});
+        return this.service
+          .add(added)
+          .map(returned => new actions.AddProjectSuccessAction(returned))
+          .catch(err => of(new actions.AddProjectFailAction(JSON.stringify(err))));
       }
     );
 
@@ -60,7 +53,7 @@ export class ProjectEffects{
     .map(toPayload)
     .switchMap(project => this.service
       .update(project)
-      .map(project => new actions.UpdateProjectSuccessAction(project))
+      .map(returned => new actions.UpdateProjectSuccessAction(returned))
       .catch(err => of(new actions.UpdateProjectFailAction(JSON.stringify(err))))
     );
 
@@ -70,7 +63,7 @@ export class ProjectEffects{
     .map(toPayload)
     .switchMap(project => this.service
       .del(project)
-      .map(project => new actions.DeleteProjectSuccessAction(project))
+      .map(returned => new actions.DeleteProjectSuccessAction(returned))
       .catch(err => of(new actions.DeleteProjectFailAction(JSON.stringify(err))))
     );
 
@@ -82,7 +75,7 @@ export class ProjectEffects{
       .select(fromRoot.getProjectTaskList)
       .switchMap(lists => Observable.from(lists))
       .map((taskList: TaskList) => new tasklistActions.DeleteTaskListAction(taskList))
-      );
+    );
 
   @Effect()
   selectProject$: Observable<Action> = this.actions$
@@ -114,7 +107,7 @@ export class ProjectEffects{
     .map(toPayload)
     .map((prj: Project) => prj.id)
     .withLatestFrom(this.store$.select(fromRoot.getAuth).map(auth => auth.user), (projectId, user) => {
-      return new userActions.AddUserProjectAction({user: user, projectId: projectId})
+      return new userActions.AddUserProjectAction({user: user, projectId: projectId});
     });
 
   @Effect()
@@ -123,6 +116,15 @@ export class ProjectEffects{
     .map(toPayload)
     .map((prj: Project) => prj.id)
     .withLatestFrom(this.store$.select(fromRoot.getAuth).map(auth => auth.user), (projectId, user) => {
-      return new userActions.RemoveUserProjectAction({user: user, projectId: projectId})
+      return new userActions.RemoveUserProjectAction({user: user, projectId: projectId});
     });
+
+  /**
+   *
+   * @param actions$
+   * @param todoService
+   */
+  constructor(private actions$: Actions,
+              private service: ProjectService,
+              private store$: Store<fromRoot.State>) {}
 }

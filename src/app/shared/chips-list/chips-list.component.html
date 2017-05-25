@@ -1,5 +1,6 @@
 <md-chip-list>
   <md-chip color="primary" *ngFor="let item of items; let i = index">
-    {{item.name}} <md-icon (click)="removeChip($event, i)">cancel</md-icon>
+    {{item.name}}
+    <md-icon (click)="removeChip($event, i)">cancel</md-icon>
   </md-chip>
 </md-chip-list>

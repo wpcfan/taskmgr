@@ -1,31 +1,4 @@
-import { NgModule } from '@angular/core';
-import { StoreModule } from '@ngrx/store';
-import { RouterStoreModule } from '@ngrx/router-store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { createSelector } from 'reselect';
-import { ActionReducer } from '@ngrx/store';
-import * as fromRouter from '@ngrx/router-store';
-import { environment } from '../../environments/environment';
-import { Auth } from '../domain';
-import * as authActions from "../actions/auth.action";
-
-/**
- * The compose function is one of our most handy tools. In basic terms, you give
- * it any number of functions and it returns a function. This new function
- * takes a value and chains it through every composed function, returning
- * the output.
- *
- * More: https://drboolean.gitbooks.io/mostly-adequate-guide/content/ch5.html
- */
-import { compose } from '@ngrx/core/compose';
-
-/**
- * storeFreeze prevents state from being mutated. When mutation occurs, an
- * exception will be thrown. This is useful during development mode to
- * ensure that none of the reducers accidentally mutates the state.
- */
-import { storeFreeze } from 'ngrx-store-freeze';
-
+import {NgModule} from '@angular/core';
 /**
  * combineReducers is another useful metareducer that takes a map of reducer
  * functions and creates a new reducer that gathers the values
@@ -34,8 +7,29 @@ import { storeFreeze } from 'ngrx-store-freeze';
  *
  * More: https://egghead.io/lessons/javascript-redux-implementing-combinereducers-from-scratch
  */
-import { combineReducers } from '@ngrx/store';
-
+import {ActionReducer, combineReducers, StoreModule} from '@ngrx/store';
+import * as fromRouter from '@ngrx/router-store';
+import {RouterStoreModule} from '@ngrx/router-store';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {createSelector} from 'reselect';
+import {environment} from '../../environments/environment';
+import {Auth} from '../domain';
+import * as authActions from '../actions/auth.action';
+/**
+ * The compose function is one of our most handy tools. In basic terms, you give
+ * it any number of functions and it returns a function. This new function
+ * takes a value and chains it through every composed function, returning
+ * the output.
+ *
+ * More: https://drboolean.gitbooks.io/mostly-adequate-guide/content/ch5.html
+ */
+import {compose} from '@ngrx/core/compose';
+/**
+ * storeFreeze prevents state from being mutated. When mutation occurs, an
+ * exception will be thrown. This is useful during development mode to
+ * ensure that none of the reducers accidentally mutates the state.
+ */
+import {storeFreeze} from 'ngrx-store-freeze';
 /**
  * Every reducer module's default export is the reducer function itself. In
  * addition, each module should export a type or interface that describes
@@ -95,11 +89,12 @@ const initState = {
   users: fromUsers.initialState,
   theme: fromTheme.initialState,
   router: fromRouter.initialState
-}
+};
 
 export function reducer(state: any, action: any) {
-  if(action.type === authActions.ActionTypes.LOGOUT)
+  if (action.type === authActions.ActionTypes.LOGOUT) {
     return initState;
+  }
   if (environment.production) {
     return productionReducer(state, action);
   } else {
@@ -125,7 +120,7 @@ export const getTaskLists = createSelector(getTaskListsState, fromTaskLists.getT
 export const getTaskListEntities = createSelector(getTaskListsState, fromTaskLists.getEntities);
 export const getTaskListIds = createSelector(getTaskListsState, fromTaskLists.getIds);
 export const getSelectedProjectId = createSelector(getProjectsState, fromProjects.getSelectedId);
-export const getSelectedProject = createSelector(getProjectEntities, getSelectedProjectId, (entities, id)=>{
+export const getSelectedProject = createSelector(getProjectEntities, getSelectedProjectId, (entities, id) => {
   return entities[id];
 });
 export const getProjectTaskList = createSelector(getSelectedProjectId, getTaskLists, (projectId, taskLists) => {
@@ -143,7 +138,7 @@ export const getTasksWithOwner = createSelector(getTasks, getUserEntities, (task
     const owner = entities[task.ownerId];
     const participants = task.participantIds.map(id => entities[id]);
     return Object.assign({}, task, {owner: owner}, {participants: [...participants]});
-  })
+  });
 });
 export const getTheme = createSelector(getThemeState, fromTheme.getTheme);
 
@@ -164,4 +159,5 @@ export const getTheme = createSelector(getThemeState, fromTheme.getTheme);
     })
   ]
 })
-export class AppStoreModule {}
+export class AppStoreModule {
+}

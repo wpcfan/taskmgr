@@ -23,14 +23,14 @@ export interface User {
   taskIds?: string[];
 }
 
-export interface Quote{
+export interface Quote {
   id?: string;
   cn: string;
   en: string;
   pic: string;
 }
 
-export interface Task{
+export interface Task {
   id?: string;
   taskListId: string;
   desc: string;
@@ -48,7 +48,7 @@ export interface Task{
   createDate?: Date;
 }
 
-export interface TaskList{
+export interface TaskList {
   id?: string;
   name: string;
   projectId: string;
@@ -56,7 +56,7 @@ export interface TaskList{
   taskIds?: string[];
 }
 
-export interface Project{
+export interface Project {
   id?: string;
   name: string;
   desc?: string;

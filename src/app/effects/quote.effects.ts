@@ -1,23 +1,16 @@
-import { Injectable } from '@angular/core';
-import { Effect, Actions, toPayload } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import {Injectable} from '@angular/core';
+import {Actions, Effect, toPayload} from '@ngrx/effects';
+import {Action} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
+import {of} from 'rxjs/observable/of';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/filter';
 
-import { QuoteService } from '../services';
+import {QuoteService} from '../services';
 import * as actions from '../actions/quote.action';
 
 @Injectable()
-export class QuoteEffects{
-  /**
-   *
-   * @param actions$
-   * @param authService
-   */
-  constructor(private actions$: Actions, private quoteService: QuoteService) { }
-
+export class QuoteEffects {
   /**
    *
    */
@@ -31,4 +24,10 @@ export class QuoteEffects{
     .filter(m => m !== undefined)
     .map(quote => new actions.QuoteSuccessAction(quote));
 
+  /**
+   *
+   * @param actions$
+   * @param authService
+   */
+  constructor(private actions$: Actions, private quoteService: QuoteService) {}
 }

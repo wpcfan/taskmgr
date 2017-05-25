@@ -1,31 +1,21 @@
-import { Injectable } from '@angular/core';
-import { Effect, Actions, toPayload } from '@ngrx/effects';
-import { Action, Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import {Injectable} from '@angular/core';
+import {Actions, Effect, toPayload} from '@ngrx/effects';
+import {Action, Store} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
+import {of} from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/withLatestFrom';
 import 'rxjs/add/observable/zip';
-import { TaskListService } from '../services';
+import {TaskListService} from '../services';
 import * as actions from '../actions/task-list.action';
 import * as prjActions from '../actions/project.action';
 import * as taskActions from '../actions/task.action';
 import * as fromRoot from '../reducers';
-import {TaskList, Task} from '../domain';
+import {Task, TaskList} from '../domain';
 
 @Injectable()
-export class TaskListEffects{
-  /**
-   * 任务列表的 Effects
-   * @param actions$ 注入 action 数据流
-   * @param service 注入任务列表服务
-   * @param store$ 注入 redux store
-   */
-  constructor(
-    private actions$: Actions,
-    private service$: TaskListService,
-    private store$: Store<fromRoot.State>) { }
+export class TaskListEffects {
   /**
    *
    */
@@ -44,10 +34,10 @@ export class TaskListEffects{
     .ofType(actions.ActionTypes.ADD)
     .map(toPayload)
     .switchMap((taskList) => {
-      return this.service$
-        .add(taskList)
-        .map(taskList => new actions.AddTaskListSuccessAction(taskList))
-        .catch(err => of(new actions.AddTaskListFailAction(JSON.stringify(err))))
+        return this.service$
+          .add(taskList)
+          .map(tl => new actions.AddTaskListSuccessAction(tl))
+          .catch(err => of(new actions.AddTaskListFailAction(JSON.stringify(err))));
       }
     );
 
@@ -57,7 +47,7 @@ export class TaskListEffects{
     .map(toPayload)
     .switchMap(taskList => this.service$
       .update(taskList)
-      .map(taskList => new actions.UpdateTaskListSuccessAction(taskList))
+      .map(tl => new actions.UpdateTaskListSuccessAction(tl))
       .catch(err => of(new actions.UpdateTaskListFailAction(JSON.stringify(err))))
     );
 
@@ -67,7 +57,7 @@ export class TaskListEffects{
     .map(toPayload)
     .switchMap(taskList => this.service$
       .delete(taskList)
-      .map(taskList => new actions.DeleteTaskListSuccessAction(taskList))
+      .map(tl => new actions.DeleteTaskListSuccessAction(tl))
       .catch(err => of(new actions.DeleteTaskListFailAction(JSON.stringify(err))))
     );
 
@@ -89,8 +79,8 @@ export class TaskListEffects{
     .switchMap(prj => {
       return this.service$.initializeTaskLists(prj)
         .map(project => new actions.InitTaskListsSuccessAction(project))
-        .catch(err => of(new actions.InitTaskListsFailAction(JSON.stringify(err))))
-    })
+        .catch(err => of(new actions.InitTaskListsFailAction(JSON.stringify(err))));
+    });
 
   @Effect()
   updateProjectRef$: Observable<Action> = this.actions$
@@ -110,5 +100,14 @@ export class TaskListEffects{
   //     .map(_ => new actions.SwapOrderSuccessAction(true))
   //     .catch(err => of(new actions.SwapOrderFailAction(JSON.stringify(err))))
   //   })
-
+  /**
+   * 任务列表的 Effects
+   * @param actions$ 注入 action 数据流
+   * @param service 注入任务列表服务
+   * @param store$ 注入 redux store
+   */
+  constructor(private actions$: Actions,
+              private service$: TaskListService,
+              private store$: Store<fromRoot.State>) {
+  }
 }

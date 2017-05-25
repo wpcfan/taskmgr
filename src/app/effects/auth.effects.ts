@@ -1,44 +1,38 @@
-import { Injectable } from '@angular/core';
-import { Effect, Actions, toPayload } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
-import { go } from '@ngrx/router-store';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import {Injectable} from '@angular/core';
+import {Actions, Effect, toPayload} from '@ngrx/effects';
+import {Action} from '@ngrx/store';
+import {go} from '@ngrx/router-store';
+import {Observable} from 'rxjs/Observable';
+import {of} from 'rxjs/observable/of';
 import 'rxjs/add/operator/switchMap';
 
-import { AuthService } from '../services';
+import {AuthService} from '../services';
 import * as actions from '../actions/auth.action';
 
 @Injectable()
-export class AuthEffects{
-  /**
-   * 
-   * @param actions$ 
-   * @param authService 
-   */
-  constructor(private actions$: Actions, private authService: AuthService) { }
+export class AuthEffects {
 
   /**
-   * 
+   *
    */
   @Effect()
   login$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.LOGIN)
     .map(toPayload)
-    .switchMap((val:{email:string, password: string}) => this.authService
-        .login(val.email, val.password)
-        .map(auth => new actions.LoginSuccessAction(auth))
-        .catch(err => of(new actions.LoginFailAction({
-          status: 501, 
-          message: err.message,
-          exception: err.stack,
-          path: '/login',
-          timestamp: new Date()
-        })))
+    .switchMap((val: { email: string, password: string }) => this.authService
+      .login(val.email, val.password)
+      .map(auth => new actions.LoginSuccessAction(auth))
+      .catch(err => of(new actions.LoginFailAction({
+        status: 501,
+        message: err.message,
+        exception: err.stack,
+        path: '/login',
+        timestamp: new Date()
+      })))
     );
 
   /**
-   * 
+   *
    */
   @Effect()
   register$: Observable<Action> = this.actions$
@@ -59,10 +53,15 @@ export class AuthEffects{
   registerAndHome$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.REGISTER_SUCCESS)
     .map(() => go(['/projects']));
-  
+
   @Effect()
   logout$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.LOGOUT)
     .map(() => go(['/']));
-
+  /**
+   *
+   * @param actions$
+   * @param authService
+   */
+  constructor(private actions$: Actions, private authService: AuthService) {}
 }

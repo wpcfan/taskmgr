@@ -1,18 +1,18 @@
-.drag-enter{
+.drag-enter {
   background-color: dimgray;
 }
 
-.drag-leave{
+.drag-leave {
   background-color: inherit;
 }
 
-.drop{
+.drop {
   background-color: inherit;
 }
 
 .list-container {
   flex: 0 0 360px;
-  overflow-y: scroll; 
+  overflow-y: scroll;
   overflow-x: hidden;
 }
 
@@ -25,7 +25,7 @@
   overflow-x: scroll;
 }
 
-.fab-button{
+.fab-button {
   position: fixed;
   right: 32px;
   bottom: 96px;

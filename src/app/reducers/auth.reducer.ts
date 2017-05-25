@@ -3,7 +3,7 @@ import * as actions from '../actions/auth.action';
 
 export const initialState: models.Auth = {};
 
-export function reducer (state: models.Auth = initialState, action: actions.Actions): models.Auth {
+export function reducer(state: models.Auth = initialState, action: actions.Actions): models.Auth {
   switch (action.type) {
     case actions.ActionTypes.LOGIN_SUCCESS:
       return Object.assign({}, state, action.payload);

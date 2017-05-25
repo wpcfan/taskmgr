@@ -1,25 +1,25 @@
-import { TestBed, ComponentFixture, async } from "@angular/core/testing";
-import { LoginComponent } from "./";
-import { SharedModule } from '../../shared';
-import { StoreModule } from '@ngrx/store';
-import { reducer } from '../../reducers';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {LoginComponent} from './';
+import {SharedModule} from '../../shared';
+import {StoreModule} from '@ngrx/store';
+import {reducer} from '../../reducers';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-describe('测试登录组件：LoginComponent', ()=>{
+describe('测试登录组件：LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
   // async beforeEach
-  beforeEach( async(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginComponent ],
+      declarations: [LoginComponent],
       imports: [
         SharedModule,
         StoreModule.provideStore(reducer),
         BrowserAnimationsModule
-        ]
+      ]
     })
-    .compileComponents(); // compile template and css
+      .compileComponents(); // compile template and css
   }));
 
   beforeEach(() => {
@@ -32,4 +32,4 @@ describe('测试登录组件：LoginComponent', ()=>{
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('.card md-card-header md-card-title').innerText).toContain('登录');
   });
-})
+});
