@@ -1,5 +1,6 @@
 // Import theming functions
 @import '~@angular/material/theming';
+@import 'src/theme.scss';
 
 .dialog-title {
   color: mat-color($my-app-primary);
