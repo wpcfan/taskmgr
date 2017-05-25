@@ -22,26 +22,26 @@ export function reducer(state = initialState, action: actions.Actions): State {
       if (state.ids.indexOf(taskList.id) > -1) {
         return state;
       }
-      const ids = [...state.ids, taskList.id];
-      const entities = Object.assign({}, state.entities, {[taskList.id]: taskList});
+      const newIds = [...state.ids, taskList.id];
+      const newEntities = Object.assign({}, state.entities, {[taskList.id]: taskList});
       return Object.assign({}, state, {
-        ids: ids,
-        entities: entities,
+        ids: newIds,
+        entities: newEntities,
         selectedId: [...state.selectedIds, taskList.id]
       });
     }
     case actions.ActionTypes.DELETE_SUCCESS: {
       const taskList = <TaskList>action.payload;
-      const ids = state.ids.filter(id => id !== taskList.id);
-      const entities = ids.reduce((entities: { [id: string]: TaskList }, id) => {
+      const newIds = state.ids.filter(id => id !== taskList.id);
+      const newEntities = newIds.reduce((entities: { [id: string]: TaskList }, id) => {
         return Object.assign(entities, {
           [id]: state.entities[id]
         });
       }, {});
       const selectedIds = state.selectedIds.filter(id => id !== taskList.id);
       return Object.assign({}, state, {
-        ids: ids,
-        entities: entities,
+        ids: newIds,
+        entities: newEntities,
         selectedIds: selectedIds
       });
     }
