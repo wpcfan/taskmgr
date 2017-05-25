@@ -43,6 +43,7 @@ export function reducer(state = initialState, action: actions.Actions): State {
         selectedId: project.id === state.selectedId ? null : state.selectedId
       });
     }
+    case actions.ActionTypes.UPDATE_LISTS_SUCCESS:
     case actions.ActionTypes.UPDATE_SUCCESS: {
       const project = action.payload;
       const entities = Object.assign({}, state.entities, {[project.id]: project});
@@ -75,6 +76,7 @@ export function reducer(state = initialState, action: actions.Actions): State {
     }
     case actions.ActionTypes.LOADS_FAIL:
     case actions.ActionTypes.ADD_FAIL:
+    case actions.ActionTypes.UPDATE_LISTS_FAIL:
     case actions.ActionTypes.UPDATE_FAIL:
     case actions.ActionTypes.DELETE_FAIL:
     default:

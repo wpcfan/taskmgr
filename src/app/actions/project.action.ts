@@ -9,6 +9,9 @@ export const ActionTypes = {
   UPDATE: type('[Project] Update'),
   UPDATE_SUCCESS: type('[Project] Update Success'),
   UPDATE_FAIL: type('[Project] Update Fail'),
+  UPDATE_LISTS: type('[Project] Update Lists'),
+  UPDATE_LISTS_SUCCESS: type('[Project] Update Lists Success'),
+  UPDATE_LISTS_FAIL: type('[Project] Update Lists Fail'),
   DELETE: type('[Project] Delete'),
   DELETE_SUCCESS: type('[Project] Delete Success'),
   DELETE_FAIL: type('[Project] Delete Fail'),
@@ -55,6 +58,27 @@ export class UpdateProjectSuccessAction implements Action {
 
 export class UpdateProjectFailAction implements Action {
   type = ActionTypes.UPDATE_FAIL;
+
+  constructor(public payload: Err) {
+  }
+}
+
+export class UpdateListsAction implements Action {
+  type = ActionTypes.UPDATE_LISTS;
+
+  constructor(public payload: Project) {
+  }
+}
+
+export class UpdateListsSuccessAction implements Action {
+  type = ActionTypes.UPDATE_LISTS_SUCCESS;
+
+  constructor(public payload: Project) {
+  }
+}
+
+export class UpdateListsFailAction implements Action {
+  type = ActionTypes.UPDATE_LISTS_FAIL;
 
   constructor(public payload: Err) {
   }
@@ -116,6 +140,9 @@ export type Actions
   | UpdateProjectAction
   | UpdateProjectSuccessAction
   | UpdateProjectFailAction
+  | UpdateListsAction
+  | UpdateListsSuccessAction
+  | UpdateListsFailAction
   | DeleteProjectAction
   | DeleteProjectSuccessAction
   | DeleteProjectFailAction

@@ -86,7 +86,7 @@ export class TaskListEffects {
   updateProjectRef$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.INITIALIZE_SUCCESS)
     .map(toPayload)
-    .map(prj => new prjActions.UpdateProjectAction(prj));
+    .map(prj => new prjActions.UpdateListsAction(prj));
 
   // @Effect()
   // dragDrop$: Observable<Action> = this.actions$

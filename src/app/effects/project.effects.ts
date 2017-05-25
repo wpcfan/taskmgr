@@ -56,6 +56,16 @@ export class ProjectEffects {
       .map(returned => new actions.UpdateProjectSuccessAction(returned))
       .catch(err => of(new actions.UpdateProjectFailAction(JSON.stringify(err))))
     );
+  
+  @Effect()
+  updateLists$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.UPDATE_LISTS)
+    .map(toPayload)
+    .switchMap(project => this.service
+      .updateTaskLists(project)
+      .map(returned => new actions.UpdateListsSuccessAction(returned))
+      .catch(err => of(new actions.UpdateListsFailAction(JSON.stringify(err))))
+    );
 
   @Effect()
   removeProject$: Observable<Action> = this.actions$

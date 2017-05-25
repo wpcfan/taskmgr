@@ -59,4 +59,13 @@ export class ProjectService {
       .map(res => res.json());
   }
 
+  updateTaskLists(project: Project): Observable<Project>{
+    const uri = `${this.config.uri}/${this.domain}/${project.id}`;
+    const toUpdate = {
+      taskLists: project.taskLists
+    };
+    return this.http
+      .patch(uri, JSON.stringify(toUpdate), {headers: this.headers})
+      .map(res => res.json());
+  }
 }
