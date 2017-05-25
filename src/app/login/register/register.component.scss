@@ -1,13 +1,13 @@
 .form {
   margin: 15px;
+  height: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
 .card {
-  width: 20rem;
-  flex: 1 1 auto;
+  flex: 1 1 400px;
 }
 
 .text-right {
@@ -15,7 +15,7 @@
   text-align: end;
 }
 
-.dropbox{
+.control-padding{
+  margin-top: 10px;
   padding-top: 10px;
-  padding-bottom: 10px;
 }

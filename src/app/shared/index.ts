@@ -21,7 +21,9 @@ import {
   MdSelectModule,
   MdSidenavModule,
   MdSlideToggleModule,
-  MdToolbarModule
+  MdToolbarModule,
+  MdTabsModule,
+  MdSelectionModule,
 } from '@angular/material';
 import {ConfirmDialogComponent} from './confirm-dialog';
 import {ImageListSelectComponent} from './image-list-select';
@@ -52,6 +54,8 @@ import {InitialsPipe} from './initials.pipe';
     MdSidenavModule,
     MdToolbarModule,
     MdSlideToggleModule,
+    MdTabsModule,
+    MdSelectionModule,
   ],
   exports: [
     CommonModule,
@@ -76,6 +80,8 @@ import {InitialsPipe} from './initials.pipe';
     MdSidenavModule,
     MdToolbarModule,
     MdSlideToggleModule,
+    MdTabsModule,
+    MdSelectionModule,
     ConfirmDialogComponent,
     ImageListSelectComponent,
     ChipsListComponent

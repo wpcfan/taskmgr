@@ -13,6 +13,39 @@ export interface Auth {
   token?: string;
 }
 
+export interface Address {
+  id?: number;
+  province: string;
+  city: string;
+  district: string;
+  street?: string;
+}
+
+export enum IdentityType {
+  IdCard = 0,
+  Insurance,
+  Passport,
+  DriverLicense,
+  ResidenceBooklet,
+  SpecialDistrict,
+  Military,
+  Soldier,
+  Civilian,
+  Other
+}
+
+export interface Identity {
+  identityNo: string;
+  identityType: IdentityType;
+}
+
+export interface UserProfile {
+  userId: string;
+  addrs: Address[];
+  serials: Identity[];
+  dateOfBirth: Date;
+}
+
 export interface User {
   id?: string;
   email: string;
@@ -21,6 +54,9 @@ export interface User {
   avatar?: string;
   projectIds?: string[];
   taskIds?: string[];
+  address?: Address;
+  dateOfBirth?: Date;
+  identity?: Identity;
 }
 
 export interface Quote {
