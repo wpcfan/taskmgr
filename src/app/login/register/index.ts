@@ -75,6 +75,9 @@ export class RegisterComponent implements OnInit {
         identityType: ['']
       })
     });
+  }
+
+  ngAfterViewInit() {
     // 初始化省份数组
     this.provinces = getProvinces();
     // 省份的选择变化流
@@ -106,7 +109,7 @@ export class RegisterComponent implements OnInit {
         default:
           break;
       }
-    })
+    });
   }
 
   onSubmit({value, valid}, e: Event) {
@@ -170,5 +173,13 @@ export class RegisterComponent implements OnInit {
         result = true;
     }
     return result ? null : {idNotValid:  true}
+  }
+
+  prevTab() {
+    this.selectedTab = 0;
+  }
+
+  nextTab() {
+    this.selectedTab = 1;
   }
 }
