@@ -2,12 +2,7 @@ export enum IdentityType {
   IdCard = 0,
   Insurance,
   Passport,
-  DriverLicense,
-  ResidenceBooklet,
-  SpecialDistrict,
   Military,
-  Soldier,
-  Civilian,
   Other
 }
 

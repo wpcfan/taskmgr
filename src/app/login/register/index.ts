@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -7,12 +7,10 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/combineLatest';
 import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/auth.action';
-import {
-  getProvinces,
-  getCitiesByProvince,
-  getAreasByCity
-} from '../../utils/area.util';
-import { IdentityType } from "../../domain";
+import {getProvinces, getCitiesByProvince, getAreasByCity} from '../../utils/area.util';
+import {IdentityType} from "../../domain";
+import {isValidAddr, extractInfo} from "../../utils/identity.util";
+import {isValidDate} from "../../utils/date.util";
 
 export enum AgeUnit {
   Year = 0,
@@ -27,6 +25,7 @@ export enum AgeUnit {
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  selectedTab: number = 0;
   form: FormGroup;
   avatars$: Observable<string[]>;
   provinces: string[];
@@ -41,13 +40,8 @@ export class RegisterComponent implements OnInit {
     {value: IdentityType.IdCard, label: '身份证'},
     {value: IdentityType.Insurance, label: '医保'},
     {value: IdentityType.Passport, label: '护照'},
-    {value: IdentityType.SpecialDistrict, label: '港澳通行证'},
-    {value: IdentityType.ResidenceBooklet, label: '户口簿'},
-    {value: IdentityType.DriverLicense, label: '驾照'},
     {value: IdentityType.Military, label: '军官证'},
-    {value: IdentityType.Soldier, label: '士兵证'},
-    {value: IdentityType.Civilian, label: '文职官员证'},
-    {value: IdentityType.Civilian, label: '其它'}
+    {value: IdentityType.Other, label: '其它'}
   ];
   constructor(private fb: FormBuilder,
               private store$: Store<fromRoot.State>) {
@@ -93,6 +87,26 @@ export class RegisterComponent implements OnInit {
     this.districts$ = Observable
       .combineLatest(province$, city$, (p, c) => Object.assign({}, {province: p, city: c}))
       .mergeMap(a => Observable.of(getAreasByCity(a.province, a.city)));
+    
+    const idNo$ = this.form.get('identity').valueChanges.debounceTime(300);
+    idNo$.subscribe(id => {
+      switch (id.identityType) {
+        case IdentityType.IdCard: {
+          this.form.get('identity').get('identityNo').setValidators(this.validateIdNumber);
+          break;
+        }
+        case IdentityType.Passport: {
+          this.form.get('identity').get('identityNo').setValidators(this.validatePassport);
+          break;
+        }
+        case IdentityType.Military: {
+          this.form.get('identity').get('identityNo').setValidators(this.validateMilitary);
+          break;
+        }
+        default:
+          break;
+      }
+    })
   }
 
   onSubmit({value, valid}, e: Event) {
@@ -109,4 +123,52 @@ export class RegisterComponent implements OnInit {
       }));
   }
 
+  validateIdNumber(c: FormControl): {[key: string]: any}{
+    const value = c.value;
+    if(value === undefined 
+      || value === null 
+      || value === '') return null;
+    if(value.length !== 18) return {idNotValid: true};
+    const pattern = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}[x0-9]$/;
+    let result = false;
+    if(pattern.test(value)){
+      const info = extractInfo(value);
+      if(isValidAddr(info.addrCode) && isValidDate(info.dateOfBirth)) {
+        result = true;
+      }
+    }
+    return result ? null : {idNotValid:  true}
+  }
+
+  validatePassport(c: FormControl): {[key: string]: any}{
+    const value = c.value;
+    if(value === undefined 
+      || value === null 
+      || value === '') {
+        return null;
+      }
+    if(value.length !== 18) return {idNotValid: true};
+    const pattern = /^[GgEe]\d{8}$/;
+    let result = false;
+    if(pattern.test(value)){   
+        result = true;
+    }
+    return result ? null : {idNotValid:  true}
+  }
+
+  validateMilitary(c: FormControl): {[key: string]: any}{
+    const value = c.value;
+    if(value === undefined 
+      || value === null 
+      || value === '') {
+        return null;
+      }
+    if(value.length !== 18) return {idNotValid: true};
+    const pattern = /[\u4e00-\u9fa5](字第){1}(\d{4,8})(号?)$/;
+    let result = false;
+    if(pattern.test(value)){   
+        result = true;
+    }
+    return result ? null : {idNotValid:  true}
+  }
 }

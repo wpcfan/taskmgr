@@ -1,99 +1,84 @@
-<form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)" novalidate>
-  <md-card class="card">
-    <md-card-header>
-      <md-card-title> 注册：</md-card-title>
-    </md-card-header>
-    <md-card-content>
-      <md-tab-group dynamicHeight="true">
-        <md-tab label="帐号信息">
-          <md-input-container class="full-width">
-            <input mdInput placeholder="电子邮件" formControlName="email">
-          </md-input-container>
-          <md-input-container class="full-width">
-            <input mdInput type="text" placeholder="您的名字" formControlName="name">
-          </md-input-container>
-          <md-input-container class="full-width">
-            <input mdInput type="password" placeholder="您的密码" formControlName="password">
-          </md-input-container>
-          <md-input-container class="full-width">
-            <input mdInput type="password" placeholder="为避免失误请再次输入" formControlName="repeat">
-          </md-input-container>
-          <app-image-list-select
-            cols=6
-            title="选择头像："
-            [items]="avatars$ | async"
-            formControlName="avatar">
-          </app-image-list-select>
-        </md-tab>
-        <md-tab label="个人信息">
-          <div formGroupName="identity">
-            <md-select placeholder="证件类型" formControlName="identityType" class="full-width control-padding">
-              <md-option 
-                *ngFor="let type of identityTypes" 
-                [value]="type.value">
-                {{type.label}}
-              </md-option>
-            </md-select>  
-            <md-input-container class="full-width control-padding">
-              <input mdInput 
-                formControlName="identityNo" 
-                type="text" 
-                placeholder="证件号码">
-              <md-hint 
-                class="warning">
-                身份证号不合法
-              </md-hint>
-            </md-input-container>
-          </div>
-          <md-input-container class="full-width control-padding">
-            <input mdInput formControlName="dateOfBirth" type="date" placeholder="出生日期">
-              <md-hint
-                *ngIf="form.controls['dateOfBirth'].dirty && form.controls['dateOfBirth'].hasError('dateNotValid')">
-                请输入合法的出生日期
-              </md-hint>
-          </md-input-container>
-          <div class="full-width control-padding">
-            <md-input-container>
-              <input mdInput
-                formControlName="age"
-                type="number"
-                placeholder="年龄" >
-            </md-input-container>
-            <md-button-toggle-group formControlName="ageUnit">
-              <md-button-toggle
-                *ngFor="let unit of ageUnits"
-                [value]="unit.value">
-                {{unit.label}}
-              </md-button-toggle>
-            </md-button-toggle-group>
-          </div>
-          <div formGroupName="address">
-            <md-select placeholder="请选择省份" floatPlaceholder="always" formControlName="province" class="full-width control-padding">
-              <md-option *ngFor="let p of provinces" [value]="p">
-                {{ p }}
-              </md-option>
-            </md-select>
-            <md-select placeholder="请选择城市" floatPlaceholder="always" formControlName="city" class="full-width control-padding">
-              <md-option *ngFor="let c of cities$ | async" [value]="c">
-                {{ c }}
-              </md-option>
-            </md-select>
-            <md-select placeholder="请选择区县" floatPlaceholder="always" formControlName="district" class="full-width control-padding">
-              <md-option *ngFor="let d of districts$ | async" [value]="d">
-                {{ d }}
-              </md-option>
-            </md-select>
-            <md-input-container class="full-width">
-              <input mdInput placeholder="街道地址" formControlName="street">
-            </md-input-container>
-          </div>
-        </md-tab>
-      </md-tab-group>
-      <button md-raised-button type="submit" [disabled]="!form.valid">注册</button>
-    </md-card-content>
-    <md-card-actions class="text-right">
-      <p>已有账户？ <a routerLink="/login">登录</a></p>
-      <p>忘记 <a routerLink="/forgot">密码？</a></p>
-    </md-card-actions>
-  </md-card>
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)" novalidate> 
+  <md-input-container class="full-width">
+    <input mdInput placeholder="电子邮件" formControlName="email">
+  </md-input-container>
+  <md-input-container class="full-width">
+    <input mdInput type="text" placeholder="您的名字" formControlName="name">
+  </md-input-container>
+  <md-input-container class="full-width">
+    <input mdInput type="password" placeholder="您的密码" formControlName="password">
+  </md-input-container>
+  <md-input-container class="full-width">
+    <input mdInput type="password" placeholder="为避免失误请再次输入" formControlName="repeat">
+  </md-input-container>
+  <app-image-list-select
+    class="full-width"
+    cols=6
+    title="选择头像："
+    [items]="avatars$ | async"
+    formControlName="avatar">
+  </app-image-list-select>
+  <div formGroupName="identity" class="full-width">
+    <md-select 
+      placeholder="证件类型" 
+      formControlName="identityType" 
+      class="full-width control-padding">
+      <md-option 
+        *ngFor="let type of identityTypes" 
+        [value]="type.value">
+        {{type.label}}
+      </md-option>
+    </md-select>  
+    <md-input-container class="full-width control-padding">
+      <input mdInput 
+        formControlName="identityNo" 
+        type="text" 
+        placeholder="证件号码">
+    </md-input-container>
+  </div>
+  <md-input-container class="full-width control-padding">
+    <input mdInput formControlName="dateOfBirth" type="date" placeholder="出生日期">
+      <md-hint
+        *ngIf="form.controls['dateOfBirth'].dirty && form.controls['dateOfBirth'].hasError('dateNotValid')">
+        请输入合法的出生日期
+      </md-hint>
+  </md-input-container>
+  <div class="full-width control-padding">
+    <md-input-container>
+      <input mdInput
+        formControlName="age"
+        type="number"
+        placeholder="年龄" >
+    </md-input-container>
+    <md-button-toggle-group formControlName="ageUnit">
+      <md-button-toggle
+        *ngFor="let unit of ageUnits"
+        [value]="unit.value">
+        {{unit.label}}
+      </md-button-toggle>
+    </md-button-toggle-group>
+  </div>
+  <div formGroupName="address">
+    <md-select placeholder="请选择省份" formControlName="province" class="full-width control-padding">
+      <md-option *ngFor="let p of provinces" [value]="p">
+        {{ p }}
+      </md-option>
+    </md-select>
+    <md-select placeholder="请选择城市" formControlName="city" class="full-width control-padding">
+      <md-option *ngFor="let c of cities$ | async" [value]="c">
+        {{ c }}
+      </md-option>
+    </md-select>
+    <md-select placeholder="请选择区县" formControlName="district" class="full-width control-padding">
+      <md-option *ngFor="let d of districts$ | async" [value]="d">
+        {{ d }}
+      </md-option>
+    </md-select>
+    <md-input-container class="full-width">
+      <input mdInput placeholder="街道地址" formControlName="street">
+    </md-input-container>
+  </div>
+  <button md-raised-button type="submit" [disabled]="!form.valid">注册</button>
+  <p>已有账户？ <a routerLink="/login">登录</a></p>
+  <p>忘记 <a routerLink="/forgot">密码？</a></p>
 </form>

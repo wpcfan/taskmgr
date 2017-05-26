@@ -1,13 +1,10 @@
 .form {
+  width: 600px;
   margin: 15px;
   height: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-}
-
-.card {
-  flex: 1 1 400px;
 }
 
 .text-right {
