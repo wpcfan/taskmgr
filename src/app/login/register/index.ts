@@ -75,9 +75,6 @@ export class RegisterComponent implements OnInit {
         identityType: ['']
       })
     });
-  }
-
-  ngAfterViewInit() {
     // 初始化省份数组
     this.provinces = getProvinces();
     // 省份的选择变化流
@@ -122,15 +119,15 @@ export class RegisterComponent implements OnInit {
         password: value.password,
         name: value.name,
         email: value.email,
-        avatar: value.avatar
+        avatar: value.avatar,
+        identity: value.identity,
+        address: value.address,
+        dateOfBirth: value.dateOfBirth
       }));
   }
 
-  validateIdNumber(c: FormControl): {[key: string]: any}{
+  validateIdNumber(c: FormControl): {[key: string]: any} {
     const value = c.value;
-    if(value === undefined 
-      || value === null 
-      || value === '') return null;
     if(value.length !== 18) return {idNotValid: true};
     const pattern = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}[x0-9]$/;
     let result = false;
@@ -143,14 +140,9 @@ export class RegisterComponent implements OnInit {
     return result ? null : {idNotValid:  true}
   }
 
-  validatePassport(c: FormControl): {[key: string]: any}{
+  validatePassport(c: FormControl): {[key: string]: any} {
     const value = c.value;
-    if(value === undefined 
-      || value === null 
-      || value === '') {
-        return null;
-      }
-    if(value.length !== 18) return {idNotValid: true};
+    if(value.length !== 9) return {idNotValid: true};
     const pattern = /^[GgEe]\d{8}$/;
     let result = false;
     if(pattern.test(value)){   
@@ -159,14 +151,8 @@ export class RegisterComponent implements OnInit {
     return result ? null : {idNotValid:  true}
   }
 
-  validateMilitary(c: FormControl): {[key: string]: any}{
+  validateMilitary(c: FormControl): {[key: string]: any} {
     const value = c.value;
-    if(value === undefined 
-      || value === null 
-      || value === '') {
-        return null;
-      }
-    if(value.length !== 18) return {idNotValid: true};
     const pattern = /[\u4e00-\u9fa5](字第){1}(\d{4,8})(号?)$/;
     let result = false;
     if(pattern.test(value)){   
