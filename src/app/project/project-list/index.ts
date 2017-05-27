@@ -13,7 +13,8 @@ import {dropFromTopAnim} from '../../anim';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.scss'],
-  animations: [dropFromTopAnim]
+  animations: [dropFromTopAnim],
+  host: {'[@dropFromTop]': 'in'}
 })
 export class ProjectListComponent {
 
