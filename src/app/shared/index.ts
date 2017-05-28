@@ -28,6 +28,8 @@ import {
 import {ConfirmDialogComponent} from './confirm-dialog';
 import {ImageListSelectComponent} from './image-list-select';
 import {ChipsListComponent} from './chips-list';
+import {IdentityInputComponent} from './identity-input'
+import {AreaListComponent} from './area-list';
 import {InitialsPipe} from './initials.pipe';
 
 @NgModule({
@@ -84,12 +86,16 @@ import {InitialsPipe} from './initials.pipe';
     MdSelectionModule,
     ConfirmDialogComponent,
     ImageListSelectComponent,
-    ChipsListComponent
+    ChipsListComponent,
+    IdentityInputComponent,
+    AreaListComponent,
   ],
   declarations: [
     ConfirmDialogComponent,
     ImageListSelectComponent,
     ChipsListComponent,
+    IdentityInputComponent,
+    AreaListComponent,
     InitialsPipe,
   ],
   entryComponents: [

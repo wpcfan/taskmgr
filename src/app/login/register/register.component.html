@@ -24,25 +24,8 @@
       <p>忘记 <a routerLink="/forgot">密码？</a></p>
     </md-tab>
     <md-tab label="个人信息">
-      <div formGroupName="identity" class="full-width">
-        <md-select 
-          placeholder="证件类型" 
-          formControlName="identityType" 
-          class="full-width control-padding">
-          <md-option 
-            *ngFor="let type of identityTypes" 
-            [value]="type.value">
-            {{type.label}}
-          </md-option>
-        </md-select>  
-        <md-input-container class="full-width control-padding">
-          <input mdInput 
-            formControlName="identityNo" 
-            type="text" 
-            placeholder="证件号码">
-          <md-error>证件号码输入有误</md-error>
-        </md-input-container>
-      </div>
+      <app-indentity-input formControlName="identity" class="full-width">
+      </app-indentity-input>
       <md-input-container class="full-width control-padding">
         <input mdInput formControlName="dateOfBirth" type="date" placeholder="出生日期">
           <md-hint
@@ -65,25 +48,8 @@
           </md-button-toggle>
         </md-button-toggle-group>
       </div>
-      <div formGroupName="address">
-        <md-select placeholder="请选择省份" floatPlaceholder="never" formControlName="province" class="full-width control-padding">
-          <md-option *ngFor="let p of provinces" [value]="p">
-            {{ p }}
-          </md-option>
-        </md-select>
-        <md-select placeholder="请选择城市" floatPlaceholder="never" formControlName="city" class="full-width control-padding">
-          <md-option *ngFor="let c of cities$ | async" [value]="c">
-            {{ c }}
-          </md-option>
-        </md-select>
-        <md-select placeholder="请选择区县" floatPlaceholder="never" formControlName="district" class="full-width control-padding">
-          <md-option *ngFor="let d of districts$ | async" [value]="d">
-            {{ d }}
-          </md-option>
-        </md-select>
-        <md-input-container class="full-width">
-          <input mdInput placeholder="街道地址" formControlName="street">
-        </md-input-container>
+      <div class="full-width control-padding">
+        <app-area-list formControlName="address"></app-area-list>
       </div>
       <button md-raised-button type="button" (click)="prevTab()">上一步</button>
       <button md-raised-button type="submit" [disabled]="!form.valid">注册</button>
