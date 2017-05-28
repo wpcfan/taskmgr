@@ -13,25 +13,38 @@ import {isValidDate} from '../../utils/date.util';
 @Component({
   selector: 'app-indentity-input',
   template: `
-    <md-input-container class="full-width control-padding">
-      <md-select 
-        mdPrefix
+    <div>
+      <md-select
         placeholder="证件类型"
         (change)="onIdTypeChange($event.value)">
-        <md-option 
-          *ngFor="let type of identityTypes" 
+        <md-option
+          *ngFor="let type of identityTypes"
           [value]="type.value">
           {{type.label}}
         </md-option>
-      </md-select>  
-      <input mdInput 
-        type="text" 
-        placeholder="证件号码"
-        (change)="onIdNoChange($event.target.value)">
-      <md-error>证件号码输入有误</md-error>
-    </md-input-container>
+      </md-select>
+    </div>
+    <div class="id-input">
+      <md-input-container class="full-width control-padding">
+        <input mdInput
+               type="text"
+               placeholder="证件号码"
+               (change)="onIdNoChange($event.target.value)">
+        <md-error>证件号码输入有误</md-error>
+      </md-input-container>
+    </div>
   `,
-  styles: [`
+  styles: [`    
+    .id-input{
+      flex: 1;
+    }
+    :host{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-content: center;
+      align-items: baseline;
+    }
   `],
   providers: [
     {
