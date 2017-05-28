@@ -7,8 +7,8 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/combineLatest';
 import {Identity, IdentityType} from '../../domain';
-import {isValidAddr, extractInfo} from "../../utils/identity.util";
-import {isValidDate} from "../../utils/date.util";
+import {isValidAddr, extractInfo} from '../../utils/identity.util';
+import {isValidDate} from '../../utils/date.util';
 
 @Component({
   selector: 'app-indentity-input',
@@ -66,7 +66,7 @@ export class IdentityInputComponent implements ControlValueAccessor, AfterViewIn
 
   constructor() { }
 
-  private propagateChange = (_: any) => {}
+  private propagateChange = (_: any) => {};
 
   ngAfterViewInit() {
     const idType$ = this.idType;
@@ -75,7 +75,7 @@ export class IdentityInputComponent implements ControlValueAccessor, AfterViewIn
       return {
         identityType: _type,
         identityNo: _no
-      }
+      };
     });
     this._sub = val$.subscribe(v => {
       this.propagateChange(v);
@@ -83,7 +83,7 @@ export class IdentityInputComponent implements ControlValueAccessor, AfterViewIn
   }
 
   ngOnDestroy() {
-    if(this._sub) {
+    if (this._sub) {
       this._sub.unsubscribe();
     }
   }
@@ -91,7 +91,7 @@ export class IdentityInputComponent implements ControlValueAccessor, AfterViewIn
   // 设置初始值
   public writeValue(obj: Identity) {
     if (obj) {
-      this.identity = obj
+      this.identity = obj;
     }
   }
 
@@ -107,7 +107,9 @@ export class IdentityInputComponent implements ControlValueAccessor, AfterViewIn
 
   // 验证表单，验证结果正确返回 null 否则返回一个验证结果对象
   validate(c: FormControl): {[key: string]: any} {
-    if(!c.value) return null;
+    if (!c.value) {
+      return null;
+    }
     switch (c.value.identityType) {
       case IdentityType.IdCard: {
         return this.validateIdNumber(c);
@@ -127,58 +129,56 @@ export class IdentityInputComponent implements ControlValueAccessor, AfterViewIn
 
   private validateIdNumber(c: FormControl): {[key: string]: any} {
     const value = c.value;
-    if(value.length !== 18) {
+    if (value.length !== 18) {
       return {idNotValid: true};
     }
     const pattern = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}[x0-9]$/;
     let result = false;
-    if(pattern.test(value)){
+    if (pattern.test(value)) {
       const info = extractInfo(value);
-      if(isValidAddr(info.addrCode) && isValidDate(info.dateOfBirth)) {
+      if (isValidAddr(info.addrCode) && isValidDate(info.dateOfBirth)) {
         result = true;
       }
     }
-    return result ? null : {idNotValid:  true}
+    return result ? null : {idNotValid:  true};
   }
 
   private validatePassport(c: FormControl): {[key: string]: any} {
     const value = c.value;
-    if(value.length !== 9) {
+    if (value.length !== 9) {
       return {idNotValid: true};
     }
     const pattern = /^[GgEe]\d{8}$/;
     let result = false;
-    if(pattern.test(value)){   
-        result = true;
+    if (pattern.test(value)) {
+      result = true;
     }
-    return result ? null : {idNotValid:  true}
+    return result ? null : {idNotValid:  true};
   }
 
   private validateMilitary(c: FormControl): {[key: string]: any} {
     const value = c.value;
     const pattern = /[\u4e00-\u9fa5](字第){1}(\d{4,8})(号?)$/;
     let result = false;
-    if(pattern.test(value)){   
-        result = true;
+    if (pattern.test(value)) {
+      result = true;
     }
-    return result ? null : {idNotValid:  true}
+    return result ? null : {idNotValid:  true};
   }
 
   onIdTypeChange(idType) {
-    console.log(idType);
     this._idType.next(idType);
   }
 
   onIdNoChange(idNo) {
-    console.log(idNo)
     this._idNo.next(idNo);
   }
 
   private get idType(): Observable<IdentityType> {
-    return this._idType.asObservable()
+    return this._idType.asObservable();
   }
 
   private get idNo(): Observable<string> {
-    return this._idNo.asObservable()
+    return this._idNo.asObservable();
   }
 }

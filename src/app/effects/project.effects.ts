@@ -56,7 +56,7 @@ export class ProjectEffects {
       .map(returned => new actions.UpdateProjectSuccessAction(returned))
       .catch(err => of(new actions.UpdateProjectFailAction(JSON.stringify(err))))
     );
-  
+
   @Effect()
   updateLists$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.UPDATE_LISTS)

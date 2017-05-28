@@ -5,7 +5,7 @@ import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
-import {Address} from '../../domain'
+import {Address} from '../../domain';
 
 @Component({
   selector: 'app-area-list',
@@ -45,7 +45,6 @@ import {Address} from '../../domain'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestroy {
-  
   cities$: Observable<string[]>;
   districts$: Observable<string[]>;
   @Input() provinces = getProvinces();
@@ -55,11 +54,11 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
   private _street = new Subject<string>();
   private _address: Address;
   private _sub: Subscription;
-  private propagateChange = (_: any) => {}
+  private propagateChange = (_: any) => {};
 
   constructor() { }
 
-  ngOnInit() { 
+  ngOnInit() {
     const province$ = this.province;
     const city$ = this.city;
     const district$ = this.district;
@@ -82,18 +81,18 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
     this.districts$ = Observable
       .combineLatest(province$, city$, (p, c) => Object.assign({}, {province: p, city: c}))
       .mergeMap(a => Observable.of(getAreasByCity(a.province, a.city)));
-    
+
   }
 
   ngOnDestroy() {
-    if(this._sub) {
+    if (this._sub) {
       this._sub.unsubscribe();
     }
   }
 
   // 验证表单，验证结果正确返回 null 否则返回一个验证结果对象
   validate(c: FormControl): {[key: string]: any} {
-    if(c.value) {
+    if (c.value) {
 
     }
     return null;
@@ -102,7 +101,7 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
   // 设置初始值
   public writeValue(obj: Address) {
     if (obj) {
-      this._address = obj
+      this._address = obj;
     }
   }
 
@@ -146,5 +145,5 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
 
   get street() {
     return this._street.asObservable();
-  }  
+  }
 }

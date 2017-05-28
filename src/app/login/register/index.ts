@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -7,7 +7,6 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/combineLatest';
 import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/auth.action';
-import {isValidAddr, extractInfo} from "../../utils/identity.util";
 
 export enum AgeUnit {
   Year = 0,
@@ -22,7 +21,7 @@ export enum AgeUnit {
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  selectedTab: number = 0;
+  selectedTab = 0;
   form: FormGroup;
   avatars$: Observable<string[]>;
   ageUnits: { value: AgeUnit, label: string}[] = [
@@ -54,7 +53,6 @@ export class RegisterComponent implements OnInit {
       address: [],
       identity: []
     });
-    
     const idNo$ = this.form.get('identity').valueChanges;
   }
 

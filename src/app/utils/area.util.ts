@@ -14,7 +14,7 @@ export const getCitiesByProvince = (province: string) => {
   }
   const cities = city_data[province];
   const citiesByProvice = [];
-  for (const city in cities){
+  for (const city in cities) {
     citiesByProvice.push(city);
   }
   return [...citiesByProvice];
