@@ -10,26 +10,45 @@ import {Address} from '../../domain';
 @Component({
   selector: 'app-area-list',
   template: `
-    <md-select placeholder="请选择省份" (change)="onProvinceChange($event.value)">
-      <md-option *ngFor="let p of provinces" [value]="p">
-        {{ p }}
-      </md-option>
-    </md-select>
-    <md-select placeholder="请选择城市" (change)="onCityChange($event.value)">
-      <md-option *ngFor="let c of cities$ | async" [value]="c">
-        {{ c }}
-      </md-option>
-    </md-select>
-    <md-select placeholder="请选择区县" (change)="onDistrictChange($event.value)">
-      <md-option *ngFor="let d of districts$ | async" [value]="d">
-        {{ d }}
-      </md-option>
-    </md-select>
-    <md-input-container>
-      <input mdInput placeholder="街道地址" (change)="onStreetChange($event.target.value)">
-    </md-input-container>
+    <div>
+      <md-select placeholder="请选择省份" (change)="onProvinceChange($event.value)">
+        <md-option *ngFor="let p of provinces" [value]="p">
+          {{ p }}
+        </md-option>
+      </md-select>
+    </div>
+    <div>
+      <md-select placeholder="请选择城市" (change)="onCityChange($event.value)">
+        <md-option *ngFor="let c of cities$ | async" [value]="c">
+          {{ c }}
+        </md-option>
+      </md-select>
+    </div>
+    <div>
+      <md-select placeholder="请选择区县" (change)="onDistrictChange($event.value)">
+        <md-option *ngFor="let d of districts$ | async" [value]="d">
+          {{ d }}
+        </md-option>
+      </md-select>
+    </div>
+    <div class="street">
+      <md-input-container class="full-width">
+        <input mdInput placeholder="街道地址" (change)="onStreetChange($event.target.value)">
+      </md-input-container>
+    </div>
     `,
-  styles: [``],
+  styles: [`    
+    .street{
+      flex: 1 1 100%;
+    }
+    :host{
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  `],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
