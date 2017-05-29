@@ -3,7 +3,7 @@ import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/auth.action';
-import * as entities from '../../domain';
+import {Auth} from '../../domain';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +13,7 @@ import * as entities from '../../domain';
 })
 export class HeaderComponent {
 
-  auth$: Observable<entities.Auth>;
+  auth$: Observable<Auth>;
 
   @Output() toggle = new EventEmitter<void>();
   @Output() toggleDarkTheme = new EventEmitter<boolean>();

@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import {MdDialog} from '@angular/material';
 import {Store} from '@ngrx/store';
-import * as entities from '../../domain';
+import {Project} from '../../domain';
 import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/project.action';
 import {NewProjectComponent} from '../new-project';
@@ -24,7 +24,7 @@ import {foldAnim} from '../../anim';
   animations: [foldAnim],
 })
 export class ProjectItemComponent {
-  @Input() item: entities.Project;
+  @Input() item: Project;
   @Output('itemSelected') itemSelected = new EventEmitter<void>();
   @HostBinding('@fold') fold;
 

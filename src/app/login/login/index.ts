@@ -4,7 +4,7 @@ import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import * as fromRoot from '../../reducers';
 import * as authActions from '../../actions/auth.action';
-import * as entities from '../../domain';
+import {Quote} from '../../domain';
 import * as actions from '../../actions/quote.action';
 
 @Component({
@@ -15,7 +15,7 @@ import * as actions from '../../actions/quote.action';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  quote$: Observable<entities.Quote>;
+  quote$: Observable<Quote>;
 
   constructor(private fb: FormBuilder,
               private store$: Store<fromRoot.State>) {
