@@ -6,7 +6,7 @@ export function extractInfo(idNo: string) {
   }
   const addrPart = idNo.substring(0, 6); // 前六位地址码
   const birthPart = idNo.substring(6, 14); // 八位生日
-  const genderPart = parseInt(idNo.substring(14, 17)); // 性别
+  const genderPart = parseInt(idNo.substring(14, 17), 10); // 性别
 
   return Object.assign({}, {
     addrCode: addrPart,

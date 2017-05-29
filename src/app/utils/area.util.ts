@@ -3,7 +3,9 @@ const city_data = {'北京市': {'北京市': ['东城区', '西城区', '崇文
 export const getProvinces = () => {
   const provinces = [];
   for (const province in city_data) {
-    provinces.push(province);
+    if (province) {
+      provinces.push(province);
+    }
   }
   return [...provinces];
 };
@@ -15,7 +17,9 @@ export const getCitiesByProvince = (province: string) => {
   const cities = city_data[province];
   const citiesByProvice = [];
   for (const city in cities) {
-    citiesByProvice.push(city);
+    if (city) {
+      citiesByProvice.push(city);
+    }
   }
   return [...citiesByProvice];
 };

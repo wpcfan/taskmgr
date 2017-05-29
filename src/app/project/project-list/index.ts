@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, HostBinding} from '@angular/core';
 import {MdDialog} from '@angular/material';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
@@ -14,10 +14,10 @@ import {dropFromTopAnim} from '../../anim';
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.scss'],
   animations: [dropFromTopAnim],
-  host: {'[@dropFromTop]': 'in'}
 })
 export class ProjectListComponent {
 
+  @HostBinding('@dropFromTop') state = 'in';
   projects$: Observable<models.Project[]>;
 
   constructor(private store$: Store<fromRoot.State>,
