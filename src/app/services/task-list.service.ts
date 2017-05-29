@@ -32,7 +32,7 @@ export class TaskListService {
       .map(res => res.json());
   }
 
-  delete(taskList: TaskList): Observable<TaskList> {
+  del(taskList: TaskList): Observable<TaskList> {
     const uri = `${this.config.uri}/${this.domain}/${taskList.id}`;
     return this.http
       .delete(uri)

@@ -56,7 +56,7 @@ export class TaskListEffects {
     .ofType(actions.ActionTypes.DELETE)
     .map(toPayload)
     .switchMap(taskList => this.service$
-      .delete(taskList)
+      .del(taskList)
       .map(tl => new actions.DeleteTaskListSuccessAction(tl))
       .catch(err => of(new actions.DeleteTaskListFailAction(JSON.stringify(err))))
     );

@@ -171,7 +171,7 @@ export class IdentityInputComponent implements ControlValueAccessor, AfterViewIn
 
   private validateMilitary(c: FormControl): {[key: string]: any} {
     const value = c.value;
-    const pattern = /[\u4e00-\u9fa5](字第){1}(\d{4,8})(号?)$/;
+    const pattern = /[\u4e00-\u9fa5](字第)(\d{4,8})(号?)$/;
     let result = false;
     if (pattern.test(value)) {
       result = true;
