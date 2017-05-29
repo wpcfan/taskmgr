@@ -7,8 +7,19 @@ import {Auth} from '../../domain';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  template: `
+    <md-toolbar color="primary">
+      <button md-icon-button (click)="onClick()">
+        <md-icon>menu</md-icon>
+      </button>
+      <span>企业协作平台</span>
+      <span class="fill-remaining-space"></span>
+      <md-slide-toggle (change)="onChange($event.checked)">黑夜模式</md-slide-toggle>
+      <span><a md-button *ngIf="((auth$|async).user !== undefined)" (click)="logout()">退出</a></span>
+    </md-toolbar>
+  `,
+  styles: [`
+  `],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {

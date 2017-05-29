@@ -2,9 +2,15 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 
 @Component({
   selector: 'app-footer',
-  templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss'],
+  template: `
+    <md-toolbar color="primary">
+      <span class="fill-remaining-space"></span>
+      <span>&copy; 2017 版权所有: 接灰的电子产品</span>
+      <span class="fill-remaining-space"></span>
+    </md-toolbar>
+  `,
+  styles: [`
+  `],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FooterComponent {
-}
+export class FooterComponent {}
