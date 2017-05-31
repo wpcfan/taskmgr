@@ -65,6 +65,7 @@ export interface Age {
       display: flex;
       flex-wrap: nowrap;
       flex-direction: row;
+      align-items: baseline;
     }
   `],
   providers: [

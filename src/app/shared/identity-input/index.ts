@@ -42,7 +42,6 @@ import {isValidDate} from '../../utils/date.util';
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
-      align-content: center;
       align-items: baseline;
     }
   `],
