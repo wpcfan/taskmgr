@@ -1,8 +1,9 @@
-import {Component, Input, OnInit, ChangeDetectionStrategy, forwardRef, OnDestroy} from '@angular/core';
+import {Component, ViewChild, Input, OnInit, ChangeDetectionStrategy, forwardRef, OnDestroy} from '@angular/core';
 import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {MdSelect} from '@angular/material';
 import {getProvinces, getCitiesByProvince, getAreasByCity} from '../../utils/area.util';
-import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
 import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/observable/combineLatest';
 import {Address} from '../../domain';
@@ -10,38 +11,49 @@ import {Address} from '../../domain';
 @Component({
   selector: 'app-area-list',
   template: `
-    <div>
-      <md-select placeholder="请选择省份" (change)="onProvinceChange($event.value)">
-        <md-option *ngFor="let p of provinces" [value]="p">
-          {{ p }}
-        </md-option>
-      </md-select>
-    </div>
-    <div>
-      <md-select placeholder="请选择城市" (change)="onCityChange($event.value)">
-        <md-option *ngFor="let c of cities$ | async" [value]="c">
-          {{ c }}
-        </md-option>
-      </md-select>
-    </div>
-    <div>
-      <md-select placeholder="请选择区县" (change)="onDistrictChange($event.value)">
-        <md-option *ngFor="let d of districts$ | async" [value]="d">
-          {{ d }}
-        </md-option>
-      </md-select>
-    </div>
-    <div class="street">
-      <md-input-container class="full-width">
-        <input mdInput placeholder="街道地址" (change)="onStreetChange($event.target.value)">
-      </md-input-container>
+    <div class="address-group">
+      <div>
+        <md-select
+          placeholder="请选择省份"
+          [(ngModel)]="_address.province"
+          (change)="onProvinceChange()">
+          <md-option *ngFor="let p of provinces" [value]="p">
+            {{ p }}
+          </md-option>
+        </md-select>
+      </div>
+      <div>
+        <md-select 
+          placeholder="请选择城市"
+          [(ngModel)]="_address.city"
+          (change)="onCityChange()">
+          <md-option *ngFor="let c of cities$ | async" [value]="c">
+            {{ c }}
+          </md-option>
+        </md-select>
+      </div>
+      <div>
+        <md-select 
+          placeholder="请选择区县"
+          [(ngModel)]="_address.district"
+          (change)="onDistrictChange()">
+          <md-option *ngFor="let d of districts$ | async" [value]="d">
+            {{ d }}
+          </md-option>
+        </md-select>
+      </div>
+      <div class="street">
+        <md-input-container class="full-width">
+          <input mdInput placeholder="街道地址" [(ngModel)]="_address.street" (change)="onStreetChange()">
+        </md-input-container>
+      </div>
     </div>
     `,
   styles: [`    
     .street{
       flex: 1 1 100%;
     }
-    :host{
+    .address-group{
       width: 100%;
       display: flex;
       flex-wrap: wrap;
@@ -64,24 +76,33 @@ import {Address} from '../../domain';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestroy {
+  _address: Address = {
+    province: '',
+    city: '',
+    district: '',
+    street: ''
+  };
+  _province = new Subject<string>();
+  _city = new Subject<string>();
+  _district = new Subject<string>();
+  _street = new Subject<string>();
   cities$: Observable<string[]>;
   districts$: Observable<string[]>;
   @Input() provinces = getProvinces();
-  private _province = new Subject<string>();
-  private _city = new Subject<string>();
-  private _district = new Subject<string>();
-  private _street = new Subject<string>();
-  private _address: Address;
+
   private _sub: Subscription;
   private propagateChange = (_: any) => {};
 
-  constructor() { }
+  constructor() { 
+
+  }
 
   ngOnInit() {
-    const province$ = this.province;
-    const city$ = this.city;
-    const district$ = this.district;
-    const street$ = this.street;
+
+    const province$ = this._province.asObservable().startWith('');
+    const city$ = this._city.asObservable().startWith('');
+    const district$ = this._district.asObservable().startWith('');
+    const street$ = this._street.asObservable().startWith('');
     const val$ = Observable.combineLatest([province$, city$, district$, street$], (_p, _c, _d, _s) => {
       return {
         province: _p,
@@ -111,16 +132,34 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
 
   // 验证表单，验证结果正确返回 null 否则返回一个验证结果对象
   validate(c: FormControl): {[key: string]: any} {
-    if (c.value) {
-
+    const val = c.value;
+    if(!val) {
+      return null;
     }
-    return null;
+    if (val.province && val.city && val.district && val.street && val.street.length >= 4) {
+      return null;
+    }
+    return {
+      addressNotValid: true
+    };
   }
 
   // 设置初始值
   public writeValue(obj: Address) {
     if (obj) {
       this._address = obj;
+      if (this._address.province) {
+        this._province.next(this._address.province);
+      }
+      if (this._address.city) {
+        this._city.next(this._address.city);
+      }
+      if (this._address.district) {
+        this._district.next(this._address.district);
+      }
+      if (this._address.street) {
+        this._street.next(this._address.street);
+      }
     }
   }
 
@@ -134,35 +173,19 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
   public registerOnTouched() {
   }
 
-  onProvinceChange(val) {
-    this._province.next(val);
+  onProvinceChange() {
+    this._province.next(this._address.province);
   }
 
-  onCityChange(val) {
-    this._city.next(val);
+  onCityChange() {
+    this._city.next(this._address.city);
   }
 
-  onDistrictChange(val) {
-    this._district.next(val);
+  onDistrictChange() {
+    this._district.next(this._address.district);
   }
 
-  onStreetChange(val) {
-    this._street.next(val);
-  }
-
-  get province() {
-    return this._province.asObservable();
-  }
-
-  get city() {
-    return this._city.asObservable();
-  }
-
-  get district() {
-    return this._district.asObservable();
-  }
-
-  get street() {
-    return this._street.asObservable();
-  }
+  onStreetChange() {
+    this._street.next(this._address.street);
+  }  
 }

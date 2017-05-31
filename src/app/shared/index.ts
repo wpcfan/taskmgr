@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {
   MdAutocompleteModule,
@@ -30,12 +30,14 @@ import {ImageListSelectComponent} from './image-list-select';
 import {ChipsListComponent} from './chips-list';
 import {IdentityInputComponent} from './identity-input';
 import {AreaListComponent} from './area-list';
+import {AgeInputComponent} from './age-input';
 import {InitialsPipe} from './initials.pipe';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     MdInputModule,
     MdSelectModule,
     MdButtonToggleModule,
@@ -62,6 +64,7 @@ import {InitialsPipe} from './initials.pipe';
   exports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     MdInputModule,
     MdSelectModule,
     MdButtonToggleModule,
@@ -89,6 +92,7 @@ import {InitialsPipe} from './initials.pipe';
     ChipsListComponent,
     IdentityInputComponent,
     AreaListComponent,
+    AgeInputComponent
   ],
   declarations: [
     ConfirmDialogComponent,
@@ -96,6 +100,7 @@ import {InitialsPipe} from './initials.pipe';
     ChipsListComponent,
     IdentityInputComponent,
     AreaListComponent,
+    AgeInputComponent,
     InitialsPipe,
   ],
   entryComponents: [

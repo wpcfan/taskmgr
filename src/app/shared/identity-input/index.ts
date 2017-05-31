@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, Output, AfterViewInit, OnDestroy} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, Output, OnInit, OnDestroy} from '@angular/core';
 import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
@@ -60,7 +60,7 @@ import {isValidDate} from '../../utils/date.util';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IdentityInputComponent implements ControlValueAccessor, AfterViewInit, OnDestroy {
+export class IdentityInputComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
   identityTypes: {value: IdentityType, label: string}[] = [
     {value: IdentityType.IdCard, label: '身份证'},
@@ -81,7 +81,7 @@ export class IdentityInputComponent implements ControlValueAccessor, AfterViewIn
 
   private propagateChange = (_: any) => {};
 
-  ngAfterViewInit() {
+  ngOnInit() {
     const idType$ = this.idType;
     const idNo$ = this.idNo;
     const val$ = Observable.combineLatest(idType$, idNo$, (_type, _no) => {
@@ -141,14 +141,16 @@ export class IdentityInputComponent implements ControlValueAccessor, AfterViewIn
   }
 
   private validateIdNumber(c: FormControl): {[key: string]: any} {
-    const value = c.value;
-    if (value.length !== 18) {
-      return {idNotValid: true};
+    const val = c.value.identityNo;
+    if (val.length !== 18) {
+      return {
+        idNotValid:  true
+      }
     }
     const pattern = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}[x0-9]$/;
     let result = false;
-    if (pattern.test(value)) {
-      const info = extractInfo(value);
+    if (pattern.test(val)) {
+      const info = extractInfo(val);
       if (isValidAddr(info.addrCode) && isValidDate(info.dateOfBirth)) {
         result = true;
       }
@@ -157,7 +159,7 @@ export class IdentityInputComponent implements ControlValueAccessor, AfterViewIn
   }
 
   private validatePassport(c: FormControl): {[key: string]: any} {
-    const value = c.value;
+    const value = c.value.identityNo;
     if (value.length !== 9) {
       return {idNotValid: true};
     }
@@ -170,7 +172,7 @@ export class IdentityInputComponent implements ControlValueAccessor, AfterViewIn
   }
 
   private validateMilitary(c: FormControl): {[key: string]: any} {
-    const value = c.value;
+    const value = c.value.identityNo;
     const pattern = /[\u4e00-\u9fa5](字第)(\d{4,8})(号?)$/;
     let result = false;
     if (pattern.test(value)) {
