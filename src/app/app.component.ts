@@ -10,6 +10,7 @@ import * as actions from './actions/theme.action';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  
   dark$: Observable<boolean>;
 
   constructor(private store$: Store<fromRoot.State>) {
