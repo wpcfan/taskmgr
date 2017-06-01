@@ -1,12 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
+import {User} from '../../domain';
 
 @Component({
   selector: 'app-invite',
   template: `
     <md-card>
       <h2 md-dialog-title>{{dialogTitle}}</h2>
-      <div class="full-width">
-        <app-chip-list></app-chip-list>
+      <div class="full-width" #f (ngOnSubmit)="onSubmit($event, f)">
+        <app-chips-list [label]="'邀请成员'" name="members" [(ngModel)]="members"></app-chips-list>
       </div>
     </md-card>
     <div md-dialog-actions>
@@ -21,8 +22,17 @@ import {Component, OnInit} from '@angular/core';
     `,
   styles: [``]
 })
-export class InviteComponent implements OnInit {
+export class InviteComponent {
+  
+  members: User[] = [];
+
   constructor() { }
 
-  ngOnInit() { }
+  onSubmit(ev: Event, {value, valid}) {
+    ev.preventDefault();
+    if (!valid) {
+      return;
+    }
+    
+  }
 }
