@@ -1,5 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
-  <h2 class="dialog-title" md-dialog-title>{{dialogTitle}}</h2>
+  <h2 md-dialog-title>{{dialogTitle}}</h2>
   <div md-dialog-content>
     <md-input-container class="full-width">
       <input mdInput type="text" placeholder="任务内容" formControlName="desc">
