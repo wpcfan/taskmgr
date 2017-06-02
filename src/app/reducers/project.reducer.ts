@@ -43,6 +43,7 @@ export function reducer(state = initialState, action: actions.Actions): State {
         selectedId: project.id === state.selectedId ? null : state.selectedId
       });
     }
+    case actions.ActionTypes.INVITE_SUCCESS:
     case actions.ActionTypes.UPDATE_LISTS_SUCCESS:
     case actions.ActionTypes.UPDATE_SUCCESS: {
       const project = action.payload;
@@ -93,3 +94,4 @@ export const getSelected = createSelector(getEntities, getSelectedId, (entities,
 export const getAll = createSelector(getEntities, getIds, (entities, ids) => {
   return ids.map(id => entities[id]);
 });
+export const getProjectById = (id, state) => state.entities[id];

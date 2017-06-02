@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {Err, User} from '../domain';
+import {Err, User, Project} from '../domain';
 import {type} from '../utils/type.util';
 
 export interface UserProject {
@@ -27,6 +27,9 @@ export const ActionTypes = {
   REMOVE_USER_PROJECT: type('[User] Remove User Project'),
   REMOVE_USER_PROJECT_SUCCESS: type('[User] Remove User Project Success'),
   REMOVE_USER_PROJECT_FAIL: type('[User] Remove User Project Fail'),
+  BATCH_UPDATE_USER_PROJECT: type('[User] Batch Update User Project'),
+  BATCH_UPDATE_USER_PROJECT_SUCCESS: type('[User] Batch Update User Project Success'),
+  BATCH_UPDATE_USER_PROJECT_FAIL: type('[User] Batch Update User Project Fail'),
   SEARCH_USERS: type('[User] Search Users'),
   SEARCH_USERS_SUCCESS: type('[User] Search Users Success'),
   SEARCH_USERS_FAIL: type('[User] Search Users Fail'),
@@ -77,6 +80,27 @@ export class RemoveUserProjectSuccessAction implements Action {
 
 export class RemoveUserProjectFailAction implements Action {
   type = ActionTypes.REMOVE_USER_PROJECT_FAIL;
+
+  constructor(public payload: Err) {
+  }
+}
+
+export class BatchUpdateUserProjectAction implements Action {
+  type = ActionTypes.BATCH_UPDATE_USER_PROJECT;
+
+  constructor(public payload: Project) {
+  }
+}
+
+export class BatchUpdateUserProjectSuccessAction implements Action {
+  type = ActionTypes.BATCH_UPDATE_USER_PROJECT_SUCCESS;
+
+  constructor(public payload: User[]) {
+  }
+}
+
+export class BatchUpdateUserProjectFailAction implements Action {
+  type = ActionTypes.BATCH_UPDATE_USER_PROJECT_FAIL;
 
   constructor(public payload: Err) {
   }
@@ -138,6 +162,9 @@ export type Actions
   | RemoveUserProjectAction
   | RemoveUserProjectSuccessAction
   | RemoveUserProjectFailAction
+  | BatchUpdateUserProjectAction
+  | BatchUpdateUserProjectSuccessAction
+  | BatchUpdateUserProjectFailAction  
   | LoadUsersByPrjAction
   | LoadUsersByPrjSuccessAction
   | LoadUsersByPrjFailAction

@@ -70,6 +70,17 @@ export class UserEffects {
         .catch(err => of(new actions.LoadUsersByPrjFailAction(JSON.stringify(err))))
     );
 
+  @Effect()
+  batchUpdateProjectUsers$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.BATCH_UPDATE_USER_PROJECT)
+    .map(toPayload)
+    .switchMap(project =>
+      this.service$.batchUpdateProjectRef(project)
+        .map(users => new actions.BatchUpdateUserProjectSuccessAction(users))
+        .catch(err => of(new actions.BatchUpdateUserProjectFailAction(err)))
+    );
+
+
   /**
    * 任务的 Effects
    * @param actions$ 注入 action 数据流

@@ -129,6 +129,22 @@ export class ProjectEffects {
       return new userActions.RemoveUserProjectAction({user: user, projectId: projectId});
     });
 
+  @Effect()
+  inviteMembersRef$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.INVITE)
+    .map(toPayload)
+    .switchMap(({projectId, members}) => 
+      this.service.inviteMembers(projectId, members)
+        .map(project => new actions.InviteMembersSuccessAction(project))
+        .catch(err => of(new actions.InviteMembersFailAction(err)))
+    );
+
+  @Effect()
+  updateUserPrjRef$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.INVITE_SUCCESS)
+    .map(toPayload)
+    .map((project: Project) => new userActions.BatchUpdateUserProjectAction(project))
+
   /**
    *
    * @param actions$

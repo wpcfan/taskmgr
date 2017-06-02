@@ -1,6 +1,6 @@
 import {Action} from '@ngrx/store';
 import {type} from '../utils/type.util';
-import {Err, Project} from '../domain';
+import {Err, Project, User} from '../domain';
 
 export const ActionTypes = {
   ADD: type('[Project] Add'),
@@ -19,6 +19,9 @@ export const ActionTypes = {
   LOADS_SUCCESS: type('[Project] Load Success'),
   LOADS_FAIL: type('[Project] Load Fail'),
   SELECT: type('[Project] Select Project'),
+  INVITE: type('[Project] Invite Members'),
+  INVITE_SUCCESS: type('[Project] Invite Members Success'),
+  INVITE_FAIL: type('[Project] Invite Members Fail'),
 };
 
 export class AddProjectAction implements Action {
@@ -133,6 +136,27 @@ export class SelectProjectAction implements Action {
   }
 }
 
+export class InviteMembersAction implements Action {
+  type = ActionTypes.INVITE;
+
+  constructor(public payload: {projectId: string; members: User[]}) {
+  }
+}
+
+export class InviteMembersSuccessAction implements Action {
+  type = ActionTypes.INVITE_SUCCESS;
+
+  constructor(public payload: Project) {
+  }
+}
+
+export class InviteMembersFailAction implements Action {
+  type = ActionTypes.INVITE_FAIL;
+
+  constructor(public payload: Err) {
+  }
+}
+
 export type Actions
   = AddProjectAction
   | AddProjectSuccessAction
@@ -150,4 +174,5 @@ export type Actions
   | LoadProjectsSuccessAction
   | LoadProjectsFailAction
   | SelectProjectAction
+  | InviteMembersAction  
   ;

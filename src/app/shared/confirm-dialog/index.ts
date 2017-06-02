@@ -1,7 +1,6 @@
-import {ChangeDetectionStrategy, Component, Inject, OnDestroy} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {MD_DIALOG_DATA, MdDialogRef, OverlayContainer} from '@angular/material';
 import {Store} from '@ngrx/store';
-import {Subscription} from 'rxjs/Subscription';
 import * as fromRoot from '../../reducers';
 
 export interface ConfirmDialog {
@@ -16,26 +15,22 @@ export interface ConfirmDialog {
   styleUrls: ['./confirm-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ConfirmDialogComponent implements OnDestroy {
+export class ConfirmDialogComponent implements OnInit {
 
   dialog: ConfirmDialog;
-  subTheme: Subscription;
 
   constructor(private oc: OverlayContainer,
-              private store$: Store<fromRoot.State>,
               @Inject(MD_DIALOG_DATA) private data: any,
               private dialogRef: MdDialogRef<ConfirmDialogComponent>) {
-    this.subTheme = this.store$.select(fromRoot.getTheme)
-      .subscribe(result => oc.themeClass = result ? 'myapp-dark-theme' : null);
     if (this.data.dialog !== undefined || this.data.dialog !== null) {
       this.dialog = this.data.dialog;
     }
   }
 
-  ngOnDestroy() {
-    if (this.subTheme) {
-      this.subTheme.unsubscribe();
-    }
+  ngOnInit() {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.oc.themeClass = this.data.darkTheme ? 'myapp-dark-theme' : null;
   }
 
   handleAction(result: boolean) {

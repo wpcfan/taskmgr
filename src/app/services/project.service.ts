@@ -6,7 +6,7 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/reduce';
 import 'rxjs/add/observable/from';
-import {Project} from '../domain';
+import {Project,  User} from '../domain';
 
 @Injectable()
 export class ProjectService {
@@ -66,6 +66,22 @@ export class ProjectService {
     };
     return this.http
       .patch(uri, JSON.stringify(toUpdate), {headers: this.headers})
+      .map(res => res.json());
+  }
+
+  inviteMembers(projectId: string, users: User[]) {
+    const uri = `${this.config.uri}/${this.domain}/${projectId}`;
+    
+    return this.http
+      .get(uri)
+      .map(res => res.json() as Project)
+      .switchMap(project => {
+        const existingMemberIds = project.members;
+        const userIds = users.map(user => user.id);
+        const remainingIds = existingMemberIds.filter(id => userIds.indexOf(id) < 0);
+        const newIds = [...remainingIds, ...userIds];
+        return this.http.patch(uri, JSON.stringify({ members: newIds }), {headers: this.headers})
+      })
       .map(res => res.json());
   }
 }

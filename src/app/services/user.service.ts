@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {Headers, Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import {User} from '../domain';
+import {User, Project} from '../domain';
 
 @Injectable()
 export class UserService {
@@ -43,5 +43,18 @@ export class UserService {
     return this.http
       .patch(uri, JSON.stringify({projectIds: toUpdate}), {headers: this.headers})
       .map(res => res.json() as User);
+  }
+
+  batchUpdateProjectRef(project: Project): Observable<User[]> {
+    const projectId = project.id;
+    const memberIds = project.members;
+    return Observable.from(memberIds)
+      .switchMap(id => {
+        const uri = `${this.config.uri}/${this.domain}/${id}`;
+        return this.http.get(uri).map(res => res.json() as User)
+      })
+      .filter(user => user.projectIds.indexOf(projectId) < 0)
+      .switchMap(u => this.addProjectRef(u, projectId))
+      .reduce((users, curr) => [...users, curr], []);
   }
 }

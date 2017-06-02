@@ -8,12 +8,6 @@ import {
   Output
 } from '@angular/core';
 import {MdDialog} from '@angular/material';
-import {Store} from '@ngrx/store';
-import {Project} from '../../domain';
-import * as fromRoot from '../../reducers';
-import * as actions from '../../actions/project.action';
-import {NewProjectComponent} from '../new-project';
-import {ConfirmDialogComponent} from '../../shared';
 import {foldAnim} from '../../anim';
 
 @Component({
@@ -24,8 +18,11 @@ import {foldAnim} from '../../anim';
   animations: [foldAnim],
 })
 export class ProjectItemComponent {
-  @Input() item: Project;
-  @Output('itemSelected') itemSelected = new EventEmitter<void>();
+  @Input() item;
+  @Output() itemSelected = new EventEmitter<void>();
+  @Output() launchUpdateDialog = new EventEmitter<void>();
+  @Output() launchInviteDailog = new EventEmitter<void>();
+  @Output() launchDeleteDailog = new EventEmitter<void>();
   @HostBinding('@fold') fold;
 
   @HostListener('mouseenter', ['$event.target'])
@@ -45,28 +42,18 @@ export class ProjectItemComponent {
 
   openUpdateDialog(ev: Event) {
     ev.preventDefault();
-    this.dialog.open(NewProjectComponent, {data: {project: this.item}});
+    this.launchUpdateDialog.emit();
   }
 
   openInviteDialog(ev: Event) {
     ev.preventDefault();
+    this.launchInviteDailog.emit();
   }
 
   openDeleteDialog(ev: Event) {
     ev.preventDefault();
-    const confirm = {
-      title: '删除项目：',
-      content: '确认要删除该项目？',
-      confirmAction: '确认删除'
-    };
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {data: {dialog: confirm}});
-    dialogRef.afterClosed().subscribe(val => {
-      if (val) {
-        this.store$.dispatch(new actions.DeleteProjectAction(this.item));
-      }
-    });
+    this.launchDeleteDailog.emit();
   }
 
-  constructor(private dialog: MdDialog,
-              private store$: Store<fromRoot.State>) {}
+  constructor() {}
 }
