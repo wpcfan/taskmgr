@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, Renderer2} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
 import {MdDialog} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -21,21 +21,27 @@ import {CopyTaskComponent} from '../copy-task';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskHomeComponent implements OnDestroy {
+  
   draggingStatus: string;
   dragTaskId: string;
   loading$: Observable<boolean>;
   lists$: Observable<TaskList[]>;
-  private routeParamSub: Subscription;
+  private darkTheme: boolean;
   private projectId: string;
+  private routeParamSub: Subscription;
+  private subTheme: Subscription;
 
-  constructor(private renderer: Renderer2,
-              private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
               private dialog: MdDialog,
               private store$: Store<fromRoot.State>) {
     const routeParam$ = this.route.params.pluck('id');
     this.routeParamSub = routeParam$.subscribe(
       (id: string) => {
         this.projectId = id;
+      });
+    this.subTheme = this.store$.select(fromRoot.getTheme)
+      .subscribe(result => {
+        this.darkTheme = result;
       });
     this.lists$ = this.store$.select(fromRoot.getProjectTaskList);
     this.loading$ = this.store$.select(fromRoot.getTaskLoading);
@@ -46,32 +52,33 @@ export class TaskHomeComponent implements OnDestroy {
     if (this.routeParamSub) {
       this.routeParamSub.unsubscribe();
     }
+    if (this.subTheme) {
+      this.subTheme.unsubscribe();
+    }
   }
 
   handleRenameList(list: TaskList) {
-    this.dialog.open(NewTaskListComponent, {
-      data: {
-        taskList: Object.assign({}, list)
-      }
+    const dialogRef = this.dialog.open(NewTaskListComponent, { data: { darkTheme: this.darkTheme, name: list.name }});
+    dialogRef.afterClosed().take(1).filter(n => n).subscribe(name => {
+      this.store$.dispatch(new listActions.UpdateTaskListAction({...list, name: name}));
     });
   }
 
   handleNewTaskList(ev: Event) {
     ev.preventDefault();
-    this.dialog.open(NewTaskListComponent, {
-      data: {
-        taskList: {
-          projectId: this.projectId
-        }
-      }
+    const dialogRef = this.dialog.open(NewTaskListComponent, { data: { darkTheme: this.darkTheme }});
+    dialogRef.afterClosed().take(1).filter(n => n).subscribe(name => {
+      this.store$.dispatch(new listActions.AddTaskListAction({name: name, order: 0, projectId: this.projectId}));
     });
   }
 
   handleMoveList(listId: string) {
-    this.dialog.open(CopyTaskComponent, {
-      data: {
-        srcListId: listId
-      }
+    const list$ = this.store$
+      .select(fromRoot.getProjectTaskList)
+      .map(lists => lists.filter(list => list.id !== listId));
+    const dialogRef = this.dialog.open(CopyTaskComponent, {data: { darkTheme: this.darkTheme, srcListId: listId, lists: list$ }});
+    dialogRef.afterClosed().take(1).filter(n => n).subscribe(val => {
+      this.store$.dispatch(new taskActions.MoveAllAction(val));
     });
   }
 
@@ -118,18 +125,37 @@ export class TaskHomeComponent implements OnDestroy {
   }
 
   handleAddTask(listId: string) {
-    this.dialog.open(NewTaskComponent, {
-      data: {
-        taskListId: listId
-      }
-    });
+    const dialogRef = this.dialog.open(NewTaskComponent, { data: { darkTheme: this.darkTheme }});
+    dialogRef.afterClosed()
+      .take(1)
+      .filter(n => n)
+      .withLatestFrom(this.store$.select(fromRoot.getAuthUser), (val, user)=> {
+        return {
+          task: val,
+          ownerId: user.id
+        }
+      })
+      .subscribe(({task, ownerId}) => {
+        this.store$.dispatch(new taskActions.AddTaskAction({
+          ...task, 
+          taskListId: listId, 
+          completed: false, 
+          ownerId: ownerId,
+          createDate: new Date()
+        }));
+      });
   }
 
   handleUpdateTask(task: Task) {
-    this.dialog.open(NewTaskComponent, {
-      data: {
-        task: task
-      }
-    });
+    const dialogRef = this.dialog.open(NewTaskComponent, { data: { darkTheme: this.darkTheme, task: task }});
+    dialogRef.afterClosed()
+      .take(1)
+      .filter(n => n)
+      .subscribe((val) => {
+        this.store$.dispatch(new taskActions.UpdateTaskAction({
+          ...task, 
+          ...val
+        }));
+      });
   }
 }

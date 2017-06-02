@@ -132,13 +132,11 @@
       "desc": "登录鉴权过程中需携带 token 访问 API",
       "completed": false,
       "ownerId": "BkkDvwee-",
-      "participantIds": [
-        "37489e0c-df34-c261-71c4-ce75357e3035"
-      ],
+      "participantIds": [],
       "dueDate": "2017-05-30T16:00:00.000Z",
       "priority": 2,
       "remark": "",
-      "reminder": "2017-05-29T16:00:00.000Z",
+      "reminder": "2017-06-13T16:00:00.000Z",
       "createDate": "2017-05-24T06:11:05.625Z",
       "id": 4
     },
@@ -160,8 +158,10 @@
       "desc": "首页 banner 增加 2px 的 margin",
       "completed": false,
       "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
-      "participantIds": [],
-      "dueDate": null,
+      "participantIds": [
+        "BkkDvwee-"
+      ],
+      "dueDate": "2017-06-29T16:00:00.000Z",
       "priority": 3,
       "remark": "",
       "reminder": null,

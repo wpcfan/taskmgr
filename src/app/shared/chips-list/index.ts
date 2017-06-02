@@ -27,11 +27,12 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   @Input() multiple = true;
   @Input() label = '添加/修改成员';
   @Input() placeholderText = '请输入成员 email';
-  @Input() items: User[] = [];
+  @Input() items: User[];
   chips: FormGroup;
   memberResults$: Observable<User[]>;
 
   constructor(private fb: FormBuilder, private service: UserService) {
+    this.items = [];
   }
 
   ngOnInit() {
@@ -52,11 +53,13 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   // 设置初始值
   public writeValue(obj: User[]) {
     if (obj && this.multiple) {
-      const userEntities = obj.reduce((entities: {[id: string]: User}, user) => {
-        return Object.assign(entities, {[user.id]: user})
+      const userEntities = obj.reduce((entities, user) => {
+        return {entities, [user.id]: user};
       }, {});
-      const remaining = this.items.filter(item => !userEntities[item.id]);
-      this.items = [...remaining, ...obj];
+      if(this.items){
+        const remaining = this.items.filter(item => !userEntities[item.id]);
+        this.items = [...remaining, ...obj];
+      }
     } else if (obj && !this.multiple) {
       this.items = [...obj];
     }

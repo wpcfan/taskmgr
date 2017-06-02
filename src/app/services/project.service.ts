@@ -53,9 +53,8 @@ export class ProjectService {
   // GET /projects
   get(userId: string): Observable<Project[]> {
     const uri = `${this.config.uri}/${this.domain}`;
-    // const whereClause = `{"members": "${userId}"}`;
     return this.http
-      .get(uri, {params: {'members': userId}, headers: this.headers})
+      .get(uri, {params: {'member': userId}, headers: this.headers})
       .map(res => res.json());
   }
 
