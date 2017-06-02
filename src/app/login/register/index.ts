@@ -56,11 +56,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
       if (isValidAddr(info.addrCode)) {
         const addr = getAddrByCode(info.addrCode);
         this.form.get('address').patchValue(addr);
-        this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
+        this.form.get('address').updateValueAndValidity({onlySelf: true, emitEvent: true});
       }
       if (isValidDate(info.dateOfBirth)) {
         const date = toDate(info.dateOfBirth);
-        this.form.get('dateOfBirth').patchValue(date);
+        this.form.patchValue({
+          dateOfBirth: date
+        });
         this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
       }
     });
