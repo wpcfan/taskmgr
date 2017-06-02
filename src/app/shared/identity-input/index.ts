@@ -26,10 +26,11 @@ import {isValidDate} from '../../utils/date.util';
     </div>
     <div class="id-input">
       <md-input-container class="full-width control-padding">
-        <input mdInput
-               type="text"
-               placeholder="证件号码"
-               (change)="onIdNoChange($event.target.value)">
+        <input 
+          mdInput
+          type="text"
+          placeholder="证件号码" 
+          (change)="onIdNoChange($event.target.value)">
         <md-error>证件号码输入有误</md-error>
       </md-input-container>
     </div>
