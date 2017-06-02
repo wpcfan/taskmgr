@@ -7,7 +7,6 @@ import {
   Input,
   Output
 } from '@angular/core';
-import {MdDialog} from '@angular/material';
 import {foldAnim} from '../../anim';
 
 @Component({

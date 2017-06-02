@@ -145,7 +145,7 @@ export class IdentityInputComponent implements ControlValueAccessor, OnInit, OnD
     if (val.length !== 18) {
       return {
         idNotValid:  true
-      }
+      };
     }
     const pattern = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}[x0-9]$/;
     let result = false;

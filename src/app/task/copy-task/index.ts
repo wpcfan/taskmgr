@@ -27,7 +27,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class CopyTaskComponent implements OnInit {
   form: FormGroup;
   dialogTitle: string;
-  lists$: Observable<TaskList>
+  lists$: Observable<TaskList>;
 
   constructor(private oc: OverlayContainer,
               private fb: FormBuilder,

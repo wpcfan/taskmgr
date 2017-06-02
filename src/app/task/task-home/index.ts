@@ -21,7 +21,7 @@ import {CopyTaskComponent} from '../copy-task';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskHomeComponent implements OnDestroy {
-  
+
   draggingStatus: string;
   dragTaskId: string;
   loading$: Observable<boolean>;
@@ -129,17 +129,17 @@ export class TaskHomeComponent implements OnDestroy {
     dialogRef.afterClosed()
       .take(1)
       .filter(n => n)
-      .withLatestFrom(this.store$.select(fromRoot.getAuthUser), (val, user)=> {
+      .withLatestFrom(this.store$.select(fromRoot.getAuthUser), (val, user) => {
         return {
           task: val,
           ownerId: user.id
-        }
+        };
       })
       .subscribe(({task, ownerId}) => {
         this.store$.dispatch(new taskActions.AddTaskAction({
-          ...task, 
-          taskListId: listId, 
-          completed: false, 
+          ...task,
+          taskListId: listId,
+          completed: false,
           ownerId: ownerId,
           createDate: new Date()
         }));
@@ -153,7 +153,7 @@ export class TaskHomeComponent implements OnDestroy {
       .filter(n => n)
       .subscribe((val) => {
         this.store$.dispatch(new taskActions.UpdateTaskAction({
-          ...task, 
+          ...task,
           ...val
         }));
       });

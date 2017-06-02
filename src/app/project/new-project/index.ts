@@ -2,8 +2,6 @@ import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core'
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MD_DIALOG_DATA, MdDialogRef, OverlayContainer} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
-import * as fromRoot from '../../reducers';
-import * as actions from '../../actions/project.action';
 
 @Component({
   selector: 'app-new-project',

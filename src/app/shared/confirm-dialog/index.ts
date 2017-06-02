@@ -1,7 +1,5 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {MD_DIALOG_DATA, MdDialogRef, OverlayContainer} from '@angular/material';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '../../reducers';
 
 export interface ConfirmDialog {
   title: string;
@@ -28,8 +26,6 @@ export class ConfirmDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this.oc.themeClass = this.data.darkTheme ? 'myapp-dark-theme' : null;
   }
 

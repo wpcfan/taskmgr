@@ -38,8 +38,6 @@ export class ProjectListComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
     if (this.subTheme) {
       this.subTheme.unsubscribe();
     }
@@ -93,7 +91,7 @@ export class ProjectListComponent implements OnDestroy {
       confirmAction: '确认删除'
     };
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {data: {dialog: confirm, darkTheme: this.darkTheme}});
-    
+
     // 使用 take(1) 来自动销毁订阅，因为 take(1) 意味着接收到 1 个数据后就完成了
     dialogRef.afterClosed().take(1).subscribe(val => {
       if (val) {

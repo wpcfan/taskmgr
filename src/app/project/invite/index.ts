@@ -25,17 +25,15 @@ import {User} from '../../domain';
   styles: [``]
 })
 export class InviteComponent implements OnInit {
-  
+
   members: User[] = [];
 
   constructor(
-    @Inject(MD_DIALOG_DATA) private data: any, 
+    @Inject(MD_DIALOG_DATA) private data: any,
     private dialogRef: MdDialogRef<InviteComponent>,
     private oc: OverlayContainer) { }
 
   ngOnInit() {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this.oc.themeClass = this.data.darkTheme ? 'myapp-dark-theme' : null;
     this.members = [...this.data.members];
   }

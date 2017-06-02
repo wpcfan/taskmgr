@@ -1,14 +1,13 @@
 import {ChangeDetectionStrategy, Component, forwardRef, Input, OnInit, OnDestroy} from '@angular/core';
 import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import {
-  subYears, 
-  subMonths, 
-  subDays, 
-  isBefore, 
-  differenceInDays, 
-  differenceInMonths, 
+  subYears,
+  subMonths,
+  subDays,
+  isBefore,
+  differenceInDays,
+  differenceInMonths,
   differenceInYears,
   isPast,
   isValid,
@@ -83,8 +82,6 @@ export interface Age {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AgeInputComponent implements ControlValueAccessor, OnInit {
-  
-  
   age: Age;
   ageUnits: { value: AgeUnit; label: string }[] = [
     {value: AgeUnit.Year, label: '岁'},
@@ -92,13 +89,13 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit {
     {value: AgeUnit.Day, label: '天'}
   ];
   private readonly dateFormat = 'YYYY-MM-DD';
+  @Input() dateOfBirth = format(subYears(Date.now(), 50), this.dateFormat);
   private readonly daysTop = 90; // 90 天以下，用天作为单位
   private readonly monthsTop = 24; // 24 个月以下，用月作为单位
   private propagateChange = (_: any) => {};
-  @Input() dateOfBirth = format(subYears(Date.now(), 50), this.dateFormat);
   constructor() { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.age = this.toAge(parse(this.dateOfBirth));
   }
 
@@ -155,18 +152,18 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit {
       return {
         age: differenceInDays(now, date),
         unit: AgeUnit.Day
-      }
+      };
     }
     if (isBefore(subMonths(now, this.monthsTop), date)) {
       return {
         age: differenceInMonths(now, date),
         unit: AgeUnit.Month
-      }
+      };
     }
     return {
       age: differenceInYears(now, date),
       unit: AgeUnit.Year
-    }
+    };
   }
 
   private toDate(age: Age): string {

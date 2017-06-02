@@ -14,8 +14,8 @@ import {ProjectItemComponent} from './project-item';
   exports: [ProjectListComponent],
   entryComponents: [NewProjectComponent, InviteComponent],
   declarations: [
-    ProjectListComponent, 
-    NewProjectComponent, 
+    ProjectListComponent,
+    NewProjectComponent,
     InviteComponent,
     ProjectItemComponent
     ]

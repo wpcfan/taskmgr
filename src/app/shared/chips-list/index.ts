@@ -36,8 +36,6 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   }
 
   ngOnInit() {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this.chips = this.fb.group({
       memberSearch: ['']
     });
@@ -56,7 +54,7 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
       const userEntities = obj.reduce((entities, user) => {
         return {entities, [user.id]: user};
       }, {});
-      if(this.items){
+      if (this.items) {
         const remaining = this.items.filter(item => !userEntities[item.id]);
         this.items = [...remaining, ...obj];
       }

@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       console.log(valid);
       return valid;
     });
-    
+
     this._sub = id$.subscribe(id => {
       const info = extractInfo(id.identityNo);
       if (isValidAddr(info.addrCode)) {
@@ -69,8 +69,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
     if (this._sub) {
       this._sub.unsubscribe();
     }

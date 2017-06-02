@@ -1,6 +1,5 @@
-import {Component, ViewChild, Input, OnInit, ChangeDetectionStrategy, forwardRef, OnDestroy} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy, forwardRef, OnDestroy} from '@angular/core';
 import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {MdSelect} from '@angular/material';
 import {getProvinces, getCitiesByProvince, getAreasByCity} from '../../utils/area.util';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
@@ -93,9 +92,7 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
   private _sub: Subscription;
   private propagateChange = (_: any) => {};
 
-  constructor() { 
-
-  }
+  constructor() {}
 
   ngOnInit() {
 
@@ -133,7 +130,7 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
   // 验证表单，验证结果正确返回 null 否则返回一个验证结果对象
   validate(c: FormControl): {[key: string]: any} {
     const val = c.value;
-    if(!val) {
+    if (!val) {
       return null;
     }
     if (val.province && val.city && val.district && val.street && val.street.length >= 4) {
@@ -187,5 +184,5 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
 
   onStreetChange() {
     this._street.next(this._address.street);
-  }  
+  }
 }

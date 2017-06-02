@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MD_DIALOG_DATA, MdDialogRef, OverlayContainer} from '@angular/material';
-import {User} from '../../domain';
 
 @Component({
   selector: 'app-new-task',
@@ -10,7 +9,7 @@ import {User} from '../../domain';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewTaskComponent implements OnInit {
-  
+
   form: FormGroup;
   dialogTitle: string;
   priorities: { label: string; value: number }[] = [

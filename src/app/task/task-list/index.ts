@@ -14,7 +14,6 @@ import {Store} from '@ngrx/store';
 })
 export class TaskListComponent implements AfterViewInit {
 
-  taskCount: number;
   @Input() loading: boolean;
   @Input() list: TaskList;
   @Input() tasks: Task[];
