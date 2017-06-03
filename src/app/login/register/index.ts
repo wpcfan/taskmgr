@@ -45,11 +45,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
       address: [],
       identity: []
     });
-    const id$ = this.form.get('identity').valueChanges.debounceTime(300).filter(v => {
-      const valid = this.form.get('identity').valid;
-      console.log(valid);
-      return valid;
-    });
+    const id$ = this.form.get('identity').valueChanges
+      .debounceTime(300)
+      .filter(v => this.form.get('identity').valid);
 
     this._sub = id$.subscribe(id => {
       const info = extractInfo(id.identityNo);
