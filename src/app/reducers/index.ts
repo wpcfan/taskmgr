@@ -130,7 +130,7 @@ export const getTasksWithOwner = createSelector(getTasks, getUserEntities, (task
 });
 export const getProjectMembers = (projectId: string) => createSelector(getProjectsState, getUserEntities, (state, entities) => {
   return state.entities[projectId].members.map(id => entities[id]);
-})
+});
 export const getTheme = createSelector(getThemeState, fromTheme.getTheme);
 
 @NgModule({

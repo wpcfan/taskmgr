@@ -164,7 +164,7 @@ export type Actions
   | RemoveUserProjectFailAction
   | BatchUpdateUserProjectAction
   | BatchUpdateUserProjectSuccessAction
-  | BatchUpdateUserProjectFailAction  
+  | BatchUpdateUserProjectFailAction
   | LoadUsersByPrjAction
   | LoadUsersByPrjSuccessAction
   | LoadUsersByPrjFailAction

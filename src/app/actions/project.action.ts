@@ -174,5 +174,5 @@ export type Actions
   | LoadProjectsSuccessAction
   | LoadProjectsFailAction
   | SelectProjectAction
-  | InviteMembersAction  
+  | InviteMembersAction
   ;

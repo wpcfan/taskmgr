@@ -51,7 +51,7 @@ export class UserService {
     return Observable.from(memberIds)
       .switchMap(id => {
         const uri = `${this.config.uri}/${this.domain}/${id}`;
-        return this.http.get(uri).map(res => res.json() as User)
+        return this.http.get(uri).map(res => res.json() as User);
       })
       .filter(user => user.projectIds.indexOf(projectId) < 0)
       .switchMap(u => this.addProjectRef(u, projectId))

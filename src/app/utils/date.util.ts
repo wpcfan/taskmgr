@@ -6,4 +6,4 @@ export const isValidDate = (dateStr) => {
 
 export const toDate = (dateStr) => {
   return format(parse(dateStr), 'YYYY-MM-DD');
-}
+};

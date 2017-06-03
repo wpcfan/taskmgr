@@ -17,8 +17,8 @@ export function isValidAddr(code: string): boolean {
 }
 
 export const getAddrByCode = (code) => {
-  const provinceStr = GB2260[code.substring(0, 2)+'0000'];
-  const cityStr = GB2260[code.substring(0, 4)+ '00'];
+  const provinceStr = GB2260[code.substring(0, 2) + '0000'];
+  const cityStr = GB2260[code.substring(0, 4) + '00'];
   const districtStr = GB2260[code];
   const city = cityStr.replace(provinceStr, '');
   const district = districtStr.replace(cityStr, '');
@@ -26,5 +26,5 @@ export const getAddrByCode = (code) => {
     province: provinceStr,
     city: city,
     district: district
-  }
-}
+  };
+};

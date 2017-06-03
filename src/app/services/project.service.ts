@@ -70,7 +70,7 @@ export class ProjectService {
 
   inviteMembers(projectId: string, users: User[]) {
     const uri = `${this.config.uri}/${this.domain}/${projectId}`;
-    
+
     return this.http
       .get(uri)
       .map(res => res.json() as Project)
@@ -79,7 +79,7 @@ export class ProjectService {
         const userIds = users.map(user => user.id);
         const remainingIds = existingMemberIds.filter(id => userIds.indexOf(id) < 0);
         const newIds = [...remainingIds, ...userIds];
-        return this.http.patch(uri, JSON.stringify({ members: newIds }), {headers: this.headers})
+        return this.http.patch(uri, JSON.stringify({ members: newIds }), {headers: this.headers});
       })
       .map(res => res.json());
   }
