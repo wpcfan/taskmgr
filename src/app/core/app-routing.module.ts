@@ -10,8 +10,9 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'projects/:id',
+    path: 'projects',
     loadChildren: 'app/project#ProjectModule',
+    pathMatch: 'full',
     canActivate: [AuthGuardService]
   },
   {
