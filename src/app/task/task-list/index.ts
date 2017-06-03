@@ -3,8 +3,33 @@ import {Task, TaskList} from '../../domain';
 
 @Component({
   selector: 'app-task-list',
-  templateUrl: './task-list.component.html',
-  styleUrls: ['./task-list.component.scss'],
+  template: `
+    <md-list>
+      <app-task-list-header
+        [header]="list.name"
+        [darkTheme]="darkTheme"
+        (newTask)="addNewTask()"
+        (changeListName)="onChangeListName()"
+        (deleteList)="onDeleteList()"
+        (moveAllTasks)="onMoveAllTasks()">
+      </app-task-list-header>
+      <md-divider></md-divider>
+      <md-progress-bar color="primary" mode="indeterminate" *ngIf="loading else listItems">
+      </md-progress-bar>
+    </md-list>
+    <ng-template #listItems>
+      <md-divider></md-divider>
+      <app-task-item
+        *ngFor="let task of tasks"
+        md-line
+        [item]="task"
+        (taskComplete)="onTaskComplete(task)"
+        (taskClick)="onTaskClick(task)"
+        (draggingTaskId)="handleDragging($event)">
+      </app-task-item>
+    </ng-template>
+  `,
+  styles: [``],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskListComponent {
