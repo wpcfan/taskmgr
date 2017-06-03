@@ -22,10 +22,10 @@ import {CopyTaskComponent} from '../copy-task';
 })
 export class TaskHomeComponent implements OnDestroy {
 
-  draggingStatus: string;
-  dragTaskId: string;
   loading$: Observable<boolean>;
   lists$: Observable<TaskList[]>;
+  draggingStatus: string;
+  private dragTaskId: string;
   private darkTheme: boolean;
   private projectId: string;
   private routeParamSub: Subscription;

@@ -8,7 +8,7 @@ import {MdIconRegistry, OverlayContainer} from '@angular/material';
   styleUrls: ['./task-list-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskListHeaderComponent {
+export class TaskListHeaderComponent implements OnInit {
   @Output() changeListName = new EventEmitter<void>();
   @Output() deleteList = new EventEmitter<void>();
   @Output() moveAllTasks = new EventEmitter<void>();
