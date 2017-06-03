@@ -37,7 +37,7 @@ export class AuthService {
     return this.http
       .get(uri, {params: {'email': user.email}})
       .switchMap(res => {
-        if (res.json() === 0) {
+        if (res.json().length > 0) {
           throw new Error('username existed');
         }
         return this.http.post(uri, JSON.stringify(user), {headers: this.headers})

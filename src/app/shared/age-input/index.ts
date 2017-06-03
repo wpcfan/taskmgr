@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, forwardRef, Input, OnInit, OnDestroy} from '@angular/core';
-import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ChangeDetectionStrategy, Component, forwardRef, Input, OnInit} from '@angular/core';
+import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 import 'rxjs/add/observable/combineLatest';
 import {
   subYears,
@@ -14,6 +14,7 @@ import {
   format,
   parse
 } from 'date-fns';
+import {Observable} from 'rxjs/Observable';
 
 export enum AgeUnit {
   Year = 0,
@@ -29,38 +30,31 @@ export interface Age {
 @Component({
   selector: 'app-age-input',
   template: `
-    <div>
-      <md-input-container>
-        <input mdInput 
-          type="date" 
-          placeholder="出生日期" 
-          [value]="dateOfBirth"
-          (change)="onBirthdayChange($event.target.value)"
-          >
-      </md-input-container>
-    </div>
-    <div>
-      <md-input-container>
-        <input mdInput
-          type="number"
-          placeholder="年龄" 
-          [(ngModel)]="age.age"
-          (change)="onAgeNumChange()"
-          >
-      </md-input-container>
-    </div>
-    <div>
-      <md-button-toggle-group [(ngModel)]="age.unit" (change)="onAgeUnitChange()">
-        <md-button-toggle
-          *ngFor="let unit of ageUnits"
-          [value]="unit.value">
-          {{ unit.label }}
-        </md-button-toggle>
-      </md-button-toggle-group>
+    <div [formGroup]="form" class="age-input">
+      <div>
+        <md-input-container>
+          <input mdInput type="date" placeholder="出生日期" formControlName="birthday">
+        </md-input-container>
+      </div>
+      <div class="age-num">
+        <md-input-container>
+          <input mdInput type="number" placeholder="年龄" formControlName="ageNum">
+        </md-input-container>
+      </div>
+      <div>
+        <md-button-toggle-group formControlName="ageUnit">
+          <md-button-toggle *ngFor="let unit of ageUnits" [value]="unit.value">
+            {{ unit.label }}
+          </md-button-toggle>
+        </md-button-toggle-group>
+      </div>
     </div>
     `,
   styles: [`
-    :host{
+    .age-num{
+      width: 50px;
+    }
+    .age-input{
       display: flex;
       flex-wrap: nowrap;
       flex-direction: row;
@@ -82,28 +76,48 @@ export interface Age {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AgeInputComponent implements ControlValueAccessor, OnInit {
-  age: Age;
+  form: FormGroup;
   ageUnits: { value: AgeUnit; label: string }[] = [
     {value: AgeUnit.Year, label: '岁'},
     {value: AgeUnit.Month, label: '月'},
     {value: AgeUnit.Day, label: '天'}
   ];
   private readonly dateFormat = 'YYYY-MM-DD';
-  @Input() dateOfBirth = format(subYears(Date.now(), 50), this.dateFormat);
+  @Input() dateOfBirth;
   private readonly daysTop = 90; // 90 天以下，用天作为单位
   private readonly monthsTop = 24; // 24 个月以下，用月作为单位
   private propagateChange = (_: any) => {};
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.age = this.toAge(parse(this.dateOfBirth));
+    const initDate = this.dateOfBirth ? this.dateOfBirth : format(subYears(Date.now(), 50), this.dateFormat);
+    const initAge = this.toAge(initDate);
+    this.form = this.fb.group({
+      birthday: [initDate],
+      ageNum: [initAge.age],
+      ageUnit: [initAge.unit]
+    });
+    const birthday$ = this.form.get('birthday').valueChanges.distinctUntilChanged().startWith(initDate);
+    const ageNum$ = this.form.get('ageNum').valueChanges.distinctUntilChanged().startWith(initAge.age);
+    const ageUnit$ = this.form.get('ageUnit').valueChanges.distinctUntilChanged().startWith(initAge.unit);
+    birthday$.subscribe(date => {
+      const age = this.toAge(date);
+      this.form.get('ageNum').patchValue(age.age);
+      this.form.get('ageUnit').patchValue(age.unit);
+      this.propagateChange(date);
+    });
+    const age$ = Observable.combineLatest(ageNum$, ageUnit$, (_num, _unit) => this.toDate({age: _num, unit: _unit}));
+    age$.subscribe(date => {
+      this.form.get('birthday').patchValue(date);
+    });
   }
 
   // 提供值的写入方法
   public writeValue(obj: string) {
     if (obj && isValid(parse(obj))) {
-      this.dateOfBirth = format(obj, this.dateFormat);
-      this.age = this.toAge(parse(this.dateOfBirth));
+      const date = format(obj, this.dateFormat);
+      this.form.get('birthday').patchValue(date);
+      this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
     }
   }
 
@@ -131,22 +145,8 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit {
     };
   }
 
-  onBirthdayChange(date: string) {
-    this.dateOfBirth = date;
-    this.propagateChange(date);
-    this.age = this.toAge(parse(this.dateOfBirth));
-  }
-
-  onAgeNumChange() {
-    this.dateOfBirth = this.toDate(this.age);
-  }
-
-  onAgeUnitChange() {
-    this.dateOfBirth = this.toDate(this.age);
-  }
-
-
-  private toAge(date: Date): Age {
+  private toAge(dateStr: string): Age {
+    const date = parse(dateStr);
     const now = new Date();
     if (isBefore(subDays(now, this.daysTop), date)) {
       return {
