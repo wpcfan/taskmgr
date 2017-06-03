@@ -9,7 +9,8 @@ import {
   MdSidenavModule, 
   MdSlideToggleModule,
   MdButtonModule,
-  MdIconModule
+  MdIconModule,
+  MdListModule
 } from '@angular/material';
 import {AppRoutingModule} from './app-routing.module';
 import {AppEffectsModule} from '../effects';
@@ -30,6 +31,7 @@ import 'hammerjs';
     MdSlideToggleModule,
     MdButtonModule,
     MdIconModule,
+    MdListModule,
     AppEffectsModule,
     ServicesModule.forRoot(),
     AppStoreModule,
