@@ -141,7 +141,7 @@ export const getTheme = createSelector(getThemeState, fromTheme.getTheme);
      */
     StoreModule.provideStore(reducer),
     RouterStoreModule.connectRouter(),
-    // Note that you must instrument after importing StoreModule
+    // DevTool 需要在 StoreModule 之后导入
     StoreDevtoolsModule.instrumentOnlyWithExtension({
       maxAge: 5
     })
