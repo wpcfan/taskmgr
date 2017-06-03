@@ -27,6 +27,7 @@ import {User} from '../../domain';
 export class InviteComponent implements OnInit {
 
   members: User[] = [];
+  dialogTitle = '邀请成员';
 
   constructor(
     @Inject(MD_DIALOG_DATA) private data: any,
