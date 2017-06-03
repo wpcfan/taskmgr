@@ -10,6 +10,11 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'projects/:id',
+    loadChildren: 'app/project#ProjectModule',
+    canActivate: [AuthGuardService]
+  },
+  {
     path: 'tasklists/:id',
     loadChildren: 'app/task#TaskModule',
     canActivate: [AuthGuardService]

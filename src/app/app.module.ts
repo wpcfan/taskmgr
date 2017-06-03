@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 import {CoreModule} from './core';
 import {LoginModule} from './login';
 import {AppComponent} from './app.component';
-import {ProjectModule} from './project';
 
 @NgModule({
   declarations: [
@@ -12,7 +11,6 @@ import {ProjectModule} from './project';
   imports: [
     BrowserModule,
     LoginModule,
-    ProjectModule,
     CoreModule,
   ],
   bootstrap: [AppComponent]

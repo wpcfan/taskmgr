@@ -1,4 +1,4 @@
-import {Component, OnInit, Inject} from '@angular/core';
+import {Component, OnInit, Inject, Input} from '@angular/core';
 import {MD_DIALOG_DATA, MdDialogRef, OverlayContainer} from '@angular/material';
 import {User} from '../../domain';
 
@@ -27,7 +27,7 @@ import {User} from '../../domain';
 export class InviteComponent implements OnInit {
 
   members: User[] = [];
-  dialogTitle = '邀请成员';
+  dialogTitle: string;
 
   constructor(
     @Inject(MD_DIALOG_DATA) private data: any,
@@ -37,6 +37,7 @@ export class InviteComponent implements OnInit {
   ngOnInit() {
     this.oc.themeClass = this.data.darkTheme ? 'myapp-dark-theme' : null;
     this.members = [...this.data.members];
+    this.dialogTitle = this.data.dialogTitle ? this.data.dialogTitle : '邀请成员';
   }
 
   onSubmit(ev: Event, {value, valid}) {
