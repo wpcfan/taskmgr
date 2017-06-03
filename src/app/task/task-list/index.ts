@@ -1,10 +1,5 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {Task, TaskList} from '../../domain';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/filter';
-import * as fromRoot from '../../reducers';
-import * as taskActions from '../../actions/task.action';
-import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-task-list',
@@ -12,9 +7,10 @@ import {Store} from '@ngrx/store';
   styleUrls: ['./task-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskListComponent implements AfterViewInit {
+export class TaskListComponent {
 
   @Input() loading: boolean;
+  @Input() darkTheme: boolean;
   @Input() list: TaskList;
   @Input() tasks: Task[];
   @Output() dragTask = new EventEmitter<string>();
@@ -25,14 +21,7 @@ export class TaskListComponent implements AfterViewInit {
   @Output() addTask = new EventEmitter<string>();
   @Output() updateTask = new EventEmitter<Task>();
 
-  constructor(private store$: Store<fromRoot.State>) {
-  }
-
-  ngAfterViewInit() {
-    // 由于@Input 是在 Init 时候才设置进来的，这句要放在这里
-    // 如果在 constructor 中会报错
-    this.store$.dispatch(new taskActions.LoadTasksAction(this.list.id));
-  }
+  constructor() { }
 
   onChangeListName() {
     this.renameList.emit(this.list);

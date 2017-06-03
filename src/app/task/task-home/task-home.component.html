@@ -13,6 +13,7 @@
     (drop)="onDrop(taskList.id)">
     <app-task-list
       [list]="taskList"
+      [darkTheme]="darkTheme"
       [tasks]="tasksByList(taskList.id) | async"
       [loading]="loading$ | async"
       (completeTask)="handleCompleteTask($event)"

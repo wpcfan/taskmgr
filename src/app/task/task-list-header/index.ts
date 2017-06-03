@@ -1,9 +1,6 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MdIconRegistry, OverlayContainer} from '@angular/material';
-import {Subscription} from 'rxjs/Subscription';
-import {Store} from '@ngrx/store';
-import * as fromRoot from '../../reducers';
 
 @Component({
   selector: 'app-task-list-header',
@@ -17,17 +14,18 @@ export class TaskListHeaderComponent {
   @Output() moveAllTasks = new EventEmitter<void>();
   @Output() newTask = new EventEmitter<void>();
   @Input() header = '';
-  subTheme: Subscription;
+  @Input() darkTheme: boolean = false;
 
-  constructor(private store$: Store<fromRoot.State>,
-              oc: OverlayContainer,
+  constructor(private oc: OverlayContainer,
               iconRegistry: MdIconRegistry,
               sanitizer: DomSanitizer) {
-    this.subTheme = this.store$.select(fromRoot.getTheme)
-      .subscribe(result => oc.themeClass = result ? 'myapp-dark-theme' : null);
     iconRegistry.addSvgIcon(
       'move',
       sanitizer.bypassSecurityTrustResourceUrl('assets/img/icons/move.svg'));
+  }
+
+  ngOnInit() {
+    this.oc.themeClass = this.darkTheme ? 'myapp-dark-theme' : null;
   }
 
   onChangeListName(ev: Event) {

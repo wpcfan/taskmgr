@@ -30,6 +30,7 @@ export class TaskHomeComponent implements OnDestroy {
   private projectId: string;
   private routeParamSub: Subscription;
   private subTheme: Subscription;
+  private subTasks: Subscription;
 
   constructor(private route: ActivatedRoute,
               private dialog: MdDialog,
@@ -44,6 +45,11 @@ export class TaskHomeComponent implements OnDestroy {
         this.darkTheme = result;
       });
     this.lists$ = this.store$.select(fromRoot.getProjectTaskList);
+    this.subTasks = this.lists$.subscribe(lists => {
+      lists.forEach((list)=>{
+        this.store$.dispatch(new taskActions.LoadTasksAction(list.id));
+      });
+    });
     this.loading$ = this.store$.select(fromRoot.getTaskLoading);
   }
 
@@ -55,6 +61,15 @@ export class TaskHomeComponent implements OnDestroy {
     if (this.subTheme) {
       this.subTheme.unsubscribe();
     }
+    if (this.subTasks) {
+      this.subTasks.unsubscribe();
+    }
+  }
+
+  tasksByList(listId: string) {
+    return this.store$
+      .select(fromRoot.getTasksWithOwner)
+      .map(tasks => tasks.filter(task => task.taskListId === listId));
   }
 
   handleRenameList(list: TaskList) {
@@ -92,12 +107,6 @@ export class TaskHomeComponent implements OnDestroy {
 
   handleCompleteTask(task: Task) {
     this.store$.dispatch(new taskActions.CompleteTaskAction(task));
-  }
-
-  tasksByList(listId: string) {
-    return this.store$
-      .select(fromRoot.getTasksWithOwner)
-      .map(tasks => tasks.filter(task => task.taskListId === listId));
   }
 
   onDragOver(e) {

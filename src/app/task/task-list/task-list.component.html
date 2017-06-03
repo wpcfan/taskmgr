@@ -1,6 +1,7 @@
 <md-list>
   <app-task-list-header
     [header]="list.name"
+    [darkTheme]="darkTheme"
     (newTask)="addNewTask()"
     (changeListName)="onChangeListName()"
     (deleteList)="onDeleteList()"
