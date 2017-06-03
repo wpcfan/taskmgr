@@ -8,7 +8,7 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/combineLatest';
 import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/auth.action';
-import { extractInfo, getAddrByCode, isValidAddr } from '../../utils/identity.util';
+import {extractInfo, getAddrByCode, isValidAddr} from '../../utils/identity.util';
 import {isValidDate, toDate} from '../../utils/date.util';
 
 @Component({
@@ -18,6 +18,7 @@ import {isValidDate, toDate} from '../../utils/date.util';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit, OnDestroy {
+
   private _sub: Subscription;
   selectedTab = 0;
   form: FormGroup;
@@ -28,9 +29,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.avatars$ = Observable
       .range(0, 13)
       .map(i => `/assets/img/avatar/${i}.svg`)
-      .reduce((r, x) => {
-        return [...r, x];
-      }, []);
+      .reduce((r, x) => [...r, x], []);
   }
 
   ngOnInit() {
@@ -53,14 +52,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
       const info = extractInfo(id.identityNo);
       if (isValidAddr(info.addrCode)) {
         const addr = getAddrByCode(info.addrCode);
-        this.form.get('address').patchValue(addr);
-        this.form.get('address').updateValueAndValidity({onlySelf: true, emitEvent: true});
+        this.form.patchValue({address: addr});
+        this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
       }
       if (isValidDate(info.dateOfBirth)) {
         const date = toDate(info.dateOfBirth);
-        this.form.patchValue({
-          dateOfBirth: date
-        });
+        this.form.patchValue({dateOfBirth: date});
         this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
       }
     });
