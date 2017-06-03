@@ -147,8 +147,9 @@ export class ProjectEffects {
 
   /**
    *
-   * @param actions$
-   * @param todoService
+   * @param actions$ action 流
+   * @param service  注入 ProjectService
+   * @param store$ 注入 redux store
    */
   constructor(private actions$: Actions,
               private service: ProjectService,
