@@ -1,0 +1,21 @@
+// 将设置放入此文件中以覆盖默认值和用户设置。
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "node_modules": true,
+    "dist": true,
+    "out": true
+  },
+  "editor.fontSize": 18,
+  "editor.lineHeight": 24,
+  "editor.fontLigatures": true,
+  "editor.fontFamily": "Fira Code, 'Operator Mono', Menlo, Monaco, 'Courier New', monospace",
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.trimAutoWhitespace": true,
+  "files.insertFinalNewline": true,
+  "terminal.integrated.fontSize": 18
+}
