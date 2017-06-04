@@ -22,13 +22,7 @@ export class SidebarComponent {
   constructor(private store$: Store<fromRoot.State>) {
     this.auth$ = this.store$.select(fromRoot.getAuth);
     this.projects$ = this.store$.select(fromRoot.getProjects);
-    this.initializeSvgIconSet();
     this.today = `day${getDate(new Date())}`;
-  }
-
-  initializeSvgIconSet() {
-
-
   }
 
   handleClicked(ev: Event) {
