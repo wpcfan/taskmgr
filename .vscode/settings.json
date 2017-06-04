@@ -9,6 +9,7 @@
     "dist": true,
     "out": true
   },
+  "files.trimTrailingWhitespace": true,
   "editor.fontSize": 18,
   "editor.lineHeight": 24,
   "editor.fontLigatures": true,
@@ -17,5 +18,7 @@
   "editor.insertSpaces": true,
   "editor.trimAutoWhitespace": true,
   "files.insertFinalNewline": true,
-  "terminal.integrated.fontSize": 18
+  "terminal.integrated.fontSize": 18,
+  "terminal.integrated.fontFamily": "Fira Code, 'Operator Mono', Menlo, Monaco, 'Courier New', monospace",
+  "terminal.integrated.fontLigatures": true
 }
