@@ -3,7 +3,7 @@
     {
       "password": "wp123456",
       "name": "王芃",
-      "avatar": "/assets/img/avatar/10.svg",
+      "avatar": "avatars:svg-1",
       "email": "wpcfan@163.com",
       "id": "37489e0c-df34-c261-71c4-ce75357e3035",
       "projectIds": [
@@ -14,7 +14,7 @@
     {
       "password": "Ls123456",
       "name": "李四",
-      "avatar": "/assets/img/avatar/12.svg",
+      "avatar": "avatars:svg-2",
       "email": "lisi@163.com",
       "id": "BkkDvwee-",
       "projectIds": [

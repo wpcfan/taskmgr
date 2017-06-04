@@ -21,6 +21,9 @@ import {FooterComponent} from './footer';
 import {SidebarComponent} from './sidebar';
 import {PageNotFoundComponent} from './page-not-found';
 import 'hammerjs';
+import { MdIconRegistry } from '@angular/material';
+import { DomSanitizer } from '@angular/platform-browser';
+import { loadSvgResources } from '../utils/svg.util';
 
 @NgModule({
   imports: [
@@ -62,9 +65,14 @@ import 'hammerjs';
   ]
 })
 export class CoreModule {
-  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+
+  constructor(
+    @Optional() @SkipSelf() parentModule: CoreModule,
+    iconRegistry: MdIconRegistry,
+    sanitizer: DomSanitizer) {
     if (parentModule) {
       throw new Error('CoreModule 已经装载，请仅在 AppModule 中引入该模块。');
     }
+    loadSvgResources(iconRegistry, sanitizer);
   }
 }

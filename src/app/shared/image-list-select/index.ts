@@ -20,13 +20,16 @@ import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} fro
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImageListSelectComponent implements ControlValueAccessor {
+
   @Input() selected: string;
   @Input() title = '选择封面：';
   @Input() items: string[] = [];
   @Input() cols = 8;
   @Input() rowHeight = '64px';
   @Input() itemWidth = '80px';
+  @Input() useSvgIcon = false;
   @Output('itemChange') itemChange = new EventEmitter<string>();
+
   // 这里是做一个空函数体，真正使用的方法在 registerOnChange 中
   // 由框架注册，然后我们使用它把变化发回表单
   // 注意，和 EventEmitter 尽管很像，但发送回的对象不同

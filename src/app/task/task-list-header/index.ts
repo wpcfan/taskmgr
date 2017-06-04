@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
-import {MdIconRegistry, OverlayContainer} from '@angular/material';
+import {OverlayContainer} from '@angular/material';
 
 @Component({
   selector: 'app-task-list-header',
@@ -63,12 +62,7 @@ export class TaskListHeaderComponent implements OnInit {
   @Input() header = '';
   @Input() darkTheme = false;
 
-  constructor(private oc: OverlayContainer,
-              iconRegistry: MdIconRegistry,
-              sanitizer: DomSanitizer) {
-    iconRegistry.addSvgIcon(
-      'move',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/img/icons/move.svg'));
+  constructor(private oc: OverlayContainer) {
   }
 
   ngOnInit() {

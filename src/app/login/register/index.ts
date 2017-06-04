@@ -3,9 +3,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/reduce';
+import 'rxjs/add/observable/range';
 import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/auth.action';
 import {extractInfo, getAddrByCode, isValidAddr} from '../../utils/identity.util';
@@ -23,17 +22,19 @@ export class RegisterComponent implements OnInit, OnDestroy {
   selectedTab = 0;
   form: FormGroup;
   avatars$: Observable<string[]>;
+  private readonly avatarName = 'avatars';
 
   constructor(private fb: FormBuilder,
               private store$: Store<fromRoot.State>) {
+
     this.avatars$ = Observable
-      .range(0, 13)
-      .map(i => `/assets/img/avatar/${i}.svg`)
+      .range(1, 16)
+      .map(i => `${this.avatarName}:svg-${i}`)
       .reduce((r, x) => [...r, x], []);
   }
 
   ngOnInit() {
-    const img = `/assets/img/avatar/${Math.floor(Math.random() * 13).toFixed(0)}.svg`;
+    const img = `${this.avatarName}:svg-${Math.floor(Math.random() * 16).toFixed(0)}`;
     this.form = this.fb.group({
       name: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],

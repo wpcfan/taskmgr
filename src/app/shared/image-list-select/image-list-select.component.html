@@ -1,13 +1,13 @@
 <div>
-  <span>{{title}}</span><img class="cover" [src]="selected">
+  <span>{{title}}</span>
+  <md-icon class="avatar" [svgIcon]="selected" *ngIf="useSvgIcon"></md-icon>
+  <img class="cover" [src]="selected" *ngIf="!useSvgIcon">
 </div>
 <div class="scroll-container">
   <md-grid-list [cols]="cols" [rowHeight]="rowHeight">
     <md-grid-tile *ngFor="let item of items; let i = index;">
       <div class="image-container" (click)="onChange(i)">
-        <img
-          [src]="item"
-          [ngStyle]="{'width': itemWidth }">
+        <md-icon class="avatar" [svgIcon]="item" *ngIf="useSvgIcon else useImg"></md-icon>
         <div class="after">
           <span class="zoom">
             <md-icon>checked</md-icon>
@@ -17,3 +17,6 @@
     </md-grid-tile>
   </md-grid-list>
 </div>
+<ng-template #useImg>
+  <img [src]="item" [ngStyle]="{'width': itemWidth }">
+</ng-template>

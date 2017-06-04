@@ -15,8 +15,9 @@
           <input mdInput type="password" placeholder="为避免失误请再次输入" formControlName="repeat">
         </md-input-container>
         <app-image-list-select
-          cols=6
-          title="选择头像："
+          [useSvgIcon]="true"
+          [cols]="6"
+          [title]="'选择头像：'"
           [items]="avatars$ | async"
           formControlName="avatar">
         </app-image-list-select>

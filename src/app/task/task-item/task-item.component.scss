@@ -1,3 +1,12 @@
+md-icon.avatar {
+  overflow: hidden;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  margin: 12px;
+  order: 3;
+}
+
 .completed {
   opacity: 0.64;
   color: #d9d9d9;
@@ -26,10 +35,6 @@
   font-size: 10px;
   width: 100%;
   order: 1;
-}
-
-.avatar-right {
-  order: 3;
 }
 
 .duedate {
