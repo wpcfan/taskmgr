@@ -61,7 +61,7 @@ export class TaskListHeaderComponent implements OnInit {
   @Output() moveAllTasks = new EventEmitter<void>();
   @Output() newTask = new EventEmitter<void>();
   @Input() header = '';
-  @Input() darkTheme: boolean = false;
+  @Input() darkTheme = false;
 
   constructor(private oc: OverlayContainer,
               iconRegistry: MdIconRegistry,

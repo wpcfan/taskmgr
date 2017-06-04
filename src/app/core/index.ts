@@ -3,10 +3,10 @@ import {CommonModule} from '@angular/common';
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MdSidenav, 
-  MdSidenavContainer, 
+  MdSidenav,
+  MdSidenavContainer,
   MdToolbarModule,
-  MdSidenavModule, 
+  MdSidenavModule,
   MdSlideToggleModule,
   MdButtonModule,
   MdIconModule,
@@ -27,7 +27,7 @@ import 'hammerjs';
     CommonModule,
     HttpModule,
     MdToolbarModule,
-    MdSidenavModule, 
+    MdSidenavModule,
     MdSlideToggleModule,
     MdButtonModule,
     MdIconModule,
@@ -39,8 +39,8 @@ import 'hammerjs';
     BrowserAnimationsModule
   ],
   exports: [
-    MdSidenav, 
-    MdSidenavContainer, 
+    MdSidenav,
+    MdSidenavContainer,
     HeaderComponent,
     FooterComponent,
     SidebarComponent,

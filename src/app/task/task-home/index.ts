@@ -46,7 +46,7 @@ export class TaskHomeComponent implements OnDestroy {
       });
     this.lists$ = this.store$.select(fromRoot.getProjectTaskList);
     this.subTasks = this.lists$.subscribe(lists => {
-      lists.forEach((list)=>{
+      lists.forEach((list) => {
         this.store$.dispatch(new taskActions.LoadTasksAction(list.id));
       });
     });
