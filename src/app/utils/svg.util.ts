@@ -1,6 +1,12 @@
 import { MdIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
+/**
+ * a utility to load all needed svg resources to the app for md-icon to use
+ *
+ * @param ir a MdIconRegistry instance to use external svg resources for md-icon use
+ * @param ds a DomSanitizer instance to bypass security and return a url
+ */
 export const loadSvgResources = (ir: MdIconRegistry, ds: DomSanitizer) => {
   const imgDir = 'assets/img';
   const avatarDir = `${imgDir}/avatar`;

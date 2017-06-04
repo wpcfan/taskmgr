@@ -40,3 +40,6 @@
 # System Files
 .DS_Store
 Thumbs.db
+
+# generated docs
+/doc
