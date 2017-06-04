@@ -22,7 +22,7 @@ import {Address} from '../../domain';
         </md-select>
       </div>
       <div>
-        <md-select 
+        <md-select
           placeholder="请选择城市"
           [(ngModel)]="_address.city"
           (change)="onCityChange()">
@@ -32,7 +32,7 @@ import {Address} from '../../domain';
         </md-select>
       </div>
       <div>
-        <md-select 
+        <md-select
           placeholder="请选择区县"
           [(ngModel)]="_address.district"
           (change)="onDistrictChange()">
@@ -48,7 +48,7 @@ import {Address} from '../../domain';
       </div>
     </div>
     `,
-  styles: [`    
+  styles: [`
     .street{
       flex: 1 1 100%;
     }

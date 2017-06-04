@@ -28,7 +28,7 @@ import * as fromRoot from '../../reducers';
       <mwl-calendar-week-view
         *ngSwitchCase="'week'"
         [viewDate]="viewDate"
-        [locale]="'zh'"        
+        [locale]="'zh'"
         [events]="calEvents"
         [refresh]="refresh"
         (eventClicked)="handleEvent('Clicked', $event.event)"
@@ -37,7 +37,7 @@ import * as fromRoot from '../../reducers';
       <mwl-calendar-day-view
         *ngSwitchCase="'day'"
         [viewDate]="viewDate"
-        [locale]="'zh'"        
+        [locale]="'zh'"
         [events]="calEvents"
         [refresh]="refresh"
         (eventClicked)="handleEvent('Clicked', $event.event)"

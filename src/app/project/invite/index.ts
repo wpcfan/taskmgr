@@ -10,7 +10,7 @@ import {User} from '../../domain';
       <form class="full-width" #f="ngForm" (ngSubmit)="onSubmit($event, f)">
         <app-chips-list [items]="members" [label]="'邀请成员'" name="members" [(ngModel)]="members"></app-chips-list>
         <div md-dialog-actions>
-          <button 
+          <button
             md-raised-button
             color="primary"
             type="submit"
