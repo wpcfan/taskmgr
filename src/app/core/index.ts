@@ -20,10 +20,10 @@ import {HeaderComponent} from './header';
 import {FooterComponent} from './footer';
 import {SidebarComponent} from './sidebar';
 import {PageNotFoundComponent} from './page-not-found';
+import {MdIconRegistry} from '@angular/material';
+import {DomSanitizer} from '@angular/platform-browser';
+import {loadSvgResources} from '../utils/svg.util';
 import 'hammerjs';
-import { MdIconRegistry } from '@angular/material';
-import { DomSanitizer } from '@angular/platform-browser';
-import { loadSvgResources } from '../utils/svg.util';
 
 @NgModule({
   imports: [
