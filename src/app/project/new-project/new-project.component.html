@@ -8,10 +8,7 @@
       <md-input-container class="full-width">
         <input mdInput placeholder="项目简介（选填）" formControlName="desc">
       </md-input-container>
-      <app-image-list-select
-        cols=6
-        [items]="thumbnails$ | async"
-        formControlName="coverImg">
+      <app-image-list-select [cols]="6" [items]="thumbnails$ | async" formControlName="coverImg">
       </app-image-list-select>
     </div>
   </md-card>

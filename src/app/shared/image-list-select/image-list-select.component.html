@@ -7,7 +7,8 @@
   <md-grid-list [cols]="cols" [rowHeight]="rowHeight">
     <md-grid-tile *ngFor="let item of items; let i = index;">
       <div class="image-container" (click)="onChange(i)">
-        <md-icon class="avatar" [svgIcon]="item" *ngIf="useSvgIcon else useImg"></md-icon>
+        <img [src]="item" [ngStyle]="{'width': itemWidth }" *ngIf="!useSvgIcon">
+        <md-icon class="avatar" [svgIcon]="item" *ngIf="useSvgIcon"></md-icon>
         <div class="after">
           <span class="zoom">
             <md-icon>checked</md-icon>
@@ -17,6 +18,3 @@
     </md-grid-tile>
   </md-grid-list>
 </div>
-<ng-template #useImg>
-  <img [src]="item" [ngStyle]="{'width': itemWidth }">
-</ng-template>
