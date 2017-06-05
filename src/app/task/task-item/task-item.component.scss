@@ -29,14 +29,6 @@ md-icon.avatar {
   border: 0 solid #A6A6A6;
 }
 
-.bottom-bar {
-  margin-top: 3px;
-  margin-bottom: 2px;
-  font-size: 10px;
-  width: 100%;
-  order: 1;
-}
-
 .duedate {
   background-color: #FF4F3E;
   color: #fff;
@@ -44,6 +36,14 @@ md-icon.avatar {
 
 .alarm {
   font-size: 18px;
+}
+
+.bottom-bar {
+  margin-top: 3px;
+  margin-bottom: 2px;
+  font-size: 10px;
+  width: 100%;
+  order: 1;
 }
 
 .desc {
@@ -68,11 +68,6 @@ md-icon.avatar {
 .drag-start {
   opacity: 0.5;
   border: #ff525b dashed 2px;
-}
-
-.drag-end {
-  opacity: 1;
-  border: none;
 }
 
 :host {
