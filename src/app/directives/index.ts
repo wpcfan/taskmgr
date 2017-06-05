@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { DragDirective } from './drag-drop/drag.directive';
 import { DropDirective } from './drag-drop/drop.directive';
-import { DragDropService } from './drag-drop.service';
+import { DragDropService, DragData } from './drag-drop.service';
 
 @NgModule({
   providers: [
@@ -17,3 +17,4 @@ import { DragDropService } from './drag-drop.service';
   ]
 })
 export class DirectivesModule {}
+export {DragData};
