@@ -9,11 +9,13 @@ export class DropDirective {
   @Output() dropped: EventEmitter<DragData> = new EventEmitter();
   @Input() dropTags: string[] = [];
   @Input() dragEnterClass = '';
+  private drag$;
 
   constructor(
     private el: ElementRef,
     private rd: Renderer2,
     private service: DragDropService) {
+      this.drag$ = this.service.getDragData().take(1);
   }
 
   @HostListener('dragenter', ['$event'])
@@ -21,7 +23,7 @@ export class DropDirective {
     ev.preventDefault();
     ev.stopPropagation();
     if (this.el.nativeElement === ev.target) {
-      this.service.getDragData().take(1).subscribe(dragData => {
+      this.drag$.subscribe(dragData => {
         if (this.dropTags.indexOf(dragData.tag) > -1) {
           this.rd.addClass(this.el.nativeElement, this.dragEnterClass);
         }
@@ -33,8 +35,8 @@ export class DropDirective {
   onDragOver(ev: Event) {
     ev.preventDefault();
     ev.stopPropagation();
-    if (this.el.nativeElement === event.target) {
-      this.service.getDragData().take(1).subscribe(dragData => {
+    if (this.el.nativeElement === ev.target) {
+      this.drag$.subscribe(dragData => {
         if (this.dropTags.indexOf(dragData.tag) > -1) {
           this.rd.setProperty(ev, 'dataTransfer.effectAllowed', 'all');
           this.rd.setProperty(ev, 'dataTransfer.dropEffect', 'move');
@@ -50,8 +52,8 @@ export class DropDirective {
   onDragLeave(ev: Event) {
     ev.preventDefault();
     ev.stopPropagation();
-    if (this.el.nativeElement === event.target) {
-      this.service.getDragData().take(1).subscribe(dragData => {
+    if (this.el.nativeElement === ev.target) {
+      this.drag$.subscribe(dragData => {
         if (this.dropTags.indexOf(dragData.tag) > -1) {
           this.rd.removeClass(this.el.nativeElement, this.dragEnterClass);
         }
@@ -63,8 +65,8 @@ export class DropDirective {
   onDrop(ev: Event) {
     ev.preventDefault();
     ev.stopPropagation();
-    if (this.el.nativeElement === event.target) {
-      this.service.getDragData().take(1).subscribe(dragData => {
+    if (this.el.nativeElement === ev.target) {
+      this.drag$.subscribe(dragData => {
         if (this.dropTags.indexOf(dragData.tag) > -1) {
           this.rd.removeClass(this.el.nativeElement, this.dragEnterClass);
           this.dropped.emit(dragData);
