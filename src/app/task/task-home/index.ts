@@ -13,6 +13,7 @@ import {Task, TaskList} from '../../domain';
 import {NewTaskListComponent} from '../new-task-list';
 import {NewTaskComponent} from '../new-task';
 import {CopyTaskComponent} from '../copy-task';
+import { ConfirmDialogComponent } from '../../shared/confirm-dialog/index';
 
 @Component({
   selector: 'app-task-home',
@@ -97,7 +98,19 @@ export class TaskHomeComponent implements OnDestroy {
   }
 
   handleDelList(list: TaskList) {
-    this.store$.dispatch(new listActions.DeleteTaskListAction(list));
+    const confirm = {
+      title: '删除项目：',
+      content: '确认要删除该任务列表？',
+      confirmAction: '确认删除'
+    };
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {data: {dialog: confirm, darkTheme: this.darkTheme}});
+
+    // 使用 take(1) 来自动销毁订阅，因为 take(1) 意味着接收到 1 个数据后就完成了
+    dialogRef.afterClosed().take(1).subscribe(val => {
+      if (val) {
+        this.store$.dispatch(new listActions.DeleteTaskListAction(list));
+      }
+    });
   }
 
   handleCompleteTask(task: Task) {
