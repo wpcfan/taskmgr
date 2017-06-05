@@ -24,10 +24,10 @@ export function reducer(state = initialState, action: actions.Actions): State {
       }
       const newIds = [...state.ids, taskList.id];
       const newEntities = {...state.entities, [taskList.id]: taskList};
-      return {...state,
+      return {
         ids: newIds,
         entities: newEntities,
-        selectedId: [...state.selectedIds, taskList.id]
+        selectedIds: [...state.selectedIds, taskList.id]
       };
     }
     case actions.ActionTypes.DELETE_SUCCESS: {

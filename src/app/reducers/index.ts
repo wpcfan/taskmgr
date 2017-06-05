@@ -35,6 +35,7 @@ import * as fromTaskLists from './task-list.reducer';
 import * as fromTasks from './task.reducer';
 import * as fromUsers from './user.reducer';
 import * as fromTheme from './theme.reducer';
+import { state } from '@angular/animations';
 
 /**
  * 正如我们的 reducer 像数据库中的表一样，我们的顶层 state 也包含各个子 reducer 的 state
@@ -107,6 +108,7 @@ export const getProjectEntities = createSelector(getProjectsState, fromProjects.
 export const getTaskLists = createSelector(getTaskListsState, fromTaskLists.getTaskLists);
 export const getTaskListEntities = createSelector(getTaskListsState, fromTaskLists.getEntities);
 export const getTaskListIds = createSelector(getTaskListsState, fromTaskLists.getIds);
+export const getTaskListSelectedIds = createSelector(getTaskListsState, fromTaskLists.getSelectedIds);
 export const getSelectedProjectId = createSelector(getProjectsState, fromProjects.getSelectedId);
 export const getSelectedProject = createSelector(getProjectEntities, getSelectedProjectId, (entities, id) => {
   return entities[id];
@@ -137,6 +139,10 @@ export const getAuth = createSelector(getCurrentAuth, getUserEntities, (_auth, _
 });
 export const getAuthUser = createSelector(getCurrentAuth, getUserEntities, (_auth, _entities) => {
   return _entities[_auth.userId];
+});
+export const getMaxListOrder = createSelector(getTaskListEntities, getTaskListSelectedIds, (entities, ids) => {
+  const orders: number[] = ids.map(id => entities[id].order);
+  return orders.sort()[orders.length-1];
 });
 
 @NgModule({

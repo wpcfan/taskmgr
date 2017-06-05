@@ -82,9 +82,18 @@ export class TaskHomeComponent implements OnDestroy {
   handleNewTaskList(ev: Event) {
     ev.preventDefault();
     const dialogRef = this.dialog.open(NewTaskListComponent, { data: { darkTheme: this.darkTheme }});
-    dialogRef.afterClosed().take(1).filter(n => n).subscribe(name => {
-      this.store$.dispatch(new listActions.AddTaskListAction({name: name, order: 0, projectId: this.projectId}));
-    });
+    dialogRef.afterClosed()
+      .take(1)
+      .filter(n => n)
+      .withLatestFrom(this.store$.select(fromRoot.getMaxListOrder), (_n, _o) => {
+        return {
+          name: _n,
+          order: _o
+        }
+      })
+      .subscribe(({name, order}) => {
+        this.store$.dispatch(new listActions.AddTaskListAction({name: name, order: order+1, projectId: this.projectId}));
+      });
   }
 
   handleMoveList(listId: string) {
