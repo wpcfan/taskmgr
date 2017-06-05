@@ -13,6 +13,7 @@ import {Task, TaskList} from '../../domain';
 import {NewTaskListComponent} from '../new-task-list';
 import {NewTaskComponent} from '../new-task';
 import {CopyTaskComponent} from '../copy-task';
+import {DragData} from '../../services/drag-drop.service';
 
 @Component({
   selector: 'app-task-home',
@@ -24,8 +25,7 @@ export class TaskHomeComponent implements OnDestroy {
 
   loading$: Observable<boolean>;
   lists$: Observable<TaskList[]>;
-  draggingStatus: string;
-  private dragTaskId: string;
+
   private darkTheme: boolean;
   private projectId: string;
   private routeParamSub: Subscription;
@@ -101,36 +101,23 @@ export class TaskHomeComponent implements OnDestroy {
     this.store$.dispatch(new listActions.DeleteTaskListAction(list));
   }
 
-  handleMoveTask({taskId, taskListId}) {
-    this.store$.dispatch(new taskActions.MoveTaskAction({taskId, taskListId}));
-  }
-
   handleCompleteTask(task: Task) {
     this.store$.dispatch(new taskActions.CompleteTaskAction(task));
   }
 
-  onDragOver(e) {
-    e.preventDefault();
-    this.draggingStatus = 'enter';
-  }
-
-  onDrop(taskListId) {
-    this.draggingStatus = 'drop';
-    if (this.dragTaskId) {
-      this.store$.dispatch(new taskActions.MoveTaskAction({taskId: this.dragTaskId, taskListId: taskListId}));
+  handleMove(srcData: DragData, taskList: TaskList) {
+    switch (srcData.tag) {
+      case 'task-item': {
+        this.store$.dispatch(new taskActions.MoveTaskAction({taskId: srcData.data.id, taskListId: taskList.id}));
+        break;
+      }
+      case 'task-list': {
+        this.store$.dispatch(new listActions.SwapOrderAction({src: srcData.data, target: taskList}));
+        break;
+      }
+      default:
+        break;
     }
-  }
-
-  onDragEnter(e) {
-    this.draggingStatus = 'enter';
-  }
-
-  onDragLeave(e) {
-    this.draggingStatus = 'leave';
-  }
-
-  handleDragTask(taskId) {
-    this.dragTaskId = taskId;
   }
 
   handleAddTask(listId: string) {

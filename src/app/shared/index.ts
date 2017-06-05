@@ -29,6 +29,8 @@ import {IdentityInputComponent} from './identity-input';
 import {AreaListComponent} from './area-list';
 import {AgeInputComponent} from './age-input';
 import {InitialsPipe} from './initials.pipe';
+import { DragDirective } from './drag-drop/drag.directive';
+import { DropDirective } from './drag-drop/drop.directive';
 
 @NgModule({
   imports: [
@@ -83,7 +85,9 @@ import {InitialsPipe} from './initials.pipe';
     ChipsListComponent,
     IdentityInputComponent,
     AreaListComponent,
-    AgeInputComponent
+    AgeInputComponent,
+    DragDirective,
+    DropDirective,
   ],
   declarations: [
     ConfirmDialogComponent,
@@ -93,6 +97,8 @@ import {InitialsPipe} from './initials.pipe';
     AreaListComponent,
     AgeInputComponent,
     InitialsPipe,
+    DragDirective,
+    DropDirective
   ],
   entryComponents: [
     ConfirmDialogComponent

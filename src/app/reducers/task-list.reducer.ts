@@ -1,4 +1,4 @@
-import {TaskList} from '../domain';
+import {TaskList, Project} from '../domain';
 import {createSelector} from 'reselect';
 import * as actions from '../actions/task-list.action';
 import * as prjActions from '../actions/project.action';
@@ -50,6 +50,17 @@ export function reducer(state = initialState, action: actions.Actions): State {
       const entities = Object.assign({}, state.entities, {[taskList.id]: taskList});
       return Object.assign({}, state, {entities: entities});
     }
+    case actions.ActionTypes.SWAP_ORDER_SUCCESS: {
+      const taskLists = <TaskList[]>action.payload;
+      if (taskLists === null) {
+        return state;
+      }
+      const updated = taskLists.reduce((entities: { [id: string]: TaskList }, taskList: TaskList) => {
+        return {...entities, [taskList.id]: taskList};
+      }, {});
+      const updatedEntities = {...state.entities, ...updated};
+      return {...state, entities: updatedEntities};
+    }
     case actions.ActionTypes.LOADS_SUCCESS: {
       const taskLists = <TaskList[]>action.payload;
       // if taskList is null then return the orginal state
@@ -73,7 +84,7 @@ export function reducer(state = initialState, action: actions.Actions): State {
       };
     }
     case prjActions.ActionTypes.SELECT: {
-      const selectedIds = state.ids.filter(id => state.entities[id].projectId === action.payload.id);
+      const selectedIds = state.ids.filter(id => state.entities[id].projectId ===(<Project>action.payload).id);
       return Object.assign({}, state, {selectedIds: selectedIds});
     }
     case actions.ActionTypes.LOADS_FAIL:

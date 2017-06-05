@@ -47,14 +47,14 @@ export class TaskListService {
       .map(res => res.json());
   }
 
-  swapOrder(drag: TaskList, drop: TaskList): Observable<TaskList[]> {
-    const dragUri = `${this.config.uri}/${this.domain}/${drag.id}`;
-    const dropUri = `${this.config.uri}/${this.domain}/${drop.id}`;
+  swapOrder(src: TaskList, target: TaskList): Observable<TaskList[]> {
+    const dragUri = `${this.config.uri}/${this.domain}/${src.id}`;
+    const dropUri = `${this.config.uri}/${this.domain}/${target.id}`;
     const drag$ = this.http
-      .patch(dragUri, JSON.stringify({order: drag.order}), {headers: this.headers})
+      .patch(dragUri, JSON.stringify({order: target.order}), {headers: this.headers})
       .map(res => res.json());
     const drop$ = this.http
-      .patch(dropUri, JSON.stringify({order: drop.order}), {headers: this.headers})
+      .patch(dropUri, JSON.stringify({order: src.order}), {headers: this.headers})
       .map(res => res.json());
     return concat(drag$, drop$).reduce((r, x) => {
       return [...r, x];

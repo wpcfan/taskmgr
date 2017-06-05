@@ -24,8 +24,7 @@ import {Task, TaskList} from '../../domain';
         md-line
         [item]="task"
         (taskComplete)="onTaskComplete(task)"
-        (taskClick)="onTaskClick(task)"
-        (draggingTaskId)="handleDragging($event)">
+        (taskClick)="onTaskClick(task)">
       </app-task-item>
     </ng-template>
   `,
@@ -38,7 +37,6 @@ export class TaskListComponent {
   @Input() darkTheme: boolean;
   @Input() list: TaskList;
   @Input() tasks: Task[];
-  @Output() dragTask = new EventEmitter<string>();
   @Output() delList = new EventEmitter<TaskList>();
   @Output() moveList = new EventEmitter<string>();
   @Output() renameList = new EventEmitter<TaskList>();
@@ -72,7 +70,4 @@ export class TaskListComponent {
     this.addTask.emit(this.list.id);
   }
 
-  handleDragging(taskId: string) {
-    this.dragTask.emit(taskId);
-  }
 }

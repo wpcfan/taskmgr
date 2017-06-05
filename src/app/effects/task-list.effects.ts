@@ -88,18 +88,16 @@ export class TaskListEffects {
     .map(toPayload)
     .map(prj => new prjActions.UpdateListsAction(prj));
 
-  // @Effect()
-  // dragDrop$: Observable<Action> = this.actions$
-  //   .ofType(actions.ActionTypes.DROP)
-  //   .switchMap(_ => {
-  //     const drag$ = this.store$.select(fromRoot.getTaskDrag);
-  //     const drop$ = this.store$.select(fromRoot.getTaskDrop);
-  //     return Observable.zip(drag$, drop$, (_drag, _drop) => {
-  //       return this.service$.swapOrder(_drag, _drop);
-  //     })
-  //     .map(_ => new actions.SwapOrderSuccessAction(true))
-  //     .catch(err => of(new actions.SwapOrderFailAction(JSON.stringify(err))))
-  //   })
+  @Effect()
+  swapOrder$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.SWAP_ORDER)
+    .map(toPayload)
+    .switchMap(({src, target}) =>
+      this.service$.swapOrder(src, target)
+        .map(tls => new actions.SwapOrderSuccessAction(tls))
+        .catch(err => of(new actions.SwapOrderFailAction(err)))
+    );
+
   /**
    * 任务列表的 Effects
    * @param actions$ 注入 action 数据流

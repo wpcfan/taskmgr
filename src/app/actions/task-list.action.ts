@@ -15,6 +15,7 @@ export const ActionTypes = {
   LOADS: type('[TaskList] Load'),
   LOADS_SUCCESS: type('[TaskList] Load Success'),
   LOADS_FAIL: type('[TaskList] Load Fail'),
+  SWAP_ORDER: type('[TaskList] Swap Order'),
   SWAP_ORDER_SUCCESS: type('[TaskList] Swap Order Success'),
   SWAP_ORDER_FAIL: type('[TaskList] Swap Order Fail'),
   INITIALIZE: type('[TaskList] Init TaskLists'),
@@ -106,10 +107,17 @@ export class LoadTaskListsFailAction implements Action {
   }
 }
 
+export class SwapOrderAction implements Action {
+  type = ActionTypes.SWAP_ORDER;
+
+  constructor(public payload: {src: TaskList; target: TaskList}) {
+  }
+}
+
 export class SwapOrderSuccessAction implements Action {
   type = ActionTypes.SWAP_ORDER_SUCCESS;
 
-  constructor(public payload: any) {
+  constructor(public payload: TaskList[]) {
   }
 }
 
@@ -154,6 +162,7 @@ export type Actions
   | LoadTaskListsAction
   | LoadTaskListsSuccessAction
   | LoadTaskListsFailAction
+  | SwapOrderAction
   | SwapOrderSuccessAction
   | SwapOrderFailAction
   | InitTaskListsAction

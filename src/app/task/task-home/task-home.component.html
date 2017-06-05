@@ -1,16 +1,16 @@
 <div class="task-lists">
   <div
-    [ngClass]="{
-      'drag-enter': draggingStatus === 'enter',
-      'drag-leave': draggingStatus === 'leave',
-      'drop': draggingStatus === 'drop'
-      }"
-    *ngFor="let taskList of lists$ | async"
     class="list-container"
-    (dragover)="onDragOver($event)"
-    (dragenter)="onDragEnter($event)"
-    (dragleave)="onDragLeave($event)"
-    (drop)="onDrop(taskList.id)">
+    *ngFor="let taskList of lists$ | async"
+    [ngStyle]="{'order': taskList.order}"
+    app-droppable
+    [dropTags]="['task-item', 'task-list']"
+    [dragEnterClass]="'drag-enter'"
+    [app-draggable]="true"
+    [dragTag]="'task-list'"
+    [draggedClass]="'drag-start'"
+    [dragData]="taskList"
+    (dropped)="handleMove($event, taskList)">
     <app-task-list
       [list]="taskList"
       [darkTheme]="darkTheme"
@@ -20,7 +20,6 @@
       (renameList)="handleRenameList($event)"
       (delList)="handleDelList($event)"
       (moveList)="handleMoveList($event)"
-      (dragTask)="handleDragTask($event)"
       (addTask)="handleAddTask($event)"
       (updateTask)=handleUpdateTask($event)>
     </app-task-list>

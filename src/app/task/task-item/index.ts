@@ -8,12 +8,11 @@ import {Task} from '../../domain';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskItemComponent implements OnInit {
+
   @Output() taskComplete = new EventEmitter<Task>();
   @Output() taskClick = new EventEmitter<string>();
-  @Output() draggingTaskId = new EventEmitter<string>();
   @Input() item: Task;
   avatar: string;
-  draggingStatus: string;
   widerPriority = false;
 
   constructor() {
@@ -42,12 +41,4 @@ export class TaskItemComponent implements OnInit {
     this.widerPriority = false;
   }
 
-  onDragStart(e) {
-    this.draggingStatus = 'start';
-    this.draggingTaskId.emit(this.item.id);
-  }
-
-  onDragEnd(e) {
-    this.draggingStatus = 'end';
-  }
 }
