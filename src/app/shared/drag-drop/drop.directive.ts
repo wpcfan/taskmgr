@@ -6,17 +6,15 @@ import { DragDropService, DragData } from '../../services/drag-drop.service';
 })
 export class DropDirective {
 
+  @Output() dropped: EventEmitter<DragData> = new EventEmitter();
+  @Input() dropTags: string[] = [];
+  @Input() dragEnterClass = '';
+
   constructor(
     private el: ElementRef,
     private rd: Renderer2,
     private service: DragDropService) {
   }
-
-  @Output() dropped: EventEmitter<DragData> = new EventEmitter();
-
-  @Input() dropTags: string[] = [];
-
-  @Input() dragEnterClass = '';
 
   @HostListener('dragenter', ['$event'])
   onDragEnter(ev: Event) {

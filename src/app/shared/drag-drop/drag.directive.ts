@@ -7,12 +7,9 @@ import { DragDropService } from '../../services/drag-drop.service';
 export class DragDirective {
 
   private _isDraggable = false;
-
-  constructor(
-    private el: ElementRef,
-    private rd: Renderer2,
-    private service: DragDropService) {
-  }
+  @Input() dragTag: string;
+  @Input() draggedClass: string;
+  @Input() dragData: any;
 
   @Input('app-draggable')
   set isDraggable(draggable: boolean) {
@@ -24,11 +21,11 @@ export class DragDirective {
     return this._isDraggable;
   }
 
-  @Input() dragTag: string;
-
-  @Input() draggedClass: string;
-
-  @Input() dragData: any;
+  constructor(
+    private el: ElementRef,
+    private rd: Renderer2,
+    private service: DragDropService) {
+  }
 
   @HostListener('dragstart', ['$event'])
   onDragStart(ev: Event) {
