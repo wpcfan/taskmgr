@@ -1,5 +1,6 @@
 import * as actions from '../actions/user.action';
-import {User} from '../domain';
+import * as authActions from '../actions/auth.action';
+import {User, Auth} from '../domain';
 import {createSelector} from 'reselect';
 
 export interface State {
@@ -12,16 +13,28 @@ export const initialState: State = {
   entities: {}
 };
 
-export function reducer(state = initialState, action: actions.Actions): State {
+export function reducer(state = initialState, action: actions.Actions | authActions.Actions): State {
   switch (action.type) {
+    case authActions.ActionTypes.LOGIN_SUCCESS:
+    case authActions.ActionTypes.REGISTER_SUCCESS: {
+      const auth = <Auth>action.payload;
+      if (state.ids.indexOf(auth.userId) > -1) {
+        return {...state, entities: {...state.entities, [auth.user.id]: auth.user}};
+      } else {
+        return {
+          ids: [...state.ids, auth.user.id],
+          entities: {...state.entities, [auth.user.id]: auth.user}};
+      }
+    }
     case actions.ActionTypes.ADD_USER_PROJECT_SUCCESS: {
       const user = <User>action.payload;
-      if (state.entities[user.id]) {
-        return state;
-      }
       const ids = [...state.ids, user.id];
       const entities = {...state.entities, [user.id]: user};
-      return {...state, ids: ids, entities: entities};
+      if (state.entities[user.id]) {
+        return {...state, entities: entities};
+      } else {
+        return {...state, ids: ids, entities: entities};
+      }
     }
     case actions.ActionTypes.REMOVE_USER_PROJECT_SUCCESS: {
       const user = <User>action.payload;

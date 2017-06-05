@@ -99,8 +99,8 @@ export const getUserState = (state: State) => state.users;
 export const getRouterState = (state: State) => state.router;
 export const getThemeState = (state: State) => state.theme;
 
-export const getAuth = createSelector(getAuthState, fromAuth.getAuth);
-export const getAuthUser = createSelector(getAuthState, fromAuth.getAuthUser);
+export const getCurrentAuth = createSelector(getAuthState, fromAuth.getAuth);
+export const getAuthUserId = createSelector(getAuthState, fromAuth.getAuthUserId);
 export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
 export const getProjects = createSelector(getProjectsState, fromProjects.getAll);
 export const getProjectEntities = createSelector(getProjectsState, fromProjects.getEntities);
@@ -132,6 +132,12 @@ export const getProjectMembers = (projectId: string) => createSelector(getProjec
   return state.entities[projectId].members.map(id => entities[id]);
 });
 export const getTheme = createSelector(getThemeState, fromTheme.getTheme);
+export const getAuth = createSelector(getCurrentAuth, getUserEntities, (_auth, _entities) => {
+  return {..._auth, user: _entities[_auth.userId]};
+});
+export const getAuthUser = createSelector(getCurrentAuth, getUserEntities, (_auth, _entities) => {
+  return _entities[_auth.userId];
+});
 
 @NgModule({
   imports: [

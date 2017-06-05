@@ -1,21 +1,27 @@
-import * as models from '../domain';
+import {Auth} from '../domain';
 import * as actions from '../actions/auth.action';
 
-export const initialState: models.Auth = {};
+export const initialState: Auth = {};
 
-export function reducer(state: models.Auth = initialState, action: actions.Actions): models.Auth {
+export function reducer(state: Auth = initialState, action: actions.Actions): Auth {
   switch (action.type) {
     case actions.ActionTypes.LOGIN_SUCCESS:
-      return {...action.payload};
+    case actions.ActionTypes.REGISTER_SUCCESS: {
+      const auth = <Auth>action.payload;
+      return {
+        token: auth.token,
+        userId: auth.user.id
+      };
+    }
     case actions.ActionTypes.LOGIN_FAIL:
-    case actions.ActionTypes.REGISTER_FAIL:
+    case actions.ActionTypes.REGISTER_FAIL: {
       return {err: action.payload};
-    case actions.ActionTypes.REGISTER_SUCCESS:
-      return {...action.payload};
-    default:
+    }
+    default: {
       return state;
+    }
   }
 }
 
-export const getAuth = (state: models.Auth) => state;
-export const getAuthUser = (state: models.Auth) => state.user;
+export const getAuth = (state: Auth) => state;
+export const getAuthUserId = (state: Auth) => state.userId;
