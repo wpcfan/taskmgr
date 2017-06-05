@@ -13,7 +13,6 @@ import {Task, TaskList} from '../../domain';
 import {NewTaskListComponent} from '../new-task-list';
 import {NewTaskComponent} from '../new-task';
 import {CopyTaskComponent} from '../copy-task';
-import {DragData} from '../../services/drag-drop.service';
 
 @Component({
   selector: 'app-task-home',
@@ -105,7 +104,7 @@ export class TaskHomeComponent implements OnDestroy {
     this.store$.dispatch(new taskActions.CompleteTaskAction(task));
   }
 
-  handleMove(srcData: DragData, taskList: TaskList) {
+  handleMove(srcData, taskList: TaskList) {
     switch (srcData.tag) {
       case 'task-item': {
         this.store$.dispatch(new taskActions.MoveTaskAction({taskId: srcData.data.id, taskListId: taskList.id}));

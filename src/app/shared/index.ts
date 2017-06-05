@@ -29,8 +29,7 @@ import {IdentityInputComponent} from './identity-input';
 import {AreaListComponent} from './area-list';
 import {AgeInputComponent} from './age-input';
 import {InitialsPipe} from './initials.pipe';
-import { DragDirective } from './drag-drop/drag.directive';
-import { DropDirective } from './drag-drop/drop.directive';
+import {DirectivesModule} from '../directives';
 
 @NgModule({
   imports: [
@@ -56,6 +55,7 @@ import { DropDirective } from './drag-drop/drop.directive';
     MdAutocompleteModule,
     MdTabsModule,
     MdSelectionModule,
+    DirectivesModule,
   ],
   exports: [
     CommonModule,
@@ -80,14 +80,13 @@ import { DropDirective } from './drag-drop/drop.directive';
     MdAutocompleteModule,
     MdTabsModule,
     MdSelectionModule,
+    DirectivesModule,
     ConfirmDialogComponent,
     ImageListSelectComponent,
     ChipsListComponent,
     IdentityInputComponent,
     AreaListComponent,
     AgeInputComponent,
-    DragDirective,
-    DropDirective,
   ],
   declarations: [
     ConfirmDialogComponent,
@@ -97,8 +96,6 @@ import { DropDirective } from './drag-drop/drop.directive';
     AreaListComponent,
     AgeInputComponent,
     InitialsPipe,
-    DragDirective,
-    DropDirective
   ],
   entryComponents: [
     ConfirmDialogComponent

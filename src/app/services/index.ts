@@ -7,7 +7,6 @@ import {TaskService} from './task.service';
 import {AuthGuardService} from './auth-guard.service';
 import {UserService} from './user.service';
 import {MyCalService} from './my-cal.service';
-import {DragDropService} from './drag-drop.service';
 
 export {
   AuthGuardService,
@@ -18,7 +17,6 @@ export {
   TaskService,
   UserService,
   MyCalService,
-  DragDropService,
 }
 
 @NgModule({})
@@ -35,7 +33,6 @@ export class ServicesModule {
         TaskService,
         UserService,
         MyCalService,
-        DragDropService,
       ]
     };
   }

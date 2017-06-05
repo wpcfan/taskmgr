@@ -1,5 +1,5 @@
 import { Directive, Input, Output, EventEmitter, HostListener, ElementRef, Renderer2 } from '@angular/core';
-import { DragDropService, DragData } from '../../services/drag-drop.service';
+import { DragDropService, DragData } from '../drag-drop.service';
 
 @Directive({
   selector: '[app-droppable][dropTags][dragEnterClass]',
