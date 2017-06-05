@@ -27,7 +27,7 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   @Input() multiple = true;
   @Input() label = '添加/修改成员';
   @Input() placeholderText = '请输入成员 email';
-  @Input() items: User[];
+  items: User[];
   chips: FormGroup;
   memberResults$: Observable<User[]>;
 

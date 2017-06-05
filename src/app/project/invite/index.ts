@@ -8,7 +8,7 @@ import {User} from '../../domain';
     <md-card>
       <h2 md-dialog-title>{{dialogTitle}}</h2>
       <form class="full-width" #f="ngForm" (ngSubmit)="onSubmit($event, f)">
-        <app-chips-list [items]="members" [label]="'邀请成员'" name="members" [(ngModel)]="members">
+        <app-chips-list [label]="'邀请成员'" name="members" [(ngModel)]="members">
         </app-chips-list>
         <div md-dialog-actions>
           <button md-raised-button color="primary" type="submit" [disabled]="!f.valid">
@@ -42,7 +42,6 @@ export class InviteComponent implements OnInit {
     if (!valid) {
       return;
     }
-    console.log(this.members);
     this.dialogRef.close(this.members);
   }
 }
