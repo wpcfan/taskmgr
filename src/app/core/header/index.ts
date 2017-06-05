@@ -9,7 +9,7 @@ import {Auth} from '../../domain';
   selector: 'app-header',
   template: `
     <md-toolbar color="primary">
-      <button md-icon-button (click)="onClick()">
+      <button md-icon-button (click)="onClick()" *ngIf="((auth$|async).user !== undefined)">
         <md-icon>menu</md-icon>
       </button>
       <span>企业协作平台</span>
