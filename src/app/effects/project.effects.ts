@@ -39,7 +39,7 @@ export class ProjectEffects {
     .map(toPayload)
     .withLatestFrom(this.store$.select(fromRoot.getAuth))
     .switchMap(([project, auth]) => {
-        const added = Object.assign({}, project, {members: [`${auth.user.id}`]});
+        const added = {...project, members: [`${auth.user.id}`]};
         return this.service
           .add(added)
           .map(returned => new actions.AddProjectSuccessAction(returned))

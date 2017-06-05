@@ -125,7 +125,7 @@ export const getTasksWithOwner = createSelector(getTasks, getUserEntities, (task
   return tasks.map(task => {
     const owner = entities[task.ownerId];
     const participants = task.participantIds.map(id => entities[id]);
-    return Object.assign({}, task, {owner: owner}, {participants: [...participants]});
+    return {...task, owner: owner, participants: [...participants]};
   });
 });
 export const getProjectMembers = (projectId: string) => createSelector(getProjectsState, getUserEntities, (state, entities) => {

@@ -41,10 +41,7 @@ export class AuthService {
           throw new Error('username existed');
         }
         return this.http.post(uri, JSON.stringify(user), {headers: this.headers})
-          .map(r => Object.assign({}, {
-            token: this.token,
-            user: Object.assign({}, r.json())
-          }));
+          .map(r => ({token: this.token, user: r.json()}));
       });
   }
 
@@ -62,10 +59,10 @@ export class AuthService {
         if (res.json().length === 0) {
           throw new Error('Login Failed');
         }
-        return Object.assign({}, {
+        return {
           token: this.token,
-          user: Object.assign({}, res.json()[0])
-        });
+          user: res.json()[0]
+        };
       });
   }
 }

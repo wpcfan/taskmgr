@@ -6,17 +6,12 @@ export const initialState: models.Auth = {};
 export function reducer(state: models.Auth = initialState, action: actions.Actions): models.Auth {
   switch (action.type) {
     case actions.ActionTypes.LOGIN_SUCCESS:
-      return Object.assign({}, state, action.payload);
+      return {...action.payload};
     case actions.ActionTypes.LOGIN_FAIL:
-      return Object.assign({}, {
-        err: action.payload
-      });
-    case actions.ActionTypes.REGISTER_SUCCESS:
-      return Object.assign({}, state, action.payload);
     case actions.ActionTypes.REGISTER_FAIL:
-      return Object.assign({}, {
-        err: action.payload
-      });
+      return {err: action.payload};
+    case actions.ActionTypes.REGISTER_SUCCESS:
+      return {...action.payload};
     default:
       return state;
   }

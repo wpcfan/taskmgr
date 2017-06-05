@@ -11,7 +11,7 @@ export const initialState: State = {
 export function reducer(state = initialState, action: actions.Actions): State {
   switch (action.type) {
     case actions.ActionTypes.SWITCH_THEME: {
-      return Object.assign({}, state, {darkmode: action.payload});
+      return {...state, darkmode: action.payload};
     }
     default: {
       return state;

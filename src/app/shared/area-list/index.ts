@@ -116,7 +116,7 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
     this.cities$ = province$.mergeMap(province => Observable.of(getCitiesByProvince(province)));
     // 根据省份和城市的选择得到地区列表
     this.districts$ = Observable
-      .combineLatest(province$, city$, (p, c) => Object.assign({}, {province: p, city: c}))
+      .combineLatest(province$, city$, (p, c) => ({province: p, city: c}))
       .mergeMap(a => Observable.of(getAreasByCity(a.province, a.city)));
 
   }

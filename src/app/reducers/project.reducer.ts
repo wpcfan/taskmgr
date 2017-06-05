@@ -23,8 +23,8 @@ export function reducer(state = initialState, action: actions.Actions): State {
       }
       ;
       const ids = [...state.ids, project.id];
-      const entities = Object.assign({}, state.entities, {[project.id]: project});
-      return Object.assign({}, state, {ids: ids, entities: entities});
+      const entities = {...state.entities, [project.id]: project};
+      return {...state, ids: ids, entities: entities};
     }
     case actions.ActionTypes.DELETE_SUCCESS: {
       const project = action.payload;
@@ -33,22 +33,20 @@ export function reducer(state = initialState, action: actions.Actions): State {
         return state;
       }
       const newEntities = ids.reduce((entities: { [id: string]: Project }, id) => {
-        return Object.assign(entities, {
-          [id]: state.entities[id]
-        });
+        return {...entities, [id]: state.entities[id]};
       }, {});
-      return Object.assign({}, state, {
+      return {
         ids: ids,
         entities: newEntities,
         selectedId: project.id === state.selectedId ? null : state.selectedId
-      });
+      };
     }
     case actions.ActionTypes.INVITE_SUCCESS:
     case actions.ActionTypes.UPDATE_LISTS_SUCCESS:
     case actions.ActionTypes.UPDATE_SUCCESS: {
       const project = action.payload;
-      const entities = Object.assign({}, state.entities, {[project.id]: project});
-      return Object.assign({}, state, {entities: entities});
+      const entities = {...state.entities, [project.id]: project};
+      return {...state, entities: entities};
     }
     case actions.ActionTypes.LOADS_SUCCESS: {
       const projects = action.payload;
@@ -62,18 +60,16 @@ export function reducer(state = initialState, action: actions.Actions): State {
         return state;
       }
       const newEntities = newProjects.reduce((entities: { [id: string]: Project }, project: Project) => {
-        return Object.assign(entities, {
-          [project.id]: project
-        });
+        return {...entities, [project.id]: project};
       }, {});
       return {
         ids: [...state.ids, ...newIds],
-        entities: Object.assign({}, state.entities, newEntities),
+        entities: {...state.entities, ...newEntities},
         selectedId: null
       };
     }
     case actions.ActionTypes.SELECT: {
-      return Object.assign({}, state, {selectedId: action.payload.id});
+      return {...state, selectedId: action.payload.id};
     }
     case actions.ActionTypes.LOADS_FAIL:
     case actions.ActionTypes.ADD_FAIL:

@@ -16,7 +16,7 @@ export const initialState: State = {
 export function reducer(state: State = initialState, action: actions.Actions): State {
   switch (action.type) {
     case actions.ActionTypes.QUOTE_SUCCESS:
-      return Object.assign({}, state, {quote: action.payload});
+      return {...state, quote: action.payload};
     case actions.ActionTypes.QUOTE_FAIL:
     default:
       return state;

@@ -160,10 +160,7 @@ export class TaskHomeComponent implements OnDestroy {
       .take(1)
       .filter(n => n)
       .subscribe((val) => {
-        this.store$.dispatch(new taskActions.UpdateTaskAction({
-          ...task,
-          ...val
-        }));
+        this.store$.dispatch(new taskActions.UpdateTaskAction({...task, ...val}));
       });
   }
 }

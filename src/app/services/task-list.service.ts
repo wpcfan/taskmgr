@@ -70,6 +70,6 @@ export class TaskListService {
       .reduce((r, x) => {
         return [...r, x];
       }, [])
-      .map(tls => Object.assign({}, prj, {taskLists: tls.map(tl => tl.id)}));
+      .map(tls => ({...prj, taskLists: tls.map(tl => tl.id)}));
   }
 }
