@@ -88,7 +88,7 @@ export class TaskHomeComponent implements OnDestroy {
   loading$: Observable<boolean>;
   lists$: Observable<TaskList[]>;
 
-  private darkTheme: boolean;
+  darkTheme: boolean;
   private projectId: string;
   private routeParamSub: Subscription;
   private subTheme: Subscription;
