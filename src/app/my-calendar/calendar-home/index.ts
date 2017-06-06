@@ -8,10 +8,10 @@ import {MyCalService} from '../../services';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 
-
 @Component({
   selector: 'app-cal-home',
   template: `
+    <md-card>
     <div class="toolbar">
       <button
         md-icon-button
@@ -61,6 +61,7 @@ import * as fromRoot from '../../reducers';
         </mwl-calendar-day-view>
       </div>
      </div>
+     </md-card>
   `,
   styles: [`
     .toolbar{
