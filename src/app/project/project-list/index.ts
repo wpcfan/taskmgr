@@ -16,8 +16,42 @@ import {dropFromTopAnim} from '../../anim';
 @Component({
   selector: 'app-project-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './project-list.component.html',
-  styleUrls: ['./project-list.component.scss'],
+  template: `
+    <div class="projects">
+      <app-project-item
+        class="card"
+        *ngFor="let project of (projects$ | async)"
+        [item]="project"
+        (itemSelected)="selectProject(project)"
+        (launchUpdateDialog)="openUpdateDialog(project)"
+        (launchInviteDailog)="openInviteDialog(project)"
+        (launchDeleteDailog)="openDeleteDialog(project)">
+      </app-project-item>
+    </div>
+    <button md-fab (click)="openNewProjectDialog()" type="button" class="fab-button">
+      <md-icon>add</md-icon>
+    </button>
+  `,
+  styles: [`
+    .projects {
+      margin: 15px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-content: stretch;
+      align-items: stretch;
+    }
+    .card {
+      flex: 0 0 360px;
+      margin-right: 10px;
+    }
+    .fab-button {
+      position: fixed;
+      right: 32px;
+      bottom: 96px;
+      z-index: 998;
+    }
+  `],
   animations: [dropFromTopAnim],
 })
 export class ProjectListComponent implements OnDestroy {

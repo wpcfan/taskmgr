@@ -6,8 +6,34 @@ import {User} from '../../domain';
 
 @Component({
   selector: 'app-chips-list',
-  templateUrl: './chips-list.component.html',
-  styleUrls: ['./chips-list.component.scss'],
+  template: `
+    <div [formGroup]="chips">
+      <span>{{label}}</span>
+      <md-chip-list>
+        <md-chip color="primary" selected="true" *ngFor="let member of items">
+          {{member.name}} <span (click)="removeMember(member)" class="remove-tag">x</span>
+        </md-chip>
+      </md-chip-list>
+      <md-input-container class="full-width" *ngIf="displayInput">
+        <input mdInput [placeholder]="placeholderText" [mdAutocomplete]="autoMember" formControlName="memberSearch">
+      </md-input-container>
+    </div>
+    <md-autocomplete #autoMember="mdAutocomplete" [displayWith]="displayUser">
+      <md-option
+        *ngFor="let item of memberResults$ | async"
+        [value]="item"
+        (onSelectionChange)="handleMemberSelection(item)">
+        {{item.name}}
+      </md-option>
+    </md-autocomplete>
+  `,
+  styles: [`
+    :host {
+      display: inline-flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  `],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

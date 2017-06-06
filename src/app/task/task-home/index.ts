@@ -17,8 +17,70 @@ import { ConfirmDialogComponent } from '../../shared/confirm-dialog/index';
 
 @Component({
   selector: 'app-task-home',
-  templateUrl: './task-home.component.html',
-  styleUrls: ['./task-home.component.scss'],
+  template: `
+    <div class="task-lists">
+      <div
+        class="list-container"
+        *ngFor="let taskList of lists$ | async"
+        [ngStyle]="{'order': taskList.order}"
+        app-droppable
+        [dropTags]="['task-item', 'task-list']"
+        [dragEnterClass]="'drag-enter'"
+        [app-draggable]="true"
+        [dragTag]="'task-list'"
+        [draggedClass]="'drag-start'"
+        [dragData]="taskList"
+        (dropped)="handleMove($event, taskList)">
+        <app-task-list
+          [list]="taskList"
+          [darkTheme]="darkTheme"
+          [tasks]="tasksByList(taskList.id) | async"
+          [loading]="loading$ | async"
+          (completeTask)="handleCompleteTask($event)"
+          (renameList)="handleRenameList($event)"
+          (delList)="handleDelList($event)"
+          (moveList)="handleMoveList($event)"
+          (addTask)="handleAddTask($event)"
+          (updateTask)=handleUpdateTask($event)>
+        </app-task-list>
+      </div>
+    </div>
+    <button md-fab (click)="handleNewTaskList($event)" type="button" class="fab-button">
+      <md-icon>add</md-icon>
+    </button>
+  `,
+  styles: [`
+    .drag-start {
+      opacity: 0.5;
+      border: #ff525b dashed 2px;
+    }
+    .drag-enter {
+      background-color: dimgray;
+    }
+    .list-container {
+      flex: 0 0 360px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
+    .task-lists {
+      min-width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      overflow-x: scroll;
+    }
+    .fab-button {
+      position: fixed;
+      right: 32px;
+      bottom: 96px;
+      z-index: 998;
+    }
+    :host {
+      width: 100%;
+      height: 100%;
+    }
+  `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskHomeComponent implements OnDestroy {

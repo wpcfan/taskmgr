@@ -9,8 +9,17 @@ export interface ConfirmDialog {
 
 @Component({
   selector: 'app-confirm-dialog',
-  templateUrl: './confirm-dialog.component.html',
-  styleUrls: ['./confirm-dialog.component.scss'],
+  template: `
+    <md-card>
+      <h1 md-dialog-title>{{dialog.title}}</h1>
+      <div md-dialog-content>{{dialog.content}}</div>
+      <div md-dialog-actions>
+        <button md-raised-button color="primary" (click)="handleAction(true)">{{dialog.confirmAction}}</button>
+        <button md-raised-button md-dialog-close type="button" (click)="handleAction(false)">关闭</button>
+      </div>
+    </md-card>
+  `,
+  styles: [``],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmDialogComponent implements OnInit {
