@@ -12,9 +12,9 @@ import {isValidDate, toDate} from '../../utils/date.util';
 
 @Component({
   selector: 'app-register',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 

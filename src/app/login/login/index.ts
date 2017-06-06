@@ -2,16 +2,16 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
+import {Quote} from '../../domain';
 import * as fromRoot from '../../reducers';
 import * as authActions from '../../actions/auth.action';
-import {Quote} from '../../domain';
 import * as actions from '../../actions/quote.action';
 
 @Component({
   selector: 'app-login',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
