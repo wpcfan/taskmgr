@@ -18,10 +18,10 @@ import {isValidDate, toDate} from '../../utils/date.util';
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
-  private _sub: Subscription;
   selectedTab = 0;
   form: FormGroup;
   avatars$: Observable<string[]>;
+  private _sub: Subscription;
   private readonly avatarName = 'avatars';
 
   constructor(private fb: FormBuilder,

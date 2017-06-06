@@ -62,6 +62,8 @@ import {isValidDate} from '../../utils/date.util';
 })
 export class IdentityInputComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
+  @Output() change = new EventEmitter<void>();
+
   identityTypes: {value: IdentityType, label: string}[] = [
     {value: IdentityType.IdCard, label: '身份证'},
     {value: IdentityType.Insurance, label: '医保'},
@@ -69,13 +71,10 @@ export class IdentityInputComponent implements ControlValueAccessor, OnInit, OnD
     {value: IdentityType.Military, label: '军官证'},
     {value: IdentityType.Other, label: '其它'}
   ];
-
-  _idType = new Subject<IdentityType>();
-  _idNo = new Subject<string>();
+  identity: Identity | null;
+  private _idType = new Subject<IdentityType>();
+  private _idNo = new Subject<string>();
   private _sub: Subscription;
-
-  @Input() identity: Identity | null;
-  @Output() change = new EventEmitter<void>();
 
   constructor() { }
 

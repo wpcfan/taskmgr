@@ -90,7 +90,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit {
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
-    const initDate = this.dateOfBirth ? this.dateOfBirth : format(subYears(Date.now(), 50), this.dateFormat);
+    const initDate = this.dateOfBirth ? this.dateOfBirth : format(subYears(Date.now(), 30), this.dateFormat);
     const initAge = this.toAge(initDate);
     this.form = this.fb.group({
       birthday: [initDate],

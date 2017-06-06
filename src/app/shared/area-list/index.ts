@@ -87,7 +87,7 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
   _street = new Subject<string>();
   cities$: Observable<string[]>;
   districts$: Observable<string[]>;
-  @Input() provinces = getProvinces();
+  provinces = getProvinces();
 
   private _sub: Subscription;
   private propagateChange = (_: any) => {};
