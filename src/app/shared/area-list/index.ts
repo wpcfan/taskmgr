@@ -70,7 +70,7 @@ import {Address} from '../../domain';
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => AreaListComponent),
       multi: true,
-    }
+    },
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
