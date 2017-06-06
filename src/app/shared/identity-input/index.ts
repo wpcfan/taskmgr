@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, Output, OnInit, OnDestroy} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Output, OnInit, OnDestroy} from '@angular/core';
 import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
@@ -14,23 +14,15 @@ import {isValidDate} from '../../utils/date.util';
   selector: 'app-indentity-input',
   template: `
     <div>
-      <md-select
-        placeholder="证件类型"
-        (change)="onIdTypeChange($event.value)">
-        <md-option
-          *ngFor="let type of identityTypes"
-          [value]="type.value">
+      <md-select placeholder="证件类型" (change)="onIdTypeChange($event.value)">
+        <md-option *ngFor="let type of identityTypes" [value]="type.value">
           {{type.label}}
         </md-option>
       </md-select>
     </div>
     <div class="id-input">
       <md-input-container class="full-width control-padding">
-        <input
-          mdInput
-          type="text"
-          placeholder="证件号码"
-          (change)="onIdNoChange($event.target.value)">
+        <input mdInput type="text" placeholder="证件号码" (change)="onIdNoChange($event.target.value)">
         <md-error>证件号码输入有误</md-error>
       </md-input-container>
     </div>

@@ -12,41 +12,61 @@ import * as fromRoot from '../../reducers';
 @Component({
   selector: 'app-cal-home',
   template: `
-  <div *ngIf="(events$ | async) as calEvents">
-    <div [ngSwitch]="view$ | async">
-      <mwl-calendar-month-view
-        *ngSwitchCase="'month'"
-        [viewDate]="viewDate"
-        [locale]="'zh'"
-        [events]="calEvents"
-        [refresh]="refresh"
-        [activeDayIsOpen]="activeDayIsOpen"
-        (dayClicked)="dayClicked($event.day)"
-        (eventClicked)="handleEvent('Clicked', $event.event)"
-        (eventTimesChanged)="eventTimesChanged($event)">
-      </mwl-calendar-month-view>
-      <mwl-calendar-week-view
-        *ngSwitchCase="'week'"
-        [viewDate]="viewDate"
-        [locale]="'zh'"
-        [events]="calEvents"
-        [refresh]="refresh"
-        (eventClicked)="handleEvent('Clicked', $event.event)"
-        (eventTimesChanged)="eventTimesChanged($event)">
-      </mwl-calendar-week-view>
-      <mwl-calendar-day-view
-        *ngSwitchCase="'day'"
-        [viewDate]="viewDate"
-        [locale]="'zh'"
-        [events]="calEvents"
-        [refresh]="refresh"
-        (eventClicked)="handleEvent('Clicked', $event.event)"
-        (eventTimesChanged)="eventTimesChanged($event)">
-      </mwl-calendar-day-view>
+    <div class="toolbar">
+      <button
+        md-icon-button
+        mwlCalendarPreviousView
+        [view]="view$ | async"
+        [(viewDate)]="viewDate">
+        <md-icon class="md-48">chevron_left</md-icon>
+      </button>
+      <button
+        md-button
+        mwlCalendarToday
+        [(viewDate)]="viewDate">
+        {{viewDate | date: 'yyyy-MM-dd'}}
+      </button>
+      <button
+        md-icon-button
+        mwlCalendarNextView
+        [view]="view$ | async"
+        [(viewDate)]="viewDate">
+        <md-icon class="md-48">chevron_right</md-icon>
+      </button>
     </div>
-   </div>
+    <div *ngIf="(events$ | async) as calEvents">
+      <div [ngSwitch]="view$ | async">
+        <mwl-calendar-month-view
+          *ngSwitchCase="'month'"
+          [viewDate]="viewDate"
+          [locale]="'zh'"
+          [events]="calEvents"
+          [activeDayIsOpen]="activeDayIsOpen"
+          (dayClicked)="dayClicked($event.day)"
+          (eventClicked)="handleEvent('Clicked', $event.event)">
+        </mwl-calendar-month-view>
+        <mwl-calendar-week-view
+          *ngSwitchCase="'week'"
+          [viewDate]="viewDate"
+          [locale]="'zh'"
+          [events]="calEvents"
+          (eventClicked)="handleEvent('Clicked', $event.event)">
+        </mwl-calendar-week-view>
+        <mwl-calendar-day-view
+          *ngSwitchCase="'day'"
+          [viewDate]="viewDate"
+          [locale]="'zh'"
+          [events]="calEvents"
+          (eventClicked)="handleEvent('Clicked', $event.event)">
+        </mwl-calendar-day-view>
+      </div>
+     </div>
   `,
   styles: [`
+    .toolbar{
+      display: flex;
+      flex-direction: row;
+    }
     :host{
       width: 100%;
     }
@@ -77,7 +97,6 @@ export class CalendarHomeComponent implements OnInit {
   }
 
   dayClicked({date, events}: { date: Date, events: CalendarEvent[] }): void {
-
     if (isSameMonth(date, this.viewDate)) {
       if ((isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) || events.length === 0) {
         this.activeDayIsOpen = false;
