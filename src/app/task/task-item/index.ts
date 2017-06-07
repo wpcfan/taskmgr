@@ -19,7 +19,7 @@ export class TaskItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.avatar = (this.item.owner) ? this.item.owner.avatar : '/assets/img/avatar/unassigned.svg';
+    this.avatar = (this.item.owner) ? this.item.owner.avatar : 'unassigned';
   }
 
   checkboxChanged() {

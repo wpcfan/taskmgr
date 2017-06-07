@@ -110,6 +110,7 @@ export class NewTaskComponent implements OnInit {
     this.dialogRef.close({
       desc: value.desc,
       participantIds: value.followers.map(u => u.id),
+      ownerId: value.owner.length > 0 ? value.owner.id : null,
       dueDate: value.dueDate,
       reminder: value.reminder,
       priority: value.priority,
