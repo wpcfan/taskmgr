@@ -16,6 +16,8 @@ export const ActionTypes = {
   LOAD_SUCCESS: type('[Task] Load Success'),
   LOAD_FAIL: type('[Task] Load Fail'),
   MOVE_ALL: type('[Task] Move All'),
+  MOVE_ALL_SUCCESS: type('[Task] Move All Success'),
+  MOVE_ALL_FAIL: type('[Task] Move All Fail'),
   MOVE: type('[Task] Move'),
   MOVE_SUCCESS: type('[Task] Move Success'),
   MOVE_FAIL: type('[Task] Move Fail'),
@@ -157,6 +159,20 @@ export class MoveAllAction implements Action {
   }
 }
 
+export class MoveAllSuccessAction implements Action {
+  type = ActionTypes.MOVE_ALL_SUCCESS;
+
+  constructor(public payload: Task[]) {
+  }
+}
+
+export class MoveAllFailAction implements Action {
+  type = ActionTypes.MOVE_ALL_FAIL;
+
+  constructor(public payload: Err) {
+  }
+}
+
 export type Actions
   = AddTaskAction
   | AddTaskSuccessAction
@@ -177,4 +193,6 @@ export type Actions
   | CompleteTaskSuccessAction
   | CompleteTaskFailAction
   | MoveAllAction
+  | MoveAllSuccessAction
+  | MoveAllFailAction
   ;

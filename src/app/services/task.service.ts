@@ -67,21 +67,30 @@ export class TaskService {
       .map(res => res.json());
   }
 
-  move(taskId: string, taskListId: string) {
+  moveAll(srcListId, targetListId): Observable<Task[]> {
+    return this.get(srcListId)
+      .mergeMap(tasks => Observable.from(tasks))
+      .mergeMap(task => this.move(task.id, targetListId))
+      .reduce((arrTasks, t) => {
+        return [...arrTasks, t]
+      }, []);
+  }
+
+  move(taskId: string, taskListId: string): Observable<Task> {
     const uri = `${this.config.uri}/${this.domain}/${taskId}`;
     return this.http
       .patch(uri, JSON.stringify({taskListId: taskListId}), {headers: this.headers})
       .map(res => res.json());
   }
 
-  complete(task: Task) {
+  complete(task: Task): Observable<Task> {
     const uri = `${this.config.uri}/${this.domain}/${task.id}`;
     return this.http
       .patch(uri, JSON.stringify({completed: !task.completed}), {headers: this.headers})
       .map(res => res.json());
   }
 
-  addTaskRef(user: User, taskId: string) {
+  addTaskRef(user: User, taskId: string): Observable<User> {
     const uri = `${this.config.uri}/users/${user.id}`;
     const taskIds = (user.taskIds) ? user.taskIds : [];
     return this.http
@@ -89,7 +98,7 @@ export class TaskService {
       .map(res => res.json() as User);
   }
 
-  removeTaskRef(user: User, taskId: string) {
+  removeTaskRef(user: User, taskId: string): Observable<User> {
     const uri = `${this.config.uri}/users/${user.id}`;
     const taskIds = (user.taskIds) ? user.taskIds : [];
     const index = taskIds.indexOf(taskId);

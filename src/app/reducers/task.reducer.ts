@@ -62,6 +62,18 @@ export function reducer(state = initialState, action: actions.Actions): State {
         loading: false
       };
     }
+    case actions.ActionTypes.MOVE_ALL_SUCCESS: {
+      const tasks = <Task[]>action.payload;
+      // if task is null then return the orginal state
+      if (tasks === null) {
+        return state;
+      }
+      const updatedTasks = tasks.filter(task => state.entities[task.id]);
+      const updatedEntities = updatedTasks.reduce((entities: { [id: string]: Task }, task) => {
+        return {...entities, [task.id]: task};
+      }, {});
+      return {...state, entities: {...state.entities, ...updatedEntities}};
+    }
     case actions.ActionTypes.COMPLETE_FAIL:
     case actions.ActionTypes.MOVE_FAIL:
     case actions.ActionTypes.LOAD_FAIL:

@@ -85,10 +85,9 @@ export class TaskEffects {
   moveAllTask$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.MOVE_ALL)
     .map(toPayload)
-    .switchMap(({srcListId, targetListId}) => this.store$
-      .select(fromRoot.getTasks)
-      .switchMap((tasks: Task[]) => Observable.from(tasks.filter(task => task.taskListId === srcListId)))
-      .map(task => new actions.MoveTaskAction({taskId: task.id, taskListId: targetListId}))
+    .switchMap(({srcListId, targetListId}) => this.service$.moveAll(srcListId, targetListId)
+      .map(tasks => new actions.MoveAllSuccessAction(tasks))
+      .catch(err => of(new actions.MoveAllFailAction(err)))
     );
 
   /**
