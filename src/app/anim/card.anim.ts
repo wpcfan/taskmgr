@@ -1,6 +1,6 @@
 import {animate, group, state, style, transition, trigger} from '@angular/animations';
 
-export const foldAnim = trigger('fold', [
+export const cardAnim = trigger('card', [
   state('in', style({transform: 'translateX(0)', opacity: 1})),
   state('out', style({
     transform: 'scale(1)',

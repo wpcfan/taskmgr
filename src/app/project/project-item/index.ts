@@ -7,7 +7,7 @@ import {
   Input,
   Output
 } from '@angular/core';
-import {foldAnim} from '../../anim';
+import {cardAnim} from '../../anim';
 
 @Component({
   selector: 'app-project-item',
@@ -42,7 +42,7 @@ import {foldAnim} from '../../anim';
   `,
   styles: [``],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [foldAnim],
+  animations: [cardAnim],
 })
 export class ProjectItemComponent {
   @Input() item;
@@ -50,16 +50,16 @@ export class ProjectItemComponent {
   @Output() launchUpdateDialog = new EventEmitter<void>();
   @Output() launchInviteDailog = new EventEmitter<void>();
   @Output() launchDeleteDailog = new EventEmitter<void>();
-  @HostBinding('@fold') fold;
+  @HostBinding('@card') cardState;
 
   @HostListener('mouseenter', ['$event.target'])
   onMouseEnter(target) {
-    this.fold = 'hover';
+    this.cardState = 'hover';
   }
 
   @HostListener('mouseleave', ['$event.target'])
   onMouseLeave(target) {
-    this.fold = 'out';
+    this.cardState = 'out';
   }
 
   onClick(ev: Event) {
