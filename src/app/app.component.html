@@ -1,5 +1,5 @@
 <md-sidenav-container [class.myapp-dark-theme]="dark$ | async">
-  <md-sidenav #sidenav mode="push">
+  <md-sidenav #sidenav mode="over">
     <app-sidebar (navClicked)="sidenav.close()"></app-sidebar>
   </md-sidenav>
   <div class="site">

@@ -11,7 +11,7 @@ import * as actions from '../../actions/project.action';
 import {NewProjectComponent} from '../new-project';
 import {InviteComponent} from '../invite';
 import {ConfirmDialogComponent} from '../../shared';
-import {dropFromTopAnim} from '../../anim';
+import {routerAnim} from '../../anim';
 
 @Component({
   selector: 'app-project-list',
@@ -38,6 +38,7 @@ import {dropFromTopAnim} from '../../anim';
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
+      justify-content: flex-start;
       align-content: stretch;
       align-items: stretch;
     }
@@ -53,13 +54,14 @@ import {dropFromTopAnim} from '../../anim';
     }
     .host {
       display: block;
+      width: 100%;
     }
   `],
-  animations: [dropFromTopAnim],
+  animations: [routerAnim()],
 })
 export class ProjectListComponent implements OnDestroy {
 
-  @HostBinding('@dropFromTop') state = 'in';
+  @HostBinding('@routeAnim') state = 'in';
   projects$: Observable<models.Project[]>;
   darkTheme: boolean;
   subTheme: Subscription;

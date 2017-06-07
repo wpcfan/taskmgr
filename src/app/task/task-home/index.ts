@@ -13,8 +13,8 @@ import {Task, TaskList} from '../../domain';
 import {NewTaskListComponent} from '../new-task-list';
 import {NewTaskComponent} from '../new-task';
 import {CopyTaskComponent} from '../copy-task';
-import { ConfirmDialogComponent } from '../../shared/confirm-dialog/index';
-import { dropFromTopAnim } from '../../anim/drop-from-top.anim';
+import {ConfirmDialogComponent} from '../../shared/confirm-dialog';
+import {routerAnim} from '../../anim';
 
 @Component({
   selector: 'app-task-home',
@@ -82,12 +82,12 @@ import { dropFromTopAnim } from '../../anim/drop-from-top.anim';
       height: 100%;
     }
   `],
-  animations: [dropFromTopAnim],
+  animations: [routerAnim()],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskHomeComponent implements OnDestroy {
 
-  @HostBinding('@dropFromTop') state = 'in';
+  @HostBinding('@routeAnim') state = 'in';
   loading$: Observable<boolean>;
   lists$: Observable<TaskList[]>;
 

@@ -7,7 +7,7 @@ import 'rxjs/add/operator/pluck';
 import {MyCalService} from '../../services';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
-import { dropFromTopAnim } from '../../anim/drop-from-top.anim';
+import {routerAnim} from '../../anim';
 
 @Component({
   selector: 'app-cal-home',
@@ -74,12 +74,12 @@ import { dropFromTopAnim } from '../../anim/drop-from-top.anim';
     }
   `
   ],
-  animations: [dropFromTopAnim],
+  animations: [routerAnim()],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarHomeComponent implements OnInit {
 
-  @HostBinding('@dropFromTop') state = 'in';
+  @HostBinding('@routeAnim') state = 'in';
   viewDate: Date;
   view$: Observable<string>;
   activeDayIsOpen = true;
