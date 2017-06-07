@@ -76,7 +76,9 @@ export interface Age {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AgeInputComponent implements ControlValueAccessor, OnInit {
+
   form: FormGroup;
+  fromDate: boolean = false;
   ageUnits: { value: AgeUnit; label: string }[] = [
     {value: AgeUnit.Year, label: '岁'},
     {value: AgeUnit.Month, label: '月'},
@@ -104,11 +106,15 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit {
       const age = this.toAge(date);
       this.form.get('ageNum').patchValue(age.age);
       this.form.get('ageUnit').patchValue(age.unit);
+      this.form.updateValueAndValidity({onlySelf: true, emitEvent: false});
       this.propagateChange(date);
     });
     const age$ = Observable.combineLatest(ageNum$, ageUnit$, (_num, _unit) => this.toDate({age: _num, unit: _unit}));
     age$.subscribe(date => {
-      this.form.get('birthday').patchValue(date);
+      const calcAge = this.toAge(this.form.get('birthday').value);
+      if(calcAge.age !== this.form.get('ageNum').value || calcAge.unit !== this.form.get('ageUnit').value) {
+        this.form.get('birthday').patchValue(date);
+      }
     });
   }
 
@@ -116,6 +122,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit {
   public writeValue(obj: string) {
     if (obj && isValid(parse(obj))) {
       const date = format(obj, this.dateFormat);
+      this.fromDate = true;
       this.form.get('birthday').patchValue(date);
       this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
     }
