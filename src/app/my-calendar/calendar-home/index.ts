@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, HostBinding } from '@angular/core';
 import {CalendarEvent} from 'angular-calendar';
 import {addDays, addHours, endOfDay, endOfMonth, isSameDay, isSameMonth, startOfDay, subDays} from 'date-fns';
 import {Observable} from 'rxjs/Observable';
@@ -7,6 +7,7 @@ import 'rxjs/add/operator/pluck';
 import {MyCalService} from '../../services';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
+import { dropFromTopAnim } from '../../anim/drop-from-top.anim';
 
 @Component({
   selector: 'app-cal-home',
@@ -73,9 +74,12 @@ import * as fromRoot from '../../reducers';
     }
   `
   ],
+  animations: [dropFromTopAnim],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarHomeComponent implements OnInit {
+
+  @HostBinding('@dropFromTop') state = 'in';
   viewDate: Date;
   view$: Observable<string>;
   activeDayIsOpen = true;

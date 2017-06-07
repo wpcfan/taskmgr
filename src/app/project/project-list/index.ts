@@ -51,6 +51,9 @@ import {dropFromTopAnim} from '../../anim';
       bottom: 96px;
       z-index: 998;
     }
+    .host {
+      display: block;
+    }
   `],
   animations: [dropFromTopAnim],
 })

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnDestroy} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, HostBinding } from '@angular/core';
 import {MdDialog} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -14,6 +14,7 @@ import {NewTaskListComponent} from '../new-task-list';
 import {NewTaskComponent} from '../new-task';
 import {CopyTaskComponent} from '../copy-task';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/index';
+import { dropFromTopAnim } from '../../anim/drop-from-top.anim';
 
 @Component({
   selector: 'app-task-home',
@@ -81,10 +82,12 @@ import { ConfirmDialogComponent } from '../../shared/confirm-dialog/index';
       height: 100%;
     }
   `],
+  animations: [dropFromTopAnim],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskHomeComponent implements OnDestroy {
 
+  @HostBinding('@dropFromTop') state = 'in';
   loading$: Observable<boolean>;
   lists$: Observable<TaskList[]>;
 
