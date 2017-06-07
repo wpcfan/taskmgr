@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, HostBinding } from '@angular/core';
+import {ChangeDetectionStrategy, Component, HostBinding} from '@angular/core';
 import {CalendarEvent} from 'angular-calendar';
 import {addDays, addHours, endOfDay, endOfMonth, isSameDay, isSameMonth, startOfDay, subDays} from 'date-fns';
 import {Observable} from 'rxjs/Observable';
@@ -7,7 +7,7 @@ import 'rxjs/add/operator/pluck';
 import {MyCalService} from '../../services';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
-import {routerAnim, RouterAnimType} from '../../anim';
+import {slideToBottom} from '../../anim';
 
 @Component({
   selector: 'app-cal-home',
@@ -74,10 +74,10 @@ import {routerAnim, RouterAnimType} from '../../anim';
     }
   `
   ],
-  animations: [routerAnim(RouterAnimType.Bottom)],
+  animations: [slideToBottom],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CalendarHomeComponent implements OnInit {
+export class CalendarHomeComponent {
 
   @HostBinding('@routeAnim') state = 'in';
   viewDate: Date;
@@ -92,9 +92,6 @@ export class CalendarHomeComponent implements OnInit {
     this.view$ = this.route.params.pluck('view');
     this.events$ = this.store$.select(fromRoot.getAuthUser)
       .switchMap(user => this.service$.getUserTasks(user.id));
-  }
-
-  ngOnInit() {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {

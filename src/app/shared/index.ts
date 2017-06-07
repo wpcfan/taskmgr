@@ -28,7 +28,6 @@ import {ChipsListComponent} from './chips-list';
 import {IdentityInputComponent} from './identity-input';
 import {AreaListComponent} from './area-list';
 import {AgeInputComponent} from './age-input';
-import {InitialsPipe} from './initials.pipe';
 import {DirectivesModule} from '../directives';
 
 @NgModule({
@@ -95,7 +94,6 @@ import {DirectivesModule} from '../directives';
     IdentityInputComponent,
     AreaListComponent,
     AgeInputComponent,
-    InitialsPipe,
   ],
   entryComponents: [
     ConfirmDialogComponent

@@ -11,7 +11,7 @@ import * as actions from '../../actions/project.action';
 import {NewProjectComponent} from '../new-project';
 import {InviteComponent} from '../invite';
 import {ConfirmDialogComponent} from '../../shared';
-import {routerAnim, RouterAnimType} from '../../anim';
+import {slideToBottom} from '../../anim';
 
 @Component({
   selector: 'app-project-list',
@@ -57,7 +57,7 @@ import {routerAnim, RouterAnimType} from '../../anim';
       width: 100%;
     }
   `],
-  animations: [routerAnim(RouterAnimType.Bottom)],
+  animations: [slideToBottom],
 })
 export class ProjectListComponent implements OnDestroy {
 
