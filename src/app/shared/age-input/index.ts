@@ -78,17 +78,15 @@ export interface Age {
 export class AgeInputComponent implements ControlValueAccessor, OnInit {
 
   form: FormGroup;
-  fromDate: boolean = false;
   ageUnits: { value: AgeUnit; label: string }[] = [
     {value: AgeUnit.Year, label: '岁'},
     {value: AgeUnit.Month, label: '月'},
     {value: AgeUnit.Day, label: '天'}
   ];
+  dateOfBirth;
   private readonly dateFormat = 'YYYY-MM-DD';
-  @Input() dateOfBirth;
-  private readonly daysTop = 90; // 90 天以下，用天作为单位
-  private readonly monthsTop = 24; // 24 个月以下，用月作为单位
   private propagateChange = (_: any) => {};
+
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -122,7 +120,6 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit {
   public writeValue(obj: string) {
     if (obj && isValid(parse(obj))) {
       const date = format(obj, this.dateFormat);
-      this.fromDate = true;
       this.form.get('birthday').patchValue(date);
       this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
     }
@@ -153,15 +150,17 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit {
   }
 
   private toAge(dateStr: string): Age {
+    const daysTop = 90; // 90 天以下，用天作为单位
+    const monthsTop = 24; // 24 个月以下，用月作为单位
     const date = parse(dateStr);
     const now = new Date();
-    if (isBefore(subDays(now, this.daysTop), date)) {
+    if (isBefore(subDays(now, daysTop), date)) {
       return {
         age: differenceInDays(now, date),
         unit: AgeUnit.Day
       };
     }
-    if (isBefore(subMonths(now, this.monthsTop), date)) {
+    if (isBefore(subMonths(now, monthsTop), date)) {
       return {
         age: differenceInMonths(now, date),
         unit: AgeUnit.Month
