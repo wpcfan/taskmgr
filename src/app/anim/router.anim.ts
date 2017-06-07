@@ -1,13 +1,36 @@
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
-export const routerAnim = () => {
-  return slideToBottom();
+export enum RouterAnimType {
+  Right = 0,
+  Left,
+  Bottom,
+  Top
+}
+
+export const routerAnim = (animType: RouterAnimType) => {
+  switch (animType) {
+    case RouterAnimType.Right: {
+      return slideToRight();
+    }
+    case RouterAnimType.Left: {
+      return slideToLeft();
+    }
+    case RouterAnimType.Bottom: {
+      return slideToBottom();
+    }
+    case RouterAnimType.Top: {
+      return slideToTop();
+    }
+    default: {
+      return slideToBottom();
+    }
+  }
 };
 
 const slideToRight = () => {
   return trigger('routeAnim', [
-    state('void', style({position:'relative', width:'100%'}) ),
-    state('*', style({position:'relative', width:'100%'}) ),
+    state('void', style({position:'fixed', width:'100%'}) ),
+    state('*', style({position:'fixed', width:'100%'}) ),
     transition(':enter', [
       style({transform: 'translateX(-100%)'}),
       animate('0.5s ease-in-out', style({transform: 'translateX(0%)'}))

@@ -7,7 +7,7 @@ import 'rxjs/add/operator/pluck';
 import {MyCalService} from '../../services';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
-import {routerAnim} from '../../anim';
+import {routerAnim, RouterAnimType} from '../../anim';
 
 @Component({
   selector: 'app-cal-home',
@@ -74,7 +74,7 @@ import {routerAnim} from '../../anim';
     }
   `
   ],
-  animations: [routerAnim()],
+  animations: [routerAnim(RouterAnimType.Bottom)],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarHomeComponent implements OnInit {

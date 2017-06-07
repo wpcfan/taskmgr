@@ -14,8 +14,6 @@ import {Auth} from '../../domain';
       </button>
       <span>企业协作平台</span>
       <span class="fill-remaining-space"></span>
-      <a md-button [routerLink]="['/projects']">项目首页</a>
-      <a md-button [routerLink]="['/mycal/month']">日历</a>
       <md-slide-toggle (change)="onChange($event.checked)">黑夜模式</md-slide-toggle>
       <span><a md-button *ngIf="((auth$|async).user !== undefined)" (click)="logout()">退出</a></span>
     </md-toolbar>
