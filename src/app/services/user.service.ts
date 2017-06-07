@@ -39,7 +39,7 @@ export class UserService {
     const uri = `${this.config.uri}/${this.domain}/${user.id}`;
     const projectIds = (user.projectIds) ? user.projectIds : [];
     const index = projectIds.indexOf(projectId);
-    const toUpdate = [...projectIds.slice(0, index), ...projectIds.slice(index)];
+    const toUpdate = [...projectIds.slice(0, index), ...projectIds.slice(index+1)];
     return this.http
       .patch(uri, JSON.stringify({projectIds: toUpdate}), {headers: this.headers})
       .map(res => res.json() as User);
