@@ -81,11 +81,7 @@ export class ProjectEffects {
   afterRemoveProject$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.DELETE_SUCCESS)
     .map(toPayload)
-    .switchMap(project => this.store$
-      .select(fromRoot.getProjectTaskList)
-      .switchMap(lists => Observable.from(lists))
-      .map((taskList: TaskList) => new tasklistActions.DeleteTaskListAction(taskList))
-    );
+    .map(project => new tasklistActions.DeleteTaskListByProjectAction(project));
 
   @Effect()
   selectProject$: Observable<Action> = this.actions$

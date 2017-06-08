@@ -12,6 +12,9 @@ export const ActionTypes = {
   DELETE: type('[TaskList] Delete'),
   DELETE_SUCCESS: type('[TaskList] Delete Success'),
   DELETE_FAIL: type('[TaskList] Delete Fail'),
+  DELETE_BY_PROJECT: type('[TaskList] Delete By Project'),
+  DELETE_BY_PROJECT_SUCCESS: type('[TaskList] Delete By Project Success'),
+  DELETE_BY_PROJECT_FAIL: type('[TaskList] Delete By Project Fail'),
   LOADS: type('[TaskList] Load'),
   LOADS_SUCCESS: type('[TaskList] Load Success'),
   LOADS_FAIL: type('[TaskList] Load Fail'),
@@ -81,6 +84,27 @@ export class DeleteTaskListSuccessAction implements Action {
 
 export class DeleteTaskListFailAction implements Action {
   type = ActionTypes.DELETE_FAIL;
+
+  constructor(public payload: Err) {
+  }
+}
+
+export class DeleteTaskListByProjectAction implements Action {
+  type = ActionTypes.DELETE_BY_PROJECT;
+
+  constructor(public payload: Project) {
+  }
+}
+
+export class DeleteTaskListByProjectSuccessAction implements Action {
+  type = ActionTypes.DELETE_BY_PROJECT_SUCCESS;
+
+  constructor(public payload: TaskList[]) {
+  }
+}
+
+export class DeleteTaskListByProjectFailAction implements Action {
+  type = ActionTypes.DELETE_BY_PROJECT_FAIL;
 
   constructor(public payload: Err) {
   }
@@ -159,6 +183,9 @@ export type Actions
   | DeleteTaskListAction
   | DeleteTaskListSuccessAction
   | DeleteTaskListFailAction
+  | DeleteTaskListByProjectAction
+  | DeleteTaskListByProjectSuccessAction
+  | DeleteTaskListByProjectFailAction
   | LoadTaskListsAction
   | LoadTaskListsSuccessAction
   | LoadTaskListsFailAction

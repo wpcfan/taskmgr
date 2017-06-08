@@ -17,33 +17,29 @@ import {slideToBottom} from '../../anim';
   selector: 'app-project-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="projects">
-      <app-project-item
-        class="card"
-        *ngFor="let project of (projects$ | async)"
-        [item]="project"
-        (itemSelected)="selectProject(project)"
-        (launchUpdateDialog)="openUpdateDialog(project)"
-        (launchInviteDailog)="openInviteDialog(project)"
-        (launchDeleteDailog)="openDeleteDialog(project)">
-      </app-project-item>
-    </div>
+    <app-project-item
+      class="card"
+      *ngFor="let project of (projects$ | async)"
+      [item]="project"
+      (itemSelected)="selectProject(project)"
+      (launchUpdateDialog)="openUpdateDialog(project)"
+      (launchInviteDailog)="openInviteDialog(project)"
+      (launchDeleteDailog)="openDeleteDialog(project)">
+    </app-project-item>
     <button md-fab (click)="openNewProjectDialog()" type="button" class="fab-button">
       <md-icon>add</md-icon>
     </button>
   `,
   styles: [`
-    .projects {
+    :host {
       margin: 15px;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      justify-content: flex-start;
-      align-content: stretch;
-      align-items: stretch;
     }
     .card {
-      flex: 0 0 360px;
+      height: 360px;
+      flex: 0 1 360px;
       margin-right: 10px;
     }
     .fab-button {
@@ -51,10 +47,6 @@ import {slideToBottom} from '../../anim';
       right: 32px;
       bottom: 96px;
       z-index: 998;
-    }
-    .host {
-      display: block;
-      width: 100%;
     }
   `],
   animations: [slideToBottom],

@@ -39,6 +39,24 @@ export class TaskListService {
       .mapTo(taskList);
   }
 
+  deleteByProject(project: Project): Observable<TaskList[]> {
+    const listIds = project.taskLists;
+    return Observable.from(listIds)
+      .mergeMap(id => {
+        const uri = `${this.config.uri}/${this.domain}/${id}`;
+        return this.http
+          .get(uri)
+          .map(res => res.json());
+      })
+      .mergeMap(list => {
+        const uri = `${this.config.uri}/${this.domain}/${list.id}`;
+        return this.http
+          .delete(uri)
+          .mapTo(list);
+      })
+      .reduce((lists, li) => [...lists, li], []);
+  }
+
   // GET /tasklist
   get(projectId: string): Observable<TaskList[]> {
     const uri = `${this.config.uri}/${this.domain}`;

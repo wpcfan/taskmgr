@@ -43,6 +43,20 @@ export function reducer(state = initialState, action: actions.Actions): State {
         selectedIds: selectedIds
       };
     }
+    case actions.ActionTypes.DELETE_BY_PROJECT_SUCCESS: {
+      const taskLists = <TaskList[]>action.payload;
+      const listEntities = taskLists.reduce((entities, list) => ({...entities, [list.id]: list}), {});
+      const remaningIds = state.ids.filter(id => !listEntities[id]);
+      const remainingEntities = remaningIds.reduce((entities: { [id: string]: TaskList }, id) => {
+        return {...entities, [id]: state.entities[id]};
+      }, {});
+      const selectedIds = state.selectedIds.filter(id => !listEntities[id]);
+      return {
+        ids: remaningIds,
+        entities: remainingEntities,
+        selectedIds: selectedIds
+      };
+    }
     case actions.ActionTypes.UPDATE_SUCCESS: {
       const taskList = <TaskList>action.payload;
       const entities = {...state.entities, [taskList.id]: taskList};
