@@ -14,7 +14,7 @@ import {NewTaskListComponent} from '../new-task-list';
 import {NewTaskComponent} from '../new-task';
 import {CopyTaskComponent} from '../copy-task';
 import {ConfirmDialogComponent} from '../../shared/confirm-dialog';
-import {slideToBottom} from '../../anim';
+import {routeAnimation, routeAnimType} from '../../anim';
 
 @Component({
   selector: 'app-task-home',
@@ -82,7 +82,7 @@ import {slideToBottom} from '../../anim';
       height: 100%;
     }
   `],
-  animations: [slideToBottom],
+  animations: [routeAnimation(routeAnimType.slideToBottom)],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskHomeComponent implements OnDestroy {
