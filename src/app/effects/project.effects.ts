@@ -7,7 +7,6 @@ import {of} from 'rxjs/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/withLatestFrom';
-import 'rxjs/add/operator/debounceTime';
 import {ProjectService} from '../services';
 import * as actions from '../actions/project.action';
 import * as tasklistActions from '../actions/task-list.action';
@@ -17,7 +16,6 @@ import {Project, TaskList} from '../domain';
 
 @Injectable()
 export class ProjectEffects {
-
 
   /**
    *

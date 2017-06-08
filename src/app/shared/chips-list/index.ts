@@ -110,6 +110,7 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
     } else {
       this.items = [];
     }
+    this.chips.patchValue({ memberSearch: '' });
     this.propagateChange(this.items);
   }
 
