@@ -7,14 +7,14 @@ import {User} from '../../domain';
 @Component({
   selector: 'app-chips-list',
   template: `
-    <div [formGroup]="chips">
+    <div [formGroup]="chips" class="full-width">
       <span>{{label}}</span>
       <md-chip-list>
         <md-chip color="primary" selected="true" *ngFor="let member of items">
           {{member.name}} <span (click)="removeMember(member)" class="remove-tag">x</span>
         </md-chip>
       </md-chip-list>
-      <md-input-container class="full-width" *ngIf="displayInput">
+      <md-input-container *ngIf="displayInput" class="full-width">
         <input mdInput [placeholder]="placeholderText" [mdAutocomplete]="autoMember" formControlName="memberSearch">
       </md-input-container>
     </div>
@@ -28,11 +28,6 @@ import {User} from '../../domain';
     </md-autocomplete>
   `,
   styles: [`
-    :host {
-      display: inline-flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-    }
   `],
   providers: [
     {
