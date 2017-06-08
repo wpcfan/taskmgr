@@ -104,7 +104,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit {
       const age = this.toAge(date);
       this.form.get('ageNum').patchValue(age.age);
       this.form.get('ageUnit').patchValue(age.unit);
-      this.form.updateValueAndValidity({onlySelf: true, emitEvent: false});
+      this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
       this.propagateChange(date);
     });
     const age$ = Observable.combineLatest(ageNum$, ageUnit$, (_num, _unit) => this.toDate({age: _num, unit: _unit}));
@@ -112,6 +112,8 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit {
       const calcAge = this.toAge(this.form.get('birthday').value);
       if(calcAge.age !== this.form.get('ageNum').value || calcAge.unit !== this.form.get('ageUnit').value) {
         this.form.get('birthday').patchValue(date);
+        this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
+        this.propagateChange(date);
       }
     });
   }
