@@ -166,7 +166,7 @@ export class TaskHomeComponent implements OnDestroy {
         }
       })
       .subscribe(({name, order}) => {
-        this.store$.dispatch(new listActions.AddTaskListAction({name: name, order: order+1, projectId: this.projectId}));
+        this.store$.dispatch(new listActions.AddTaskListAction({name: name, order: order + 1, projectId: this.projectId}));
       });
   }
 

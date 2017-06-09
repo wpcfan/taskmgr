@@ -62,7 +62,7 @@ export class ImageListSelectComponent implements ControlValueAccessor {
   }
 
   // 列表元素选择发生改变触发
-  private onChange(i) {
+  onChange(i) {
     this.selected = this.items[i];
     // 更新表单
     this.propagateChange(this.items[i]);

@@ -94,7 +94,7 @@ export function reducer(state = initialState, action: actions.Actions): State {
       };
     }
     case prjActions.ActionTypes.SELECT: {
-      const selectedIds = state.ids.filter(id => state.entities[id].projectId ===(<Project>action.payload).id);
+      const selectedIds = state.ids.filter(id => state.entities[id].projectId === (<Project>action.payload).id);
       return {...state, selectedIds: selectedIds};
     }
     case actions.ActionTypes.LOADS_FAIL:

@@ -23,12 +23,12 @@
     <md-card-header>
       <md-card-title> 佳句</md-card-title>
       <md-card-subtitle>
-        {{(quote$|async).cn}}
+        {{(quote$ | async)?.cn}}
       </md-card-subtitle>
     </md-card-header>
-    <img md-card-image [src]="(quote$|async).pic">
+    <img md-card-image [src]="(quote$ | async)?.pic">
     <md-card-content>
-      <p> {{(quote$|async).en}}</p>
+      <p> {{(quote$ | async)?.en}}</p>
     </md-card-content>
   </md-card>
 </form>
