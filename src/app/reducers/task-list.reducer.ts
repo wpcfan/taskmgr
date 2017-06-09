@@ -1,5 +1,6 @@
 import {TaskList, Project} from '../domain';
 import {createSelector} from 'reselect';
+import * as _ from 'lodash';
 import * as actions from '../actions/task-list.action';
 import * as prjActions from '../actions/project.action';
 
@@ -43,18 +44,18 @@ export function reducer(state = initialState, action: actions.Actions): State {
         selectedIds: selectedIds
       };
     }
-    case actions.ActionTypes.DELETE_BY_PROJECT_SUCCESS: {
-      const taskLists = <TaskList[]>action.payload;
-      const listEntities = taskLists.reduce((entities, list) => ({...entities, [list.id]: list}), {});
-      const remaningIds = state.ids.filter(id => !listEntities[id]);
+    case prjActions.ActionTypes.DELETE_SUCCESS: {
+      const project = <Project>action.payload;
+      const taskListIds = project.taskLists;
+      const remaningIds = _.difference(state.ids, taskListIds);
       const remainingEntities = remaningIds.reduce((entities: { [id: string]: TaskList }, id) => {
         return {...entities, [id]: state.entities[id]};
       }, {});
-      const selectedIds = state.selectedIds.filter(id => !listEntities[id]);
+      const selectedIds = _.difference(state.selectedIds, taskListIds);
       return {
-        ids: remaningIds,
+        ids: [...remaningIds],
         entities: remainingEntities,
-        selectedIds: selectedIds
+        selectedIds: [...selectedIds]
       };
     }
     case actions.ActionTypes.UPDATE_SUCCESS: {

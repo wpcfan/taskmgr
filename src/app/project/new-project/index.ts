@@ -74,7 +74,7 @@ export class NewProjectComponent implements OnInit {
     if (!valid) {
       return;
     }
-    this.dialogRef.close({name: value.name, desc: value.desc, coverImg: value.coverImg});
+    this.dialogRef.close({name: value.name, desc: value.desc ? value.desc : null, coverImg: value.coverImg});
   }
 
 }

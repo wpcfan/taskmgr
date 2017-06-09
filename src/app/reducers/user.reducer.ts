@@ -38,9 +38,10 @@ export function reducer(state = initialState, action: actions.Actions | authActi
     }
     case actions.ActionTypes.REMOVE_USER_PROJECT_SUCCESS: {
       const user = <User>action.payload;
-      const newIds = state.ids.filter(id => id !== user.id);
-      const newEntities = newIds.reduce((entities, id) => ({...entities, [id]: state.entities[id]}), {});
-      return {...state, ids: newIds, entities: newEntities};
+      if (!state.entities[user.id]) {
+        return state;
+      }
+      return {...state, entities: {...state.entities, [user.id]: user}};
     }
     case actions.ActionTypes.SEARCH_USERS_SUCCESS: {
       const users = <User[]>action.payload;

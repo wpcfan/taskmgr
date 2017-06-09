@@ -6,7 +6,7 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/reduce';
 import 'rxjs/add/observable/from';
-import {Project,  User} from '../domain';
+import {Project, Task, User} from '../domain';
 
 @Injectable()
 export class ProjectService {
@@ -44,10 +44,19 @@ export class ProjectService {
 
   // DELETE /projects instead of deleting the records
   del(project: Project): Observable<Project> {
+    const deltask$ = Observable.from(project.taskLists)
+      .mergeMap(listId => this.http
+        .get(`${this.config.uri}/tasks`, {params: {'taskListId': listId}})
+        .map(res => res.json()))
+      .mergeMap(tasks => Observable.from(tasks))
+      .mergeMap((task: Task) => this.http
+        .delete(`${this.config.uri}/tasks/${task.id}`)
+        .mapTo(task))
+      .reduce((tasks, t) => [...tasks, t], []);
     const uri = `${this.config.uri}/${this.domain}/${project.id}`;
-    return this.http
+    return deltask$.switchMap(_ => this.http
       .delete(uri, {headers: this.headers})
-      .map(_ => project);
+      .map(_ => project));
   }
 
   // GET /projects

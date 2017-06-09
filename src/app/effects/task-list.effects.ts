@@ -73,16 +73,6 @@ export class TaskListEffects {
     });
 
   @Effect()
-  removeListByProject$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.DELETE_BY_PROJECT)
-    .map(toPayload)
-    .switchMap((project: Project) => {
-      return this.service$.deleteByProject(project)
-        .map(lists => new actions.DeleteTaskListByProjectSuccessAction(lists))
-        .catch(err => of(new actions.DeleteTaskListByProjectFailAction(err)));
-    });
-
-  @Effect()
   initializeTaskLists$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.INITIALIZE)
     .map(toPayload)

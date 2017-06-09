@@ -9,6 +9,9 @@ Charset: utf-8
 }
 
 ###
+DELETE http://localhost:3000/projects/H10cxnvMZ
+
+###
 //Projects
 GET http://localhost:8090/projects/?enabled=true&archived=false
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YW5nIiwiY3JlYXRlZCI6MTQ5MjQ5NDY1MTQ4OSwiZXhwIjoxNDkzMDk5NDUxfQ.7KqheQW14zjW2cFEbWUnvSz5RXzItxwjVTZ3fa2K3rjkU4anN-A4Wu0kBaJ_adHNY5XRlygVfNQOfPTaQBgq2w
@@ -82,7 +85,7 @@ Content-Type: application/json
 		]
 	}
 }
-  
+
 ###
 https://leancloud.cn/1.1/classes/projects?where=%7B%22members%22%3A%22590acda82f301e00582a352a%22%7D
 X-LC-Id: ABTVy9loYSaIMc3EkaFRupTL-gzGzoHsz

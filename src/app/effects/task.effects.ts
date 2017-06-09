@@ -42,7 +42,7 @@ export class TaskEffects {
     );
 
   @Effect()
-  updateTaskList$: Observable<Action> = this.actions$
+  updateTask$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.UPDATE)
     .map(toPayload)
     .switchMap(task => this.service$
@@ -52,7 +52,7 @@ export class TaskEffects {
     );
 
   @Effect()
-  removeTaskList$: Observable<Action> = this.actions$
+  removeTask$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.DELETE)
     .map(toPayload)
     .switchMap(task => this.service$

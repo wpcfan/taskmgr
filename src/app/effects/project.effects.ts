@@ -10,6 +10,7 @@ import 'rxjs/add/operator/withLatestFrom';
 import {ProjectService} from '../services';
 import * as actions from '../actions/project.action';
 import * as tasklistActions from '../actions/task-list.action';
+import * as taskActions from '../actions/task.action';
 import * as userActions from '../actions/user.action';
 import * as fromRoot from '../reducers';
 import {Project, TaskList} from '../domain';
@@ -74,12 +75,6 @@ export class ProjectEffects {
       .map(returned => new actions.DeleteProjectSuccessAction(returned))
       .catch(err => of(new actions.DeleteProjectFailAction(JSON.stringify(err))))
     );
-
-  @Effect()
-  afterRemoveProject$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.DELETE_SUCCESS)
-    .map(toPayload)
-    .map(project => new tasklistActions.DeleteTaskListByProjectAction(project));
 
   @Effect()
   selectProject$: Observable<Action> = this.actions$
