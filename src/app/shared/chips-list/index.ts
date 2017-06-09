@@ -45,7 +45,8 @@ import {User} from '../../domain';
 })
 export class ChipsListComponent implements ControlValueAccessor, OnInit {
 
-  // fix the lint complaints about
+  // fix the lint complaints about using a reference in template
+  // It seems tslint requires now that a `@ViewChild` need to be declared
   // 'you are using blablabla that you're trying to access does not exist in the class declaration.'
   @ViewChild('autoMember') autoMember;
   @Input() multiple = true;
