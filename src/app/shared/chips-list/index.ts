@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit, forwardRef, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, forwardRef, Input, ViewChild} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormGroup, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
 import {UserService} from '../../services';
@@ -45,6 +45,9 @@ import {User} from '../../domain';
 })
 export class ChipsListComponent implements ControlValueAccessor, OnInit {
 
+  // fix the lint complaints about
+  // 'you are using blablabla that you're trying to access does not exist in the class declaration.'
+  @ViewChild('autoMember') autoMember;
   @Input() multiple = true;
   @Input() label = '添加/修改成员';
   @Input() placeholderText = '请输入成员 email';
