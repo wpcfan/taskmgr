@@ -22,10 +22,10 @@ export class TaskEffects {
     .ofType(actions.ActionTypes.LOAD)
     .map(toPayload)
     .mergeMap((taskListId) => {
-        return this.service$
-          .get(taskListId)
-          .map(tasks => new actions.LoadTasksSuccessAction(tasks))
-          .catch(err => of(new actions.LoadTasksFailAction(JSON.stringify(err))));
+      return this.service$
+        .get(taskListId)
+        .map(tasks => new actions.LoadTasksSuccessAction(tasks))
+        .catch(err => of(new actions.LoadTasksFailAction(JSON.stringify(err))));
       }
     );
 
@@ -34,10 +34,10 @@ export class TaskEffects {
     .ofType(actions.ActionTypes.ADD)
     .map(toPayload)
     .switchMap((task) => {
-        return this.service$
-          .add(task)
-          .map(t => new actions.AddTaskSuccessAction(t))
-          .catch(err => of(new actions.AddTaskFailAction(JSON.stringify(err))));
+      return this.service$
+        .add(task)
+        .map(t => new actions.AddTaskSuccessAction(t))
+        .catch(err => of(new actions.AddTaskFailAction(JSON.stringify(err))));
       }
     );
 

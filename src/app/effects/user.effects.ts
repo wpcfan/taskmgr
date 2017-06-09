@@ -33,10 +33,10 @@ export class UserEffects {
     .ofType(actions.ActionTypes.ADD_USER_PROJECT)
     .map(toPayload)
     .switchMap(({user, projectId}) => {
-        return this.service$
-          .addProjectRef(user, projectId)
-          .map(task => new actions.AddUserProjectSuccessAction(task))
-          .catch(err => of(new actions.AddUserProjectFailAction(JSON.stringify(err))));
+      return this.service$
+        .addProjectRef(user, projectId)
+        .map(task => new actions.AddUserProjectSuccessAction(task))
+        .catch(err => of(new actions.AddUserProjectFailAction(JSON.stringify(err))));
       }
     );
 
@@ -46,10 +46,10 @@ export class UserEffects {
     .ofType(actions.ActionTypes.REMOVE_USER_PROJECT)
     .map(toPayload)
     .switchMap(({user, projectId}) => {
-        return this.service$
-          .removeProjectRef(user, projectId)
-          .map(task => new actions.RemoveUserProjectSuccessAction(task))
-          .catch(err => of(new actions.RemoveUserProjectFailAction(JSON.stringify(err))));
+      return this.service$
+        .removeProjectRef(user, projectId)
+        .map(task => new actions.RemoveUserProjectSuccessAction(task))
+        .catch(err => of(new actions.RemoveUserProjectFailAction(JSON.stringify(err))));
       }
     );
 

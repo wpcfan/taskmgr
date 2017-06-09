@@ -34,10 +34,10 @@ export class TaskListEffects {
     .ofType(actions.ActionTypes.ADD)
     .map(toPayload)
     .switchMap((taskList) => {
-        return this.service$
-          .add(taskList)
-          .map(tl => new actions.AddTaskListSuccessAction(tl))
-          .catch(err => of(new actions.AddTaskListFailAction(JSON.stringify(err))));
+      return this.service$
+        .add(taskList)
+        .map(tl => new actions.AddTaskListSuccessAction(tl))
+        .catch(err => of(new actions.AddTaskListFailAction(JSON.stringify(err))));
       }
     );
 

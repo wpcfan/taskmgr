@@ -38,11 +38,11 @@ export class ProjectEffects {
     .map(toPayload)
     .withLatestFrom(this.store$.select(fromRoot.getAuth))
     .switchMap(([project, auth]) => {
-        const added = {...project, members: [`${auth.user.id}`]};
-        return this.service
-          .add(added)
-          .map(returned => new actions.AddProjectSuccessAction(returned))
-          .catch(err => of(new actions.AddProjectFailAction(JSON.stringify(err))));
+      const added = {...project, members: [`${auth.user.id}`]};
+      return this.service
+        .add(added)
+        .map(returned => new actions.AddProjectSuccessAction(returned))
+        .catch(err => of(new actions.AddProjectFailAction(JSON.stringify(err))));
       }
     );
 
