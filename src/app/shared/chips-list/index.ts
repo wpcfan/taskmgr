@@ -7,14 +7,6 @@ import {User} from '../../domain';
 @Component({
   selector: 'app-chips-list',
   template: `
-    <md-autocomplete #autoMember="mdAutocomplete" [displayWith]="displayUser">
-      <md-option
-        *ngFor="let item of memberResults$ | async"
-        [value]="item"
-        (onSelectionChange)="handleMemberSelection(item)">
-        {{item.name}}
-      </md-option>
-    </md-autocomplete>
     <div [formGroup]="chips" class="full-width">
       <span>{{label}}</span>
       <md-chip-list>
@@ -26,6 +18,14 @@ import {User} from '../../domain';
         <input mdInput [placeholder]="placeholderText" [mdAutocomplete]="autoMember" formControlName="memberSearch">
       </md-input-container>
     </div>
+    <md-autocomplete #autoMember="mdAutocomplete" [displayWith]="displayUser">
+      <md-option
+        *ngFor="let item of memberResults$ | async"
+        [value]="item"
+        (onSelectionChange)="handleMemberSelection(item)">
+        {{item.name}}
+      </md-option>
+    </md-autocomplete>
   `,
   styles: [`
   `],
