@@ -14,14 +14,13 @@ import {NewTaskListComponent} from '../new-task-list';
 import {NewTaskComponent} from '../new-task';
 import {CopyTaskComponent} from '../copy-task';
 import {ConfirmDialogComponent} from '../../shared/confirm-dialog';
-import {routeAnimation, routeAnimType} from '../../anim';
+import {defaultRouteAnim} from '../../anim';
 
 @Component({
   selector: 'app-task-home',
   template: `
     <div class="task-lists">
-      <div
-        class="list-container"
+      <div class="list-container"
         *ngFor="let taskList of lists$ | async"
         [ngStyle]="{'order': taskList.order}"
         app-droppable
@@ -32,17 +31,27 @@ import {routeAnimation, routeAnimType} from '../../anim';
         [draggedClass]="'drag-start'"
         [dragData]="taskList"
         (dropped)="handleMove($event, taskList)">
-        <app-task-list
-          [list]="taskList"
-          [darkTheme]="darkTheme"
-          [tasks]="tasksByList(taskList.id) | async"
-          [loading]="loading$ | async"
-          (completeTask)="handleCompleteTask($event)"
-          (renameList)="handleRenameList($event)"
-          (delList)="handleDelList($event)"
-          (moveList)="handleMoveList($event)"
-          (addTask)="handleAddTask($event)"
-          (updateTask)=handleUpdateTask($event)>
+        <app-task-list>
+          <app-task-list-header
+            [header]="taskList.name"
+            [darkTheme]="darkTheme"
+            (newTask)="handleAddTask(taskList.id)"
+            (changeListName)="handleRenameList(taskList)"
+            (deleteList)="handleDelList(taskList)"
+            (moveAllTasks)="handleMoveList(taskList.id)">
+          </app-task-list-header>
+          <md-divider></md-divider>
+          <md-progress-bar color="primary" mode="indeterminate" *ngIf="(loading$ | async) as loading else listItems">
+          </md-progress-bar>
+          <ng-template #listItems>
+            <md-divider></md-divider>
+            <app-task-item md-line
+              *ngFor="let task of tasksByList(taskList.id) | async"
+              [item]="task"
+              (taskComplete)="handleCompleteTask(task)"
+              (taskClick)="handleUpdateTask(task)">
+            </app-task-item>
+          </ng-template>
         </app-task-list>
       </div>
     </div>
@@ -82,7 +91,7 @@ import {routeAnimation, routeAnimType} from '../../anim';
       height: 100%;
     }
   `],
-  animations: [routeAnimation(routeAnimType.slideToBottom)],
+  animations: [defaultRouteAnim],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskHomeComponent implements OnDestroy {
