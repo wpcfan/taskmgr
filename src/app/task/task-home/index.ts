@@ -20,7 +20,8 @@ import {defaultRouteAnim} from '../../anim';
   selector: 'app-task-home',
   template: `
     <div class="task-lists">
-      <div class="list-container"
+      <app-task-list
+        class="list-container"
         *ngFor="let taskList of lists$ | async"
         [ngStyle]="{'order': taskList.order}"
         app-droppable
@@ -31,29 +32,27 @@ import {defaultRouteAnim} from '../../anim';
         [draggedClass]="'drag-start'"
         [dragData]="taskList"
         (dropped)="handleMove($event, taskList)">
-        <app-task-list>
-          <app-task-list-header
-            [header]="taskList.name"
-            [darkTheme]="darkTheme"
-            (newTask)="handleAddTask(taskList.id)"
-            (changeListName)="handleRenameList(taskList)"
-            (deleteList)="handleDelList(taskList)"
-            (moveAllTasks)="handleMoveList(taskList.id)">
-          </app-task-list-header>
+        <app-task-list-header
+          [header]="taskList.name"
+          [darkTheme]="darkTheme"
+          (newTask)="handleAddTask(taskList.id)"
+          (changeListName)="handleRenameList(taskList)"
+          (deleteList)="handleDelList(taskList)"
+          (moveAllTasks)="handleMoveList(taskList.id)">
+        </app-task-list-header>
+        <md-divider></md-divider>
+        <md-progress-bar color="primary" mode="indeterminate" *ngIf="(loading$ | async) as loading else listItems">
+        </md-progress-bar>
+        <ng-template #listItems>
           <md-divider></md-divider>
-          <md-progress-bar color="primary" mode="indeterminate" *ngIf="(loading$ | async) as loading else listItems">
-          </md-progress-bar>
-          <ng-template #listItems>
-            <md-divider></md-divider>
-            <app-task-item md-line
-              *ngFor="let task of tasksByList(taskList.id) | async"
-              [item]="task"
-              (taskComplete)="handleCompleteTask(task)"
-              (taskClick)="handleUpdateTask(task)">
-            </app-task-item>
-          </ng-template>
-        </app-task-list>
-      </div>
+          <app-task-item md-line
+            *ngFor="let task of tasksByList(taskList.id) | async"
+            [item]="task"
+            (taskComplete)="handleCompleteTask(task)"
+            (taskClick)="handleUpdateTask(task)">
+          </app-task-item>
+        </ng-template>
+      </app-task-list>
     </div>
     <button md-fab (click)="handleNewTaskList($event)" type="button" class="fab-button">
       <md-icon>add</md-icon>

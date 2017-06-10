@@ -1,11 +1,13 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import {Task} from '../../domain';
+import {itemAnim} from '../../anim/item.anim'
 
 @Component({
   selector: 'app-task-item',
   templateUrl: './task-item.component.html',
   styleUrls: ['./task-item.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [itemAnim]
 })
 export class TaskItemComponent implements OnInit {
 
@@ -13,7 +15,7 @@ export class TaskItemComponent implements OnInit {
   @Output() taskClick = new EventEmitter<string>();
   @Input() item: Task;
   avatar: string;
-  widerPriority = false;
+  widerPriority = 'in';
 
   constructor() {
   }
@@ -33,12 +35,12 @@ export class TaskItemComponent implements OnInit {
 
   @HostListener('mouseenter')
   handleMouseEnter() {
-    this.widerPriority = true;
+    this.widerPriority = 'out';
   }
 
   @HostListener('mouseleave')
   handleMouseLeave() {
-    this.widerPriority = false;
+    this.widerPriority = 'in';
   }
 
 }

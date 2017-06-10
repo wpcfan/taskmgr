@@ -1,5 +1,6 @@
 <md-list-item
   class="container"
+  [@item]="widerPriority"
   [app-draggable]="true"
   [dragTag]="'task-item'"
   [draggedClass]="'drag-start'"
@@ -10,13 +11,11 @@
     'priority-emergency': item.priority === 1}">
 
   <div md-line class="content">
-    <div class="main">
-      <md-checkbox [checked]="item.completed" (change)="checkboxChanged()">
-      </md-checkbox>
-      <span (click)="itemClicked($event)" class="desc" [ngClass]="{'completed': item.completed}">
-        {{item.desc}}
-      </span>
-    </div>
+    <md-checkbox [checked]="item.completed" (change)="checkboxChanged()">
+    </md-checkbox>
+    <span (click)="itemClicked($event)" class="desc" [ngClass]="{'completed': item.completed}">
+      {{item.desc}}
+    </span>
   </div>
   <div md-line class="bottom-bar" (click)="itemClicked($event)">
     <span class="duedate" *ngIf="item.dueDate">{{item.dueDate | date:"yy-MM-dd"}}</span>
