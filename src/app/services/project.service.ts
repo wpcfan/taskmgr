@@ -54,7 +54,7 @@ export class ProjectService {
         .mapTo(task))
       .reduce((tasks, t) => [...tasks, t], []);
     const uri = `${this.config.uri}/${this.domain}/${project.id}`;
-    return deltask$.switchMap(_ => this.http
+    return deltask$.switchMap(p => this.http
       .delete(uri, {headers: this.headers})
       .map(_ => project));
   }
