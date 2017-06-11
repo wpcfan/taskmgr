@@ -1,5 +1,6 @@
 import {Task, TaskList, Project} from '../domain';
 import {createSelector} from 'reselect';
+import {covertArrToObj, buildObjFromArr} from '../utils/reduer.util';
 import * as actions from '../actions/task.action';
 import * as prjActions from '../actions/project.action';
 import * as _ from 'lodash';
@@ -35,18 +36,14 @@ export function reducer(state = initialState, action: actions.Actions): State {
     case actions.ActionTypes.DELETE_SUCCESS: {
       const task = <Task>action.payload;
       const newIds = state.ids.filter(id => id !== task.id);
-      const newEntities = newIds.reduce((entities: { [id: string]: Task }, id) => {
-        return {...entities, [id]: state.entities[id]};
-      }, {});
+      const newEntities = buildObjFromArr(newIds, state.entities);
       return {ids: newIds, entities: newEntities, loading: false}
     }
     case prjActions.ActionTypes.DELETE_SUCCESS: {
       const project = <Project>action.payload;
       const listIds = project.taskLists;
       const remainingIds = state.ids.filter(id => _.indexOf(listIds, state.entities[id].taskListId) === -1);
-      const remainingEntities = remainingIds.reduce((entities: { [id: string]: Task }, id) => {
-        return {...entities, [id]: state.entities[id]};
-      }, {});
+      const remainingEntities = buildObjFromArr(remainingIds, state.entities);
       return {ids: remainingIds, entities: remainingEntities, loading: false}
     }
     case actions.ActionTypes.MOVE_SUCCESS:
@@ -58,15 +55,12 @@ export function reducer(state = initialState, action: actions.Actions): State {
     }
     case actions.ActionTypes.LOAD_SUCCESS: {
       const tasks = <Task[]>action.payload;
-      // if task is null then return the orginal state
-      if (tasks === null) {
+      if (tasks.length === 0) {
         return state;
       }
       const newTasks = tasks.filter(task => !state.entities[task.id]);
       const newIds = newTasks.map(task => task.id);
-      const newEntities = newTasks.reduce((entities: { [id: string]: Task }, task) => {
-        return {...entities, [task.id]: task};
-      }, {});
+      const newEntities = covertArrToObj(newTasks);
       return {
         ids: [...state.ids, ...newIds],
         entities: {...state.entities, ...newEntities},
@@ -80,9 +74,7 @@ export function reducer(state = initialState, action: actions.Actions): State {
         return state;
       }
       const updatedTasks = tasks.filter(task => state.entities[task.id]);
-      const updatedEntities = updatedTasks.reduce((entities: { [id: string]: Task }, task) => {
-        return {...entities, [task.id]: task};
-      }, {});
+      const updatedEntities = covertArrToObj(updatedTasks);
       return {...state, entities: {...state.entities, ...updatedEntities}};
     }
     case actions.ActionTypes.COMPLETE_FAIL:

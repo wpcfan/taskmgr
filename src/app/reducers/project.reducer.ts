@@ -1,5 +1,6 @@
 import {Project} from '../domain';
 import {createSelector} from 'reselect';
+import {covertArrToObj, buildObjFromArr} from '../utils/reduer.util';
 import * as actions from '../actions/project.action';
 
 export interface State {
@@ -14,6 +15,11 @@ export const initialState: State = {
   selectedId: null,
 };
 
+const updateObject = (oldObject, newValues) => {
+  return {...oldObject, ...newValues};
+}
+
+
 export function reducer(state = initialState, action: actions.Actions): State {
   switch (action.type) {
     case actions.ActionTypes.ADD_SUCCESS: {
@@ -21,7 +27,6 @@ export function reducer(state = initialState, action: actions.Actions): State {
       if (state.entities[project.id]) {
         return state;
       }
-      ;
       const ids = [...state.ids, project.id];
       const entities = {...state.entities, [project.id]: project};
       return {...state, ids: ids, entities: entities};
@@ -32,9 +37,7 @@ export function reducer(state = initialState, action: actions.Actions): State {
       if (ids.length === 0) {
         return state;
       }
-      const newEntities = ids.reduce((entities: { [id: string]: Project }, id) => {
-        return {...entities, [id]: state.entities[id]};
-      }, {});
+      const newEntities = buildObjFromArr(ids, state.entities);
       return {
         ids: ids,
         entities: newEntities,
@@ -59,9 +62,7 @@ export function reducer(state = initialState, action: actions.Actions): State {
       if (newProjects.length === 0) {
         return state;
       }
-      const newEntities = newProjects.reduce((entities: { [id: string]: Project }, project: Project) => {
-        return {...entities, [project.id]: project};
-      }, {});
+      const newEntities = covertArrToObj(newProjects);
       return {
         ids: [...state.ids, ...newIds],
         entities: {...state.entities, ...newEntities},

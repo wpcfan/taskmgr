@@ -1,5 +1,6 @@
 import * as actions from '../actions/user.action';
 import * as authActions from '../actions/auth.action';
+import {covertArrToObj} from '../utils/reduer.util';
 import {User, Auth} from '../domain';
 import {createSelector} from 'reselect';
 
@@ -23,7 +24,8 @@ export function reducer(state = initialState, action: actions.Actions | authActi
       } else {
         return {
           ids: [...state.ids, auth.user.id],
-          entities: {...state.entities, [auth.user.id]: auth.user}};
+          entities: {...state.entities, [auth.user.id]: auth.user}
+        };
       }
     }
     case actions.ActionTypes.ADD_USER_PROJECT_SUCCESS: {
@@ -53,7 +55,7 @@ export function reducer(state = initialState, action: actions.Actions | authActi
       if (newIds.length === 0) {
         return state;
       }
-      const newEntities = newUsers.reduce((entities, user) => ({...entities, [user.id]: user}), {});
+      const newEntities = covertArrToObj(newUsers);
       return {
         ids: [...state.ids, ...newIds],
         entities: {...state.entities, ...newEntities}
@@ -66,8 +68,10 @@ export function reducer(state = initialState, action: actions.Actions | authActi
       }
       const newUsers = users.filter(user => !state.entities[user.id]);
       const newIds = newUsers.map(user => user.id);
-      if (newIds.length === 0) {return state; }
-      const newEntities = newUsers.reduce((entities, user) => ({...entities, [user.id]: user}), {});
+      if (newIds.length === 0) {
+        return state;
+      }
+      const newEntities = covertArrToObj(newUsers);
       return {
         ids: [...state.ids, ...newIds],
         entities: {...state.entities, ...newEntities}
@@ -75,7 +79,7 @@ export function reducer(state = initialState, action: actions.Actions | authActi
     }
     case actions.ActionTypes.BATCH_UPDATE_USER_PROJECT_SUCCESS: {
       const users = <User[]>action.payload;
-      const userProjects = users.reduce((entities, user) => ({...entities, [user.id]: user}), {});
+      const userProjects = covertArrToObj(users);
       const newEnities = {...state.entities, ...userProjects};
       return {...state, entities: newEnities};
     }

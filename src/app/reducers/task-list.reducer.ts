@@ -1,5 +1,6 @@
 import {TaskList, Project} from '../domain';
 import {createSelector} from 'reselect';
+import {covertArrToObj, buildObjFromArr} from '../utils/reduer.util';
 import * as _ from 'lodash';
 import * as actions from '../actions/task-list.action';
 import * as prjActions from '../actions/project.action';
@@ -34,9 +35,7 @@ export function reducer(state = initialState, action: actions.Actions): State {
     case actions.ActionTypes.DELETE_SUCCESS: {
       const taskList = <TaskList>action.payload;
       const newIds = state.ids.filter(id => id !== taskList.id);
-      const newEntities = newIds.reduce((entities: { [id: string]: TaskList }, id) => {
-        return {...entities, [id]: state.entities[id]};
-      }, {});
+      const newEntities = buildObjFromArr(newIds, state.entities);
       const selectedIds = state.selectedIds.filter(id => id !== taskList.id);
       return {
         ids: newIds,
@@ -48,9 +47,7 @@ export function reducer(state = initialState, action: actions.Actions): State {
       const project = <Project>action.payload;
       const taskListIds = project.taskLists;
       const remaningIds = _.difference(state.ids, taskListIds);
-      const remainingEntities = remaningIds.reduce((entities: { [id: string]: TaskList }, id) => {
-        return {...entities, [id]: state.entities[id]};
-      }, {});
+      const remainingEntities = buildObjFromArr(remaningIds, state.entities);
       const selectedIds = _.difference(state.selectedIds, taskListIds);
       return {
         ids: [...remaningIds],
@@ -68,9 +65,7 @@ export function reducer(state = initialState, action: actions.Actions): State {
       if (taskLists === null) {
         return state;
       }
-      const updated = taskLists.reduce((entities: { [id: string]: TaskList }, taskList: TaskList) => {
-        return {...entities, [taskList.id]: taskList};
-      }, {});
+      const updated = covertArrToObj(taskLists);
       const updatedEntities = {...state.entities, ...updated};
       return {...state, entities: updatedEntities};
     }
@@ -85,9 +80,7 @@ export function reducer(state = initialState, action: actions.Actions): State {
         return state;
       }
       const newIds = newTaskLists.map(taskList => taskList.id);
-      const newEntities = newTaskLists.reduce((entities: { [id: string]: TaskList }, taskList: TaskList) => {
-        return {...entities, [taskList.id]: taskList};
-      }, {});
+      const newEntities = covertArrToObj(newTaskLists);
       return {
         ids: [...state.ids, ...newIds],
         entities: {...state.entities, ...newEntities},

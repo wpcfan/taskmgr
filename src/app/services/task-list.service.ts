@@ -6,7 +6,7 @@ import {Project, TaskList} from '../domain';
 
 @Injectable()
 export class TaskListService {
-  private domain = 'tasklists';
+  private domain = 'taskLists';
   private headers = new Headers({
     'Content-Type': 'application/json'
   });
