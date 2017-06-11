@@ -2,6 +2,8 @@ import {NgModule} from '@angular/core';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {
+  MdToolbarModule,
+  MdSidenavModule,
   MdAutocompleteModule,
   MdButtonModule,
   MdButtonToggleModule,
@@ -21,6 +23,9 @@ import {
   MdSelectModule,
   MdTabsModule,
   MdSelectionModule,
+  MdSlideToggleModule,
+  MdSidenav,
+  MdSidenavContainer,
 } from '@angular/material';
 import {ConfirmDialogComponent} from './confirm-dialog';
 import {ImageListSelectComponent} from './image-list-select';
@@ -53,6 +58,9 @@ import {DirectivesModule} from '../directives';
     MdRadioModule,
     MdAutocompleteModule,
     MdTabsModule,
+    MdToolbarModule,
+    MdSidenavModule,
+    MdSlideToggleModule,
     MdSelectionModule,
     DirectivesModule,
   ],
@@ -79,6 +87,9 @@ import {DirectivesModule} from '../directives';
     MdAutocompleteModule,
     MdTabsModule,
     MdSelectionModule,
+    MdToolbarModule,
+    MdSidenavModule,
+    MdSlideToggleModule,
     DirectivesModule,
     ConfirmDialogComponent,
     ImageListSelectComponent,

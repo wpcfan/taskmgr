@@ -1,17 +1,8 @@
 import {NgModule, Optional, SkipSelf} from '@angular/core';
-import {CommonModule} from '@angular/common';
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {
-  MdSidenav,
-  MdSidenavContainer,
-  MdToolbarModule,
-  MdSidenavModule,
-  MdSlideToggleModule,
-  MdButtonModule,
-  MdIconModule,
-  MdListModule
-} from '@angular/material';
+import {SharedModule} from '../shared';
+import {MdSidenav, MdSidenavContainer} from '@angular/material';
 import {AppRoutingModule} from './app-routing.module';
 import {AppEffectsModule} from '../effects';
 import {ServicesModule} from '../services';
@@ -27,14 +18,8 @@ import 'hammerjs';
 
 @NgModule({
   imports: [
-    CommonModule,
+    SharedModule,
     HttpModule,
-    MdToolbarModule,
-    MdSidenavModule,
-    MdSlideToggleModule,
-    MdButtonModule,
-    MdIconModule,
-    MdListModule,
     AppEffectsModule,
     ServicesModule.forRoot(),
     AppStoreModule,
