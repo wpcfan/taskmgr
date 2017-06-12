@@ -6,6 +6,7 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/reduce';
 import 'rxjs/add/observable/from';
+import * as _ from 'lodash';
 import {Project, Task, User} from '../domain';
 
 @Injectable()
@@ -79,9 +80,8 @@ export class ProjectService {
       .map(res => res.json() as Project)
       .switchMap(project => {
         const existingMemberIds = project.members;
-        const userIds = users.map(user => user.id);
-        const remainingIds = existingMemberIds.filter(id => userIds.indexOf(id) < 0);
-        const newIds = [...remainingIds, ...userIds];
+        const invitedIds = users.map(user => user.id);
+        const newIds = _.union(existingMemberIds, invitedIds);
         return this.http.patch(uri, JSON.stringify({ members: newIds }), {headers: this.headers});
       })
       .map(res => res.json());

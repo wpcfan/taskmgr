@@ -72,7 +72,7 @@ export class TaskService {
       .mergeMap(tasks => Observable.from(tasks))
       .mergeMap(task => this.move(task.id, targetListId))
       .reduce((arrTasks, t) => {
-        return [...arrTasks, t]
+        return [...arrTasks, t];
       }, []);
   }
 

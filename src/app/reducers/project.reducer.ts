@@ -15,11 +15,6 @@ export const initialState: State = {
   selectedId: null,
 };
 
-const updateObject = (oldObject, newValues) => {
-  return {...oldObject, ...newValues};
-}
-
-
 export function reducer(state = initialState, action: actions.Actions): State {
   switch (action.type) {
     case actions.ActionTypes.ADD_SUCCESS: {
