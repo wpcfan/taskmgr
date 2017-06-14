@@ -6,7 +6,7 @@ import {Observable} from 'rxjs/Observable';
 @Component({
   selector: 'app-new-project',
   template: `
-    <form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)" novalidate>
+    <form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
       <md-card>
         <h3 md-dialog-title>{{dialogTitle}}</h3>
         <div md-dialog-content>

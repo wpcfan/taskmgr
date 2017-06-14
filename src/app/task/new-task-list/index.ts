@@ -5,7 +5,7 @@ import {MD_DIALOG_DATA, MdDialogRef, OverlayContainer} from '@angular/material';
 @Component({
   selector: 'app-new-task-list',
   template: `
-    <form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)" novalidate>
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
       <h3 md-dialog-title>{{dialogTitle}}</h3>
       <div md-dialog-content>
         <md-input-container class="full-width">
