@@ -90,8 +90,6 @@ export const reducer = (state = initialState, action: actions.Actions): State =>
       return loadTasks(state, action);
     case actions.ActionTypes.MOVE_ALL_SUCCESS:
       return moveAllTasks(state, action);
-    case actions.ActionTypes.COMPLETE_FAIL:
-    case actions.ActionTypes.MOVE_FAIL:
     case actions.ActionTypes.LOAD_FAIL:
     case actions.ActionTypes.ADD_FAIL:
     case actions.ActionTypes.UPDATE_FAIL:

@@ -101,7 +101,6 @@ export const reducer = (state = initialState, action: actions.Actions | authActi
       return loadByPrj(state, action);
     case actions.ActionTypes.BATCH_UPDATE_USER_PROJECT_SUCCESS:
       return batchUpdatePrjRef(state, action);
-    case actions.ActionTypes.LOAD_USERS_BY_PRJ_FAIL:
     default: {
       return state;
     }

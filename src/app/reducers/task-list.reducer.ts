@@ -112,10 +112,6 @@ export const reducer = (state = initialState, action: actions.Actions): State =>
       return loadLists(state, action);
     case prjActions.ActionTypes.SELECT:
       return selectPrj(state, action);
-    case actions.ActionTypes.LOADS_FAIL:
-    case actions.ActionTypes.ADD_FAIL:
-    case actions.ActionTypes.UPDATE_FAIL:
-    case actions.ActionTypes.DELETE_FAIL:
     default:
       return state;
   }

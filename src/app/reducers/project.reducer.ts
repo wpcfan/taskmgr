@@ -76,14 +76,8 @@ export const reducer = (state = initialState, action: actions.Actions): State =>
       return updateProject(state, action);
     case actions.ActionTypes.LOADS_SUCCESS:
       return loadProjects(state, action);
-    case actions.ActionTypes.SELECT: {
+    case actions.ActionTypes.SELECT:
       return {...state, selectedId: action.payload.id};
-    }
-    case actions.ActionTypes.LOADS_FAIL:
-    case actions.ActionTypes.ADD_FAIL:
-    case actions.ActionTypes.UPDATE_LISTS_FAIL:
-    case actions.ActionTypes.UPDATE_FAIL:
-    case actions.ActionTypes.DELETE_FAIL:
     default:
       return state;
   }
