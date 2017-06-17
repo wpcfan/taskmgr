@@ -20,9 +20,9 @@ export class QuoteEffects {
     .map(toPayload)
     .switchMap(() => this.quoteService
       .getQuote()
-      .catch(err => of(new actions.QuoteFailAction(JSON.stringify(err))).mapTo(undefined)))
-    .filter(m => m !== undefined)
-    .map(quote => new actions.QuoteSuccessAction(quote));
+      .map(quote => new actions.QuoteSuccessAction(quote))
+      .catch(err => of(new actions.QuoteFailAction(JSON.stringify(err))))
+    );
 
   /**
    *
