@@ -1,6 +1,6 @@
 <form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
   <md-card class="card">
-    <md-tab-group dynamicHeight="true" [selectedIndex]="selectedTab" (selectChange)="onTabChange($event.index)">
+    <md-tab-group [dynamicHeight]="true" [selectedIndex]="selectedTab" (selectChange)="onTabChange($event.index)">
       <md-tab label="帐号信息">
         <md-input-container class="full-width">
           <input mdInput placeholder="电子邮件" formControlName="email">
