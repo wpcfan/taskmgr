@@ -9,13 +9,10 @@
     'priority-normal': item.priority === 3,
     'priority-important': item.priority === 2,
     'priority-emergency': item.priority === 1}">
-
-  <div md-line class="content">
-    <md-checkbox class="status" [checked]="item.completed" (change)="checkboxChanged()">
-    </md-checkbox>
-    <span (click)="itemClicked($event)" class="desc" [ngClass]="{'completed': item.completed}">
-      {{item.desc}}
-    </span>
+  <md-checkbox class="status" [checked]="item.completed" (change)="checkboxChanged()">
+  </md-checkbox>
+  <div md-line class="content" (click)="itemClicked($event)" class="desc" [ngClass]="{'completed': item.completed}">
+    {{item.desc}}
   </div>
   <div md-line class="bottom-bar" (click)="itemClicked($event)">
     <span class="duedate" *ngIf="item.dueDate">{{item.dueDate | date:"yy-MM-dd"}}</span>
