@@ -46,8 +46,14 @@ md-icon.avatar {
   order: 1;
 }
 
+.status {
+  display: block;
+  float: left;
+}
+
 .desc {
   white-space: normal;
+  display: block;
 }
 
 .content {

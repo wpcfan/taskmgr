@@ -11,7 +11,7 @@
     'priority-emergency': item.priority === 1}">
 
   <div md-line class="content">
-    <md-checkbox [checked]="item.completed" (change)="checkboxChanged()">
+    <md-checkbox class="status" [checked]="item.completed" (change)="checkboxChanged()">
     </md-checkbox>
     <span (click)="itemClicked($event)" class="desc" [ngClass]="{'completed': item.completed}">
       {{item.desc}}
