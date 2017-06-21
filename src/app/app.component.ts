@@ -1,8 +1,4 @@
 import {Component} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
-import * as fromRoot from './reducers';
-import * as actions from './actions/theme.action';
 import { OverlayContainer } from '@angular/material';
 
 @Component({
@@ -12,14 +8,17 @@ import { OverlayContainer } from '@angular/material';
 })
 export class AppComponent {
 
-  dark$: Observable<boolean>;
+  private _dark = false;
 
-  constructor(private store$: Store<fromRoot.State>, private oc: OverlayContainer) {
-    this.dark$ = this.store$.select(fromRoot.getTheme);
+  constructor(private oc: OverlayContainer) {
   }
 
-  switchDarkTheme(dark: boolean): void {
-    this.store$.dispatch(new actions.SwitchThemeAction(dark));
+  get dark() {
+    return this._dark;
+  }
+
+  switchDarkTheme(dark: boolean) {
+    this._dark = dark;
     this.oc.themeClass = dark ? 'myapp-dark-theme' : null;
   }
 }

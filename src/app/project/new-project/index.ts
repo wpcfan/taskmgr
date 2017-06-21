@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MD_DIALOG_DATA, MdDialogRef, OverlayContainer} from '@angular/material';
+import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
@@ -40,11 +40,9 @@ export class NewProjectComponent implements OnInit {
   dialogTitle: string;
   thumbnails$: Observable<string[]>;
 
-  constructor(private oc: OverlayContainer,
-              private fb: FormBuilder,
+  constructor(private fb: FormBuilder,
               @Inject(MD_DIALOG_DATA) private data: any,
               private dialogRef: MdDialogRef<NewProjectComponent>) {
-    this.oc.themeClass = this.data.darkTheme ? 'myapp-dark-theme' : null;
     this.thumbnails$ = this.data.thumbnails;
   }
 
