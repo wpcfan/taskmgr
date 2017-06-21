@@ -64,7 +64,7 @@ const loadProjects = (state, action) => {
   };
 }
 
-export const reducer = (state = initialState, action: actions.Actions): State => {
+export function reducer (state = initialState, action: actions.Actions): State {
   switch (action.type) {
     case actions.ActionTypes.ADD_SUCCESS:
       return addProject(state, action);

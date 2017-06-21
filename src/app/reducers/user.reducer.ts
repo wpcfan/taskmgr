@@ -86,7 +86,7 @@ const batchUpdatePrjRef = (state, action) => {
   return {...state, entities: newEnities};
 }
 
-export const reducer = (state = initialState, action: actions.Actions | authActions.Actions): State => {
+export function reducer (state = initialState, action: actions.Actions | authActions.Actions): State {
   switch (action.type) {
     case authActions.ActionTypes.LOGIN_SUCCESS:
     case authActions.ActionTypes.REGISTER_SUCCESS:

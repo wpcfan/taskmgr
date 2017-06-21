@@ -69,7 +69,7 @@ const updateTask = (state, action) => {
   return {...newState, loading: false};
 }
 
-export const reducer = (state = initialState, action: actions.Actions): State => {
+export function reducer (state = initialState, action: actions.Actions): State {
   switch (action.type) {
     case actions.ActionTypes.LOAD:
     case actions.ActionTypes.DELETE:
