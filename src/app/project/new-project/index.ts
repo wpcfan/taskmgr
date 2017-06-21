@@ -20,7 +20,7 @@ import {Observable} from 'rxjs/Observable';
       </div>
       <div md-dialog-actions>
         <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">保存</button>
-        <button md-dialog-close md-button type="button">关闭</button>
+        <button md-dialog-close md-raised-button type="button">关闭</button>
       </div>
     </form>
   `,
