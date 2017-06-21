@@ -5,19 +5,17 @@ import {User} from '../../domain';
 @Component({
   selector: 'app-invite',
   template: `
-    <md-card>
-      <h2 md-dialog-title>{{dialogTitle}}</h2>
-      <form class="full-width" #f="ngForm" (ngSubmit)="onSubmit($event, f)">
-        <app-chips-list [label]="'邀请成员'" name="members" [(ngModel)]="members">
-        </app-chips-list>
-        <div md-dialog-actions>
-          <button md-raised-button color="primary" type="submit" [disabled]="!f.valid">
-            保存
-          </button>
-          <button md-dialog-close md-raised-button type="button">关闭</button>
-        </div>
+    <h2 md-dialog-title>{{dialogTitle}}</h2>
+    <form class="full-width" #f="ngForm" (ngSubmit)="onSubmit($event, f)">
+      <app-chips-list [label]="'邀请成员'" name="members" [(ngModel)]="members">
+      </app-chips-list>
+      <div md-dialog-actions>
+        <button md-raised-button color="primary" type="submit" [disabled]="!f.valid">
+          保存
+        </button>
+        <button md-dialog-close md-raised-button type="button">关闭</button>
+      </div>
     </form>
-    </md-card>
     `,
   styles: [``]
 })
