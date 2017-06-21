@@ -34,7 +34,6 @@ import {defaultRouteAnim} from '../../anim';
         (dropped)="handleMove($event, taskList)">
         <app-task-list-header
           [header]="taskList.name"
-          [darkTheme]="darkTheme"
           (newTask)="handleAddTask(taskList.id)"
           (changeListName)="handleRenameList(taskList)"
           (deleteList)="handleDelList(taskList)"
@@ -99,10 +98,8 @@ export class TaskHomeComponent implements OnDestroy {
   loading$: Observable<boolean>;
   lists$: Observable<TaskList[]>;
 
-  darkTheme: boolean;
   private projectId: string;
   private routeParamSub: Subscription;
-  private subTheme: Subscription;
   private subTasks: Subscription;
 
   constructor(private route: ActivatedRoute,
@@ -112,10 +109,6 @@ export class TaskHomeComponent implements OnDestroy {
     this.routeParamSub = routeParam$.subscribe(
       (id: string) => {
         this.projectId = id;
-      });
-    this.subTheme = this.store$.select(fromRoot.getTheme)
-      .subscribe(result => {
-        this.darkTheme = result;
       });
     this.lists$ = this.store$.select(fromRoot.getProjectTaskList);
     this.subTasks = this.lists$.subscribe(lists => {
@@ -131,9 +124,6 @@ export class TaskHomeComponent implements OnDestroy {
     if (this.routeParamSub) {
       this.routeParamSub.unsubscribe();
     }
-    if (this.subTheme) {
-      this.subTheme.unsubscribe();
-    }
     if (this.subTasks) {
       this.subTasks.unsubscribe();
     }
@@ -146,7 +136,7 @@ export class TaskHomeComponent implements OnDestroy {
   }
 
   handleRenameList(list: TaskList) {
-    const dialogRef = this.dialog.open(NewTaskListComponent, { data: { darkTheme: this.darkTheme, name: list.name }});
+    const dialogRef = this.dialog.open(NewTaskListComponent, { data: { name: list.name }});
     dialogRef.afterClosed().take(1).filter(n => n).subscribe(name => {
       this.store$.dispatch(new listActions.UpdateTaskListAction({...list, name: name}));
     });
@@ -154,7 +144,7 @@ export class TaskHomeComponent implements OnDestroy {
 
   handleNewTaskList(ev: Event) {
     ev.preventDefault();
-    const dialogRef = this.dialog.open(NewTaskListComponent, { data: { darkTheme: this.darkTheme }});
+    const dialogRef = this.dialog.open(NewTaskListComponent, { data: { }});
     dialogRef.afterClosed()
       .take(1)
       .filter(n => n)
@@ -173,7 +163,7 @@ export class TaskHomeComponent implements OnDestroy {
     const list$ = this.store$
       .select(fromRoot.getProjectTaskList)
       .map(lists => lists.filter(list => list.id !== listId));
-    const dialogRef = this.dialog.open(CopyTaskComponent, {data: { darkTheme: this.darkTheme, srcListId: listId, lists: list$ }});
+    const dialogRef = this.dialog.open(CopyTaskComponent, {data: { srcListId: listId, lists: list$ }});
     dialogRef.afterClosed().take(1).filter(n => n).subscribe(val => {
       this.store$.dispatch(new taskActions.MoveAllAction(val));
     });
@@ -185,7 +175,7 @@ export class TaskHomeComponent implements OnDestroy {
       content: '确认要删除该任务列表？',
       confirmAction: '确认删除'
     };
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {data: {dialog: confirm, darkTheme: this.darkTheme}});
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {data: {dialog: confirm}});
 
     // 使用 take(1) 来自动销毁订阅，因为 take(1) 意味着接收到 1 个数据后就完成了
     dialogRef.afterClosed().take(1).subscribe(val => {
@@ -215,7 +205,7 @@ export class TaskHomeComponent implements OnDestroy {
   }
 
   handleAddTask(listId: string) {
-    const dialogRef = this.dialog.open(NewTaskComponent, { data: { darkTheme: this.darkTheme }});
+    const dialogRef = this.dialog.open(NewTaskComponent, { data: { }});
     dialogRef.afterClosed()
       .take(1)
       .filter(n => n)
@@ -237,7 +227,7 @@ export class TaskHomeComponent implements OnDestroy {
   }
 
   handleUpdateTask(task: Task) {
-    const dialogRef = this.dialog.open(NewTaskComponent, { data: { darkTheme: this.darkTheme, task: task }});
+    const dialogRef = this.dialog.open(NewTaskComponent, { data: { task: task }});
     dialogRef.afterClosed()
       .take(1)
       .filter(n => n)

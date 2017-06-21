@@ -1,5 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnInit} from '@angular/core';
-import {OverlayContainer} from '@angular/material';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-task-list-header',
@@ -54,19 +53,14 @@ import {OverlayContainer} from '@angular/material';
   `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskListHeaderComponent implements OnInit {
+export class TaskListHeaderComponent {
   @Output() changeListName = new EventEmitter<void>();
   @Output() deleteList = new EventEmitter<void>();
   @Output() moveAllTasks = new EventEmitter<void>();
   @Output() newTask = new EventEmitter<void>();
   @Input() header = '';
-  @Input() darkTheme = false;
 
-  constructor(private oc: OverlayContainer) {
-  }
-
-  ngOnInit() {
-    this.oc.themeClass = this.darkTheme ? 'myapp-dark-theme' : null;
+  constructor() {
   }
 
   onChangeListName(ev: Event) {

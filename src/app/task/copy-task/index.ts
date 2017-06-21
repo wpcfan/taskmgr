@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MD_DIALOG_DATA, MdDialogRef, OverlayContainer} from '@angular/material';
+import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import {TaskList} from '../../domain';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -29,11 +29,9 @@ export class CopyTaskComponent implements OnInit {
   dialogTitle: string;
   lists$: Observable<TaskList>;
 
-  constructor(private oc: OverlayContainer,
-              private fb: FormBuilder,
+  constructor(private fb: FormBuilder,
               @Inject(MD_DIALOG_DATA) private data: any,
               private dialogRef: MdDialogRef<CopyTaskComponent>) {
-    this.oc.themeClass = this.data.darkTheme ? 'myapp-dark-theme' : null;
   }
 
   ngOnInit() {

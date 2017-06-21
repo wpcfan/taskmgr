@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MD_DIALOG_DATA, MdDialogRef, OverlayContainer} from '@angular/material';
+import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
 
 @Component({
   selector: 'app-new-task',
@@ -67,12 +67,9 @@ export class NewTaskComponent implements OnInit {
     },
   ];
 
-  constructor(private oc: OverlayContainer,
-              private fb: FormBuilder,
+  constructor(private fb: FormBuilder,
               @Inject(MD_DIALOG_DATA) private data: any,
-              private dialogRef: MdDialogRef<NewTaskComponent>) {
-    this.oc.themeClass = this.data.darkTheme ? 'myapp-dark-theme' : null;
-  }
+              private dialogRef: MdDialogRef<NewTaskComponent>) {}
 
   ngOnInit() {
     if (!this.data.task) {
