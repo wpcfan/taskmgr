@@ -2,7 +2,6 @@ import {ChangeDetectionStrategy, Component, HostBinding, OnDestroy} from '@angul
 import {MdDialog} from '@angular/material';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/subscription';
 import 'rxjs/add/observable/range';
 import 'rxjs/add/operator/take';
 import * as fromRoot from '../../reducers';
@@ -51,27 +50,15 @@ import {defaultRouteAnim} from '../../anim';
   `],
   animations: [defaultRouteAnim],
 })
-export class ProjectListComponent implements OnDestroy {
+export class ProjectListComponent {
 
   @HostBinding('@routeAnim') state = 'in';
   projects$: Observable<models.Project[]>;
-  darkTheme: boolean;
-  subTheme: Subscription;
 
   constructor(private store$: Store<fromRoot.State>,
               private dialog: MdDialog) {
     this.store$.dispatch(new actions.LoadProjectsAction({}));
     this.projects$ = this.store$.select(fromRoot.getProjects);
-    this.subTheme = this.store$.select(fromRoot.getTheme)
-      .subscribe(result => {
-        this.darkTheme = result;
-      });
-  }
-
-  ngOnDestroy() {
-    if (this.subTheme) {
-      this.subTheme.unsubscribe();
-    }
   }
 
   selectProject(project: models.Project) {
@@ -81,7 +68,7 @@ export class ProjectListComponent implements OnDestroy {
   openNewProjectDialog() {
     const img = `/assets/img/covers/${Math.floor(Math.random() * 39).toFixed(0)}_tn.jpg`;
     const thumbnails$ = this.getThumbnailsObs();
-    const dialogRef = this.dialog.open(NewProjectComponent, {data: {darkTheme: this.darkTheme, thumbnails: thumbnails$, img: img}});
+    const dialogRef = this.dialog.open(NewProjectComponent, {data: { thumbnails: thumbnails$, img: img}});
     dialogRef.afterClosed().take(1).subscribe(val => {
       if (val) {
         const converImg = this.buildImgSrc(val.coverImg);
@@ -92,7 +79,7 @@ export class ProjectListComponent implements OnDestroy {
 
   openUpdateDialog(project) {
     const thumbnails$ = this.getThumbnailsObs();
-    const dialogRef = this.dialog.open(NewProjectComponent, {data: {darkTheme: this.darkTheme, project: project, thumbnails: thumbnails$}});
+    const dialogRef = this.dialog.open(NewProjectComponent, {data: { project: project, thumbnails: thumbnails$}});
     dialogRef.afterClosed().take(1).subscribe(val => {
       if (val) {
         const converImg = this.buildImgSrc(val.coverImg);
@@ -106,7 +93,7 @@ export class ProjectListComponent implements OnDestroy {
     this.store$.select(fromRoot.getProjectMembers(project.id))
       .take(1)
       .subscribe(m => members = m);
-    const dialogRef = this.dialog.open(InviteComponent, {data: {darkTheme: this.darkTheme, members: members}});
+    const dialogRef = this.dialog.open(InviteComponent, {data: { members: members}});
     // 使用 take(1) 来自动销毁订阅，因为 take(1) 意味着接收到 1 个数据后就完成了
     dialogRef.afterClosed().take(1).subscribe(val => {
       if (val) {
@@ -121,7 +108,7 @@ export class ProjectListComponent implements OnDestroy {
       content: '确认要删除该项目？',
       confirmAction: '确认删除'
     };
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {data: {dialog: confirm, darkTheme: this.darkTheme}});
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {data: {dialog: confirm}});
 
     // 使用 take(1) 来自动销毁订阅，因为 take(1) 意味着接收到 1 个数据后就完成了
     dialogRef.afterClosed().take(1).subscribe(val => {

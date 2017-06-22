@@ -39,12 +39,11 @@ import {defaultRouteAnim} from '../../anim';
           (deleteList)="handleDelList(taskList)"
           (moveAllTasks)="handleMoveList(taskList.id)">
         </app-task-list-header>
-        <md-divider></md-divider>
         <md-progress-bar color="primary" mode="indeterminate" *ngIf="(loading$ | async) as loading else listItems">
         </md-progress-bar>
         <ng-template #listItems>
           <md-divider></md-divider>
-          <app-task-item md-line
+          <app-task-item
             *ngFor="let task of tasksByList(taskList.id) | async"
             [item]="task"
             (taskComplete)="handleCompleteTask(task)"
