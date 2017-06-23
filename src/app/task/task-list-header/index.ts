@@ -4,9 +4,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@
   selector: 'app-task-list-header',
   template: `
     <div md-subheader class="header-container">
-      <div class="header-label">
-        <h3>{{header}}</h3>
-      </div>
+      <h3>{{header}}</h3>
       <div class="middle-btn">
         <button md-button (click)="addNewTask($event)">
           <md-icon>add_circle_outline</md-icon>
