@@ -4,14 +4,16 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@
   selector: 'app-task-list-header',
   template: `
     <div md-subheader class="header-container">
-      <h3>{{header}}</h3>
-      <div class="middle-btn">
+      <div>
+        <h4>{{header}}</h4>
+      </div>
+      <div class="fill">
         <button md-button (click)="addNewTask($event)">
           <md-icon>add_circle_outline</md-icon>
           <span>新任务</span>
         </button>
       </div>
-      <div class="right-btn">
+      <div>
         <button md-icon-button [mdMenuTriggerFor]="menu">
           <md-icon>keyboard_arrow_down</md-icon>
         </button>
@@ -39,13 +41,18 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@
       line-height: 32px;
     }
 
+    .fill{
+      flex: 1;
+      text-align: center;
+    }
+
     .header-container{
       display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
+      flex-direction: row;
+      flex-wrap: nowrap;
       justify-content: center;
       align-items: center;
-      align-content: space-around;
+      align-content: center;
       width: 100%;
     }
   `],
