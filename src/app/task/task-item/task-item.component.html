@@ -8,16 +8,21 @@
   [ngClass]="{
     'priority-normal': item.priority === 3,
     'priority-important': item.priority === 2,
-    'priority-emergency': item.priority === 1}">
-  <md-checkbox class="status" [checked]="item.completed" (change)="checkboxChanged()">
+    'priority-emergency': item.priority === 1}"
+  (click)="itemClicked($event)">
+  <md-checkbox
+    class="status"
+    [checked]="item.completed"
+    (click)="onCheckboxClick($event)"
+    (change)="checkboxChanged()">
   </md-checkbox>
-  <div md-line class="content" (click)="itemClicked($event)" class="desc" [ngClass]="{'completed': item.completed}">
+  <div md-line class="content" class="desc" [ngClass]="{'completed': item.completed}">
     {{item.desc}}
   </div>
-  <div md-line class="bottom-bar" (click)="itemClicked($event)">
+  <div md-line class="bottom-bar">
     <span class="duedate" *ngIf="item.dueDate">{{item.dueDate | date:"yy-MM-dd"}}</span>
     <md-icon *ngIf="item.reminder" class="alarm">alarm</md-icon>
   </div>
-  <md-icon md-list-avatar class="avatar" [svgIcon]="avatar" (click)="itemClicked($event)"></md-icon>
+  <md-icon md-list-avatar class="avatar" [svgIcon]="avatar"></md-icon>
 
 </md-list-item>

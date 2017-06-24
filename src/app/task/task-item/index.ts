@@ -24,6 +24,10 @@ export class TaskItemComponent implements OnInit {
     this.avatar = (this.item.owner) ? this.item.owner.avatar : 'unassigned';
   }
 
+  onCheckboxClick(ev: Event) {
+    ev.stopPropagation();
+  }
+
   checkboxChanged() {
     this.taskComplete.emit(this.item);
   }
