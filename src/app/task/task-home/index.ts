@@ -204,22 +204,20 @@ export class TaskHomeComponent implements OnDestroy {
   }
 
   handleAddTask(listId: string) {
-    const dialogRef = this.dialog.open(NewTaskComponent, { data: { }});
+    const user$ = this.store$.select(fromRoot.getAuthUser);
+    let owner;
+    user$.take(1).subscribe(user => {
+      owner = user;
+    });
+    const dialogRef = this.dialog.open(NewTaskComponent, { data: { owner }});
     dialogRef.afterClosed()
       .take(1)
       .filter(n => n)
-      .withLatestFrom(this.store$.select(fromRoot.getAuthUser), (val, user) => {
-        return {
-          task: val,
-          ownerId: user.id
-        };
-      })
-      .subscribe(({task, ownerId}) => {
+      .subscribe(task => {
         this.store$.dispatch(new taskActions.AddTaskAction({
           ...task,
           taskListId: listId,
           completed: false,
-          ownerId: ownerId,
           createDate: new Date()
         }));
       });

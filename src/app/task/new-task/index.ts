@@ -78,7 +78,7 @@ export class NewTaskComponent implements OnInit {
         priority: [3],
         dueDate: [],
         reminder: [],
-        owner: [[]],
+        owner: [[this.data.owner]],
         followers: [[]],
         remark: ['']
       });
