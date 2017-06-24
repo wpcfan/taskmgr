@@ -37,10 +37,6 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@
     </md-menu>
   `,
   styles: [`
-    .material-icon{
-      line-height: 32px;
-    }
-
     .fill{
       flex: 1;
       text-align: center;
