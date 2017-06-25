@@ -16,7 +16,7 @@
     (click)="onCheckboxClick($event)"
     (change)="checkboxChanged()">
   </md-checkbox>
-  <div md-line class="content" class="desc" [ngClass]="{'completed': item.completed}">
+  <div md-line [md-tooltip]="item.desc" class="content" [ngClass]="{'completed': item.completed}">
     {{item.desc}}
   </div>
   <div md-line class="bottom-bar">
