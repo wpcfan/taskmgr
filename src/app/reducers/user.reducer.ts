@@ -24,7 +24,7 @@ const register = (state, action) => {
       entities: {...state.entities, [auth.user.id]: auth.user}
     };
   }
-}
+};
 
 const addPrjRef = (state, action) => {
   const user = <User>action.payload;
@@ -35,7 +35,7 @@ const addPrjRef = (state, action) => {
   } else {
     return {...state, ids: ids, entities: entities};
   }
-}
+};
 
 const removePrjRef = (state, action) => {
   const user = <User>action.payload;
@@ -43,7 +43,7 @@ const removePrjRef = (state, action) => {
     return state;
   }
   return {...state, entities: {...state.entities, [user.id]: user}};
-}
+};
 
 const searchUsers = (state, action) => {
   const users = <User[]>action.payload;
@@ -60,7 +60,7 @@ const searchUsers = (state, action) => {
     ids: [...state.ids, ...newIds],
     entities: {...state.entities, ...newEntities}
   };
-}
+};
 
 const loadByPrj = (state, action) => {
   const users = <User[]>action.payload;
@@ -77,14 +77,14 @@ const loadByPrj = (state, action) => {
     ids: [...state.ids, ...newIds],
     entities: {...state.entities, ...newEntities}
   };
-}
+};
 
 const batchUpdatePrjRef = (state, action) => {
   const users = <User[]>action.payload;
   const userProjects = covertArrToObj(users);
   const newEnities = {...state.entities, ...userProjects};
   return {...state, entities: newEnities};
-}
+};
 
 export function reducer (state = initialState, action: actions.Actions | authActions.Actions): State {
   switch (action.type) {
