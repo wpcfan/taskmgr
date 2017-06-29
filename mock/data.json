@@ -1,4 +1,18 @@
 {
+  "roles": [
+    {
+      "id": 0,
+      "name": "SuperUser"
+    },
+    {
+      "id": 1,
+      "name": "User"
+    },
+    {
+      "id": 2,
+      "name": "Project Manager"
+    }
+  ],
   "users": [
     {
       "password": "wp123456",
@@ -9,6 +23,11 @@
       "projectIds": [
         "Sk2HaTagb",
         "Hya1moGb-"
+      ],
+      "roleIds": [
+        0,
+        1,
+        2
       ]
     },
     {
@@ -19,6 +38,9 @@
       "id": "BkkDvwee-",
       "projectIds": [
         "Sk2HaTagb"
+      ],
+      "roleIds": [
+        1
       ]
     }
   ],
@@ -48,7 +70,7 @@
       ]
     }
   ],
-  "tasklists": [
+  "taskLists": [
     {
       "name": "待办",
       "projectId": "Sk2HaTagb",
@@ -195,6 +217,19 @@
       "reminder": "2017-05-20T16:00:00.000Z",
       "createDate": "2017-05-24T06:16:24.575Z",
       "id": 8
+    },
+    {
+      "taskListId": "BkWpk7jGZb",
+      "desc": "什么情况啊",
+      "completed": false,
+      "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
+      "participantIds": [],
+      "dueDate": null,
+      "priority": 3,
+      "remark": "",
+      "reminder": null,
+      "createDate": "2017-06-15T12:03:36.290Z",
+      "id": 9
     }
   ],
   "quotes": [
