@@ -35,7 +35,6 @@ import * as fromTaskLists from './task-list.reducer';
 import * as fromTasks from './task.reducer';
 import * as fromUsers from './user.reducer';
 import * as fromTheme from './theme.reducer';
-import { state } from '@angular/animations';
 
 /**
  * 正如我们的 reducer 像数据库中的表一样，我们的顶层 state 也包含各个子 reducer 的 state
@@ -114,13 +113,13 @@ const getTaskListSelectedIds = createSelector(getTaskListsState, fromTaskLists.g
 const getCurrentAuth = createSelector(getAuthState, fromAuth.getAuth);
 const getProjectEntities = createSelector(getProjectsState, fromProjects.getEntities);
 const getUserEntities = createSelector(getUserState, fromUsers.getEntities);
-const getTasksWithOwner = createSelector(getTasks, getUserEntities, (tasks, entities) => {
-  return tasks.map(task => {
-    const owner = entities[task.ownerId];
-    const participants = task.participantIds.map(id => entities[id]);
-    return {...task, owner: owner, participants: [...participants]};
-  });
-});
+const getTasksWithOwner = createSelector(getTasks, getUserEntities, (tasks, entities) => tasks.map(task =>
+  (
+    {...task,
+      owner: entities[task.ownerId],
+      participants: task.participantIds.map(id => entities[id])
+    }
+  )));
 export const getSelectedProject = createSelector(getProjectEntities, getSelectedProjectId, (entities, id) => {
   return entities[id];
 });
@@ -128,9 +127,7 @@ export const getProjectTaskList = createSelector(getSelectedProjectId, getTaskLi
   return taskLists.filter(taskList => taskList.projectId === projectId);
 });
 export const getTasksByList = createSelector(getProjectTaskList, getTasksWithOwner, (lists, tasks) => {
-  return lists.map(list => {
-    return {...list, tasks: tasks.filter(task => task.taskListId === list.id)}
-  });
+  return lists.map(list => ({...list, tasks: tasks.filter(task => task.taskListId === list.id)}));
 });
 export const getProjectMembers = (projectId: string) => createSelector(getProjectsState, getUserEntities, (state, entities) => {
   return state.entities[projectId].members.map(id => entities[id]);
