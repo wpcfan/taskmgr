@@ -117,8 +117,8 @@ export class NewTaskComponent implements OnInit {
     }
   }
 
-  onSubmit({value, valid}, event: Event) {
-    event.preventDefault();
+  onSubmit({value, valid}, ev: Event) {
+    ev.preventDefault();
     if (!valid) {
       return;
     }
