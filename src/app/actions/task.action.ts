@@ -12,9 +12,9 @@ export const ActionTypes = {
   DELETE: type('[Task] Delete'),
   DELETE_SUCCESS: type('[Task] Delete Success'),
   DELETE_FAIL: type('[Task] Delete Fail'),
-  LOAD: type('[Task] Load'),
-  LOAD_SUCCESS: type('[Task] Load Success'),
-  LOAD_FAIL: type('[Task] Load Fail'),
+  LOAD_IN_LISTS: type('[Task] Load In Lists'),
+  LOAD_IN_LISTS_SUCCESS: type('[Task] Load In Lists Success'),
+  LOAD_IN_LISTS_FAIL: type('[Task] Load In Lists Fail'),
   MOVE_ALL: type('[Task] Move All'),
   MOVE_ALL_SUCCESS: type('[Task] Move All Success'),
   MOVE_ALL_FAIL: type('[Task] Move All Fail'),
@@ -89,22 +89,22 @@ export class DeleteTaskFailAction implements Action {
   }
 }
 
-export class LoadTasksAction implements Action {
-  type = ActionTypes.LOAD;
+export class LoadTasksInListsAction implements Action {
+  type = ActionTypes.LOAD_IN_LISTS;
 
-  constructor(public payload: string) {
+  constructor(public payload: TaskList[]) {
   }
 }
 
-export class LoadTasksSuccessAction implements Action {
-  type = ActionTypes.LOAD_SUCCESS;
+export class LoadTasksInListsSuccessAction implements Action {
+  type = ActionTypes.LOAD_IN_LISTS_SUCCESS;
 
   constructor(public payload: Task[]) {
   }
 }
 
-export class LoadTasksFailAction implements Action {
-  type = ActionTypes.LOAD_FAIL;
+export class LoadTasksInListsFailAction implements Action {
+  type = ActionTypes.LOAD_IN_LISTS_FAIL;
 
   constructor(public payload: Err) {
   }
@@ -183,9 +183,9 @@ export type Actions
   | DeleteTaskAction
   | DeleteTaskSuccessAction
   | DeleteTaskFailAction
-  | LoadTasksAction
-  | LoadTasksSuccessAction
-  | LoadTasksFailAction
+  | LoadTasksInListsAction
+  | LoadTasksInListsSuccessAction
+  | LoadTasksInListsFailAction
   | MoveTaskAction
   | MoveTaskSuccessAction
   | MoveTaskFailAction
