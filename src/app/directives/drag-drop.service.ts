@@ -19,4 +19,8 @@ export class DragDropService {
   getDragData(): Observable<DragData> {
     return this._dragData.asObservable();
   }
+
+  clearDragData() {
+    this._dragData.next(null);
+  }
 }
