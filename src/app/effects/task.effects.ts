@@ -10,7 +10,6 @@ import 'rxjs/add/observable/zip';
 import {TaskService} from '../services';
 import * as actions from '../actions/task.action';
 import * as fromRoot from '../reducers';
-import {Task} from '../domain';
 
 @Injectable()
 export class TaskEffects {

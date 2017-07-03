@@ -1,4 +1,4 @@
-import {Task, TaskList, Project} from '../domain';
+import {Task, Project} from '../domain';
 import {createSelector} from 'reselect';
 import {
   covertArrToObj,
@@ -30,12 +30,12 @@ const addTask = (state, action) => {
   }
   const newState = addOne(state, action.payload);
   return {...newState, loading: false};
-}
+};
 
 const delTask = (state, action) => {
   const newState = deleteOne(state, action.payload);
   return {...newState, loading: false};
-}
+};
 
 const loadTasks = (state, action) => {
   if ((<Task[]>action.payload).length === 0) {
@@ -43,7 +43,7 @@ const loadTasks = (state, action) => {
   }
   const newState = loadCollection(state, action.payload);
   return {...newState, loading: false};
-}
+};
 
 const moveAllTasks = (state, action) => {
   const tasks = <Task[]>action.payload;
@@ -54,7 +54,7 @@ const moveAllTasks = (state, action) => {
   const updatedTasks = tasks.filter(task => state.entities[task.id]);
   const updatedEntities = covertArrToObj(updatedTasks);
   return {...state, entities: {...state.entities, ...updatedEntities}};
-}
+};
 
 const delTasksByPrj = (state, action) => {
   const project = <Project>action.payload;
@@ -62,12 +62,12 @@ const delTasksByPrj = (state, action) => {
   const remainingIds = state.ids.filter(id => _.indexOf(listIds, state.entities[id].taskListId) === -1);
   const remainingEntities = buildObjFromArr(remainingIds, state.entities);
   return {ids: remainingIds, entities: remainingEntities, loading: false};
-}
+};
 
 const updateTask = (state, action) => {
   const newState = updateOne(state, action.payload);
   return {...newState, loading: false};
-}
+};
 
 export function reducer (state = initialState, action: actions.Actions): State {
   switch (action.type) {

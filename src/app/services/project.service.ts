@@ -7,7 +7,7 @@ import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/reduce';
 import 'rxjs/add/observable/from';
 import * as _ from 'lodash';
-import {Project, Task, User} from '../domain';
+import {Project, User} from '../domain';
 
 @Injectable()
 export class ProjectService {
@@ -48,7 +48,7 @@ export class ProjectService {
     const deltask$ = Observable.from(project.taskLists)
       .mergeMap(listId => this.http
         .delete(`${this.config.uri}/taskLists/${listId}`))
-        .reduce(()=>{return {}}, {});
+        .reduce(() => ({}), {});
     const uri = `${this.config.uri}/${this.domain}/${project.id}`;
     return deltask$.switchMap(p => this.http
       .delete(uri)

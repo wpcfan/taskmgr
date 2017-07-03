@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, HostBinding } from '@angular/core';
+import { Component, OnDestroy, HostBinding } from '@angular/core';
 import {MdDialog} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -188,22 +188,20 @@ export class TaskHomeComponent implements OnDestroy {
 
   handleAddTask(listId: string) {
     const user$ = this.store$.select(fromRoot.getAuthUser);
-    let owner;
     user$.take(1).subscribe(user => {
-      owner = user;
+      const dialogRef = this.dialog.open(NewTaskComponent, { data: { user }});
+      dialogRef.afterClosed()
+        .take(1)
+        .filter(n => n)
+        .subscribe(val => {
+          this.store$.dispatch(new taskActions.AddTaskAction({
+            ...val.task,
+            taskListId: listId,
+            completed: false,
+            createDate: new Date()
+          }));
+        });
     });
-    const dialogRef = this.dialog.open(NewTaskComponent, { data: { owner }});
-    dialogRef.afterClosed()
-      .take(1)
-      .filter(n => n)
-      .subscribe(val => {
-        this.store$.dispatch(new taskActions.AddTaskAction({
-          ...val.task,
-          taskListId: listId,
-          completed: false,
-          createDate: new Date()
-        }));
-      });
   }
 
   handleUpdateTask(task: Task) {
@@ -212,7 +210,7 @@ export class TaskHomeComponent implements OnDestroy {
       .take(1)
       .filter(n => n)
       .subscribe((val) => {
-        if(val.type !== 'delete') {
+        if (val.type !== 'delete') {
           this.store$.dispatch(new taskActions.UpdateTaskAction({...task, ...val.task}));
         } else {
           this.store$.dispatch(new taskActions.DeleteTaskAction(val.task));

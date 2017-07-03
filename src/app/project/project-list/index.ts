@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, HostBinding, OnDestroy} from '@angular/core';
+import {Component, HostBinding} from '@angular/core';
 import {MdDialog} from '@angular/material';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';

@@ -122,7 +122,7 @@ export class NewTaskComponent implements OnInit {
     if (!valid) {
       return;
     }
-    this.dialogRef.close({type: 'addOrUpdate', task:{
+    this.dialogRef.close({type: 'addOrUpdate', task: {
       desc: value.desc,
       participantIds: value.followers.map(u => u.id),
       ownerId: value.owner.length > 0 ? value.owner[0].id : null,

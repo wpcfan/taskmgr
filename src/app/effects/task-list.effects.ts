@@ -12,7 +12,7 @@ import * as actions from '../actions/task-list.action';
 import * as prjActions from '../actions/project.action';
 import * as taskActions from '../actions/task.action';
 import * as fromRoot from '../reducers';
-import {Task, TaskList, Project} from '../domain';
+import {Task, TaskList} from '../domain';
 
 @Injectable()
 export class TaskListEffects {

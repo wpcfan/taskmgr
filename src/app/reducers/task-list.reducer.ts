@@ -4,7 +4,6 @@ import {covertArrToObj, buildObjFromArr} from '../utils/reduer.util';
 import * as _ from 'lodash';
 import * as actions from '../actions/task-list.action';
 import * as prjActions from '../actions/project.action';
-import * as taskReducer from './task.reducer';
 
 export interface State {
   ids: string [];
@@ -30,7 +29,7 @@ const addList = (state, action) => {
     entities: newEntities,
     selectedIds: [...state.selectedIds, taskList.id]
   };
-}
+};
 
 const delList = (state, action) => {
   const taskList = <TaskList>action.payload;
@@ -42,7 +41,7 @@ const delList = (state, action) => {
     entities: newEntities,
     selectedIds: selectedIds
   };
-}
+};
 
 const delListByPrj = (state, action) => {
   const project = <Project>action.payload;
@@ -55,13 +54,13 @@ const delListByPrj = (state, action) => {
     entities: remainingEntities,
     selectedIds: [...selectedIds]
   };
-}
+};
 
 const updateList = (state, action) => {
   const taskList = <TaskList>action.payload;
   const entities = {...state.entities, [taskList.id]: taskList};
   return {...state, entities: entities};
-}
+};
 
 const swapOrder = (state, action) => {
   const taskLists = <TaskList[]>action.payload;
@@ -71,7 +70,7 @@ const swapOrder = (state, action) => {
   const updated = covertArrToObj(taskLists);
   const updatedEntities = {...state.entities, ...updated};
   return {...state, entities: updatedEntities};
-}
+};
 
 const loadLists = (state, action) => {
   const taskLists = <TaskList[]>action.payload;
@@ -90,12 +89,12 @@ const loadLists = (state, action) => {
     entities: {...state.entities, ...newEntities},
     selectedIds: [...newIds]
   };
-}
+};
 
 const selectPrj = (state, action) => {
   const selectedIds = state.ids.filter(id => state.entities[id].projectId === (<Project>action.payload).id);
   return {...state, selectedIds: selectedIds};
-}
+};
 
 export function reducer (state = initialState, action: actions.Actions): State {
   switch (action.type) {
