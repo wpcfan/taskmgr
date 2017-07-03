@@ -71,7 +71,6 @@ const updateTask = (state, action) => {
 
 export function reducer (state = initialState, action: actions.Actions): State {
   switch (action.type) {
-    case actions.ActionTypes.LOAD:
     case actions.ActionTypes.DELETE:
     case actions.ActionTypes.UPDATE:
     case actions.ActionTypes.ADD:
@@ -86,11 +85,11 @@ export function reducer (state = initialState, action: actions.Actions): State {
     case actions.ActionTypes.COMPLETE_SUCCESS:
     case actions.ActionTypes.UPDATE_SUCCESS:
       return updateTask(state, action);
-    case actions.ActionTypes.LOAD_SUCCESS:
+    case actions.ActionTypes.LOAD_IN_LISTS_SUCCESS:
       return loadTasks(state, action);
     case actions.ActionTypes.MOVE_ALL_SUCCESS:
       return moveAllTasks(state, action);
-    case actions.ActionTypes.LOAD_FAIL:
+    case actions.ActionTypes.LOAD_IN_LISTS_FAIL:
     case actions.ActionTypes.ADD_FAIL:
     case actions.ActionTypes.UPDATE_FAIL:
     case actions.ActionTypes.DELETE_FAIL:

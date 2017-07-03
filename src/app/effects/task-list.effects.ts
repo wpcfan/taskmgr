@@ -98,6 +98,12 @@ export class TaskListEffects {
         .catch(err => of(new actions.SwapOrderFailAction(err)))
     );
 
+  @Effect()
+  loadTasksInList$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.LOADS_SUCCESS)
+    .map(toPayload)
+    .map(lists => new taskActions.LoadTasksInListsAction(lists));
+
   /**
    * 任务列表的 Effects
    * @param actions$ 注入 action 数据流

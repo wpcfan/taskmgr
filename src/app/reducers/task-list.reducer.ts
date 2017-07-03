@@ -4,6 +4,7 @@ import {covertArrToObj, buildObjFromArr} from '../utils/reduer.util';
 import * as _ from 'lodash';
 import * as actions from '../actions/task-list.action';
 import * as prjActions from '../actions/project.action';
+import * as taskReducer from './task.reducer';
 
 export interface State {
   ids: string [];

@@ -67,6 +67,12 @@ export class TaskService {
       .map(res => res.json());
   }
 
+  getByLists(lists: TaskList[]): Observable<Task[]> {
+    return Observable.from(lists)
+      .mergeMap(list => this.get(list.id))
+      .reduce((tasks, t) => [...tasks, ...t], []);
+  }
+
   moveAll(srcListId, targetListId): Observable<Task[]> {
     return this.get(srcListId)
       .mergeMap(tasks => Observable.from(tasks))

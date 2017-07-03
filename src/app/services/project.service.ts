@@ -47,9 +47,10 @@ export class ProjectService {
   del(project: Project): Observable<Project> {
     const deltask$ = Observable.from(project.taskLists)
       .mergeMap(listId => this.http
-        .delete(`${this.config.uri}/taskLists/${listId}`));
+        .delete(`${this.config.uri}/taskLists/${listId}`))
+        .reduce(()=>{return {}}, {});
     const uri = `${this.config.uri}/${this.domain}/${project.id}`;
-    return deltask$.mergeMap(p => this.http
+    return deltask$.switchMap(p => this.http
       .delete(uri)
       .map(_ => project));
   }

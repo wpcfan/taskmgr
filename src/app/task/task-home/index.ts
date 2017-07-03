@@ -14,7 +14,7 @@ import {NewTaskListComponent} from '../new-task-list';
 import {NewTaskComponent} from '../new-task';
 import {CopyTaskComponent} from '../copy-task';
 import {ConfirmDialogComponent} from '../../shared/confirm-dialog';
-import {defaultRouteAnim} from '../../anim';
+import {defaultRouteAnim, listAnimation} from '../../anim';
 
 @Component({
   selector: 'app-task-home',
@@ -44,7 +44,7 @@ import {defaultRouteAnim} from '../../anim';
         <ng-template #listItems>
           <md-divider></md-divider>
           <app-task-item
-            *ngFor="let task of tasksByList(taskList.id) | async"
+            *ngFor="let task of taskList.tasks"
             [item]="task"
             (taskComplete)="handleCompleteTask(task)"
             (taskClick)="handleUpdateTask(task)">
@@ -88,18 +88,17 @@ import {defaultRouteAnim} from '../../anim';
       height: 100%;
     }
   `],
-  animations: [defaultRouteAnim],
+  animations: [defaultRouteAnim, listAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskHomeComponent implements OnDestroy {
 
-  @HostBinding('@routeAnim') state = 'in';
+  @HostBinding('@routeAnim') state;
   loading$: Observable<boolean>;
   lists$: Observable<TaskList[]>;
 
   private projectId: string;
   private routeParamSub: Subscription;
-  private subTasks: Subscription;
 
   constructor(private route: ActivatedRoute,
               private dialog: MdDialog,
@@ -109,13 +108,7 @@ export class TaskHomeComponent implements OnDestroy {
       (id: string) => {
         this.projectId = id;
       });
-    this.lists$ = this.store$.select(fromRoot.getProjectTaskList);
-    this.subTasks = this.lists$.subscribe(lists => {
-      lists.forEach((list) => {
-        this.store$.dispatch(new taskActions.LoadTasksAction(list.id));
-      });
-    });
-    this.loading$ = this.store$.select(fromRoot.getTaskLoading);
+    this.lists$ = this.store$.select(fromRoot.getTasksByList);
   }
 
   ngOnDestroy() {
@@ -123,15 +116,6 @@ export class TaskHomeComponent implements OnDestroy {
     if (this.routeParamSub) {
       this.routeParamSub.unsubscribe();
     }
-    if (this.subTasks) {
-      this.subTasks.unsubscribe();
-    }
-  }
-
-  tasksByList(listId: string) {
-    return this.store$
-      .select(fromRoot.getTasksWithOwner)
-      .map(tasks => tasks.filter(task => task.taskListId === listId));
   }
 
   handleRenameList(list: TaskList) {

@@ -14,18 +14,16 @@ import {Task} from '../domain';
 
 @Injectable()
 export class TaskEffects {
-  /**
-   *
-   */
+
   @Effect()
-  loadTasks$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.LOAD)
+  loadTasksInLists$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.LOAD_IN_LISTS)
     .map(toPayload)
-    .mergeMap((taskListId) => {
+    .mergeMap((taskLists) => {
       return this.service$
-        .get(taskListId)
-        .map(tasks => new actions.LoadTasksSuccessAction(tasks))
-        .catch(err => of(new actions.LoadTasksFailAction(JSON.stringify(err))));
+        .getByLists(taskLists)
+        .map(tasks => new actions.LoadTasksInListsSuccessAction(tasks))
+        .catch(err => of(new actions.LoadTasksInListsFailAction(JSON.stringify(err))));
       }
     );
 
