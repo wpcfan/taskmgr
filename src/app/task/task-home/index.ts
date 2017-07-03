@@ -88,8 +88,7 @@ import {defaultRouteAnim, listAnimation} from '../../anim';
       height: 100%;
     }
   `],
-  animations: [defaultRouteAnim, listAnimation],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  animations: [defaultRouteAnim, listAnimation]
 })
 export class TaskHomeComponent implements OnDestroy {
 

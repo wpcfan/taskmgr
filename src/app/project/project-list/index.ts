@@ -14,7 +14,6 @@ import { Project } from '../../domain';
 
 @Component({
   selector: 'app-project-list',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="container" [@listAnim]="(projects$ | async).length">
       <app-project-item
