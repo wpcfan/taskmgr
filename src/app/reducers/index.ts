@@ -105,6 +105,7 @@ export const getProjects = createSelector(getProjectsState, fromProjects.getAll)
 export const getTasks = createSelector(getTasksState, fromTasks.getTasks);
 export const getTaskLoading = createSelector(getTasksState, fromTasks.getLoading);
 export const getUsers = createSelector(getUserState, fromUsers.getUsers);
+export const getTheme = createSelector(getThemeState, fromTheme.getTheme);
 
 const getSelectedProjectId = createSelector(getProjectsState, fromProjects.getSelectedId);
 const getTaskLists = createSelector(getTaskListsState, fromTaskLists.getTaskLists);
@@ -134,7 +135,6 @@ export const getTasksByList = createSelector(getProjectTaskList, getTasksWithOwn
 export const getProjectMembers = (projectId: string) => createSelector(getProjectsState, getUserEntities, (state, entities) => {
   return state.entities[projectId].members.map(id => entities[id]);
 });
-export const getTheme = createSelector(getThemeState, fromTheme.getTheme);
 export const getAuth = createSelector(getCurrentAuth, getUserEntities, (_auth, _entities) => {
   return {..._auth, user: _entities[_auth.userId]};
 });

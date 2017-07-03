@@ -197,9 +197,9 @@ export class TaskHomeComponent implements OnDestroy {
     dialogRef.afterClosed()
       .take(1)
       .filter(n => n)
-      .subscribe(task => {
+      .subscribe(val => {
         this.store$.dispatch(new taskActions.AddTaskAction({
-          ...task,
+          ...val.task,
           taskListId: listId,
           completed: false,
           createDate: new Date()
@@ -213,7 +213,11 @@ export class TaskHomeComponent implements OnDestroy {
       .take(1)
       .filter(n => n)
       .subscribe((val) => {
-        this.store$.dispatch(new taskActions.UpdateTaskAction({...task, ...val}));
+        if(val.type !== 'delete') {
+          this.store$.dispatch(new taskActions.UpdateTaskAction({...task, ...val.task}));
+        } else {
+          this.store$.dispatch(new taskActions.DeleteTaskAction(val.task));
+        }
       });
   }
 }
