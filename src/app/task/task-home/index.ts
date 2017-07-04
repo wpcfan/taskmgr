@@ -15,6 +15,7 @@ import {NewTaskComponent} from '../new-task';
 import {CopyTaskComponent} from '../copy-task';
 import {ConfirmDialogComponent} from '../../shared/confirm-dialog';
 import {defaultRouteAnim, listAnimation} from '../../anim';
+import { TaskListVM } from '../../vm/task-list.vm';
 
 @Component({
   selector: 'app-task-home',
@@ -94,7 +95,7 @@ export class TaskHomeComponent implements OnDestroy {
 
   @HostBinding('@routeAnim') state;
   loading$: Observable<boolean>;
-  lists$: Observable<TaskList[]>;
+  lists$: Observable<TaskListVM[]>;
 
   private projectId: string;
   private routeParamSub: Subscription;
@@ -167,7 +168,7 @@ export class TaskHomeComponent implements OnDestroy {
     });
   }
 
-  handleCompleteTask(task: Task) {
+  handleCompleteTask(task) {
     this.store$.dispatch(new taskActions.CompleteTaskAction(task));
   }
 
