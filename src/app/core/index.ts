@@ -15,6 +15,7 @@ import {MdIconRegistry} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {loadSvgResources} from '../utils/svg.util';
 import 'hammerjs';
+import '../utils/debug.util';
 
 @NgModule({
   imports: [
