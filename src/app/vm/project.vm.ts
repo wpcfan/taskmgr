@@ -1,5 +1,5 @@
-import { TaskList } from '../domain/task-list';
 import { User } from '../domain/user';
+import { TaskListVM } from './task-list.vm';
 
 export interface ProjectVM {
   id: string | null;
@@ -7,6 +7,6 @@ export interface ProjectVM {
   desc?: string;
   coverImg?: string;
   enabled?: boolean;
-  taskLists?: TaskList[];
+  taskLists?: TaskListVM[];
   members?: User[];
 }
