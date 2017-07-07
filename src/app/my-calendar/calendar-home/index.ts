@@ -1,9 +1,8 @@
-import {ChangeDetectionStrategy, Component, HostBinding} from '@angular/core';
+import {Component, HostBinding} from '@angular/core';
 import {CalendarEvent} from 'angular-calendar';
 import {addDays, addHours, endOfDay, endOfMonth, isSameDay, isSameMonth, startOfDay, subDays} from 'date-fns';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute} from '@angular/router';
-import 'rxjs/add/operator/pluck';
 import {MyCalService} from '../../services';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
@@ -75,7 +74,6 @@ import {defaultRouteAnim} from '../../anim';
   `
   ],
   animations: [defaultRouteAnim],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarHomeComponent {
 

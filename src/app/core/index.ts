@@ -16,19 +16,22 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {loadSvgResources} from '../utils/svg.util';
 import 'hammerjs';
 import '../utils/debug.util';
+import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/zip';
+import 'rxjs/add/observable/range';
+import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mapTo';
+import 'rxjs/add/operator/pluck';
 import 'rxjs/add/operator/defaultIfEmpty';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/reduce';
-import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/withLatestFrom';
 import 'rxjs/add/operator/filter';
-import 'rxjs/add/observable/zip';
+import 'rxjs/add/operator/take';
 @NgModule({
   imports: [
     SharedModule,

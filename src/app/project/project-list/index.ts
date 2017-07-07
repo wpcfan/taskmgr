@@ -2,8 +2,6 @@ import {Component, HostBinding} from '@angular/core';
 import {MdDialog} from '@angular/material';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/range';
-import 'rxjs/add/operator/take';
 import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/project.action';
 import {NewProjectComponent} from '../new-project';

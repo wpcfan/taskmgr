@@ -230,17 +230,6 @@
       "reminder": null,
       "createDate": "2017-06-15T12:03:36.290Z",
       "id": 9
-    },
-    {
-      "taskListId": "BkWpk7jGZb",
-      "desc": "this is a test for quick task",
-      "completed": false,
-      "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
-      "participantIds": [],
-      "priority": 3,
-      "remark": null,
-      "createDate": "2017-07-07T14:09:25.666Z",
-      "id": 10
     }
   ],
   "quotes": [
