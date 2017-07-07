@@ -19,6 +19,17 @@ export interface Identity {
   identityType: IdentityType;
 }
 
+export interface Privilege {
+  id: string;
+  name: string;
+}
+
+export interface Role {
+  id?: number;
+  name: string;
+  privilegeIds: string[];
+}
+
 export interface User {
   id?: string;
   email: string;

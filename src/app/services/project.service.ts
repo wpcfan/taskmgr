@@ -1,13 +1,8 @@
 import {Inject, Injectable} from '@angular/core';
 import {Headers, Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/mapTo';
-import 'rxjs/add/operator/reduce';
-import 'rxjs/add/observable/from';
 import * as _ from 'lodash';
-import {Project, Task, User} from '../domain';
+import {Project, User} from '../domain';
 
 @Injectable()
 export class ProjectService {
@@ -47,9 +42,10 @@ export class ProjectService {
   del(project: Project): Observable<Project> {
     const deltask$ = Observable.from(project.taskLists)
       .mergeMap(listId => this.http
-        .delete(`${this.config.uri}/taskLists/${listId}`));
+        .delete(`${this.config.uri}/taskLists/${listId}`))
+        .reduce(() => ({}), {});
     const uri = `${this.config.uri}/${this.domain}/${project.id}`;
-    return deltask$.mergeMap(p => this.http
+    return deltask$.switchMap(p => this.http
       .delete(uri)
       .map(_ => project));
   }

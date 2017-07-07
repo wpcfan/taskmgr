@@ -35,7 +35,6 @@ import * as fromTaskLists from './task-list.reducer';
 import * as fromTasks from './task.reducer';
 import * as fromUsers from './user.reducer';
 import * as fromTheme from './theme.reducer';
-import { state } from '@angular/animations';
 
 /**
  * 正如我们的 reducer 像数据库中的表一样，我们的顶层 state 也包含各个子 reducer 的 state
@@ -100,40 +99,39 @@ export const getUserState = (state: State) => state.users;
 export const getRouterState = (state: State) => state.router;
 export const getThemeState = (state: State) => state.theme;
 
-export const getCurrentAuth = createSelector(getAuthState, fromAuth.getAuth);
-export const getAuthUserId = createSelector(getAuthState, fromAuth.getAuthUserId);
 export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
 export const getProjects = createSelector(getProjectsState, fromProjects.getAll);
-export const getProjectEntities = createSelector(getProjectsState, fromProjects.getEntities);
-export const getTaskLists = createSelector(getTaskListsState, fromTaskLists.getTaskLists);
-export const getTaskListEntities = createSelector(getTaskListsState, fromTaskLists.getEntities);
-export const getTaskListIds = createSelector(getTaskListsState, fromTaskLists.getIds);
-export const getTaskListSelectedIds = createSelector(getTaskListsState, fromTaskLists.getSelectedIds);
-export const getSelectedProjectId = createSelector(getProjectsState, fromProjects.getSelectedId);
+export const getTasks = createSelector(getTasksState, fromTasks.getTasks);
+export const getTaskLoading = createSelector(getTasksState, fromTasks.getLoading);
+export const getUsers = createSelector(getUserState, fromUsers.getUsers);
+export const getTheme = createSelector(getThemeState, fromTheme.getTheme);
+
+const getSelectedProjectId = createSelector(getProjectsState, fromProjects.getSelectedId);
+const getTaskLists = createSelector(getTaskListsState, fromTaskLists.getTaskLists);
+const getTaskListEntities = createSelector(getTaskListsState, fromTaskLists.getEntities);
+const getTaskListSelectedIds = createSelector(getTaskListsState, fromTaskLists.getSelectedIds);
+const getCurrentAuth = createSelector(getAuthState, fromAuth.getAuth);
+const getProjectEntities = createSelector(getProjectsState, fromProjects.getEntities);
+const getUserEntities = createSelector(getUserState, fromUsers.getEntities);
+const getTasksWithOwner = createSelector(getTasks, getUserEntities, (tasks, entities) => tasks.map(task =>
+  (
+    {...task,
+      owner: entities[task.ownerId],
+      participants: task.participantIds.map(id => entities[id])
+    }
+  )));
 export const getSelectedProject = createSelector(getProjectEntities, getSelectedProjectId, (entities, id) => {
   return entities[id];
 });
 export const getProjectTaskList = createSelector(getSelectedProjectId, getTaskLists, (projectId, taskLists) => {
   return taskLists.filter(taskList => taskList.projectId === projectId);
 });
-export const getTasks = createSelector(getTasksState, fromTasks.getTasks);
-export const getTaskEntities = createSelector(getTasksState, fromTasks.getEntities);
-export const getTaskIds = createSelector(getTasksState, fromTasks.getIds);
-export const getTaskLoading = createSelector(getTasksState, fromTasks.getLoading);
-export const getUsers = createSelector(getUserState, fromUsers.getUsers);
-export const getUserIds = createSelector(getUserState, fromUsers.getIds);
-export const getUserEntities = createSelector(getUserState, fromUsers.getEntities);
-export const getTasksWithOwner = createSelector(getTasks, getUserEntities, (tasks, entities) => {
-  return tasks.map(task => {
-    const owner = entities[task.ownerId];
-    const participants = task.participantIds.map(id => entities[id]);
-    return {...task, owner: owner, participants: [...participants]};
-  });
+export const getTasksByList = createSelector(getProjectTaskList, getTasksWithOwner, (lists, tasks) => {
+  return lists.map(list => ({...list, tasks: tasks.filter(task => task.taskListId === list.id)}));
 });
 export const getProjectMembers = (projectId: string) => createSelector(getProjectsState, getUserEntities, (state, entities) => {
   return state.entities[projectId].members.map(id => entities[id]);
 });
-export const getTheme = createSelector(getThemeState, fromTheme.getTheme);
 export const getAuth = createSelector(getCurrentAuth, getUserEntities, (_auth, _entities) => {
   return {..._auth, user: _entities[_auth.userId]};
 });

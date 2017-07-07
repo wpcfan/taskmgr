@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, HostBinding } from '@angular/core';
+import { Component, OnDestroy, HostBinding } from '@angular/core';
 import {MdDialog} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -14,7 +14,8 @@ import {NewTaskListComponent} from '../new-task-list';
 import {NewTaskComponent} from '../new-task';
 import {CopyTaskComponent} from '../copy-task';
 import {ConfirmDialogComponent} from '../../shared/confirm-dialog';
-import {defaultRouteAnim} from '../../anim';
+import {defaultRouteAnim, listAnimation} from '../../anim';
+import { TaskListVM } from '../../vm/task-list.vm';
 
 @Component({
   selector: 'app-task-home',
@@ -44,7 +45,7 @@ import {defaultRouteAnim} from '../../anim';
         <ng-template #listItems>
           <md-divider></md-divider>
           <app-task-item
-            *ngFor="let task of tasksByList(taskList.id) | async"
+            *ngFor="let task of taskList.tasks"
             [item]="task"
             (taskComplete)="handleCompleteTask(task)"
             (taskClick)="handleUpdateTask(task)">
@@ -88,18 +89,16 @@ import {defaultRouteAnim} from '../../anim';
       height: 100%;
     }
   `],
-  animations: [defaultRouteAnim],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  animations: [defaultRouteAnim, listAnimation]
 })
 export class TaskHomeComponent implements OnDestroy {
 
-  @HostBinding('@routeAnim') state = 'in';
+  @HostBinding('@routeAnim') state;
   loading$: Observable<boolean>;
-  lists$: Observable<TaskList[]>;
+  lists$: Observable<TaskListVM[]>;
 
   private projectId: string;
   private routeParamSub: Subscription;
-  private subTasks: Subscription;
 
   constructor(private route: ActivatedRoute,
               private dialog: MdDialog,
@@ -109,13 +108,7 @@ export class TaskHomeComponent implements OnDestroy {
       (id: string) => {
         this.projectId = id;
       });
-    this.lists$ = this.store$.select(fromRoot.getProjectTaskList);
-    this.subTasks = this.lists$.subscribe(lists => {
-      lists.forEach((list) => {
-        this.store$.dispatch(new taskActions.LoadTasksAction(list.id));
-      });
-    });
-    this.loading$ = this.store$.select(fromRoot.getTaskLoading);
+    this.lists$ = this.store$.select(fromRoot.getTasksByList);
   }
 
   ngOnDestroy() {
@@ -123,15 +116,6 @@ export class TaskHomeComponent implements OnDestroy {
     if (this.routeParamSub) {
       this.routeParamSub.unsubscribe();
     }
-    if (this.subTasks) {
-      this.subTasks.unsubscribe();
-    }
-  }
-
-  tasksByList(listId: string) {
-    return this.store$
-      .select(fromRoot.getTasksWithOwner)
-      .map(tasks => tasks.filter(task => task.taskListId === listId));
   }
 
   handleRenameList(list: TaskList) {
@@ -184,7 +168,7 @@ export class TaskHomeComponent implements OnDestroy {
     });
   }
 
-  handleCompleteTask(task: Task) {
+  handleCompleteTask(task) {
     this.store$.dispatch(new taskActions.CompleteTaskAction(task));
   }
 
@@ -205,22 +189,20 @@ export class TaskHomeComponent implements OnDestroy {
 
   handleAddTask(listId: string) {
     const user$ = this.store$.select(fromRoot.getAuthUser);
-    let owner;
     user$.take(1).subscribe(user => {
-      owner = user;
+      const dialogRef = this.dialog.open(NewTaskComponent, { data: { owner: user }});
+      dialogRef.afterClosed()
+        .take(1)
+        .filter(n => n)
+        .subscribe(val => {
+          this.store$.dispatch(new taskActions.AddTaskAction({
+            ...val.task,
+            taskListId: listId,
+            completed: false,
+            createDate: new Date()
+          }));
+        });
     });
-    const dialogRef = this.dialog.open(NewTaskComponent, { data: { owner }});
-    dialogRef.afterClosed()
-      .take(1)
-      .filter(n => n)
-      .subscribe(task => {
-        this.store$.dispatch(new taskActions.AddTaskAction({
-          ...task,
-          taskListId: listId,
-          completed: false,
-          createDate: new Date()
-        }));
-      });
   }
 
   handleUpdateTask(task: Task) {
@@ -229,7 +211,11 @@ export class TaskHomeComponent implements OnDestroy {
       .take(1)
       .filter(n => n)
       .subscribe((val) => {
-        this.store$.dispatch(new taskActions.UpdateTaskAction({...task, ...val}));
+        if (val.type !== 'delete') {
+          this.store$.dispatch(new taskActions.UpdateTaskAction({...task, ...val.task}));
+        } else {
+          this.store$.dispatch(new taskActions.DeleteTaskAction(val.task));
+        }
       });
   }
 }

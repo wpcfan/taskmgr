@@ -1,45 +1,45 @@
-import {ChangeDetectionStrategy, Component, HostBinding, OnDestroy} from '@angular/core';
+import {Component, HostBinding} from '@angular/core';
 import {MdDialog} from '@angular/material';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/range';
 import 'rxjs/add/operator/take';
 import * as fromRoot from '../../reducers';
-import * as models from '../../domain';
 import * as actions from '../../actions/project.action';
 import {NewProjectComponent} from '../new-project';
 import {InviteComponent} from '../invite';
 import {ConfirmDialogComponent} from '../../shared';
-import {defaultRouteAnim} from '../../anim';
+import {defaultRouteAnim, listAnimation} from '../../anim';
+import { Project } from '../../domain';
 
 @Component({
   selector: 'app-project-list',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <app-project-item
-      class="card"
-      *ngFor="let project of (projects$ | async)"
-      [item]="project"
-      (itemSelected)="selectProject(project)"
-      (launchUpdateDialog)="openUpdateDialog(project)"
-      (launchInviteDailog)="openInviteDialog(project)"
-      (launchDeleteDailog)="openDeleteDialog(project)">
-    </app-project-item>
+    <div class="container" [@listAnim]="(projects$ | async).length">
+      <app-project-item
+        class="card"
+        *ngFor="let project of (projects$ | async)"
+        [item]="project"
+        (itemSelected)="selectProject(project)"
+        (launchUpdateDialog)="openUpdateDialog(project)"
+        (launchInviteDailog)="openInviteDialog(project)"
+        (launchDeleteDailog)="openDeleteDialog(project)">
+      </app-project-item>
+    </div>
     <button md-fab (click)="openNewProjectDialog()" type="button" class="fab-button">
       <md-icon>add</md-icon>
     </button>
   `,
   styles: [`
-    :host {
-      margin: 15px;
+    .container {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
     }
     .card {
       height: 360px;
-      flex: 0 1 360px;
-      margin-right: 10px;
+      flex: 0 0 360px;
+      margin: 10px;
     }
     .fab-button {
       position: fixed;
@@ -48,12 +48,12 @@ import {defaultRouteAnim} from '../../anim';
       z-index: 998;
     }
   `],
-  animations: [defaultRouteAnim],
+  animations: [defaultRouteAnim, listAnimation],
 })
 export class ProjectListComponent {
 
-  @HostBinding('@routeAnim') state = 'in';
-  projects$: Observable<models.Project[]>;
+  @HostBinding('@routeAnim') state;
+  projects$: Observable<Project[]>;
 
   constructor(private store$: Store<fromRoot.State>,
               private dialog: MdDialog) {
@@ -61,7 +61,7 @@ export class ProjectListComponent {
     this.projects$ = this.store$.select(fromRoot.getProjects);
   }
 
-  selectProject(project: models.Project) {
+  selectProject(project: Project) {
     this.store$.dispatch(new actions.SelectProjectAction(project));
   }
 

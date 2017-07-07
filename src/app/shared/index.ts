@@ -25,8 +25,6 @@ import {
   MdTooltipModule,
   MdSelectionModule,
   MdSlideToggleModule,
-  MdSidenav,
-  MdSidenavContainer,
 } from '@angular/material';
 import {ConfirmDialogComponent} from './confirm-dialog';
 import {ImageListSelectComponent} from './image-list-select';

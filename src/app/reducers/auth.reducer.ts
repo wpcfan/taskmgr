@@ -24,4 +24,3 @@ export function reducer(state: Auth = initialState, action: actions.Actions): Au
 }
 
 export const getAuth = (state: Auth) => state;
-export const getAuthUserId = (state: Auth) => state.userId;

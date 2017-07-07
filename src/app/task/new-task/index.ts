@@ -37,14 +37,30 @@ import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
         </md-input-container>
       </div>
       <div md-dialog-actions>
-        <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">
-          保存
-        </button>
-        <button md-dialog-close md-raised-button type="button">关闭</button>
+        <div class="fill" *ngIf="notConfirm else confirm">
+          <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">
+            保存
+          </button>
+          <button md-dialog-close md-raised-button type="button">关闭</button>
+          <span class="fill-remaining-space">
+          </span>
+          <button md-button color="warn" type="button" [disabled]="delInvisible" (click)="onDelClick(false)">删除</button>
+        </div>
       </div>
     </form>
+    <ng-template #confirm>
+      <div class="fill">
+        <span class="fill-remaining-space mat-body-2">是否确定删除？</span>
+        <button md-button color="warn" type="button" (click)="reallyDel()">确定</button>
+        <button md-raised-button color="primary" type="button" (click)="onDelClick(true)">取消</button>
+      </div>
+    </ng-template>
   `,
   styles: [`
+    .fill {
+      width: 100%;
+      display: flex;
+    }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -52,6 +68,8 @@ export class NewTaskComponent implements OnInit {
 
   form: FormGroup;
   dialogTitle: string;
+  notConfirm = true;
+  delInvisible = true;
   priorities: { label: string; value: number }[] = [
     {
       label: '普通',
@@ -83,6 +101,7 @@ export class NewTaskComponent implements OnInit {
         remark: ['']
       });
       this.dialogTitle = '创建任务：';
+      this.delInvisible = true;
     } else {
       this.form = this.fb.group({
         desc: [this.data.task.desc, Validators.required],
@@ -94,15 +113,16 @@ export class NewTaskComponent implements OnInit {
         remark: [this.data.task.remark]
       });
       this.dialogTitle = '修改任务：';
+      this.delInvisible = false;
     }
   }
 
-  onSubmit({value, valid}, event: Event) {
-    event.preventDefault();
+  onSubmit({value, valid}, ev: Event) {
+    ev.preventDefault();
     if (!valid) {
       return;
     }
-    this.dialogRef.close({
+    this.dialogRef.close({type: 'addOrUpdate', task: {
       desc: value.desc,
       participantIds: value.followers.map(u => u.id),
       ownerId: value.owner.length > 0 ? value.owner[0].id : null,
@@ -110,6 +130,14 @@ export class NewTaskComponent implements OnInit {
       reminder: value.reminder,
       priority: value.priority,
       remark: value.remark
-    });
+    }});
+  }
+
+  onDelClick(confirm: boolean) {
+    this.notConfirm = confirm;
+  }
+
+  reallyDel() {
+    this.dialogRef.close({type: 'delete', task: this.data.task})
   }
 }
