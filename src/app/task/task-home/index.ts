@@ -40,6 +40,7 @@ import { TaskListVM } from '../../vm/task-list.vm';
           (deleteList)="handleDelList(taskList)"
           (moveAllTasks)="handleMoveList(taskList.id)">
         </app-task-list-header>
+        <app-quick-task (quickTask)="handleQuickTask($event, taskList.id)"></app-quick-task>
         <md-progress-bar color="primary" mode="indeterminate" *ngIf="(loading$ | async) as loading else listItems">
         </md-progress-bar>
         <ng-template #listItems>
@@ -217,5 +218,22 @@ export class TaskHomeComponent implements OnDestroy {
           this.store$.dispatch(new taskActions.DeleteTaskAction(val.task));
         }
       });
+  }
+
+  handleQuickTask(desc: string, listId: string) {
+    const user$ = this.store$.select(fromRoot.getAuthUser);
+    user$.take(1).subscribe(user => {
+      this.store$.dispatch(new taskActions.AddTaskAction({
+        desc: desc,
+        priority: 3,
+        remark: null,
+        ownerId: user.id,
+        participantIds: [],
+        taskListId: listId,
+        completed: false,
+        createDate: new Date()
+      }));
+    })
+
   }
 }
