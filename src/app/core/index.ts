@@ -2,7 +2,6 @@ import {NgModule, Optional, SkipSelf} from '@angular/core';
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SharedModule} from '../shared';
-import {MdSidenav, MdSidenavContainer} from '@angular/material';
 import {AppRoutingModule} from './app-routing.module';
 import {AppEffectsModule} from '../effects';
 import {ServicesModule} from '../services';
@@ -43,8 +42,6 @@ import 'rxjs/add/operator/take';
     BrowserAnimationsModule
   ],
   exports: [
-    MdSidenav,
-    MdSidenavContainer,
     HeaderComponent,
     FooterComponent,
     SidebarComponent,
