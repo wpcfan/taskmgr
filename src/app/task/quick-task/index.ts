@@ -1,9 +1,10 @@
-import { Component, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, Output, EventEmitter, HostListener, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-quick-task',
   templateUrl: './quick-task.component.html',
-  styleUrls: ['./quick-task.component.scss']
+  styleUrls: ['./quick-task.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuickTaskComponent {
 

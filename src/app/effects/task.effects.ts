@@ -14,6 +14,7 @@ export class TaskEffects {
   loadTasksInLists$: Observable<Action> = this.actions$
     .ofType(actions.ActionTypes.LOAD_IN_LISTS)
     .map(toPayload)
+    .debounceTime(400) // 模拟大数据量加载时的 loading 情况
     .mergeMap((taskLists) => {
       return this.service$
         .getByLists(taskLists)
