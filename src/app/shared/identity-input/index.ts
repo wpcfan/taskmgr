@@ -3,9 +3,6 @@ import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} fro
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/observable/combineLatest';
 import {Identity, IdentityType} from '../../domain';
 import {isValidAddr, extractInfo} from '../../utils/identity.util';
 import {isValidDate} from '../../utils/date.util';

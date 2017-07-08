@@ -4,7 +4,6 @@ import {getProvinces, getCitiesByProvince, getAreasByCity} from '../../utils/are
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import {Subscription} from 'rxjs/Subscription';
-import 'rxjs/add/observable/combineLatest';
 import {Address} from '../../domain';
 
 @Component({
