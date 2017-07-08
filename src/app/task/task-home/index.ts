@@ -1,4 +1,4 @@
-import { Component, OnDestroy, HostBinding } from '@angular/core';
+import { Component, OnDestroy, HostBinding, ChangeDetectionStrategy } from '@angular/core';
 import {MdDialog} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute} from '@angular/router';
@@ -87,7 +87,8 @@ import { TaskListVM } from '../../vm/task-list.vm';
       height: 100%;
     }
   `],
-  animations: [defaultRouteAnim, listAnimation]
+  animations: [defaultRouteAnim, listAnimation],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskHomeComponent implements OnDestroy {
 
