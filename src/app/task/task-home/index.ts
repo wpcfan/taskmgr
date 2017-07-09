@@ -1,4 +1,4 @@
-import { Component, OnDestroy, HostBinding, ChangeDetectionStrategy } from '@angular/core';
+import {Component, OnDestroy, HostBinding, ChangeDetectionStrategy} from '@angular/core';
 import {MdDialog} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute} from '@angular/router';
@@ -13,7 +13,7 @@ import {NewTaskComponent} from '../new-task';
 import {CopyTaskComponent} from '../copy-task';
 import {ConfirmDialogComponent} from '../../shared/confirm-dialog';
 import {defaultRouteAnim, listAnimation} from '../../anim';
-import { TaskListVM } from '../../vm/task-list.vm';
+import {TaskListVM} from '../../vm/task-list.vm';
 
 @Component({
   selector: 'app-task-home',
