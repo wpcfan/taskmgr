@@ -34,6 +34,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/withLatestFrom';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/do';
 
 @NgModule({
   imports: [
@@ -55,7 +56,7 @@ import 'rxjs/add/operator/take';
     {
       provide: 'BASE_CONFIG',
       useValue: {
-        uri: 'http://localhost:3000',
+        uri: 'http://localhost:3002',
       }
     }
   ],
