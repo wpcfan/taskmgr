@@ -65,7 +65,7 @@ export class ProjectListComponent {
   }
 
   openNewProjectDialog() {
-    const img = `/assets/img/covers/${Math.floor(Math.random() * 39)}_tn.jpg`;
+    const img = `/assets/img/covers/${Math.floor(Math.random() * 40)}_tn.jpg`;
     const thumbnails$ = this.getThumbnailsObs();
     const dialogRef = this.dialog.open(NewProjectComponent, {data: { thumbnails: thumbnails$, img: img}});
     dialogRef.afterClosed().take(1).subscribe(val => {
