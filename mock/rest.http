@@ -3,7 +3,7 @@ POST http://localhost:8090/auth
 Content-Type: application/json;charset: utf-8
 
 {
-	"username":"peng",
+	"username":"peng1",
 	"password":"peng1234"
 }
 
@@ -13,7 +13,7 @@ POST http://localhost:8090/auth/register
 Content-Type: application/json;charset: utf-8
 
 {
-	"username":"peng",
+	"username":"peng1",
 	"password":"peng1234",
 	"email": "peng@163.com"
 }
@@ -30,7 +30,7 @@ GET http://localhost:3000/users/37489e0c-df34-c261-71c4-ce75357e3035/
 ###
 //Projects
 GET http://localhost:8090/projects/?enabled=true&archived=false
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwZW5nIiwiY3JlYXRlZCI6MTQ5ODcxODE3NjgyMywiZXhwIjoxNDk5MzIyOTc2fQ.0u2jVznonoF2b2oc3gNvbkcnlV4OLzRT3RwIN4XLWff4jbG-6b6-vNRVE2WyuulceUeLQua7dnt_udln4IFR6g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwZW5nMSIsImNyZWF0ZWQiOjE0OTk4NTgxNzg3NjksImV4cCI6MTUwMDQ2Mjk3OH0.1uV9lGMSgaClsH5SYMluyL2FvCAPU27PdjiQkXB19idIS1vtWEuy1Io2imagaKM2hp-OVWzpPBC4Ev_9JcZGqA
 userId: 59549fbfa065ca43ae48e658
 
 ###

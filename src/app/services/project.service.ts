@@ -6,7 +6,7 @@ import {Project, User} from '../domain';
 
 @Injectable()
 export class ProjectService {
-  private domain = 'projects';
+  private readonly domain = 'projects';
   private headers = new Headers({
     'Content-Type': 'application/json'
   });
@@ -43,7 +43,7 @@ export class ProjectService {
     const deltask$ = Observable.from(project.taskLists)
       .mergeMap(listId => this.http
         .delete(`${this.config.uri}/taskLists/${listId}`))
-        .reduce(() => ({}), {});
+        .count();
     const uri = `${this.config.uri}/${this.domain}/${project.id}`;
     return deltask$.switchMap(p => this.http
       .delete(uri)

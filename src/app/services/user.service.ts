@@ -5,7 +5,7 @@ import {User, Project} from '../domain';
 
 @Injectable()
 export class UserService {
-  private domain = 'users';
+  private readonly domain = 'users';
   private headers = new Headers({
     'Content-Type': 'application/json'
   });
