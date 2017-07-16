@@ -39,16 +39,12 @@ import {TaskListVM} from '../../vm/task-list.vm';
           (moveAllTasks)="handleMoveList(taskList.id)">
         </app-task-list-header>
         <app-quick-task (quickTask)="handleQuickTask($event, taskList.id)"></app-quick-task>
-        <md-progress-bar color="primary" mode="indeterminate" *ngIf="taskList.tasks?.length === 0 else listItems">
-        </md-progress-bar>
-        <ng-template #listItems>
-          <app-task-item
-            *ngFor="let task of taskList.tasks"
-            [item]="task"
-            (taskComplete)="handleCompleteTask(task)"
-            (taskClick)="handleUpdateTask(task)">
-          </app-task-item>
-        </ng-template>
+        <app-task-item
+          *ngFor="let task of taskList.tasks"
+          [item]="task"
+          (taskComplete)="handleCompleteTask(task)"
+          (taskClick)="handleUpdateTask(task)">
+        </app-task-item>
       </app-task-list>
     </div>
     <button md-fab (click)="handleNewTaskList($event)" type="button" class="fab-button">

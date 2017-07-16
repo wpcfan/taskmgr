@@ -37,7 +37,7 @@ export class AuthService {
       .get(uri, {params: {'email': user.email}})
       .switchMap(res => {
         if (res.json().length > 0) {
-          throw new Error('username existed');
+          throw 'username existed';
         }
         return this.http.post(uri, JSON.stringify(user), {headers: this.headers})
           .map(r => ({token: this.token, user: r.json()}));
@@ -56,7 +56,7 @@ export class AuthService {
       .get(uri, {params: {'email': email, 'password': password}})
       .map(res => {
         if (res.json().length === 0) {
-          throw new Error('Login Failed');
+          throw 'Login Failed';
         }
         return {
           token: this.token,

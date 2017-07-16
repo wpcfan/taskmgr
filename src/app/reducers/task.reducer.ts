@@ -56,7 +56,7 @@ const delTasksByPrj = (state, action) => {
   const listIds = project.taskLists;
   const remainingIds = state.ids.filter(id => _.indexOf(listIds, state.entities[id].taskListId) === -1);
   const remainingEntities = buildObjFromArr(remainingIds, state.entities);
-  return {ids: remainingIds, entities: remainingEntities, loading: false};
+  return {ids: remainingIds, entities: remainingEntities};
 };
 
 const updateTask = (state, action) => {
@@ -65,10 +65,6 @@ const updateTask = (state, action) => {
 
 export function reducer (state = initialState, action: actions.Actions): State {
   switch (action.type) {
-    case actions.ActionTypes.DELETE:
-    case actions.ActionTypes.UPDATE:
-    case actions.ActionTypes.ADD:
-      return {...state, loading: true};
     case actions.ActionTypes.ADD_SUCCESS:
       return addTask(state, action);
     case actions.ActionTypes.DELETE_SUCCESS:
@@ -90,7 +86,6 @@ export function reducer (state = initialState, action: actions.Actions): State {
 
 export const getEntities = (state) => state.entities;
 export const getIds = (state) => state.ids;
-export const getLoading = (state) => state.loading;
 export const getTasks = createSelector(getEntities, getIds, (entities, ids) => {
   return ids.map(id => entities[id]);
 });

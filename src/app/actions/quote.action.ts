@@ -25,7 +25,7 @@ export class QuoteSuccessAction implements Action {
 export class QuoteFailAction implements Action {
   type = ActionTypes.QUOTE_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 

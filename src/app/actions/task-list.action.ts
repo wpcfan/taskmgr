@@ -1,6 +1,6 @@
 import {Action} from '@ngrx/store';
 import {type} from '../utils/type.util';
-import {Err, Project, TaskList} from '../domain';
+import {Project, TaskList} from '../domain';
 
 export const ActionTypes = {
   ADD: type('[TaskList] Add'),
@@ -40,7 +40,7 @@ export class AddTaskListSuccessAction implements Action {
 export class AddTaskListFailAction implements Action {
   type = ActionTypes.ADD_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -61,7 +61,7 @@ export class UpdateTaskListSuccessAction implements Action {
 export class UpdateTaskListFailAction implements Action {
   type = ActionTypes.UPDATE_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -82,7 +82,7 @@ export class DeleteTaskListSuccessAction implements Action {
 export class DeleteTaskListFailAction implements Action {
   type = ActionTypes.DELETE_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -103,7 +103,7 @@ export class LoadTaskListsSuccessAction implements Action {
 export class LoadTaskListsFailAction implements Action {
   type = ActionTypes.LOADS_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -124,7 +124,7 @@ export class SwapOrderSuccessAction implements Action {
 export class SwapOrderFailAction implements Action {
   type = ActionTypes.SWAP_ORDER_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -145,7 +145,7 @@ export class InitTaskListsSuccessAction implements Action {
 export class InitTaskListsFailAction implements Action {
   type = ActionTypes.INITIALIZE_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 

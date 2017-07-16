@@ -41,7 +41,7 @@ export class AddProjectSuccessAction implements Action {
 export class AddProjectFailAction implements Action {
   type = ActionTypes.ADD_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -62,7 +62,7 @@ export class UpdateProjectSuccessAction implements Action {
 export class UpdateProjectFailAction implements Action {
   type = ActionTypes.UPDATE_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -83,7 +83,7 @@ export class UpdateListsSuccessAction implements Action {
 export class UpdateListsFailAction implements Action {
   type = ActionTypes.UPDATE_LISTS_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -104,7 +104,7 @@ export class DeleteProjectSuccessAction implements Action {
 export class DeleteProjectFailAction implements Action {
   type = ActionTypes.DELETE_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -125,7 +125,7 @@ export class LoadProjectsSuccessAction implements Action {
 export class LoadProjectsFailAction implements Action {
   type = ActionTypes.LOADS_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -153,7 +153,7 @@ export class InviteMembersSuccessAction implements Action {
 export class InviteMembersFailAction implements Action {
   type = ActionTypes.INVITE_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 

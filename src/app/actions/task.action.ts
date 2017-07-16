@@ -1,6 +1,6 @@
 import {Action} from '@ngrx/store';
 import {type} from '../utils/type.util';
-import {Err, Task, TaskList} from '../domain';
+import {Task, TaskList} from '../domain';
 
 export const ActionTypes = {
   ADD: type('[Task] Add'),
@@ -43,7 +43,7 @@ export class AddTaskSuccessAction implements Action {
 export class AddTaskFailAction implements Action {
   type = ActionTypes.ADD_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -64,7 +64,7 @@ export class UpdateTaskSuccessAction implements Action {
 export class UpdateTaskFailAction implements Action {
   type = ActionTypes.UPDATE_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -85,7 +85,7 @@ export class DeleteTaskSuccessAction implements Action {
 export class DeleteTaskFailAction implements Action {
   type = ActionTypes.DELETE_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -106,7 +106,7 @@ export class LoadTasksInListsSuccessAction implements Action {
 export class LoadTasksInListsFailAction implements Action {
   type = ActionTypes.LOAD_IN_LISTS_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -127,7 +127,7 @@ export class MoveTaskSuccessAction implements Action {
 export class MoveTaskFailAction implements Action {
   type = ActionTypes.MOVE_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -148,7 +148,7 @@ export class CompleteTaskSuccessAction implements Action {
 export class CompleteTaskFailAction implements Action {
   type = ActionTypes.COMPLETE_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -169,7 +169,7 @@ export class MoveAllSuccessAction implements Action {
 export class MoveAllFailAction implements Action {
   type = ActionTypes.MOVE_ALL_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 

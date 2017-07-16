@@ -102,7 +102,6 @@ export const getThemeState = (state: State) => state.theme;
 export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
 export const getProjects = createSelector(getProjectsState, fromProjects.getAll);
 export const getTasks = createSelector(getTasksState, fromTasks.getTasks);
-export const getTaskLoading = createSelector(getTasksState, fromTasks.getLoading);
 export const getUsers = createSelector(getUserState, fromUsers.getUsers);
 export const getTheme = createSelector(getThemeState, fromTheme.getTheme);
 
