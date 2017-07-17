@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, forwardRef, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, forwardRef, OnInit, OnDestroy} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {
   subYears,
@@ -14,6 +14,7 @@ import {
   parse
 } from 'date-fns';
 import {Observable} from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 export enum AgeUnit {
   Year = 0,
@@ -74,7 +75,7 @@ export interface Age {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AgeInputComponent implements ControlValueAccessor, OnInit {
+export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
   form: FormGroup;
   ageUnits: { value: AgeUnit; label: string }[] = [
@@ -83,6 +84,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit {
     {value: AgeUnit.Day, label: '天'}
   ];
   dateOfBirth;
+  private sub: Subscription;
   private readonly dateFormat = 'YYYY-MM-DD';
   private propagateChange = (_: any) => {};
 
@@ -99,7 +101,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit {
     const birthday$ = this.form.get('birthday').valueChanges.distinctUntilChanged().startWith(initDate);
     const ageNum$ = this.form.get('ageNum').valueChanges.distinctUntilChanged().startWith(initAge.age);
     const ageUnit$ = this.form.get('ageUnit').valueChanges.distinctUntilChanged().startWith(initAge.unit);
-    birthday$.subscribe(date => {
+    this.sub = birthday$.subscribe(date => {
       const age = this.toAge(date);
       this.form.get('ageNum').patchValue(age.age);
       this.form.get('ageUnit').patchValue(age.unit);
@@ -115,6 +117,12 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit {
         this.propagateChange(date);
       }
     });
+  }
+
+  ngOnDestroy() {
+    if(this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 
   // 提供值的写入方法
