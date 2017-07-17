@@ -131,7 +131,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
 
   // 提供值的写入方法
   public writeValue(obj: string) {
-    if (obj && isValid(parse(obj))) {
+    if (obj) {
       const date = format(obj, this.dateFormat);
       this.form.get('birthday').patchValue(date);
       this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
