@@ -84,7 +84,8 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     {value: AgeUnit.Day, label: '天'}
   ];
   dateOfBirth;
-  private sub: Subscription;
+  private subBirth: Subscription;
+  private subAge: Subscription;
   private readonly dateFormat = 'YYYY-MM-DD';
   private propagateChange = (_: any) => {};
 
@@ -101,7 +102,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     const birthday$ = this.form.get('birthday').valueChanges.distinctUntilChanged().startWith(initDate);
     const ageNum$ = this.form.get('ageNum').valueChanges.distinctUntilChanged().startWith(initAge.age);
     const ageUnit$ = this.form.get('ageUnit').valueChanges.distinctUntilChanged().startWith(initAge.unit);
-    this.sub = birthday$.subscribe(date => {
+    this.subBirth = birthday$.subscribe(date => {
       const age = this.toAge(date);
       this.form.get('ageNum').patchValue(age.age);
       this.form.get('ageUnit').patchValue(age.unit);
@@ -109,7 +110,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       this.propagateChange(date);
     });
     const age$ = Observable.combineLatest(ageNum$, ageUnit$, (_num, _unit) => this.toDate({age: _num, unit: _unit}));
-    age$.subscribe(date => {
+    this.subAge = age$.subscribe(date => {
       const calcAge = this.toAge(this.form.get('birthday').value);
       if (calcAge.age !== this.form.get('ageNum').value || calcAge.unit !== this.form.get('ageUnit').value) {
         this.form.get('birthday').patchValue(date);
@@ -120,8 +121,11 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   }
 
   ngOnDestroy() {
-    if(this.sub) {
-      this.sub.unsubscribe();
+    if(this.subBirth) {
+      this.subBirth.unsubscribe();
+    }
+    if(this.subAge) {
+      this.subAge.unsubscribe();
     }
   }
 
