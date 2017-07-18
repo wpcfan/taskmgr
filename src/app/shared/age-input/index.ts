@@ -11,12 +11,11 @@ import {
   isPast,
   isValid,
   isDate,
-  format,
   parse
 } from 'date-fns';
 import {Observable} from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-
+import {toDate} from '../../utils/date.util';
 export enum AgeUnit {
   Year = 0,
   Month,
@@ -37,18 +36,20 @@ export interface Age {
           <input mdInput type="date" placeholder="出生日期" formControlName="birthday">
         </md-input-container>
       </div>
-      <div class="age-num">
-        <md-input-container>
-          <input mdInput type="number" placeholder="年龄" formControlName="ageNum">
-        </md-input-container>
-      </div>
-      <div>
-        <md-button-toggle-group formControlName="ageUnit">
-          <md-button-toggle *ngFor="let unit of ageUnits" [value]="unit.value">
-            {{ unit.label }}
-          </md-button-toggle>
-        </md-button-toggle-group>
-      </div>
+      <ng-container formGroupName="age">
+        <div class="age-num">
+          <md-input-container>
+            <input mdInput type="number" placeholder="年龄" formControlName="ageNum">
+          </md-input-container>
+        </div>
+        <div>
+          <md-button-toggle-group formControlName="ageUnit">
+            <md-button-toggle *ngFor="let unit of ageUnits" [value]="unit.value">
+              {{ unit.label }}
+            </md-button-toggle>
+          </md-button-toggle-group>
+        </div>
+      </ng-container>
     </div>
     `,
   styles: [`
@@ -86,29 +87,36 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   ];
   dateOfBirth;
   private subBirth: Subscription;
-  private readonly dateFormat = 'YYYY-MM-DD';
   private propagateChange = (_: any) => {};
 
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
-    const initDate = this.dateOfBirth ? this.dateOfBirth : format(subYears(Date.now(), 30), this.dateFormat);
+    const initDate = this.dateOfBirth ? this.dateOfBirth : toDate(subYears(Date.now(), 30));
     const initAge = this.toAge(initDate);
     this.form = this.fb.group({
-      birthday: [initDate],
-      ageNum: [initAge.age],
-      ageUnit: [initAge.unit]
+      birthday: [initDate, this.validateDate],
+      age:  this.fb.group({
+        ageNum: [initAge.age],
+        ageUnit: [initAge.unit]
+      }, {validator: this.validateAge('ageNum', 'ageUnit')})
     });
     const birthday$ = this.form.get('birthday').valueChanges
       .startWith(initDate)
       .map(d => ({date: d, from: 'birthday'}))
-      .distinctUntilChanged();
-    const ageNum$ = this.form.get('ageNum').valueChanges
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .filter(_ => this.form.get('birthday').valid);
+    const ageNum$ = this.form.get('age').get('ageNum').valueChanges
       .startWith(initAge.age)
-      .distinctUntilChanged();
-    const ageUnit$ = this.form.get('ageUnit').valueChanges
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .filter(_ => this.form.get('age').valid);
+    const ageUnit$ = this.form.get('age').get('ageUnit').valueChanges
       .startWith(initAge.unit)
-      .distinctUntilChanged();
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .filter(_ => this.form.get('age').valid);
     const age$ = Observable
       .combineLatest(ageNum$, ageUnit$, (_num, _unit) => this.toDate({age: _num, unit: _unit}))
       .map(d => ({date: d, from: 'age'}));
@@ -116,8 +124,8 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     this.subBirth = merged$.subscribe(date => {
       if(date.from === 'birthday') {
         const age = this.toAge(date.date);
-        this.form.get('ageNum').patchValue(age.age);
-        this.form.get('ageUnit').patchValue(age.unit);
+        this.form.get('age').get('ageNum').patchValue(age.age);
+        this.form.get('age').get('ageUnit').patchValue(age.unit);
       } else {
         this.form.get('birthday').patchValue(date.date);
       }
@@ -135,7 +143,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   // 提供值的写入方法
   public writeValue(obj: string) {
     if (obj) {
-      const date = format(obj, this.dateFormat);
+      const date = toDate(obj);
       this.form.get('birthday').patchValue(date);
       this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
     }
@@ -165,6 +173,44 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     };
   }
 
+  validateDate(c: FormControl): {[key: string]: any} {
+    const val = parse(c.value);
+    const result = isDate(val) && isValid(val) && isPast(val);
+    return result ? null : {
+      birthdayInvalid: true
+    }
+  }
+
+  validateAge(ageNumKey: string, ageUnitKey:string): {[key: string]: any} {
+    return (group: FormGroup): {[key: string]: any} => {
+      const ageNum = group.controls[ageNumKey];
+      const ageUnit = group.controls[ageUnitKey];
+      let result = false;
+      const ageNumVal = ageNum.value;
+      console.log(ageNumVal)
+      switch (ageUnit.value) {
+        case AgeUnit.Year: {
+          result = ageNumVal > 0 && ageNumVal < 150
+          break;
+        }
+        case AgeUnit.Month: {
+          result = ageNumVal > 0 && ageNumVal < 24
+          break;
+        }
+        case AgeUnit.Day: {
+          result = ageNumVal > 0 && ageNumVal < 90
+          break;
+        }
+        default:
+          result = false;
+      }
+      console.log(result);
+      return result ? null : {
+        ageInvalid: true
+      }
+    }
+  }
+
   private toAge(dateStr: string): Age {
     const daysTop = 90; // 90 天以下，用天作为单位
     const monthsTop = 24; // 24 个月以下，用月作为单位
@@ -192,13 +238,13 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     const now = new Date();
     switch (age.unit) {
       case AgeUnit.Year: {
-        return format(subYears(now, age.age), this.dateFormat);
+        return toDate(subYears(now, age.age));
       }
       case AgeUnit.Month: {
-        return format(subMonths(now, age.age), this.dateFormat);
+        return toDate(subMonths(now, age.age));
       }
       case AgeUnit.Day: {
-        return format(subDays(now, age.age), this.dateFormat);
+        return toDate(subDays(now, age.age));
       }
       default: {
         return this.dateOfBirth;
