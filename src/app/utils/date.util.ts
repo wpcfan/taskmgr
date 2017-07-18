@@ -1,7 +1,7 @@
-import {isPast, isDate, parse, format} from 'date-fns';
+import {isPast, isDate, isValid, differenceInYears, parse, format} from 'date-fns';
 export const isValidDate = (dateStr) => {
   const date = parse(dateStr);
-  return isDate(date) && isPast(date);
+  return isDate(date) && isValid(date) && isPast(date) && differenceInYears(new Date(), date) < 150;
 };
 
 export const toDate = (dateStr) => {

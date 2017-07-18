@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const img = `${this.avatarName}:svg-${Math.floor(Math.random() * 16)}`;
+    const img = `${this.avatarName}:svg-${(Math.random() * 16).toFixed()}`;
     this.form = this.fb.group({
       name: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
