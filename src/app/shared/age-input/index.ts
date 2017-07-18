@@ -41,7 +41,7 @@ export interface Age {
           </md-input-container>
         </div>
         <div>
-          <md-button-toggle-group formControlName="ageUnit" [value]="selectedUnit">
+          <md-button-toggle-group formControlName="ageUnit">
             <md-button-toggle *ngFor="let unit of ageUnits" [value]="unit.value">
               {{ unit.label }}
             </md-button-toggle>
@@ -79,7 +79,7 @@ export interface Age {
 export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
   form: FormGroup;
-  ageUnits: { value: AgeUnit; label: string }[] = [
+  ageUnits = [
     {value: AgeUnit.Year, label: '岁'},
     {value: AgeUnit.Month, label: '月'},
     {value: AgeUnit.Day, label: '天'}
@@ -116,7 +116,8 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       .distinctUntilChanged();
     const age$ = Observable
       .combineLatest(ageNum$, ageUnit$, (_num, _unit) => this.toDate({age: _num, unit: _unit}))
-      .map(d => ({date: d, from: 'age'}));
+      .map(d => ({date: d, from: 'age'}))
+      .filter(_ => this.form.get('age').valid);
     const merged$ = Observable
       .merge(birthday$, age$)
       .filter(_ => this.form.valid)
@@ -149,7 +150,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   }
 
   // 提供值的写入方法
-  public writeValue(obj: string) {
+  public writeValue(obj: Date) {
     if (obj) {
       const date = toDate(obj);
       this.form.get('birthday').patchValue(date, {emitEvent: false});
@@ -181,7 +182,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   }
 
   validateDate(c: FormControl): {[key: string]: any} {
-    const val = parse(c.value);
+    const val = c.value;
     return isValidDate(val) ? null : {
       birthdayInvalid: true
     }

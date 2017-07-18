@@ -4,6 +4,6 @@ export const isValidDate = (dateStr) => {
   return isDate(date) && isValid(date) && isPast(date) && differenceInYears(new Date(), date) < 150;
 };
 
-export const toDate = (dateStr) => {
-  return format(parse(dateStr), 'YYYY-MM-DD');
+export const toDate = (date: Date) => {
+  return format(date, 'YYYY-MM-DD');
 };

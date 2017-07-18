@@ -55,7 +55,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
       }
       if (isValidDate(info.dateOfBirth)) {
-        const date = toDate(info.dateOfBirth);
+        const date = info.dateOfBirth;
         this.form.patchValue({dateOfBirth: date});
         this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
       }

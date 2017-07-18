@@ -5,7 +5,7 @@
   "scripts": {
     "server": "json-server --watch mock/data.json --port 3002",
     "ng": "ng",
-    "start": "concurrent \"ng serve --port=8000\" \"npm run server\"",
+    "start": "concurrently \"ng serve --port=8000\" \"npm run server\"",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
