@@ -193,7 +193,6 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       const ageUnit = group.controls[ageUnitKey];
       let result = false;
       const ageNumVal = ageNum.value;
-      console.log('unit: ' + ageUnit.value + ' number: ' + ageNumVal);
 
       switch (ageUnit.value) {
         case AgeUnit.Year: {
