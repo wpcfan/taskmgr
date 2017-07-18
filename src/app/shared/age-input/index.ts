@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, forwardRef, OnInit, OnDestroy} from '@angular/core';
-import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
+import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import {
   subYears,
   subMonths,
@@ -10,6 +10,7 @@ import {
   differenceInYears,
   isPast,
   isValid,
+  isDate,
   format,
   parse
 } from 'date-fns';
@@ -85,7 +86,6 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   ];
   dateOfBirth;
   private subBirth: Subscription;
-  private subAge: Subscription;
   private readonly dateFormat = 'YYYY-MM-DD';
   private propagateChange = (_: any) => {};
 
@@ -99,33 +99,36 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       ageNum: [initAge.age],
       ageUnit: [initAge.unit]
     });
-    const birthday$ = this.form.get('birthday').valueChanges.distinctUntilChanged().startWith(initDate);
-    const ageNum$ = this.form.get('ageNum').valueChanges.distinctUntilChanged().startWith(initAge.age);
-    const ageUnit$ = this.form.get('ageUnit').valueChanges.distinctUntilChanged().startWith(initAge.unit);
-    this.subBirth = birthday$.subscribe(date => {
-      const age = this.toAge(date);
-      this.form.get('ageNum').patchValue(age.age);
-      this.form.get('ageUnit').patchValue(age.unit);
-      this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
-      this.propagateChange(date);
-    });
-    const age$ = Observable.combineLatest(ageNum$, ageUnit$, (_num, _unit) => this.toDate({age: _num, unit: _unit}));
-    this.subAge = age$.subscribe(date => {
-      const calcAge = this.toAge(this.form.get('birthday').value);
-      if (calcAge.age !== this.form.get('ageNum').value || calcAge.unit !== this.form.get('ageUnit').value) {
-        this.form.get('birthday').patchValue(date);
-        this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
-        this.propagateChange(date);
+    const birthday$ = this.form.get('birthday').valueChanges
+      .startWith(initDate)
+      .map(d => ({date: d, from: 'birthday'}))
+      .distinctUntilChanged();
+    const ageNum$ = this.form.get('ageNum').valueChanges
+      .startWith(initAge.age)
+      .distinctUntilChanged();
+    const ageUnit$ = this.form.get('ageUnit').valueChanges
+      .startWith(initAge.unit)
+      .distinctUntilChanged();
+    const age$ = Observable
+      .combineLatest(ageNum$, ageUnit$, (_num, _unit) => this.toDate({age: _num, unit: _unit}))
+      .map(d => ({date: d, from: 'age'}));
+    const merged$ = Observable.merge(birthday$, age$).debug('[Age-Input][Merged]:');
+    this.subBirth = merged$.subscribe(date => {
+      if(date.from === 'birthday') {
+        const age = this.toAge(date.date);
+        this.form.get('ageNum').patchValue(age.age);
+        this.form.get('ageUnit').patchValue(age.unit);
+      } else {
+        this.form.get('birthday').patchValue(date.date);
       }
+      this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
+      this.propagateChange(date.date);
     });
   }
 
   ngOnDestroy() {
     if(this.subBirth) {
       this.subBirth.unsubscribe();
-    }
-    if(this.subAge) {
-      this.subAge.unsubscribe();
     }
   }
 
