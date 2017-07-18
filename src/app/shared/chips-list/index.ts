@@ -127,8 +127,6 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
       this.items = [user];
     }
     this.chips.patchValue({ memberSearch: user.name });
-    // 注意必须发射事件后才可以影响其他控件
-    this.chips.updateValueAndValidity({ onlySelf: true, emitEvent: true });
     this.propagateChange(this.items);
   }
 
