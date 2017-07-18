@@ -41,7 +41,7 @@ export interface Age {
           </md-input-container>
         </div>
         <div>
-          <md-button-toggle-group formControlName="ageUnit">
+          <md-button-toggle-group formControlName="ageUnit" [value]="selectedUnit">
             <md-button-toggle *ngFor="let unit of ageUnits" [value]="unit.value">
               {{ unit.label }}
             </md-button-toggle>
@@ -122,18 +122,23 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       .filter(_ => this.form.valid)
       .debug('[Age-Input][Merged]:');
     this.subBirth = merged$.subscribe(date => {
+      const age = this.toAge(date.date);
       if(date.from === 'birthday') {
-        const age = this.toAge(date.date);
         if(age.age !== this.form.get('age').get('ageNum').value) {
           this.form.get('age').get('ageNum').patchValue(age.age, {emitEvent: false});
         }
         if(age.unit !== this.form.get('age').get('ageUnit').value) {
           this.form.get('age').get('ageUnit').patchValue(age.unit, {emitEvent: false});
+          this.selectedUnit = age.unit;
         }
+        this.propagateChange(date.date);
       } else {
-        this.form.get('birthday').patchValue(date.date, {emitEvent: false});
+        const ageToCompare = this.toAge(this.form.get('birthday').value);
+        if(age.age !== ageToCompare.age || age.unit !== ageToCompare.unit) {
+          this.form.get('birthday').patchValue(date.date, {emitEvent: false});
+          this.propagateChange(date.date);
+        }
       }
-      this.propagateChange(date.date);
     });
   }
 
@@ -188,17 +193,19 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       const ageUnit = group.controls[ageUnitKey];
       let result = false;
       const ageNumVal = ageNum.value;
+      console.log('unit: ' + ageUnit.value + ' number: ' + ageNumVal);
+
       switch (ageUnit.value) {
         case AgeUnit.Year: {
           result = ageNumVal >= 2 && ageNumVal < 150
           break;
         }
         case AgeUnit.Month: {
-          result = ageNumVal > 3 && ageNumVal <= 24
+          result = ageNumVal >= 3 && ageNumVal <= 24
           break;
         }
         case AgeUnit.Day: {
-          result = ageNumVal > 0 && ageNumVal <= 90
+          result = ageNumVal >= 0 && ageNumVal <= 90
           break;
         }
         default:
