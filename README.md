@@ -19,7 +19,8 @@
 ## 安装
 
 1. fork 这个项目
-2. `cd taskmgr`
-3. `yarn install`
-4. `npm start`
+2. git clone 项目
+3. `cd taskmgr`
+4. `yarn install`
+5. `npm start`
 
