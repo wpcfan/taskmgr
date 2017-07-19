@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, forwardRef, OnInit, OnDestroy} from '@angular/core';
+import {ChangeDetectionStrategy, Component, forwardRef, OnInit, OnDestroy, Input} from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import {
   subYears,
@@ -86,6 +86,12 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   ];
   dateOfBirth;
   selectedUnit = AgeUnit.Year;
+  @Input() daysTop = 90;
+  @Input() daysBottom = 0;
+  @Input() monthsTop = 24;
+  @Input() monthsBottom = 1;
+  @Input() yearsBottom = 1;
+  @Input() yearsTop = 150;
   private subBirth: Subscription;
   private propagateChange = (_: any) => {};
 
@@ -105,9 +111,8 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       .map(d => ({date: d, from: 'birthday'}))
       .debounceTime(300)
       .distinctUntilChanged()
-      .filter(_ => this.form.get('birthday').valid);
+      .filter(date => this.form.get('birthday').valid);
     const ageNum$ = this.form.get('age').get('ageNum').valueChanges
-      .startWith(initAge.age)
       .debounceTime(300)
       .distinctUntilChanged();
     const ageUnit$ = this.form.get('age').get('ageUnit').valueChanges
@@ -120,18 +125,17 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       .filter(_ => this.form.get('age').valid);
     const merged$ = Observable
       .merge(birthday$, age$)
-      .filter(_ => this.form.valid)
       .debug('[Age-Input][Merged]:');
     this.subBirth = merged$.subscribe(date => {
       const age = this.toAge(date.date);
+      console.log(JSON.stringify(age));
       if(date.from === 'birthday') {
-        if(age.age !== this.form.get('age').get('ageNum').value) {
-          this.form.get('age').get('ageNum').patchValue(age.age, {emitEvent: false});
+        if(age.age === this.form.get('age').get('ageNum').value && age.unit === this.form.get('age').get('ageUnit').value) {
+          return;
         }
-        if(age.unit !== this.form.get('age').get('ageUnit').value) {
-          this.form.get('age').get('ageUnit').patchValue(age.unit, {emitEvent: false});
-          this.selectedUnit = age.unit;
-        }
+        this.form.get('age').get('ageUnit').patchValue(age.unit, {emitEvent: false});
+        this.selectedUnit = age.unit;
+        this.form.get('age').get('ageNum').patchValue(age.age, {emitEvent: false});
         this.propagateChange(date.date);
       } else {
         const ageToCompare = this.toAge(this.form.get('birthday').value);
@@ -197,15 +201,15 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
 
       switch (ageUnit.value) {
         case AgeUnit.Year: {
-          result = ageNumVal >= 2 && ageNumVal < 150
+          result = ageNumVal >= this.yearsBottom && ageNumVal <= this.yearsTop
           break;
         }
         case AgeUnit.Month: {
-          result = ageNumVal >= 3 && ageNumVal <= 24
+          result = ageNumVal >= this.monthsBottom && ageNumVal <= this.monthsTop
           break;
         }
         case AgeUnit.Day: {
-          result = ageNumVal >= 0 && ageNumVal <= 90
+          result = ageNumVal >= this.daysBottom && ageNumVal <= this.daysTop
           break;
         }
         default:
@@ -218,16 +222,14 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   }
 
   private toAge(dateStr: string): Age {
-    const daysTop = 90; // 90 天以下，用天作为单位
-    const monthsTop = 24; // 24 个月以下，用月作为单位
     const date = parse(dateStr);
     const now = new Date();
-    if (isBefore(subDays(now, daysTop), date)) {
+    if (isBefore(subDays(now, this.daysTop), date)) {
       return {
         age: differenceInDays(now, date),
         unit: AgeUnit.Day
       };
-    } else if (isBefore(subMonths(now, monthsTop), date)) {
+    } else if (isBefore(subMonths(now, this.monthsTop), date)) {
       return {
         age: differenceInMonths(now, date),
         unit: AgeUnit.Month
