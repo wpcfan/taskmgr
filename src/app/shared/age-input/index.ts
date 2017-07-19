@@ -128,7 +128,6 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       .debug('[Age-Input][Merged]:');
     this.subBirth = merged$.subscribe(date => {
       const age = this.toAge(date.date);
-      console.log(JSON.stringify(age));
       if(date.from === 'birthday') {
         if(age.age === this.form.get('age').get('ageNum').value && age.unit === this.form.get('age').get('ageUnit').value) {
           return;
