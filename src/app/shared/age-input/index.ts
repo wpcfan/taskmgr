@@ -30,9 +30,11 @@ export interface Age {
     <div [formGroup]="form" class="age-input">
       <div>
         <md-input-container>
-          <input mdInput type="date" placeholder="出生日期" formControlName="birthday">
+          <input mdInput [mdDatepicker]="birthPicker" type="text" placeholder="出生日期" formControlName="birthday" >
+          <button mdSuffix [mdDatepickerToggle]="birthPicker" type="button"></button>
           <md-error>日期不正确</md-error>
         </md-input-container>
+        <md-datepicker touchUi="true" #birthPicker></md-datepicker>
       </div>
       <ng-container formGroupName="age">
         <div class="age-num">
@@ -41,7 +43,7 @@ export interface Age {
           </md-input-container>
         </div>
         <div>
-          <md-button-toggle-group formControlName="ageUnit">
+          <md-button-toggle-group formControlName="ageUnit" [(ngModel)]="selectedUnit">
             <md-button-toggle *ngFor="let unit of ageUnits" [value]="unit.value">
               {{ unit.label }}
             </md-button-toggle>
@@ -78,6 +80,7 @@ export interface Age {
 })
 export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
+  selectedUnit = AgeUnit.Year;
   form: FormGroup;
   ageUnits = [
     {value: AgeUnit.Year, label: '岁'},
@@ -85,7 +88,6 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     {value: AgeUnit.Day, label: '天'}
   ];
   dateOfBirth;
-  selectedUnit = AgeUnit.Year;
   @Input() daysTop = 90;
   @Input() daysBottom = 0;
   @Input() monthsTop = 24;
@@ -113,10 +115,11 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       .distinctUntilChanged()
       .filter(date => this.form.get('birthday').valid);
     const ageNum$ = this.form.get('age').get('ageNum').valueChanges
+      .startWith(this.form.get('age').get('ageNum').value)
       .debounceTime(300)
       .distinctUntilChanged();
     const ageUnit$ = this.form.get('age').get('ageUnit').valueChanges
-      .startWith(initAge.unit)
+      .startWith(this.form.get('age').get('ageUnit').value)
       .debounceTime(300)
       .distinctUntilChanged();
     const age$ = Observable
@@ -125,6 +128,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       .filter(_ => this.form.get('age').valid);
     const merged$ = Observable
       .merge(birthday$, age$)
+      .filter(_ => this.form.valid)
       .debug('[Age-Input][Merged]:');
     this.subBirth = merged$.subscribe(date => {
       const age = this.toAge(date.date);
@@ -132,10 +136,11 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
         if(age.age === this.form.get('age').get('ageNum').value && age.unit === this.form.get('age').get('ageUnit').value) {
           return;
         }
-        this.form.get('age').get('ageUnit').patchValue(age.unit, {emitEvent: false});
-        this.selectedUnit = age.unit;
+        this.form.get('age').get('ageUnit').patchValue(age.unit, {emitEvent: false, emitModelToViewChange: true, emitViewToModelChange: true});
         this.form.get('age').get('ageNum').patchValue(age.age, {emitEvent: false});
+        this.selectedUnit = age.unit;
         this.propagateChange(date.date);
+
       } else {
         const ageToCompare = this.toAge(this.form.get('birthday').value);
         if(age.age !== ageToCompare.age || age.unit !== ageToCompare.unit) {
