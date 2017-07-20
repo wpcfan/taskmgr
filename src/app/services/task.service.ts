@@ -38,7 +38,6 @@ export class TaskService {
   update(task: Task): Observable<Task> {
     const uri = `${this.config.uri}/${this.domain}/${task.id}`;
     const toUpdate = {
-      taskListId: task.taskListId,
       desc: task.desc,
       ownerId: task.ownerId,
       participantIds: task.participantIds,
