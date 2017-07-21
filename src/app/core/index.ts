@@ -16,6 +16,7 @@ import {loadSvgResources} from '../utils/svg.util';
 import 'hammerjs';
 import '../utils/debug.util';
 import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/concat';
 import 'rxjs/add/observable/zip';
 import 'rxjs/add/observable/range';
 import 'rxjs/add/observable/of';
@@ -58,7 +59,8 @@ import 'rxjs/add/operator/do';
     {
       provide: 'BASE_CONFIG',
       useValue: {
-        uri: 'http://localhost:3002',
+        uri: 'http://localhost:3002'
+        // uri: 'http://manage.t.imooc.io/apis',
       }
     }
   ],

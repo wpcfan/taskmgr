@@ -38,6 +38,7 @@ import { Project } from '../../domain';
       height: 360px;
       flex: 0 0 360px;
       margin: 10px;
+      display: flex;
     }
     .fab-button {
       position: fixed;
