@@ -94,6 +94,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   @Input() monthsBottom = 1;
   @Input() yearsBottom = 1;
   @Input() yearsTop = 150;
+  @Input() debounceTime = 300;
   private subBirth: Subscription;
   private propagateChange = (_: any) => {};
 
@@ -109,18 +110,22 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
         ageUnit: [initAge.unit]
       }, {validator: this.validateAge('ageNum', 'ageUnit')})
     });
-    const birthday$ = this.form.get('birthday').valueChanges
+    const birthday = this.form.get('birthday');
+    const ageNum = this.form.get('age').get('ageNum');
+    const ageUnit = this.form.get('age').get('ageUnit');
+
+    const birthday$ = birthday.valueChanges
       .map(d => ({date: d, from: 'birthday'}))
-      .debounceTime(300)
+      .debounceTime(this.debounceTime)
       .distinctUntilChanged()
-      .filter(date => this.form.get('birthday').valid);
-    const ageNum$ = this.form.get('age').get('ageNum').valueChanges
-      .startWith(this.form.get('age').get('ageNum').value)
-      .debounceTime(300)
+      .filter(date => birthday.valid);
+    const ageNum$ = ageNum.valueChanges
+      .startWith(ageNum.value)
+      .debounceTime(this.debounceTime)
       .distinctUntilChanged();
-    const ageUnit$ = this.form.get('age').get('ageUnit').valueChanges
-      .startWith(this.form.get('age').get('ageUnit').value)
-      .debounceTime(300)
+    const ageUnit$ = ageUnit.valueChanges
+      .startWith(ageUnit.value)
+      .debounceTime(this.debounceTime)
       .distinctUntilChanged();
     const age$ = Observable
       .combineLatest(ageNum$, ageUnit$, (_num, _unit) => this.toDate({age: _num, unit: _unit}))
@@ -133,11 +138,11 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     this.subBirth = merged$.subscribe(date => {
       const age = this.toAge(date.date);
       if(date.from === 'birthday') {
-        if(age.age === this.form.get('age').get('ageNum').value && age.unit === this.form.get('age').get('ageUnit').value) {
+        if(age.age === ageNum.value && age.unit === ageUnit.value) {
           return;
         }
-        this.form.get('age').get('ageUnit').patchValue(age.unit, {emitEvent: false, emitModelToViewChange: true, emitViewToModelChange: true});
-        this.form.get('age').get('ageNum').patchValue(age.age, {emitEvent: false});
+        ageUnit.patchValue(age.unit, {emitEvent: false, emitModelToViewChange: true, emitViewToModelChange: true});
+        ageNum.patchValue(age.age, {emitEvent: false});
         this.selectedUnit = age.unit;
         this.propagateChange(date.date);
 
@@ -216,8 +221,10 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
           result = ageNumVal >= this.daysBottom && ageNumVal <= this.daysTop
           break;
         }
-        default:
+        default: {
           result = false;
+          break;
+        }
       }
       return result ? null : {
         ageInvalid: true
