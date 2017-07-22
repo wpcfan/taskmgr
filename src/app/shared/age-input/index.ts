@@ -201,7 +201,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     }
   }
 
-  validateAge(ageNumKey: string, ageUnitKey:string): {[key: string]: any} {
+  validateAge(ageNumKey: string, ageUnitKey:string) {
     return (group: FormGroup): {[key: string]: any} => {
       const ageNum = group.controls[ageNumKey];
       const ageUnit = group.controls[ageUnitKey];
@@ -228,8 +228,8 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       }
       return result ? null : {
         ageInvalid: true
-      }
-    }
+      };
+    };
   }
 
   private toAge(dateStr: string): Age {

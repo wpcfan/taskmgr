@@ -40,7 +40,7 @@ export class ProjectService {
 
   // DELETE /projects instead of deleting the records
   del(project: Project): Observable<Project> {
-    const deltask$ = Observable.from(project.taskLists)
+    const deltask$ = Observable.from(project.taskLists? project.taskLists: [])
       .mergeMap(listId => this.http
         .delete(`${this.config.uri}/taskLists/${listId}`))
         .count();
