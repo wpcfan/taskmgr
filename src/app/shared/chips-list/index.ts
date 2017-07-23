@@ -76,7 +76,7 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   public writeValue(obj: User[]) {
     if (obj && this.multiple) {
       const userEntities = obj.reduce((entities, user) => {
-        return {entities, [user.id]: user};
+        return {...entities, [user.id]: user};
       }, {});
       if (this.items) {
         const remaining = this.items.filter(item => !userEntities[item.id]);
@@ -118,7 +118,7 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   }
 
   handleMemberSelection(user: User) {
-    if (this.items.map(u => u.id).indexOf(user.id) >= 0) {
+    if (this.items.map(u => u.id).indexOf(user.id) !== -1) {
       return;
     }
     if (this.multiple) {
