@@ -166,7 +166,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   public writeValue(obj: Date) {
     if (obj) {
       const date = toDate(obj);
-      this.form.get('birthday').patchValue(date, {emitEvent: false});
+      this.form.get('birthday').patchValue(date, {emitEvent: true});
     }
   }
 
