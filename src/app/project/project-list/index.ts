@@ -13,7 +13,7 @@ import { Project } from '../../domain';
 @Component({
   selector: 'app-project-list',
   template: `
-    <div class="container" [@listAnim]="(projects$ | async).length">
+    <div class="container" [@listAnim]="listAnim$ | async">
       <app-project-item
         class="card"
         *ngFor="let project of (projects$ | async)"
@@ -54,11 +54,13 @@ export class ProjectListComponent {
 
   @HostBinding('@routeAnim') state;
   projects$: Observable<Project[]>;
+  listAnim$: Observable<number>;
 
   constructor(private store$: Store<fromRoot.State>,
               private dialog: MdDialog) {
     this.store$.dispatch(new actions.LoadProjectsAction({}));
     this.projects$ = this.store$.select(fromRoot.getProjects);
+    this.listAnim$ = this.projects$.map(p => p.length);
   }
 
   selectProject(project: Project) {
