@@ -28,6 +28,6 @@ export interface User {
   projectIds?: string[];
   taskIds?: string[];
   address?: Address;
-  dateOfBirth?: Date;
+  dateOfBirth?: string;
   identity?: Identity;
 }

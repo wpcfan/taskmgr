@@ -11,15 +11,15 @@ import {isValidDate} from '../../utils/date.util';
   selector: 'app-indentity-input',
   template: `
     <div>
-      <md-select placeholder="证件类型" (change)="onIdTypeChange($event.value)">
-        <md-option *ngFor="let type of identityTypes" [value]="type.value">
+      <md-select placeholder="证件类型" (change)="onIdTypeChange($event.value)" [(ngModel)]="identity.identityType">
+        <md-option *ngFor="let type of identityTypes" [value]="type.value" >
           {{type.label}}
         </md-option>
       </md-select>
     </div>
     <div class="id-input">
-      <md-input-container class="full-width control-padding">
-        <input mdInput type="text" placeholder="证件号码" (change)="onIdNoChange($event.target.value)">
+      <md-input-container class="full-width">
+        <input mdInput type="text" placeholder="证件号码" (change)="onIdNoChange($event.target.value)" [(ngModel)]="identity.identityNo">
         <md-error>证件号码输入有误</md-error>
       </md-input-container>
     </div>
@@ -60,7 +60,7 @@ export class IdentityInputComponent implements ControlValueAccessor, OnInit, OnD
     {value: IdentityType.Military, label: '军官证'},
     {value: IdentityType.Other, label: '其它'}
   ];
-  identity: Identity | null;
+  identity: Identity = {identityType: null, identityNo: null};
   private _idType = new Subject<IdentityType>();
   private _idNo = new Subject<string>();
   private _sub: Subscription;
@@ -79,6 +79,7 @@ export class IdentityInputComponent implements ControlValueAccessor, OnInit, OnD
       };
     });
     this._sub = val$.subscribe(v => {
+      this.identity = v;
       this.propagateChange(v);
     });
   }
