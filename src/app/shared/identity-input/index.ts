@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Output, OnInit, OnDestroy} from '@angular/core';
+import {ChangeDetectionStrategy, Component, forwardRef, OnInit, OnDestroy} from '@angular/core';
 import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
@@ -50,8 +50,6 @@ import {isValidDate} from '../../utils/date.util';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IdentityInputComponent implements ControlValueAccessor, OnInit, OnDestroy {
-
-  @Output() change = new EventEmitter<void>();
 
   identityTypes: {value: IdentityType, label: string}[] = [
     {value: IdentityType.IdCard, label: '身份证'},
