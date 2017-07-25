@@ -1,17 +1,12 @@
 import {Inject, Injectable} from '@angular/core';
 import {Headers, Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/mapTo';
-import 'rxjs/add/operator/reduce';
-import 'rxjs/add/observable/from';
 import * as _ from 'lodash';
-import {Project, Task, User} from '../domain';
+import {Project, User} from '../domain';
 
 @Injectable()
 export class ProjectService {
-  private domain = 'projects';
+  private readonly domain = 'projects';
   private headers = new Headers({
     'Content-Type': 'application/json'
   });
@@ -45,11 +40,12 @@ export class ProjectService {
 
   // DELETE /projects instead of deleting the records
   del(project: Project): Observable<Project> {
-    const deltask$ = Observable.from(project.taskLists)
+    const deltask$ = Observable.from(project.taskLists? project.taskLists: [])
       .mergeMap(listId => this.http
-        .delete(`${this.config.uri}/taskLists/${listId}`));
+        .delete(`${this.config.uri}/taskLists/${listId}`))
+        .count();
     const uri = `${this.config.uri}/${this.domain}/${project.id}`;
-    return deltask$.mergeMap(p => this.http
+    return deltask$.switchMap(p => this.http
       .delete(uri)
       .map(_ => project));
   }

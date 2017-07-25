@@ -1,12 +1,11 @@
-import { User } from './user';
-
-export interface Task {
+import { User } from '../domain/user';
+export interface TaskVM {
   id?: string;
   taskListId: string;
   desc: string;
   completed: boolean;
-  ownerId: string;
-  participantIds: string[];
+  owner?: User;
+  participants?: User[];
   dueDate?: Date;
   priority: number;
   // order: number;

@@ -1,11 +1,12 @@
 .form {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
 .card {
-  flex: 0 0 20rem;
+  flex: 0 1 20rem;
 }
 
 .text-right {
@@ -13,6 +14,6 @@
   text-align: end;
 }
 
-.host {
-  display: block;
+:host {
+  display: flex;
 }

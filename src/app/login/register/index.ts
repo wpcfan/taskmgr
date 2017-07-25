@@ -1,10 +1,8 @@
-import {ChangeDetectionStrategy, Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
-import 'rxjs/add/operator/reduce';
-import 'rxjs/add/observable/range';
 import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/auth.action';
 import {extractInfo, getAddrByCode, isValidAddr} from '../../utils/identity.util';
@@ -14,7 +12,7 @@ import {isValidDate, toDate} from '../../utils/date.util';
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
@@ -34,7 +32,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const img = `${this.avatarName}:svg-${Math.floor(Math.random() * 16).toFixed(0)}`;
+    const img = `${this.avatarName}:svg-${(Math.random() * 16).toFixed()}`;
     this.form = this.fb.group({
       name: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
@@ -57,7 +55,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
       }
       if (isValidDate(info.dateOfBirth)) {
-        const date = toDate(info.dateOfBirth);
+        const date = info.dateOfBirth;
         this.form.patchValue({dateOfBirth: date});
         this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
       }

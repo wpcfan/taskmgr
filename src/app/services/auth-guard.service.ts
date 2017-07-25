@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/defaultIfEmpty';
 import {Store} from '@ngrx/store';
 import {go} from '@ngrx/router-store';
 import * as fromRoot from '../reducers';

@@ -19,7 +19,7 @@ export {
   MyCalService,
 }
 
-@NgModule({})
+@NgModule()
 export class ServicesModule {
   static forRoot() {
     return {

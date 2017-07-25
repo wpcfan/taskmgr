@@ -3,29 +3,22 @@ import {Actions, Effect, toPayload} from '@ngrx/effects';
 import {Action, Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/withLatestFrom';
-import 'rxjs/add/observable/zip';
 import {TaskService} from '../services';
 import * as actions from '../actions/task.action';
 import * as fromRoot from '../reducers';
-import {Task} from '../domain';
 
 @Injectable()
 export class TaskEffects {
-  /**
-   *
-   */
+
   @Effect()
-  loadTasks$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.LOAD)
+  loadTasksInLists$: Observable<Action> = this.actions$
+    .ofType(actions.ActionTypes.LOAD_IN_LISTS)
     .map(toPayload)
-    .mergeMap((taskListId) => {
+    .mergeMap((taskLists) => {
       return this.service$
-        .get(taskListId)
-        .map(tasks => new actions.LoadTasksSuccessAction(tasks))
-        .catch(err => of(new actions.LoadTasksFailAction(JSON.stringify(err))));
+        .getByLists(taskLists)
+        .map(tasks => new actions.LoadTasksInListsSuccessAction(tasks))
+        .catch(err => of(new actions.LoadTasksInListsFailAction(JSON.stringify(err))));
       }
     );
 

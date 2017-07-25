@@ -50,7 +50,7 @@ export class ProjectItemComponent {
   @Output() launchUpdateDialog = new EventEmitter<void>();
   @Output() launchInviteDailog = new EventEmitter<void>();
   @Output() launchDeleteDailog = new EventEmitter<void>();
-  @HostBinding('@card') cardState;
+  @HostBinding('@card') cardState = 'out';
 
   @HostListener('mouseenter', ['$event.target'])
   onMouseEnter(target) {

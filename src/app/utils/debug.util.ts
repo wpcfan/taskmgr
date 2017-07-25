@@ -7,7 +7,7 @@ declare module 'rxjs/Observable' {
   }
 }
 
-Observable.prototype.debug = (message: string) => {
+Observable.prototype.debug = function(message: string) {
   return this.do(
     (next) => {
       if (!environment.production) {
@@ -21,7 +21,7 @@ Observable.prototype.debug = (message: string) => {
     },
     () => {
       if (!environment.production) {
-        console.log('Completed');
+        console.log('Completed - ');
       }
     }
   );

@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {Err, User, Project} from '../domain';
+import {User, Project} from '../domain';
 import {type} from '../utils/type.util';
 
 export interface UserProject {
@@ -47,7 +47,7 @@ export class AddUserProjectSuccessAction implements Action {
 export class AddUserProjectFailAction implements Action {
   type = ActionTypes.ADD_USER_PROJECT_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -68,7 +68,7 @@ export class RemoveUserProjectSuccessAction implements Action {
 export class RemoveUserProjectFailAction implements Action {
   type = ActionTypes.REMOVE_USER_PROJECT_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -89,7 +89,7 @@ export class BatchUpdateUserProjectSuccessAction implements Action {
 export class BatchUpdateUserProjectFailAction implements Action {
   type = ActionTypes.BATCH_UPDATE_USER_PROJECT_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -110,7 +110,7 @@ export class SearchUsersSuccessAction implements Action {
 export class SearchUsersFailAction implements Action {
   type = ActionTypes.SEARCH_USERS_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -131,7 +131,7 @@ export class LoadUsersByPrjSuccessAction implements Action {
 export class LoadUsersByPrjFailAction implements Action {
   type = ActionTypes.LOAD_USERS_BY_PRJ_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 

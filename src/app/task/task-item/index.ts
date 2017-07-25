@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import {Task} from '../../domain';
 import {itemAnim} from '../../anim/item.anim';
+import {TaskVM} from '../../vm/task.vm';
 
 @Component({
   selector: 'app-task-item',
@@ -11,9 +12,9 @@ import {itemAnim} from '../../anim/item.anim';
 })
 export class TaskItemComponent implements OnInit {
 
-  @Output() taskComplete = new EventEmitter<Task>();
-  @Output() taskClick = new EventEmitter<string>();
-  @Input() item: Task;
+  @Output() taskComplete = new EventEmitter();
+  @Output() taskClick = new EventEmitter();
+  @Input() item: TaskVM;
   avatar: string;
   widerPriority = 'in';
 
@@ -29,12 +30,12 @@ export class TaskItemComponent implements OnInit {
   }
 
   checkboxChanged() {
-    this.taskComplete.emit(this.item);
+    this.taskComplete.emit();
   }
 
   itemClicked(ev: Event) {
     ev.preventDefault();
-    this.taskClick.emit(this.item.id);
+    this.taskClick.emit();
   }
 
   @HostListener('mouseenter')

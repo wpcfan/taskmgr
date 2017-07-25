@@ -1,8 +1,8 @@
-import * as models from '../domain';
+import {Quote} from '../domain';
 import * as actions from '../actions/quote.action';
 
 export interface State {
-  quote: models.Quote;
+  quote: Quote;
 }
 
 export const initialState: State = {

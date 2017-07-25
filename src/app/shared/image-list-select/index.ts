@@ -21,7 +21,7 @@ import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} fro
 })
 export class ImageListSelectComponent implements ControlValueAccessor {
 
-  @Input() selected: string;
+  selected: string;
   @Input() title = '选择封面：';
   @Input() items: string[] = [];
   @Input() cols = 8;
@@ -35,7 +35,7 @@ export class ImageListSelectComponent implements ControlValueAccessor {
   // 注意，和 EventEmitter 尽管很像，但发送回的对象不同
   private propagateChange = (_: any) => {};
 
-  // 设置初始值
+  // 写入控件值
   public writeValue(obj: any) {
     if (obj && obj !== '') {
       this.selected = obj;

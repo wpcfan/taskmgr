@@ -1,12 +1,12 @@
 import {Inject, Injectable} from '@angular/core';
 import {Headers, Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import {concat} from 'rxjs/observable/concat';
 import {Project, TaskList} from '../domain';
+import { concat } from 'rxjs/observable/concat';
 
 @Injectable()
 export class TaskListService {
-  private domain = 'taskLists';
+  private readonly domain = 'taskLists';
   private headers = new Headers({
     'Content-Type': 'application/json'
   });
@@ -43,7 +43,7 @@ export class TaskListService {
   get(projectId: string): Observable<TaskList[]> {
     const uri = `${this.config.uri}/${this.domain}`;
     return this.http
-      .get(uri, {params: {'projectId': projectId}, headers: this.headers})
+      .get(uri, {params: {'projectId': projectId}})
       .map(res => res.json());
   }
 
@@ -56,14 +56,14 @@ export class TaskListService {
     const drop$ = this.http
       .patch(dropUri, JSON.stringify({order: src.order}), {headers: this.headers})
       .map(res => res.json());
-    return concat(drag$, drop$).reduce((r, x) => {
+    return Observable.concat(drag$, drop$).reduce((r, x) => {
       return [...r, x];
     }, []);
   }
 
   initializeTaskLists(prj: Project): Observable<Project> {
     const id = prj.id;
-    return concat(
+    return Observable.merge(
       this.add({name: '待办', projectId: id, order: 1}),
       this.add({name: '进行中', projectId: id, order: 2}),
       this.add({name: '已完成', projectId: id, order: 3}))

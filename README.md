@@ -14,12 +14,13 @@
 
 - 使用 `yarn` 作为包管理工具
 - 使用 `@angular/cli` 作为脚手架
+- 在 `package.json` 中使用 `concurrently` 把 `json-server` 和 `ng serve` 一起启动了
 
 ## 安装
 
 1. fork 这个项目
-2. `cd taskmgr`
-3. `yarn install`
-4. `json-server ./mock/data.json`
-5. `ng serve`
+2. git clone 项目
+3. `cd taskmgr`
+4. `yarn install`
+5. `npm start`
 

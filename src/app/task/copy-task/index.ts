@@ -44,8 +44,8 @@ export class CopyTaskComponent implements OnInit {
     });
   }
 
-  onSubmit({value, valid}, $event) {
-    event.preventDefault();
+  onSubmit({value, valid}, ev: Event) {
+    ev.preventDefault();
     if (!valid) {
       return;
     }

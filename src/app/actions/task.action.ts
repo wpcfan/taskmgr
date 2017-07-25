@@ -1,6 +1,6 @@
 import {Action} from '@ngrx/store';
 import {type} from '../utils/type.util';
-import {Err, Task, TaskList} from '../domain';
+import {Task, TaskList} from '../domain';
 
 export const ActionTypes = {
   ADD: type('[Task] Add'),
@@ -12,9 +12,9 @@ export const ActionTypes = {
   DELETE: type('[Task] Delete'),
   DELETE_SUCCESS: type('[Task] Delete Success'),
   DELETE_FAIL: type('[Task] Delete Fail'),
-  LOAD: type('[Task] Load'),
-  LOAD_SUCCESS: type('[Task] Load Success'),
-  LOAD_FAIL: type('[Task] Load Fail'),
+  LOAD_IN_LISTS: type('[Task] Load In Lists'),
+  LOAD_IN_LISTS_SUCCESS: type('[Task] Load In Lists Success'),
+  LOAD_IN_LISTS_FAIL: type('[Task] Load In Lists Fail'),
   MOVE_ALL: type('[Task] Move All'),
   MOVE_ALL_SUCCESS: type('[Task] Move All Success'),
   MOVE_ALL_FAIL: type('[Task] Move All Fail'),
@@ -43,7 +43,7 @@ export class AddTaskSuccessAction implements Action {
 export class AddTaskFailAction implements Action {
   type = ActionTypes.ADD_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -64,7 +64,7 @@ export class UpdateTaskSuccessAction implements Action {
 export class UpdateTaskFailAction implements Action {
   type = ActionTypes.UPDATE_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -85,28 +85,28 @@ export class DeleteTaskSuccessAction implements Action {
 export class DeleteTaskFailAction implements Action {
   type = ActionTypes.DELETE_FAIL;
 
-  constructor(public payload: Err) {
-  }
-}
-
-export class LoadTasksAction implements Action {
-  type = ActionTypes.LOAD;
-
   constructor(public payload: string) {
   }
 }
 
-export class LoadTasksSuccessAction implements Action {
-  type = ActionTypes.LOAD_SUCCESS;
+export class LoadTasksInListsAction implements Action {
+  type = ActionTypes.LOAD_IN_LISTS;
+
+  constructor(public payload: TaskList[]) {
+  }
+}
+
+export class LoadTasksInListsSuccessAction implements Action {
+  type = ActionTypes.LOAD_IN_LISTS_SUCCESS;
 
   constructor(public payload: Task[]) {
   }
 }
 
-export class LoadTasksFailAction implements Action {
-  type = ActionTypes.LOAD_FAIL;
+export class LoadTasksInListsFailAction implements Action {
+  type = ActionTypes.LOAD_IN_LISTS_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -127,7 +127,7 @@ export class MoveTaskSuccessAction implements Action {
 export class MoveTaskFailAction implements Action {
   type = ActionTypes.MOVE_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -148,7 +148,7 @@ export class CompleteTaskSuccessAction implements Action {
 export class CompleteTaskFailAction implements Action {
   type = ActionTypes.COMPLETE_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -169,7 +169,7 @@ export class MoveAllSuccessAction implements Action {
 export class MoveAllFailAction implements Action {
   type = ActionTypes.MOVE_ALL_FAIL;
 
-  constructor(public payload: Err) {
+  constructor(public payload: string) {
   }
 }
 
@@ -183,9 +183,9 @@ export type Actions
   | DeleteTaskAction
   | DeleteTaskSuccessAction
   | DeleteTaskFailAction
-  | LoadTasksAction
-  | LoadTasksSuccessAction
-  | LoadTasksFailAction
+  | LoadTasksInListsAction
+  | LoadTasksInListsSuccessAction
+  | LoadTasksInListsFailAction
   | MoveTaskAction
   | MoveTaskSuccessAction
   | MoveTaskFailAction

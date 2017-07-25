@@ -1,21 +1,37 @@
 // Login
 POST http://localhost:8090/auth
-Content-Type: application/json
-Charset: utf-8
+Content-Type: application/json;charset: utf-8
 
 {
-	"username":"wang",
-	"password":"wang1234"
+	"username":"peng1",
+	"password":"peng1234"
+}
+
+###
+
+POST http://localhost:8090/auth/register
+Content-Type: application/json;charset: utf-8
+
+{
+	"username":"peng1",
+	"password":"peng1234",
+	"email": "peng@163.com"
 }
 
 ###
 DELETE http://localhost:3000/projects/H10cxnvMZ
 
 ###
+DELETE http://localhost:3000/grandparents/0
+
+###
+GET http://localhost:3000/users/37489e0c-df34-c261-71c4-ce75357e3035/
+
+###
 //Projects
 GET http://localhost:8090/projects/?enabled=true&archived=false
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3YW5nIiwiY3JlYXRlZCI6MTQ5MjQ5NDY1MTQ4OSwiZXhwIjoxNDkzMDk5NDUxfQ.7KqheQW14zjW2cFEbWUnvSz5RXzItxwjVTZ3fa2K3rjkU4anN-A4Wu0kBaJ_adHNY5XRlygVfNQOfPTaQBgq2w
-userId: 58f5a904edc76ab0e033cfc3
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwZW5nMSIsImNyZWF0ZWQiOjE0OTk4NTgxNzg3NjksImV4cCI6MTUwMDQ2Mjk3OH0.1uV9lGMSgaClsH5SYMluyL2FvCAPU27PdjiQkXB19idIS1vtWEuy1Io2imagaKM2hp-OVWzpPBC4Ev_9JcZGqA
+userId: 59549fbfa065ca43ae48e658
 
 ###
 // Pageable

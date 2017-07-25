@@ -1,10 +1,9 @@
-import {Component, Input, OnInit, ChangeDetectionStrategy, forwardRef, OnDestroy} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, forwardRef, OnDestroy} from '@angular/core';
 import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {getProvinces, getCitiesByProvince, getAreasByCity} from '../../utils/area.util';
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 import {Subscription} from 'rxjs/Subscription';
-import 'rxjs/add/observable/combineLatest';
 import {Address} from '../../domain';
 
 @Component({

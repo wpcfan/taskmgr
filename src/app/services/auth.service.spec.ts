@@ -2,7 +2,7 @@ import {async, inject, TestBed} from '@angular/core/testing';
 import {BaseResponseOptions, Http, HttpModule, Response, ResponseOptions} from '@angular/http';
 import {MockBackend} from '@angular/http/testing';
 import {AuthService} from './auth.service';
-import * as models from '../domain';
+import {User} from '../domain';
 
 describe('测试鉴权服务：AuthService', () => {
   beforeEach(async(() => {
@@ -34,7 +34,7 @@ describe('测试鉴权服务：AuthService', () => {
   it('注册后应该返回一个 Observable<Auth>',
     async(inject([AuthService, MockBackend],
       (service: AuthService, mockBackend: MockBackend) => {
-        const mockUser: models.User = {
+        const mockUser: User = {
           name: 'someuser@dev.local',
           password: '123abc',
           email: 'someuser@dev.local'

@@ -4,16 +4,12 @@ import {Action, Store} from '@ngrx/store';
 import {go} from '@ngrx/router-store';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/withLatestFrom';
 import {ProjectService} from '../services';
 import * as actions from '../actions/project.action';
 import * as tasklistActions from '../actions/task-list.action';
-import * as taskActions from '../actions/task.action';
 import * as userActions from '../actions/user.action';
 import * as fromRoot from '../reducers';
-import {Project, TaskList} from '../domain';
+import {Project} from '../domain';
 
 @Injectable()
 export class ProjectEffects {

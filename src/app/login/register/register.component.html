@@ -21,9 +21,14 @@
           [items]="avatars$ | async"
           formControlName="avatar">
         </app-image-list-select>
-        <button md-raised-button type="button" (click)="nextTab()">下一步</button>
-        <p>已有账户？ <a routerLink="/login">登录</a></p>
-        <p>忘记 <a routerLink="/forgot">密码？</a></p>
+        <div class="full-width action-area">
+          <button md-raised-button type="button" (click)="nextTab()">下一步</button>
+          <span class="fill-remaining-space"></span>
+          <span>
+            <span>已有账户？ <a routerLink="/login">登录</a></span>
+            <span>忘记 <a routerLink="/forgot">密码？</a></span>
+          </span>
+        </div>
       </md-tab>
       <md-tab label="个人信息">
         <app-indentity-input formControlName="identity" class="full-width control-padding">
@@ -34,10 +39,15 @@
         <div class="full-width control-padding">
           <app-area-list formControlName="address"></app-area-list>
         </div>
-        <button md-raised-button type="button" (click)="prevTab()">上一步</button>
-        <button md-raised-button type="submit" [disabled]="!form.valid">注册</button>
-        <p>已有账户？ <a routerLink="/login">登录</a></p>
-        <p>忘记 <a routerLink="/forgot">密码？</a></p>
+        <div class="full-width">
+          <button md-raised-button type="button" (click)="prevTab()">上一步</button>
+          <button md-raised-button type="submit" [disabled]="!form.valid">注册</button>
+          <span class="fill-remaining-space"></span>
+          <span>
+            <span>已有账户？ <a routerLink="/login">登录</a></span>
+            <span>忘记 <a routerLink="/forgot">密码？</a></span>
+          </span>
+        </div>
       </md-tab>
     </md-tab-group>
   </md-card>

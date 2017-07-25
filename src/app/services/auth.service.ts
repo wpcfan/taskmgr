@@ -1,10 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {Headers, Http} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/of';
-import * as models from '../domain';
+import {Auth, User} from '../domain';
 
 /**
  * 认证服务主要用于用户的注册和登录功能
@@ -34,13 +31,13 @@ export class AuthService {
    *
    * @param user 用户信息，id 属性会被忽略，因为服务器端会创建新的 id
    */
-  register(user: models.User): Observable<models.Auth> {
+  register(user: User): Observable<Auth> {
     const uri = `${this.config.uri}/users`;
     return this.http
       .get(uri, {params: {'email': user.email}})
       .switchMap(res => {
         if (res.json().length > 0) {
-          throw new Error('username existed');
+          throw 'username existed';
         }
         return this.http.post(uri, JSON.stringify(user), {headers: this.headers})
           .map(r => ({token: this.token, user: r.json()}));
@@ -53,13 +50,13 @@ export class AuthService {
    * @param username 用户名
    * @param password 密码（明文），服务器会进行加密处理
    */
-  login(email: string, password: string): Observable<models.Auth> {
+  login(email: string, password: string): Observable<Auth> {
     const uri = `${this.config.uri}/users`;
     return this.http
       .get(uri, {params: {'email': email, 'password': password}})
       .map(res => {
         if (res.json().length === 0) {
-          throw new Error('Login Failed');
+          throw 'Login Failed';
         }
         return {
           token: this.token,

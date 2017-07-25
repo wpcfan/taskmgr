@@ -23,7 +23,7 @@ const addProject = (state, action) => {
   const ids = [...state.ids, project.id];
   const entities = {...state.entities, [project.id]: project};
   return {...state, ids: ids, entities: entities};
-}
+};
 
 const delProject = (state, action) => {
   const project = action.payload;
@@ -37,13 +37,13 @@ const delProject = (state, action) => {
     entities: newEntities,
     selectedId: project.id === state.selectedId ? null : state.selectedId
   };
-}
+};
 
 const updateProject = (state, action) => {
   const project = action.payload;
   const entities = {...state.entities, [project.id]: project};
   return {...state, entities: entities};
-}
+};
 
 const loadProjects = (state, action) => {
   const projects = action.payload;
@@ -62,7 +62,7 @@ const loadProjects = (state, action) => {
     entities: {...state.entities, ...newEntities},
     selectedId: null
   };
-}
+};
 
 export function reducer (state = initialState, action: actions.Actions): State {
   switch (action.type) {

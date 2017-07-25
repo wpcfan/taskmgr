@@ -5,7 +5,7 @@ import {Task, User, TaskList} from '../domain';
 
 @Injectable()
 export class TaskService {
-  private domain = 'tasks';
+  private readonly domain = 'tasks';
   private headers = new Headers({
     'Content-Type': 'application/json'
   });
@@ -38,7 +38,6 @@ export class TaskService {
   update(task: Task): Observable<Task> {
     const uri = `${this.config.uri}/${this.domain}/${task.id}`;
     const toUpdate = {
-      taskListId: task.taskListId,
       desc: task.desc,
       ownerId: task.ownerId,
       participantIds: task.participantIds,
@@ -65,6 +64,12 @@ export class TaskService {
     return this.http
       .get(uri, {params: {'taskListId': taskListId}})
       .map(res => res.json());
+  }
+
+  getByLists(lists: TaskList[]): Observable<Task[]> {
+    return Observable.from(lists)
+      .mergeMap(list => this.get(list.id))
+      .reduce((tasks, t) => [...tasks, ...t], []);
   }
 
   moveAll(srcListId, targetListId): Observable<Task[]> {

@@ -70,14 +70,13 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   // 这里是做一个空函数体，真正使用的方法在 registerOnChange 中
   // 由框架注册，然后我们使用它把变化发回表单
   // 注意，和 EventEmitter 尽管很像，但发送回的对象不同
-  private propagateChange = (_: any) => {
-  };
+  private propagateChange = (_: any) => {};
 
   // 设置初始值
   public writeValue(obj: User[]) {
     if (obj && this.multiple) {
       const userEntities = obj.reduce((entities, user) => {
-        return {entities, [user.id]: user};
+        return {...entities, [user.id]: user};
       }, {});
       if (this.items) {
         const remaining = this.items.filter(item => !userEntities[item.id]);
@@ -119,7 +118,7 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   }
 
   handleMemberSelection(user: User) {
-    if (this.items.map(u => u.id).indexOf(user.id) >= 0) {
+    if (this.items.map(u => u.id).indexOf(user.id) !== -1) {
       return;
     }
     if (this.multiple) {
@@ -128,8 +127,6 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
       this.items = [user];
     }
     this.chips.patchValue({ memberSearch: user.name });
-    // 注意必须发射事件后才可以影响其他控件
-    this.chips.updateValueAndValidity({ onlySelf: true, emitEvent: true });
     this.propagateChange(this.items);
   }
 
