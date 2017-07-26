@@ -1,7 +1,6 @@
 .card {
-  width: 600px;
   margin: 15px;
-  height: 100%;
+  display: flex;
 }
 
 .text-right {
@@ -16,4 +15,20 @@
 
 .action-area {
   display: flex;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 auto;
+}
+
+md-tab {
+  display: flex;
+  flex: 0 1 auto;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
 }
