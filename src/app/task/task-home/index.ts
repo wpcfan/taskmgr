@@ -70,6 +70,9 @@ import {TaskListVM} from '../../vm/task-list.vm';
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
+      align-items: flex-start;
+      justify-content: flex-start;
+      align-content: flex-start;
       overflow-x: scroll;
     }
     .fab-button {
