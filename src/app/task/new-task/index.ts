@@ -92,25 +92,25 @@ export class NewTaskComponent implements OnInit {
   ngOnInit() {
     if (!this.data.task) {
       this.form = this.fb.group({
-        desc: ['', Validators.required],
+        desc: ['', Validators.compose([Validators.required, Validators.maxLength(30)])],
         priority: [3],
         dueDate: [],
         reminder: [],
         owner: [[this.data.owner]],
         followers: [[]],
-        remark: ['']
+        remark: ['',  Validators.maxLength(40)]
       });
       this.dialogTitle = '创建任务：';
       this.delInvisible = true;
     } else {
       this.form = this.fb.group({
-        desc: [this.data.task.desc, Validators.required],
+        desc: [this.data.task.desc, Validators.compose([Validators.required, Validators.maxLength(20)])],
         priority: [this.data.task.priority],
         dueDate: [this.data.task.dueDate],
         reminder: [this.data.task.reminder],
         owner: [this.data.task.owner ? [{name: this.data.task.owner.name, value: this.data.task.owner.id}] : []],
         followers: [this.data.task.participants ? [...this.data.task.participants] : []],
-        remark: [this.data.task.remark]
+        remark: [this.data.task.remark, Validators.maxLength(40)]
       });
       this.dialogTitle = '修改任务：';
       this.delInvisible = false;
