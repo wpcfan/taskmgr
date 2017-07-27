@@ -41,12 +41,12 @@ export class NewTaskListComponent implements OnInit {
   ngOnInit() {
     if (!this.data.name) {
       this.form = this.fb.group({
-        name: ['', Validators.required]
+        name: ['', Validators.compose([Validators.required, Validators.maxLength(10)])]
       });
       this.dialogTitle = '创建列表：';
     } else {
       this.form = this.fb.group({
-        name: [this.data.name, Validators.required],
+        name: [this.data.name, Validators.compose([Validators.required, Validators.maxLength(10)])],
       });
       this.dialogTitle = '修改列表：';
     }
