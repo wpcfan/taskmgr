@@ -61,7 +61,7 @@ import {TaskListVM} from '../../vm/task-list.vm';
     }
     .list-container {
       flex: 0 0 360px;
-      overflow-y: scroll;
+      overflow-y: auto;
       overflow-x: hidden;
     }
     .task-lists {
