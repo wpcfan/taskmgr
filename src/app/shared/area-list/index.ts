@@ -112,11 +112,10 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
     });
 
     // 根据省份的选择得到城市列表
-    this.cities$ = province$.mergeMap(province => Observable.of(getCitiesByProvince(province)));
+    this.cities$ = province$.map(province => getCitiesByProvince(province));
     // 根据省份和城市的选择得到地区列表
     this.districts$ = Observable
-      .combineLatest(province$, city$, (p, c) => ({province: p, city: c}))
-      .mergeMap(a => Observable.of(getAreasByCity(a.province, a.city)));
+      .combineLatest(province$, city$, (p, c) => getAreasByCity(p, c));
 
   }
 
