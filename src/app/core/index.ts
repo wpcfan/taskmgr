@@ -16,6 +16,7 @@ import {loadSvgResources} from '../utils/svg.util';
 import 'hammerjs';
 import '../utils/debug.util';
 import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/observable/concat';
 import 'rxjs/add/observable/zip';
 import 'rxjs/add/observable/range';
