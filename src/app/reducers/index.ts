@@ -80,14 +80,11 @@ const initState = {
 };
 
 export function reducer(state: any, action: any) {
-  if (action.type === authActions.ActionTypes.LOGOUT) {
-    return initState;
-  }
-  if (environment.production) {
-    return productionReducer(state, action);
-  } else {
-    return developmentReducer(state, action);
-  }
+  return action.type === authActions.ActionTypes.LOGOUT ?
+    initState :
+    environment.production ?
+      productionReducer(state, action) :
+      developmentReducer(state, action);
 }
 
 export const getAuthState = (state: State) => state.auth;
