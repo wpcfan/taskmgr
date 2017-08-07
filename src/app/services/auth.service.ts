@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {Headers, Http} from '@angular/http';
+import {HttpHeaders, HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Auth, User} from '../domain';
 
@@ -8,7 +8,7 @@ import {Auth, User} from '../domain';
  */
 @Injectable()
 export class AuthService {
-  private headers = new Headers({
+  private headers = new HttpHeaders({
     'Content-Type': 'application/json'
   });
 
@@ -22,7 +22,7 @@ export class AuthService {
    * @param http 注入Http
    * @param config 注入基础配置
    */
-  constructor(private http: Http,
+  constructor(private http: HttpClient,
               @Inject('BASE_CONFIG') private config) {
   }
 
@@ -32,35 +32,41 @@ export class AuthService {
    * @param user 用户信息，id 属性会被忽略，因为服务器端会创建新的 id
    */
   register(user: User): Observable<Auth> {
+    const params = new HttpParams()
+      .set('email', user.email);
     const uri = `${this.config.uri}/users`;
     return this.http
-      .get(uri, {params: {'email': user.email}})
+      .get(uri, {params})
       .switchMap(res => {
-        if (res.json().length > 0) {
-          throw 'username existed';
+        if ((<User[]>res).length > 0) {
+          return Observable.throw('username existed');
         }
         return this.http.post(uri, JSON.stringify(user), {headers: this.headers})
-          .map(r => ({token: this.token, user: r.json()}));
+          .map(r => ({token: this.token, user: <User>r}));
       });
   }
 
   /**
    * 使用用户名和密码登录
    *
-   * @param username 用户名
+   * @param email 用户名
    * @param password 密码（明文），服务器会进行加密处理
    */
   login(email: string, password: string): Observable<Auth> {
     const uri = `${this.config.uri}/users`;
+    const params = new HttpParams()
+      .set('email', email)
+      .set('password', password);
     return this.http
-      .get(uri, {params: {'email': email, 'password': password}})
+      .get(uri, {params})
       .map(res => {
-        if (res.json().length === 0) {
-          throw 'Login Failed';
+        const users = <User[]>res;
+        if (users.length === 0) {
+          return Observable.throw('Username or password incorrect');
         }
         return {
           token: this.token,
-          user: res.json()[0]
+          user: users[0]
         };
       });
   }

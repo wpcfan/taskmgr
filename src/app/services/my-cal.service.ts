@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Task} from '../domain';
 import {CalendarEvent} from 'angular-calendar';
@@ -34,23 +34,22 @@ const getPriorityColor = (priority: number) => {
 
 @Injectable()
 export class MyCalService {
-  constructor(@Inject('BASE_CONFIG') private config, private http: Http) {
+  constructor(@Inject('BASE_CONFIG') private config, private http: HttpClient) {
   }
 
   getUserTasks(userId: string): Observable<CalendarEvent[]> {
     const uri = `${this.config.uri}/tasks`;
+    const params = new HttpParams()
+      .set('ownerId', userId);
     return this.http
-      .get(uri, {params: {'ownerId': userId}})
-      .map(res => res.json() as Task[])
-      .map(tasks => {
-        return tasks.map(task => {
-          return {
-            start: startOfDay(task.createDate),
-            end: task.dueDate ? endOfDay(task.dueDate) : endOfDay(task.createDate),
-            title: task.desc,
-            color: getPriorityColor(task.priority)
-          };
-        });
-      });
+      .get(uri, {params})
+      .map((tasks: Task[]) => tasks.map(
+        task => ({
+          start: startOfDay(task.createDate),
+          end: task.dueDate ? endOfDay(task.dueDate) : endOfDay(task.createDate),
+          title: task.desc,
+          color: getPriorityColor(task.priority)
+        })
+      ));
   }
 }

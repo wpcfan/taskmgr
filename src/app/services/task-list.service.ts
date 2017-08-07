@@ -1,25 +1,22 @@
 import {Inject, Injectable} from '@angular/core';
-import {Headers, Http} from '@angular/http';
+import {HttpHeaders, HttpParams, HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Project, TaskList} from '../domain';
-import { concat } from 'rxjs/observable/concat';
 
 @Injectable()
 export class TaskListService {
   private readonly domain = 'taskLists';
-  private headers = new Headers({
-    'Content-Type': 'application/json'
-  });
+  private headers = new HttpHeaders()
+    .set('Content-Type', 'application/json');
 
   constructor(@Inject('BASE_CONFIG') private config,
-              private http: Http) {
+              private http: HttpClient) {
   }
 
   add(taskList: TaskList): Observable<TaskList> {
     const uri = `${this.config.uri}/${this.domain}`;
     return this.http
-      .post(uri, JSON.stringify(taskList), {headers: this.headers})
-      .map(res => res.json());
+      .post(uri, JSON.stringify(taskList), {headers: this.headers});
   }
 
   update(taskList: TaskList): Observable<TaskList> {
@@ -28,8 +25,7 @@ export class TaskListService {
       name: taskList.name
     };
     return this.http
-      .patch(uri, JSON.stringify(toUpdate), {headers: this.headers})
-      .map(res => res.json());
+      .patch(uri, JSON.stringify(toUpdate), {headers: this.headers});
   }
 
   del(taskList: TaskList): Observable<TaskList> {
@@ -42,23 +38,20 @@ export class TaskListService {
   // GET /tasklist
   get(projectId: string): Observable<TaskList[]> {
     const uri = `${this.config.uri}/${this.domain}`;
+    const params = new HttpParams()
+      .set('projectId', projectId);
     return this.http
-      .get(uri, {params: {'projectId': projectId}})
-      .map(res => res.json());
+      .get(uri, {params});
   }
 
   swapOrder(src: TaskList, target: TaskList): Observable<TaskList[]> {
     const dragUri = `${this.config.uri}/${this.domain}/${src.id}`;
     const dropUri = `${this.config.uri}/${this.domain}/${target.id}`;
     const drag$ = this.http
-      .patch(dragUri, JSON.stringify({order: target.order}), {headers: this.headers})
-      .map(res => res.json());
+      .patch(dragUri, JSON.stringify({order: target.order}), {headers: this.headers});
     const drop$ = this.http
-      .patch(dropUri, JSON.stringify({order: src.order}), {headers: this.headers})
-      .map(res => res.json());
-    return Observable.concat(drag$, drop$).reduce((r, x) => {
-      return [...r, x];
-    }, []);
+      .patch(dropUri, JSON.stringify({order: src.order}), {headers: this.headers});
+    return Observable.concat(drag$, drop$).reduce((r: TaskList[], x) => [...r, x], []);
   }
 
   initializeTaskLists(prj: Project): Observable<Project> {
@@ -67,9 +60,7 @@ export class TaskListService {
       this.add({name: '待办', projectId: id, order: 1}),
       this.add({name: '进行中', projectId: id, order: 2}),
       this.add({name: '已完成', projectId: id, order: 3}))
-      .reduce((r, x) => {
-        return [...r, x];
-      }, [])
+      .reduce((r, x) => [...r, x], [])
       .map(tls => ({...prj, taskLists: tls.map(tl => tl.id)}));
   }
 }

@@ -1,4 +1,6 @@
 import {NgModule, Optional, SkipSelf} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
+// TODO: to remove this once @angular/material switch to HttpClient
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SharedModule} from '../shared';
@@ -43,6 +45,7 @@ import 'rxjs/add/operator/do';
 @NgModule({
   imports: [
     SharedModule,
+    HttpClientModule,
     HttpModule,
     AppEffectsModule,
     ServicesModule.forRoot(),

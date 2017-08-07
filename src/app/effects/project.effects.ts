@@ -120,7 +120,7 @@ export class ProjectEffects {
     .map(toPayload)
     .switchMap(({projectId, members}) =>
       this.service.inviteMembers(projectId, members)
-        .map(project => new actions.InviteMembersSuccessAction(project))
+        .map((project: Project) => new actions.InviteMembersSuccessAction(project))
         .catch(err => of(new actions.InviteMembersFailAction(err)))
     );
 

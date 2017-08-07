@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {Headers, Http} from '@angular/http';
+import {HttpHeaders, HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import * as _ from 'lodash';
 import {Project, User} from '../domain';
@@ -7,12 +7,11 @@ import {Project, User} from '../domain';
 @Injectable()
 export class ProjectService {
   private readonly domain = 'projects';
-  private headers = new Headers({
-    'Content-Type': 'application/json'
-  });
+  private headers = new HttpHeaders()
+    .set('Content-Type', 'application/json');
 
   constructor(@Inject('BASE_CONFIG') private config,
-              private http: Http) {
+              private http: HttpClient) {
     // this.headers.append('X-LC-Id', config.LCId);
     // this.headers.append('X-LC-Key', config.LCKey);
   }
@@ -21,8 +20,7 @@ export class ProjectService {
   add(project: Project): Observable<Project> {
     const uri = `${this.config.uri}/${this.domain}`;
     return this.http
-      .post(uri, JSON.stringify(project), {headers: this.headers})
-      .map(res => res.json());
+      .post(uri, JSON.stringify(project), {headers: this.headers});
   }
 
   // PUT /projects
@@ -34,13 +32,12 @@ export class ProjectService {
       desc: project.desc
     };
     return this.http
-      .patch(uri, JSON.stringify(toUpdate), {headers: this.headers})
-      .map(res => res.json());
+      .patch(uri, JSON.stringify(toUpdate), {headers: this.headers});
   }
 
   // DELETE /projects instead of deleting the records
   del(project: Project): Observable<Project> {
-    const deltask$ = Observable.from(project.taskLists? project.taskLists: [])
+    const deltask$ = Observable.from(project.taskLists ? project.taskLists : [])
       .mergeMap(listId => this.http
         .delete(`${this.config.uri}/taskLists/${listId}`))
         .count();
@@ -53,9 +50,10 @@ export class ProjectService {
   // GET /projects
   get(userId: string): Observable<Project[]> {
     const uri = `${this.config.uri}/${this.domain}`;
+    const params = new HttpParams()
+      .set('members_like', userId);
     return this.http
-      .get(uri, {params: {'members_like': userId}, headers: this.headers})
-      .map(res => res.json());
+      .get(uri, {params: params, headers: this.headers});
   }
 
   updateTaskLists(project: Project): Observable<Project> {
@@ -64,8 +62,7 @@ export class ProjectService {
       taskLists: project.taskLists
     };
     return this.http
-      .patch(uri, JSON.stringify(toUpdate), {headers: this.headers})
-      .map(res => res.json());
+      .patch(uri, JSON.stringify(toUpdate), {headers: this.headers});
   }
 
   inviteMembers(projectId: string, users: User[]) {
@@ -73,13 +70,11 @@ export class ProjectService {
 
     return this.http
       .get(uri)
-      .map(res => res.json() as Project)
-      .switchMap(project => {
+      .switchMap((project: Project) => {
         const existingMemberIds = project.members;
         const invitedIds = users.map(user => user.id);
         const newIds = _.union(existingMemberIds, invitedIds);
         return this.http.patch(uri, JSON.stringify({ members: newIds }), {headers: this.headers});
-      })
-      .map(res => res.json());
+      });
   }
 }
