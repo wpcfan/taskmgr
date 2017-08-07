@@ -26,7 +26,7 @@ const addTask = (state, action) => {
   if (state.entities[(<Task>action.payload).id]) {
     return state;
   }
-  return addOne(state, action.payload);;
+  return addOne(state, action.payload);
 };
 
 const delTask = (state, action) => {

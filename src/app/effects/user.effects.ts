@@ -1,12 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, toPayload} from '@ngrx/effects';
-import {Action, Store} from '@ngrx/store';
+import {Action} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
 import {UserService} from '../services';
 import * as actions from '../actions/user.action';
 import * as prjActions from '../actions/project.action';
-import * as fromRoot from '../reducers';
 import {Project} from '../domain';
 
 @Injectable()
@@ -84,7 +83,6 @@ export class UserEffects {
    * @param store$ 注入 redux store
    */
   constructor(private actions$: Actions,
-              private service$: UserService,
-              private store$: Store<fromRoot.State>) {
+              private service$: UserService) {
   }
 }

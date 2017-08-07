@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Actions, Effect, toPayload} from '@ngrx/effects';
-import {Action, Store} from '@ngrx/store';
+import {Action} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
 import {TaskService} from '../services';
 import * as actions from '../actions/task.action';
-import * as fromRoot from '../reducers';
 
 @Injectable()
 export class TaskEffects {
@@ -90,6 +89,5 @@ export class TaskEffects {
    * @param store$ 注入 redux store
    */
   constructor(private actions$: Actions,
-              private service$: TaskService,
-              private store$: Store<fromRoot.State>) {}
+              private service$: TaskService) {}
 }

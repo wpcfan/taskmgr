@@ -137,8 +137,8 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       .debug('[Age-Input][Merged]:');
     this.subBirth = merged$.subscribe(date => {
       const age = this.toAge(date.date);
-      if(date.from === 'birthday') {
-        if(age.age === ageNum.value && age.unit === ageUnit.value) {
+      if (date.from === 'birthday') {
+        if (age.age === ageNum.value && age.unit === ageUnit.value) {
           return;
         }
         ageUnit.patchValue(age.unit, {emitEvent: false, emitModelToViewChange: true, emitViewToModelChange: true});
@@ -148,7 +148,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
 
       } else {
         const ageToCompare = this.toAge(this.form.get('birthday').value);
-        if(age.age !== ageToCompare.age || age.unit !== ageToCompare.unit) {
+        if (age.age !== ageToCompare.age || age.unit !== ageToCompare.unit) {
           this.form.get('birthday').patchValue(date.date, {emitEvent: false});
           this.propagateChange(date.date);
         }
@@ -157,7 +157,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   }
 
   ngOnDestroy() {
-    if(this.subBirth) {
+    if (this.subBirth) {
       this.subBirth.unsubscribe();
     }
   }
@@ -201,7 +201,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     }
   }
 
-  validateAge(ageNumKey: string, ageUnitKey:string) {
+  validateAge(ageNumKey: string, ageUnitKey: string) {
     return (group: FormGroup): {[key: string]: any} => {
       const ageNum = group.controls[ageNumKey];
       const ageUnit = group.controls[ageUnitKey];
