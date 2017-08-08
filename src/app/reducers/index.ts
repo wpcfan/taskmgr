@@ -93,21 +93,16 @@ export const getProjectsState = (state: State) => state.projects;
 export const getTaskListsState = (state: State) => state.taskLists;
 export const getTasksState = (state: State) => state.tasks;
 export const getUserState = (state: State) => state.users;
-export const getRouterState = (state: State) => state.router;
-export const getThemeState = (state: State) => state.theme;
 
 export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
 export const getProjects = createSelector(getProjectsState, fromProjects.getAll);
 export const getTasks = createSelector(getTasksState, fromTasks.getTasks);
-export const getUsers = createSelector(getUserState, fromUsers.getUsers);
-export const getTheme = createSelector(getThemeState, fromTheme.getTheme);
 
 const getSelectedProjectId = createSelector(getProjectsState, fromProjects.getSelectedId);
 const getTaskLists = createSelector(getTaskListsState, fromTaskLists.getTaskLists);
 const getTaskListEntities = createSelector(getTaskListsState, fromTaskLists.getEntities);
 const getTaskListSelectedIds = createSelector(getTaskListsState, fromTaskLists.getSelectedIds);
-const getCurrentAuth = createSelector(getAuthState, fromAuth.getAuth);
-const getProjectEntities = createSelector(getProjectsState, fromProjects.getEntities);
+
 const getUserEntities = createSelector(getUserState, fromUsers.getEntities);
 const getTasksWithOwner = createSelector(getTasks, getUserEntities, (tasks, entities) => tasks.map(task =>
   (
@@ -116,9 +111,7 @@ const getTasksWithOwner = createSelector(getTasks, getUserEntities, (tasks, enti
       participants: task.participantIds.map(id => entities[id])
     }
   )));
-export const getSelectedProject = createSelector(getProjectEntities, getSelectedProjectId, (entities, id) => {
-  return entities[id];
-});
+
 export const getProjectTaskList = createSelector(getSelectedProjectId, getTaskLists, (projectId, taskLists) => {
   return taskLists.filter(taskList => taskList.projectId === projectId);
 });
@@ -128,10 +121,10 @@ export const getTasksByList = createSelector(getProjectTaskList, getTasksWithOwn
 export const getProjectMembers = (projectId: string) => createSelector(getProjectsState, getUserEntities, (state, entities) => {
   return state.entities[projectId].members.map(id => entities[id]);
 });
-export const getAuth = createSelector(getCurrentAuth, getUserEntities, (_auth, _entities) => {
+export const getAuth = createSelector(getAuthState, getUserEntities, (_auth, _entities) => {
   return {..._auth, user: _entities[_auth.userId]};
 });
-export const getAuthUser = createSelector(getCurrentAuth, getUserEntities, (_auth, _entities) => {
+export const getAuthUser = createSelector(getAuthState, getUserEntities, (_auth, _entities) => {
   return _entities[_auth.userId];
 });
 export const getMaxListOrder = createSelector(getTaskListEntities, getTaskListSelectedIds, (entities, ids) => {

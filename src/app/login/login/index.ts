@@ -36,9 +36,6 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.store$.dispatch(
-      new authActions.LoginAction({
-        email: value.email,
-        password: value.password
-      }));
+      new authActions.LoginAction(value));
   }
 }

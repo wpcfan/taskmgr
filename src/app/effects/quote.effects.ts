@@ -25,7 +25,7 @@ export class QuoteEffects {
   /**
    *
    * @param actions$
-   * @param authService
+   * @param quoteService
    */
   constructor(private actions$: Actions, private quoteService: QuoteService) {}
 }
