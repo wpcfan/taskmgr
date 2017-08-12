@@ -102,8 +102,6 @@ export function reducer (state = initialState, action: actions.Actions): State {
       return addList(state, action);
     case actions.ActionTypes.DELETE_SUCCESS:
       return delList(state, action);
-    case prjActions.ActionTypes.DELETE_SUCCESS:
-      return delListByPrj(state, action);
     case actions.ActionTypes.UPDATE_SUCCESS:
       return updateList(state, action);
     case actions.ActionTypes.SWAP_ORDER_SUCCESS:
@@ -112,6 +110,8 @@ export function reducer (state = initialState, action: actions.Actions): State {
       return loadLists(state, action);
     case prjActions.ActionTypes.SELECT:
       return selectPrj(state, action);
+    case prjActions.ActionTypes.DELETE_SUCCESS:
+      return delListByPrj(state, action);
     default:
       return state;
   }
@@ -119,7 +119,7 @@ export function reducer (state = initialState, action: actions.Actions): State {
 
 export const getEntities = (state) => state.entities;
 export const getIds = (state) => state.ids;
+export const getSelectedIds = (state) => state.selectedIds;
 export const getTaskLists = createSelector(getEntities, getIds, (entities, ids) => {
   return ids.map(id => entities[id]);
 });
-export const getSelectedIds = (state) => state.selectedIds;

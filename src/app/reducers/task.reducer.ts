@@ -46,8 +46,7 @@ const moveAllTasks = (state, action) => {
   if (tasks === null) {
     return state;
   }
-  const updatedTasks = tasks.filter(task => state.entities[task.id]);
-  const updatedEntities = covertArrToObj(updatedTasks);
+  const updatedEntities = covertArrToObj(tasks);
   return {...state, entities: {...state.entities, ...updatedEntities}};
 };
 

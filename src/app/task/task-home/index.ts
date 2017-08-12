@@ -1,9 +1,8 @@
-import {Component, OnDestroy, HostBinding, ChangeDetectionStrategy} from '@angular/core';
+import {Component,  HostBinding, ChangeDetectionStrategy} from '@angular/core';
 import {MdDialog} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute} from '@angular/router';
 import {Store} from '@ngrx/store';
-import {Subscription} from 'rxjs/Subscription';
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/task-list.action';
 import * as taskActions from '../../actions/task.action';
@@ -60,6 +59,7 @@ import {TaskListVM} from '../../vm/task-list.vm';
       background-color: dimgray;
     }
     .list-container {
+      height: 100%;
       flex: 0 0 360px;
       overflow-y: auto;
       overflow-x: hidden;
@@ -82,37 +82,22 @@ import {TaskListVM} from '../../vm/task-list.vm';
       z-index: 998;
     }
     :host {
-      width: 100%;
-      height: 100%;
+      display: flex;
     }
   `],
   animations: [defaultRouteAnim, listAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskHomeComponent implements OnDestroy {
+export class TaskHomeComponent {
 
   @HostBinding('@routeAnim') state;
   lists$: Observable<TaskListVM[]>;
-
-  private projectId: string;
-  private routeParamSub: Subscription;
-
+  private projectId$: Observable<string>;
   constructor(private route: ActivatedRoute,
               private dialog: MdDialog,
               private store$: Store<fromRoot.State>) {
-    const routeParam$ = this.route.params.pluck('id');
-    this.routeParamSub = routeParam$.subscribe(
-      (id: string) => {
-        this.projectId = id;
-      });
+    this.projectId$ = this.route.paramMap.pluck('id');
     this.lists$ = this.store$.select(fromRoot.getTasksByList);
-  }
-
-  ngOnDestroy() {
-    // 取消订阅以免内存泄露
-    if (this.routeParamSub) {
-      this.routeParamSub.unsubscribe();
-    }
   }
 
   handleRenameList(list: TaskList) {
@@ -128,14 +113,10 @@ export class TaskHomeComponent implements OnDestroy {
     dialogRef.afterClosed()
       .take(1)
       .filter(n => n)
-      .withLatestFrom(this.store$.select(fromRoot.getMaxListOrder), (_n, _o) => {
-        return {
-          name: _n,
-          order: _o
-        }
-      })
-      .subscribe(({name, order}) => {
-        this.store$.dispatch(new listActions.AddTaskListAction({name: name, order: order + 1, projectId: this.projectId}));
+      .withLatestFrom(this.store$.select(fromRoot.getMaxListOrder), (_n, _o) => ({name: _n, order: _o}))
+      .withLatestFrom(this.projectId$, (val, projectId) => ({...val, projectId: projectId}))
+      .subscribe(({name, order, projectId}) => {
+        this.store$.dispatch(new listActions.AddTaskListAction({name: name, order: order + 1, projectId: projectId}));
       });
   }
 

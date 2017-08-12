@@ -28,14 +28,11 @@ const addProject = (state, action) => {
 const delProject = (state, action) => {
   const project = action.payload;
   const ids = state.ids.filter(id => id !== project.id);
-  if (ids.length === 0) {
-    return state;
-  }
   const newEntities = buildObjFromArr(ids, state.entities);
   return {
     ids: ids,
     entities: newEntities,
-    selectedId: project.id === state.selectedId ? null : state.selectedId
+    selectedId: null
   };
 };
 

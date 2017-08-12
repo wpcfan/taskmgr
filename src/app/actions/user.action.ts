@@ -7,11 +7,6 @@ export interface UserProject {
   projectId: string;
 }
 
-export interface UserTask {
-  user: User;
-  taskId: string;
-}
-
 export const ActionTypes = {
   ADD_USER_PROJECT: type('[User] Add User Project'),
   ADD_USER_PROJECT_SUCCESS: type('[User] Add User Project Success'),

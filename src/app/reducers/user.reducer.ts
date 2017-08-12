@@ -16,45 +16,31 @@ export const initialState: State = {
 
 const register = (state, action) => {
   const auth = <Auth>action.payload;
-  if (state.ids.indexOf(auth.userId) > -1) {
-    return {...state, entities: {...state.entities, [auth.user.id]: auth.user}};
-  } else {
-    return {
+  return state.ids.indexOf(auth.userId) === -1 ?
+    {
       ids: [...state.ids, auth.user.id],
       entities: {...state.entities, [auth.user.id]: auth.user}
-    };
-  }
+    } : state;
 };
 
 const addPrjRef = (state, action) => {
   const user = <User>action.payload;
   const ids = [...state.ids, user.id];
   const entities = {...state.entities, [user.id]: user};
-  if (state.entities[user.id]) {
-    return {...state, entities: entities};
-  } else {
-    return {...state, ids: ids, entities: entities};
-  }
+  return state.entities[user.id] ?
+    {...state, entities: entities} : {...state, ids: ids, entities: entities};
 };
 
 const removePrjRef = (state, action) => {
   const user = <User>action.payload;
-  if (!state.entities[user.id]) {
-    return state;
-  }
-  return {...state, entities: {...state.entities, [user.id]: user}};
+  return state.entities[user.id] ?
+    {...state, entities: {...state.entities, [user.id]: user}} : state;
 };
 
 const searchUsers = (state, action) => {
   const users = <User[]>action.payload;
-  if (users === null) {
-    return state;
-  }
   const newUsers = users.filter(user => !state.entities[user.id]);
   const newIds = newUsers.map(user => user.id);
-  if (newIds.length === 0) {
-    return state;
-  }
   const newEntities = covertArrToObj(newUsers);
   return {
     ids: [...state.ids, ...newIds],
@@ -64,14 +50,8 @@ const searchUsers = (state, action) => {
 
 const loadByPrj = (state, action) => {
   const users = <User[]>action.payload;
-  if (users === null) {
-    return state;
-  }
   const newUsers = users.filter(user => !state.entities[user.id]);
   const newIds = newUsers.map(user => user.id);
-  if (newIds.length === 0) {
-    return state;
-  }
   const newEntities = covertArrToObj(newUsers);
   return {
     ids: [...state.ids, ...newIds],

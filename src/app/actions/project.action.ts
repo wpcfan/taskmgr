@@ -1,6 +1,6 @@
 import {Action} from '@ngrx/store';
 import {type} from '../utils/type.util';
-import {Err, Project, User} from '../domain';
+import {Project, User} from '../domain';
 
 export const ActionTypes = {
   ADD: type('[Project] Add'),
@@ -175,4 +175,6 @@ export type Actions
   | LoadProjectsFailAction
   | SelectProjectAction
   | InviteMembersAction
+  | InviteMembersSuccessAction
+  | InviteMembersFailAction
   ;

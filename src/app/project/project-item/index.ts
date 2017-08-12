@@ -12,16 +12,16 @@ import {cardAnim} from '../../anim';
 @Component({
   selector: 'app-project-item',
   template: `
-    <md-card>
-      <md-card-header (click)="onClick($event)">
+    <md-card (click)="onClick($event)">
+      <md-card-header>
         <md-card-title>
           <span>
             {{item.name}}
           </span>
         </md-card-title>
       </md-card-header>
-      <img md-card-image [src]="item.coverImg" (click)="onClick($event)">
-      <md-card-content (click)="onClick($event)">
+      <img md-card-image [src]="item.coverImg">
+      <md-card-content>
         <p>{{item.desc}}</p>
       </md-card-content>
       <md-card-actions>
@@ -52,13 +52,13 @@ export class ProjectItemComponent {
   @Output() launchDeleteDailog = new EventEmitter<void>();
   @HostBinding('@card') cardState = 'out';
 
-  @HostListener('mouseenter', ['$event.target'])
-  onMouseEnter(target) {
+  @HostListener('mouseenter')
+  onMouseEnter() {
     this.cardState = 'hover';
   }
 
-  @HostListener('mouseleave', ['$event.target'])
-  onMouseLeave(target) {
+  @HostListener('mouseleave')
+  onMouseLeave() {
     this.cardState = 'out';
   }
 
@@ -69,16 +69,19 @@ export class ProjectItemComponent {
 
   openUpdateDialog(ev: Event) {
     ev.preventDefault();
+    ev.stopPropagation();
     this.launchUpdateDialog.emit();
   }
 
   openInviteDialog(ev: Event) {
     ev.preventDefault();
+    ev.stopPropagation();
     this.launchInviteDailog.emit();
   }
 
   openDeleteDialog(ev: Event) {
     ev.preventDefault();
+    ev.stopPropagation();
     this.launchDeleteDailog.emit();
   }
 
