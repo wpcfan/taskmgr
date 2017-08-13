@@ -30,7 +30,7 @@ export class UserEffects {
     .switchMap(({user, projectId}) => {
       return this.service$
         .addProjectRef(user, projectId)
-        .map(task => new actions.AddUserProjectSuccessAction(task))
+        .map(u => new actions.AddUserProjectSuccessAction(u))
         .catch(err => of(new actions.AddUserProjectFailAction(JSON.stringify(err))));
       }
     );
@@ -43,7 +43,7 @@ export class UserEffects {
     .switchMap(({user, projectId}) => {
       return this.service$
         .removeProjectRef(user, projectId)
-        .map(task => new actions.RemoveUserProjectSuccessAction(task))
+        .map(u => new actions.RemoveUserProjectSuccessAction(u))
         .catch(err => of(new actions.RemoveUserProjectFailAction(JSON.stringify(err))));
       }
     );

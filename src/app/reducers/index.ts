@@ -34,7 +34,6 @@ import * as fromProjects from './project.reducer';
 import * as fromTaskLists from './task-list.reducer';
 import * as fromTasks from './task.reducer';
 import * as fromUsers from './user.reducer';
-import * as fromTheme from './theme.reducer';
 
 /**
  * 正如我们的 reducer 像数据库中的表一样，我们的顶层 state 也包含各个子 reducer 的 state
@@ -47,7 +46,6 @@ export interface State {
   taskLists: fromTaskLists.State;
   tasks: fromTasks.State;
   users: fromUsers.State;
-  theme: fromTheme.State;
   router: fromRouter.RouterState;
 }
 
@@ -58,7 +56,6 @@ const reducers = {
   taskLists: fromTaskLists.reducer,
   tasks: fromTasks.reducer,
   users: fromUsers.reducer,
-  theme: fromTheme.reducer,
   router: fromRouter.routerReducer,
 };
 
@@ -75,7 +72,6 @@ const initState = {
   taskLists: fromTaskLists.initialState,
   tasks: fromTasks.initialState,
   users: fromUsers.initialState,
-  theme: fromTheme.initialState,
   router: fromRouter.initialState
 };
 
