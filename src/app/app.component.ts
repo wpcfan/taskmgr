@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import { OverlayContainer } from '@angular/material';
+import {OverlayContainer} from '@angular/material';
 
 @Component({
   selector: 'app-root',

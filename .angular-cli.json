@@ -33,16 +33,15 @@
     {
       "platform": "server",
       "root": "src",
-      "outDir": "dist",
+      "outDir": "dist-server",
       "assets": [
         "assets",
         "favicon.ico"
       ],
       "index": "index.html",
-      "main": "main.ts",
-      "polyfills": "polyfills.ts",
+      "main": "main.server.ts",
       "test": "test.ts",
-      "tsconfig": "tsconfig.app.json",
+      "tsconfig": "tsconfig.server.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [

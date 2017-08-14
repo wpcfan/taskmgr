@@ -2,7 +2,8 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/app",
-    "module": "es2015",
+    // required to set this for angular server rendering
+    "module": "commonjs",
     "baseUrl": "",
     "types": []
   },
