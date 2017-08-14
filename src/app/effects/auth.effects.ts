@@ -21,13 +21,7 @@ export class AuthEffects {
     .switchMap((val: { email: string, password: string }) => this.authService
       .login(val.email, val.password)
       .map(auth => new actions.LoginSuccessAction(auth))
-      .catch(err => of(new actions.LoginFailAction({
-        status: 501,
-        message: err.message,
-        exception: err.stack,
-        path: '/login',
-        timestamp: new Date()
-      })))
+      .catch(err => of(new actions.LoginFailAction(JSON.stringify(err))))
     );
 
   /**
@@ -40,7 +34,7 @@ export class AuthEffects {
     .switchMap((val) => this.authService
       .register(val)
       .map(auth => new actions.RegisterSuccessAction(auth))
-      .catch(err => of(new actions.RegisterFailAction(err)))
+      .catch(err => of(new actions.RegisterFailAction(JSON.stringify(err))))
     );
 
   @Effect()

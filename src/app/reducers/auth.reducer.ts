@@ -15,7 +15,7 @@ export function reducer(state: Auth = initialState, action: actions.Actions): Au
     }
     case actions.ActionTypes.LOGIN_FAIL:
     case actions.ActionTypes.REGISTER_FAIL: {
-      return {err: action.payload};
+      return {err: <string>action.payload};
     }
     default: {
       return state;
