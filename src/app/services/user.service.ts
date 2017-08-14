@@ -17,21 +17,21 @@ export class UserService {
     const uri = `${this.config.uri}/${this.domain}`;
     const params = new HttpParams()
       .set('email_like', filter);
-    return this.http.get(uri, {params});
+    return this.http.get<User[]>(uri, {params});
   }
 
   getUsersByProject(projectId: string): Observable<User[]> {
     const uri = `${this.config.uri}/users`;
     const params = new HttpParams()
       .set('projectId', projectId);
-    return this.http.get(uri, {params});
+    return this.http.get<User[]>(uri, {params});
   }
 
   addProjectRef(user: User, projectId: string): Observable<User> {
     const uri = `${this.config.uri}/${this.domain}/${user.id}`;
     const projectIds = (user.projectIds) ? user.projectIds : [];
     return this.http
-      .patch(uri, JSON.stringify({projectIds: [...projectIds, projectId]}), {headers: this.headers});
+      .patch<User>(uri, JSON.stringify({projectIds: [...projectIds, projectId]}), {headers: this.headers});
   }
 
   removeProjectRef(user: User, projectId: string): Observable<User> {
@@ -40,7 +40,7 @@ export class UserService {
     const index = projectIds.indexOf(projectId);
     const toUpdate = [...projectIds.slice(0, index), ...projectIds.slice(index + 1)];
     return this.http
-      .patch(uri, JSON.stringify({projectIds: toUpdate}), {headers: this.headers});
+      .patch<User>(uri, JSON.stringify({projectIds: toUpdate}), {headers: this.headers});
   }
 
   batchUpdateProjectRef(project: Project): Observable<User[]> {

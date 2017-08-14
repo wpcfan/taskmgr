@@ -29,7 +29,7 @@ export class TaskService {
     };
     // const addTaskRef$ = this.addTaskRef()
     return this.http
-      .post(uri, JSON.stringify(toAdd), {headers: this.headers});
+      .post<Task>(uri, JSON.stringify(toAdd), {headers: this.headers});
 
   }
 
@@ -45,7 +45,7 @@ export class TaskService {
       remark: task.remark
     };
     return this.http
-      .patch(uri, JSON.stringify(toUpdate), {headers: this.headers});
+      .patch<Task>(uri, JSON.stringify(toUpdate), {headers: this.headers});
   }
 
   del(task: Task): Observable<Task> {
@@ -61,7 +61,7 @@ export class TaskService {
     const params = new HttpParams()
       .set('taskListId', taskListId);
     return this.http
-      .get(uri, {params});
+      .get<Task[]>(uri, {params});
   }
 
   getByLists(lists: TaskList[]): Observable<Task[]> {
@@ -82,20 +82,20 @@ export class TaskService {
   move(taskId: string, taskListId: string): Observable<Task> {
     const uri = `${this.config.uri}/${this.domain}/${taskId}`;
     return this.http
-      .patch(uri, JSON.stringify({taskListId: taskListId}), {headers: this.headers});
+      .patch<Task>(uri, JSON.stringify({taskListId: taskListId}), {headers: this.headers});
   }
 
   complete(task: Task): Observable<Task> {
     const uri = `${this.config.uri}/${this.domain}/${task.id}`;
     return this.http
-      .patch(uri, JSON.stringify({completed: !task.completed}), {headers: this.headers});
+      .patch<Task>(uri, JSON.stringify({completed: !task.completed}), {headers: this.headers});
   }
 
   addTaskRef(user: User, taskId: string): Observable<User> {
     const uri = `${this.config.uri}/users/${user.id}`;
     const taskIds = (user.taskIds) ? user.taskIds : [];
     return this.http
-      .patch(uri, JSON.stringify({taskIds: [...taskIds, taskId]}), {headers: this.headers});
+      .patch<User>(uri, JSON.stringify({taskIds: [...taskIds, taskId]}), {headers: this.headers});
   }
 
   removeTaskRef(user: User, taskId: string): Observable<User> {
@@ -103,6 +103,6 @@ export class TaskService {
     const taskIds = (user.taskIds) ? user.taskIds : [];
     const index = taskIds.indexOf(taskId);
     return this.http
-      .patch(uri, JSON.stringify({taskIds: [...taskIds.slice(0, index), taskIds.slice(index + 1)]}), {headers: this.headers});
+      .patch<User>(uri, JSON.stringify({taskIds: [...taskIds.slice(0, index), taskIds.slice(index + 1)]}), {headers: this.headers});
   }
 }

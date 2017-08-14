@@ -16,7 +16,7 @@ export class TaskListService {
   add(taskList: TaskList): Observable<TaskList> {
     const uri = `${this.config.uri}/${this.domain}`;
     return this.http
-      .post(uri, JSON.stringify(taskList), {headers: this.headers});
+      .post<TaskList>(uri, JSON.stringify(taskList), {headers: this.headers});
   }
 
   update(taskList: TaskList): Observable<TaskList> {
@@ -25,7 +25,7 @@ export class TaskListService {
       name: taskList.name
     };
     return this.http
-      .patch(uri, JSON.stringify(toUpdate), {headers: this.headers});
+      .patch<TaskList>(uri, JSON.stringify(toUpdate), {headers: this.headers});
   }
 
   del(taskList: TaskList): Observable<TaskList> {
@@ -41,17 +41,19 @@ export class TaskListService {
     const params = new HttpParams()
       .set('projectId', projectId);
     return this.http
-      .get(uri, {params});
+      .get<TaskList[]>(uri, {params});
   }
 
   swapOrder(src: TaskList, target: TaskList): Observable<TaskList[]> {
     const dragUri = `${this.config.uri}/${this.domain}/${src.id}`;
     const dropUri = `${this.config.uri}/${this.domain}/${target.id}`;
     const drag$ = this.http
-      .patch(dragUri, JSON.stringify({order: target.order}), {headers: this.headers});
+      .patch<TaskList>(dragUri, JSON.stringify({order: target.order}), {headers: this.headers});
     const drop$ = this.http
-      .patch(dropUri, JSON.stringify({order: src.order}), {headers: this.headers});
-    return Observable.concat(drag$, drop$).reduce((r: TaskList[], x) => [...r, x], []);
+      .patch<TaskList>(dropUri, JSON.stringify({order: src.order}), {headers: this.headers});
+    return Observable
+      .concat(drag$, drop$)
+      .reduce((r: TaskList[], x: TaskList) => [...r, x], []);
   }
 
   initializeTaskLists(prj: Project): Observable<Project> {

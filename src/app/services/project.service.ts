@@ -20,7 +20,7 @@ export class ProjectService {
   add(project: Project): Observable<Project> {
     const uri = `${this.config.uri}/${this.domain}`;
     return this.http
-      .post(uri, JSON.stringify(project), {headers: this.headers});
+      .post<Project>(uri, JSON.stringify(project), {headers: this.headers});
   }
 
   // PUT /projects
@@ -32,7 +32,7 @@ export class ProjectService {
       desc: project.desc
     };
     return this.http
-      .patch(uri, JSON.stringify(toUpdate), {headers: this.headers});
+      .patch<Project>(uri, JSON.stringify(toUpdate), {headers: this.headers});
   }
 
   // DELETE /projects instead of deleting the records
@@ -53,7 +53,7 @@ export class ProjectService {
     const params = new HttpParams()
       .set('members_like', userId);
     return this.http
-      .get(uri, {params: params, headers: this.headers});
+      .get<Project[]>(uri, {params: params, headers: this.headers});
   }
 
   updateTaskLists(project: Project): Observable<Project> {
@@ -62,7 +62,7 @@ export class ProjectService {
       taskLists: project.taskLists
     };
     return this.http
-      .patch(uri, JSON.stringify(toUpdate), {headers: this.headers});
+      .patch<Project>(uri, JSON.stringify(toUpdate), {headers: this.headers});
   }
 
   inviteMembers(projectId: string, users: User[]) {
