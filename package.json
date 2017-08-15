@@ -33,7 +33,7 @@
     "@ngrx/store": "^2.2.3",
     "@ngrx/store-devtools": "^3.2.4",
     "@nguniversal/express-engine": "^1.0.0-beta.2",
-    "angular-calendar": "^0.17.0",
+    "angular-calendar": "^0.20.1",
     "core-js": "^2.4.1",
     "crypto-js": "^3.1.9-1",
     "express": "^4.15.4",

@@ -8,11 +8,11 @@ require('zone.js/dist/zone-node');
 require('reflect-metadata');
 require('rxjs/Rx');
 
-var hash;
+let hash;
 fs.readdirSync(__dirname).forEach(file => {
   if (file.startsWith('main')) {
-  hash = file.split('.')[1];
-}
+    hash = file.split('.')[1];
+  }
 });
 
 const AppServerModuleNgFactory = require('./main.' + hash + '.bundle').AppServerModuleNgFactory;
