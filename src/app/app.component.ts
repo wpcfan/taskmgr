@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Renderer2} from '@angular/core';
 import {OverlayContainer} from '@angular/material';
 
 @Component({

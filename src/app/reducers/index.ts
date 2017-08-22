@@ -127,6 +127,9 @@ export const getMaxListOrder = createSelector(getTaskListEntities, getTaskListSe
   const orders: number[] = ids.map(id => entities[id].order);
   return orders.sort()[orders.length - 1];
 });
+export const getUserTasks = createSelector(getAuthUser, getTasks, (user, tasks) => {
+  return tasks.filter(task => task.ownerId === user.id)
+});
 
 @NgModule({
   imports: [

@@ -1,6 +1,4 @@
 import {EffectsRunner, EffectsTestingModule} from '@ngrx/effects/testing';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/throw';
 import {Observable} from 'rxjs/Observable';
 import {fakeAsync, TestBed} from '@angular/core/testing';
 import {AuthEffects} from './auth.effects';
@@ -63,7 +61,8 @@ describe('测试 AuthEffects', () => {
       runner.queue(new actions.LoginAction({email: 'wang@dev.local', password: '123abc'}));
 
       authEffects.login$.subscribe(result => {
-        expect(result.payload.status).toEqual(501);
+        console.log(JSON.stringify(result));
+        expect(result.payload.message).toEqual('msg');
       });
     });
   });

@@ -62,7 +62,7 @@ export class AuthService {
       .map(res => {
         const users = <User[]>res;
         if (users.length === 0) {
-          throw('Username or password incorrect');
+          throw(new Error('Username or password incorrect'));
         }
         return {
           token: this.token,

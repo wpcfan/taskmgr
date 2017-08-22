@@ -1,4 +1,5 @@
 import {async, inject, TestBed} from '@angular/core/testing';
+import { HttpClient } from '@angular/common/http';
 import {BaseResponseOptions, Http, HttpModule, Response, ResponseOptions} from '@angular/http';
 import {MockBackend} from '@angular/http/testing';
 import {AuthService} from './auth.service';
@@ -18,7 +19,7 @@ describe('测试鉴权服务：AuthService', () => {
           }
         },
         {
-          provide: Http,
+          provide: HttpClient,
           useFactory: (mockBackend, options) => {
             return new Http(mockBackend, options);
           },
@@ -52,7 +53,7 @@ describe('测试鉴权服务：AuthService', () => {
         });
         service.register(mockUser).subscribe(auth => {
           expect(auth.token).toBeDefined();
-          expect(auth.user.email).toEqual(mockUser.email);
+          expect(auth.userId).toEqual(mockUser.id);
         });
       })));
 

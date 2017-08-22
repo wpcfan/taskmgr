@@ -29,7 +29,7 @@ export class LoginSuccessAction implements Action {
 export class LoginFailAction implements Action {
   type = ActionTypes.LOGIN_FAIL;
 
-  constructor(public payload: string) {
+  constructor(public payload: Err) {
   }
 }
 
@@ -50,7 +50,7 @@ export class RegisterSuccessAction implements Action {
 export class RegisterFailAction implements Action {
   type = ActionTypes.REGISTER_FAIL;
 
-  constructor(public payload: string) {
+  constructor(public payload: Err) {
   }
 }
 

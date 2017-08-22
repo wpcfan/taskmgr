@@ -13,22 +13,21 @@ describe('测试 AuthReducer', () => {
   });
 
   describe('登录成功', () => {
-    it('应该返回一个 Err 为 undefined 而 User 不为空的 Auth 对象', async(() => {
+    it('应该返回一个 Err 为 undefined 而 userId 不为空的 Auth 对象', async(() => {
       const action = {
         type: actions.ActionTypes.LOGIN_SUCCESS,
         payload: {
           token: '',
           user: {
-            id: '123abc',
-            name: 'wang',
-            email: 'wang@163.com'
+            id: '1',
+            email: '123@123.com',
+            password: '123456'
           }
         }
       };
       const result = reducer(undefined, action);
-      expect(result).toEqual(action.payload);
+      expect(result).toEqual({token: '', userId: '1'});
       expect(result.err).toBeUndefined();
-      expect(result.user).toBeDefined();
     }));
   });
 
@@ -61,9 +60,8 @@ describe('测试 AuthReducer', () => {
         }
       };
       const result = reducer(undefined, action);
-      expect(result).toEqual(action.payload);
+      expect(result).toEqual({token: '', userId: '123abc'});
       expect(result.err).toBeUndefined();
-      expect(result.user).toBeDefined();
     }));
   });
 
