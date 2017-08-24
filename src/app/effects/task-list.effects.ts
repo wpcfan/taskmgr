@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Actions, Effect, toPayload} from '@ngrx/effects';
+import {Actions, Effect} from '@ngrx/effects';
 import {Action, Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
@@ -17,8 +17,8 @@ export class TaskListEffects {
    */
   @Effect()
   loadTaskLists$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.LOADS)
-    .map(toPayload)
+    .ofType<actions.LoadTaskListsAction>(actions.LOADS)
+    .map(action => action.payload)
     .switchMap((projectId) => this.service$
       .get(projectId)
       .map(taskLists => new actions.LoadTaskListsSuccessAction(taskLists))
@@ -27,8 +27,8 @@ export class TaskListEffects {
 
   @Effect()
   addTaskList$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.ADD)
-    .map(toPayload)
+    .ofType<actions.AddTaskListAction>(actions.ADD)
+    .map(action => action.payload)
     .switchMap((taskList) => {
       return this.service$
         .add(taskList)
@@ -39,8 +39,8 @@ export class TaskListEffects {
 
   @Effect()
   updateTaskList$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.UPDATE)
-    .map(toPayload)
+    .ofType<actions.UpdateTaskListAction>(actions.UPDATE)
+    .map(action => action.payload)
     .switchMap(taskList => this.service$
       .update(taskList)
       .map(tl => new actions.UpdateTaskListSuccessAction(tl))
@@ -49,8 +49,8 @@ export class TaskListEffects {
 
   @Effect()
   removeTaskList$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.DELETE)
-    .map(toPayload)
+    .ofType<actions.DeleteTaskListAction>(actions.DELETE)
+    .map(action => action.payload)
     .switchMap(taskList => this.service$
       .del(taskList)
       .map(tl => new actions.DeleteTaskListSuccessAction(tl))
@@ -59,8 +59,8 @@ export class TaskListEffects {
 
   @Effect()
   removeTasksInList$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.DELETE_SUCCESS)
-    .map(toPayload)
+    .ofType<actions.DeleteTaskListSuccessAction>(actions.DELETE_SUCCESS)
+    .map(action => action.payload)
     .switchMap((taskList: TaskList) => {
       return this.store$.select(fromRoot.getTasks)
         .switchMap((tasks: Task[]) =>
@@ -70,8 +70,8 @@ export class TaskListEffects {
 
   @Effect()
   initializeTaskLists$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.INITIALIZE)
-    .map(toPayload)
+    .ofType<actions.InitTaskListsAction>(actions.INITIALIZE)
+    .map(action => action.payload)
     .switchMap(prj => {
       return this.service$.initializeTaskLists(prj)
         .map(project => new actions.InitTaskListsSuccessAction(project))
@@ -80,14 +80,14 @@ export class TaskListEffects {
 
   @Effect()
   updateProjectRef$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.INITIALIZE_SUCCESS)
-    .map(toPayload)
+    .ofType<actions.InitTaskListsSuccessAction>(actions.INITIALIZE_SUCCESS)
+    .map(action => action.payload)
     .map(prj => new prjActions.UpdateListsAction(prj));
 
   @Effect()
   swapOrder$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.SWAP_ORDER)
-    .map(toPayload)
+    .ofType<actions.SwapOrderAction>(actions.SWAP_ORDER)
+    .map(action => action.payload)
     .switchMap(({src, target}) =>
       this.service$.swapOrder(src, target)
         .map(tls => new actions.SwapOrderSuccessAction(tls))
@@ -96,8 +96,8 @@ export class TaskListEffects {
 
   @Effect()
   loadTasksInList$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.LOADS_SUCCESS)
-    .map(toPayload)
+    .ofType<actions.LoadTaskListsSuccessAction>(actions.LOADS_SUCCESS)
+    .map(action => action.payload)
     .map(lists => new taskActions.LoadTasksInListsAction(lists));
 
   /**

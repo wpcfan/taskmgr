@@ -14,8 +14,8 @@ export class QuoteEffects {
    */
   @Effect()
   quote$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.QUOTE)
-    .map(toPayload)
+    .ofType<actions.QuoteAction>(actions.QUOTE)
+    .map(action => action.payload)
     .switchMap(() => this.quoteService
       .getQuote()
       .map(quote => new actions.QuoteSuccessAction(quote))

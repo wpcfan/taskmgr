@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Actions, Effect, toPayload} from '@ngrx/effects';
+import {Actions, Effect} from '@ngrx/effects';
 import {Action} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
@@ -15,8 +15,8 @@ export class UserEffects {
    */
   @Effect()
   searchUsers$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.SEARCH_USERS)
-    .map(toPayload)
+    .ofType<actions.SearchUsersAction>(actions.SEARCH_USERS)
+    .map(action => action.payload)
     .switchMap((str) => this.service$
       .searchUsers(str)
       .map(users => new actions.SearchUsersSuccessAction(users))
@@ -25,8 +25,8 @@ export class UserEffects {
 
   @Effect()
   addUserProject$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.ADD_USER_PROJECT)
-    .map(toPayload)
+    .ofType<actions.AddUserProjectAction>(actions.ADD_USER_PROJECT)
+    .map(action => action.payload)
     .switchMap(({user, projectId}) => {
       return this.service$
         .addProjectRef(user, projectId)
@@ -38,8 +38,8 @@ export class UserEffects {
 
   @Effect()
   removeUserProject$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.REMOVE_USER_PROJECT)
-    .map(toPayload)
+    .ofType<actions.RemoveUserProjectAction>(actions.REMOVE_USER_PROJECT)
+    .map(action => action.payload)
     .switchMap(({user, projectId}) => {
       return this.service$
         .removeProjectRef(user, projectId)
@@ -50,15 +50,15 @@ export class UserEffects {
 
   @Effect()
   toLoadUser$: Observable<Action> = this.actions$
-    .ofType(prjActions.ActionTypes.LOADS_SUCCESS)
-    .map(toPayload)
+    .ofType<prjActions.LoadProjectsSuccessAction>(prjActions.LOADS_SUCCESS)
+    .map(action => action.payload)
     .switchMap((prjs: Project[]) => Observable.from(prjs.map(prj => prj.id)))
     .map((projectId: string) => new actions.LoadUsersByPrjAction(projectId));
 
   @Effect()
   loadProjectUsers$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.LOAD_USERS_BY_PRJ)
-    .map(toPayload)
+    .ofType<actions.LoadUsersByPrjAction>(actions.LOAD_USERS_BY_PRJ)
+    .map(action => action.payload)
     .switchMap(projectId =>
       this.service$.getUsersByProject(projectId)
         .map(users => new actions.LoadUsersByPrjSuccessAction(users))
@@ -67,8 +67,8 @@ export class UserEffects {
 
   @Effect()
   batchUpdateProjectUsers$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.BATCH_UPDATE_USER_PROJECT)
-    .map(toPayload)
+    .ofType<actions.BatchUpdateUserProjectAction>(actions.BATCH_UPDATE_USER_PROJECT)
+    .map(action => action.payload)
     .switchMap(project =>
       this.service$.batchUpdateProjectRef(project)
         .map(users => new actions.BatchUpdateUserProjectSuccessAction(users))
