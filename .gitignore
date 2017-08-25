@@ -33,6 +33,7 @@
 /libpeerconnection.log
 *.log
 /typings
+/.esm-cache
 
 # e2e
 /e2e/*.js
