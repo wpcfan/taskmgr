@@ -2,7 +2,7 @@ import * as actions from '../actions/user.action';
 import * as authActions from '../actions/auth.action';
 import {covertArrToObj} from '../utils/reduer.util';
 import {User, Auth} from '../domain';
-import {createSelector} from 'reselect';
+import {createSelector} from '@ngrx/store';
 
 export interface State {
   ids: string [];
@@ -68,18 +68,18 @@ const batchUpdatePrjRef = (state, action) => {
 
 export function reducer (state = initialState, action: actions.Actions | authActions.Actions): State {
   switch (action.type) {
-    case authActions.ActionTypes.LOGIN_SUCCESS:
-    case authActions.ActionTypes.REGISTER_SUCCESS:
+    case authActions.LOGIN_SUCCESS:
+    case authActions.REGISTER_SUCCESS:
       return register(state, action);
-    case actions.ActionTypes.ADD_USER_PROJECT_SUCCESS:
+    case actions.ADD_USER_PROJECT_SUCCESS:
       return addPrjRef(state, action);
-    case actions.ActionTypes.REMOVE_USER_PROJECT_SUCCESS:
+    case actions.REMOVE_USER_PROJECT_SUCCESS:
       return removePrjRef(state, action);
-    case actions.ActionTypes.SEARCH_USERS_SUCCESS:
+    case actions.SEARCH_USERS_SUCCESS:
       return searchUsers(state, action);
-    case actions.ActionTypes.LOAD_USERS_BY_PRJ_SUCCESS:
+    case actions.LOAD_USERS_BY_PRJ_SUCCESS:
       return loadByPrj(state, action);
-    case actions.ActionTypes.BATCH_UPDATE_USER_PROJECT_SUCCESS:
+    case actions.BATCH_UPDATE_USER_PROJECT_SUCCESS:
       return batchUpdatePrjRef(state, action);
     default: {
       return state;

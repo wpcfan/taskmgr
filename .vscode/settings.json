@@ -7,6 +7,7 @@
     "**/.DS_Store": true,
     "node_modules": true,
     "dist": true,
+    "dist-server": true,
     "out": true
   },
   "files.trimTrailingWhitespace": true,

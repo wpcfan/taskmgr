@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
       email: ['wpcfan@163.com', Validators.compose([Validators.required, Validators.email])],
       password: ['wp123456', Validators.required]
     });
-    this.store$.dispatch({type: actions.ActionTypes.QUOTE});
+    this.store$.dispatch({type: actions.QUOTE});
   }
 
   onSubmit({value, valid}, e: Event) {

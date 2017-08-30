@@ -1,173 +1,170 @@
 import {Action} from '@ngrx/store';
-import {type} from '../utils/type.util';
 import {Task, TaskList} from '../domain';
 
-export const ActionTypes = {
-  ADD: type('[Task] Add'),
-  ADD_SUCCESS: type('[Task] Add Success'),
-  ADD_FAIL: type('[Task] Add Fail'),
-  UPDATE: type('[Task] Update'),
-  UPDATE_SUCCESS: type('[Task] Update Success'),
-  UPDATE_FAIL: type('[Task] Update Fail'),
-  DELETE: type('[Task] Delete'),
-  DELETE_SUCCESS: type('[Task] Delete Success'),
-  DELETE_FAIL: type('[Task] Delete Fail'),
-  LOAD_IN_LISTS: type('[Task] Load In Lists'),
-  LOAD_IN_LISTS_SUCCESS: type('[Task] Load In Lists Success'),
-  LOAD_IN_LISTS_FAIL: type('[Task] Load In Lists Fail'),
-  MOVE_ALL: type('[Task] Move All'),
-  MOVE_ALL_SUCCESS: type('[Task] Move All Success'),
-  MOVE_ALL_FAIL: type('[Task] Move All Fail'),
-  MOVE: type('[Task] Move'),
-  MOVE_SUCCESS: type('[Task] Move Success'),
-  MOVE_FAIL: type('[Task] Move Fail'),
-  COMPLETE: type('[Task] Complete'),
-  COMPLETE_SUCCESS: type('[Task] Complete Success'),
-  COMPLETE_FAIL: type('[Task] Complete Fail')
-};
+export const ADD = '[Task] Add';
+export const ADD_SUCCESS = '[Task] Add Success';
+export const ADD_FAIL = '[Task] Add Fail';
+export const UPDATE = '[Task] Update';
+export const UPDATE_SUCCESS = '[Task] Update Success';
+export const UPDATE_FAIL = '[Task] Update Fail';
+export const DELETE = '[Task] Delete';
+export const DELETE_SUCCESS = '[Task] Delete Success';
+export const DELETE_FAIL = '[Task] Delete Fail';
+export const LOAD_IN_LISTS = '[Task] Load In Lists';
+export const LOAD_IN_LISTS_SUCCESS = '[Task] Load In Lists Success';
+export const LOAD_IN_LISTS_FAIL = '[Task] Load In Lists Fail';
+export const MOVE_ALL = '[Task] Move All';
+export const MOVE_ALL_SUCCESS = '[Task] Move All Success';
+export const MOVE_ALL_FAIL = '[Task] Move All Fail';
+export const MOVE = '[Task] Move';
+export const MOVE_SUCCESS = '[Task] Move Success';
+export const MOVE_FAIL = '[Task] Move Fail';
+export const COMPLETE = '[Task] Complete';
+export const COMPLETE_SUCCESS = '[Task] Complete Success';
+export const COMPLETE_FAIL = '[Task] Complete Fail';
 
 export class AddTaskAction implements Action {
-  type = ActionTypes.ADD;
+  readonly type = ADD;
 
   constructor(public payload: Task) {
   }
 }
 
 export class AddTaskSuccessAction implements Action {
-  type = ActionTypes.ADD_SUCCESS;
+  readonly type = ADD_SUCCESS;
 
   constructor(public payload: Task) {
   }
 }
 
 export class AddTaskFailAction implements Action {
-  type = ActionTypes.ADD_FAIL;
+  readonly type = ADD_FAIL;
 
   constructor(public payload: string) {
   }
 }
 
 export class UpdateTaskAction implements Action {
-  type = ActionTypes.UPDATE;
+  readonly type = UPDATE;
 
   constructor(public payload: Task) {
   }
 }
 
 export class UpdateTaskSuccessAction implements Action {
-  type = ActionTypes.UPDATE_SUCCESS;
+  readonly type = UPDATE_SUCCESS;
 
   constructor(public payload: Task) {
   }
 }
 
 export class UpdateTaskFailAction implements Action {
-  type = ActionTypes.UPDATE_FAIL;
+  readonly type = UPDATE_FAIL;
 
   constructor(public payload: string) {
   }
 }
 
 export class DeleteTaskAction implements Action {
-  type = ActionTypes.DELETE;
+  readonly type = DELETE;
 
   constructor(public payload: Task) {
   }
 }
 
 export class DeleteTaskSuccessAction implements Action {
-  type = ActionTypes.DELETE_SUCCESS;
+  readonly type = DELETE_SUCCESS;
 
   constructor(public payload: Task) {
   }
 }
 
 export class DeleteTaskFailAction implements Action {
-  type = ActionTypes.DELETE_FAIL;
+  readonly type = DELETE_FAIL;
 
   constructor(public payload: string) {
   }
 }
 
 export class LoadTasksInListsAction implements Action {
-  type = ActionTypes.LOAD_IN_LISTS;
+  readonly type = LOAD_IN_LISTS;
 
   constructor(public payload: TaskList[]) {
   }
 }
 
 export class LoadTasksInListsSuccessAction implements Action {
-  type = ActionTypes.LOAD_IN_LISTS_SUCCESS;
+  readonly type = LOAD_IN_LISTS_SUCCESS;
 
   constructor(public payload: Task[]) {
   }
 }
 
 export class LoadTasksInListsFailAction implements Action {
-  type = ActionTypes.LOAD_IN_LISTS_FAIL;
+  readonly type = LOAD_IN_LISTS_FAIL;
 
   constructor(public payload: string) {
   }
 }
 
 export class MoveTaskAction implements Action {
-  type = ActionTypes.MOVE;
+  readonly type = MOVE;
 
   constructor(public payload: { taskId: string; taskListId: string }) {
   }
 }
 
 export class MoveTaskSuccessAction implements Action {
-  type = ActionTypes.MOVE_SUCCESS;
+  readonly type = MOVE_SUCCESS;
 
   constructor(public payload: Task) {
   }
 }
 
 export class MoveTaskFailAction implements Action {
-  type = ActionTypes.MOVE_FAIL;
+  readonly type = MOVE_FAIL;
 
   constructor(public payload: string) {
   }
 }
 
 export class CompleteTaskAction implements Action {
-  type = ActionTypes.COMPLETE;
+  readonly type = COMPLETE;
 
   constructor(public payload: Task) {
   }
 }
 
 export class CompleteTaskSuccessAction implements Action {
-  type = ActionTypes.COMPLETE_SUCCESS;
+  readonly type = COMPLETE_SUCCESS;
 
   constructor(public payload: Task) {
   }
 }
 
 export class CompleteTaskFailAction implements Action {
-  type = ActionTypes.COMPLETE_FAIL;
+  readonly type = COMPLETE_FAIL;
 
   constructor(public payload: string) {
   }
 }
 
 export class MoveAllAction implements Action {
-  type = ActionTypes.MOVE_ALL;
+  readonly type = MOVE_ALL;
 
   constructor(public payload: { srcListId: string; targetListId: string }) {
   }
 }
 
 export class MoveAllSuccessAction implements Action {
-  type = ActionTypes.MOVE_ALL_SUCCESS;
+  readonly type = MOVE_ALL_SUCCESS;
 
   constructor(public payload: Task[]) {
   }
 }
 
 export class MoveAllFailAction implements Action {
-  type = ActionTypes.MOVE_ALL_FAIL;
+  readonly type = MOVE_ALL_FAIL;
 
   constructor(public payload: string) {
   }

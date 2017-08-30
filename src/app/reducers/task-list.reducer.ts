@@ -1,5 +1,5 @@
 import {TaskList, Project} from '../domain';
-import {createSelector} from 'reselect';
+import {createSelector} from '@ngrx/store';
 import {covertArrToObj, buildObjFromArr} from '../utils/reduer.util';
 import * as _ from 'lodash';
 import * as actions from '../actions/task-list.action';
@@ -96,21 +96,21 @@ const selectPrj = (state, action) => {
   return {...state, selectedIds: selectedIds};
 };
 
-export function reducer (state = initialState, action: actions.Actions): State {
+export function reducer (state = initialState, action: actions.Actions | prjActions.Actions): State {
   switch (action.type) {
-    case actions.ActionTypes.ADD_SUCCESS:
+    case actions.ADD_SUCCESS:
       return addList(state, action);
-    case actions.ActionTypes.DELETE_SUCCESS:
+    case actions.DELETE_SUCCESS:
       return delList(state, action);
-    case actions.ActionTypes.UPDATE_SUCCESS:
+    case actions.UPDATE_SUCCESS:
       return updateList(state, action);
-    case actions.ActionTypes.SWAP_ORDER_SUCCESS:
+    case actions.SWAP_ORDER_SUCCESS:
       return swapOrder(state, action);
-    case actions.ActionTypes.LOADS_SUCCESS:
+    case actions.LOADS_SUCCESS:
       return loadLists(state, action);
-    case prjActions.ActionTypes.SELECT:
+    case prjActions.SELECT:
       return selectPrj(state, action);
-    case prjActions.ActionTypes.DELETE_SUCCESS:
+    case prjActions.DELETE_SUCCESS:
       return delListByPrj(state, action);
     default:
       return state;

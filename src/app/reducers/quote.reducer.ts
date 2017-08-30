@@ -15,9 +15,9 @@ export const initialState: State = {
 
 export function reducer(state: State = initialState, action: actions.Actions): State {
   switch (action.type) {
-    case actions.ActionTypes.QUOTE_SUCCESS:
+    case actions.QUOTE_SUCCESS:
       return {...state, quote: action.payload};
-    case actions.ActionTypes.QUOTE_FAIL:
+    case actions.QUOTE_FAIL:
     default:
       return state;
   }

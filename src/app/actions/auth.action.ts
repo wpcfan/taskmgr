@@ -1,61 +1,58 @@
 import {Action} from '@ngrx/store';
-import {type} from '../utils/type.util';
 import {Auth, Err, User} from '../domain';
 
-export const ActionTypes = {
-  LOGIN: type('[Auth] Login'),
-  LOGIN_SUCCESS: type('[Auth] Login Success'),
-  LOGIN_FAIL: type('[Auth] Login Fail'),
-  REGISTER: type('[Auth] Register'),
-  REGISTER_SUCCESS: type('[Auth] Register Success'),
-  REGISTER_FAIL: type('[Auth] Register Fail'),
-  LOGOUT: type('[Auth] Logout')
-};
+export const LOGIN = '[Auth] Login';
+export const LOGIN_SUCCESS = '[Auth] Login Success';
+export const LOGIN_FAIL = '[Auth] Login Fail';
+export const REGISTER = '[Auth] Register';
+export const REGISTER_SUCCESS = '[Auth] Register Success';
+export const REGISTER_FAIL = '[Auth] Register Fail';
+export const LOGOUT = '[Auth] Logout';
 
 export class LoginAction implements Action {
-  type = ActionTypes.LOGIN;
+  readonly type = LOGIN;
 
   constructor(public payload: { email: string; password: string }) {
   }
 }
 
 export class LoginSuccessAction implements Action {
-  type = ActionTypes.LOGIN_SUCCESS;
+  readonly type = LOGIN_SUCCESS;
 
   constructor(public payload: Auth) {
   }
 }
 
 export class LoginFailAction implements Action {
-  type = ActionTypes.LOGIN_FAIL;
+  readonly type = LOGIN_FAIL;
 
   constructor(public payload: Err) {
   }
 }
 
 export class RegisterAction implements Action {
-  type = ActionTypes.REGISTER;
+  readonly type = REGISTER;
 
   constructor(public payload: User) {
   }
 }
 
 export class RegisterSuccessAction implements Action {
-  type = ActionTypes.REGISTER_SUCCESS;
+  readonly type = REGISTER_SUCCESS;
 
   constructor(public payload: Auth) {
   }
 }
 
 export class RegisterFailAction implements Action {
-  type = ActionTypes.REGISTER_FAIL;
+  readonly type = REGISTER_FAIL;
 
   constructor(public payload: Err) {
   }
 }
 
 export class LogoutAction implements Action {
-  type = ActionTypes.LOGOUT;
+  readonly type = LOGOUT;
 
   constructor(public payload: Auth) {
   }

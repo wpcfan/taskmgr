@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
-import {go} from '@ngrx/router-store';
+import * as routerActions from '../actions/router.action';
 import * as fromRoot from '../reducers';
 
 @Injectable()
@@ -31,7 +31,7 @@ export class AuthGuardService implements CanActivate {
       .map(auth => {
         const result = auth.token !== undefined && auth.token !== null;
         if (!result) {
-          this.store$.dispatch(go(['/login']));
+          this.store$.dispatch(new routerActions.Go({path: ['/login']}));
         }
         return result;
       })

@@ -3,7 +3,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@
 @Component({
   selector: 'app-task-list-header',
   template: `
-    <div md-subheader class="header-container">
+    <div mdSubheader class="header-container">
       <div>
         <h4>{{header}}</h4>
       </div>

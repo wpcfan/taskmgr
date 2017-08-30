@@ -20,7 +20,7 @@ import {cardAnim} from '../../anim';
           </span>
         </md-card-title>
       </md-card-header>
-      <img md-card-image [src]="item.coverImg">
+      <img mdCardImage [src]="item.coverImg">
       <md-card-content>
         <p>{{item.desc}}</p>
       </md-card-content>

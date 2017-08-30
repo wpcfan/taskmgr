@@ -4,21 +4,25 @@ import {NgModule} from '@angular/core';
  * 这个新的 reducer 接收到各 reducer 的值后，按 reducer 的 key 进行存储。
  * 把这个新的 reducer 想象成一个数据库，各个子 reducer 就像数据库中的表。
  *
- */
-import {ActionReducer, combineReducers, StoreModule} from '@ngrx/store';
-import * as fromRouter from '@ngrx/router-store';
-import {RouterStoreModule} from '@ngrx/router-store';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {createSelector} from 'reselect';
-import {environment} from '../../environments/environment';
-import {Auth} from '../domain';
-import * as authActions from '../actions/auth.action';
-/**
  * compose 函数是一个很方便的工具，简单来说，它接受任意数量的函数作为参数，然后返回一个新的函数。
  * 这个新的函数其实就是前面的函数的叠加，比如说，我们给出 `compose(f(x), g(x))`, 返回的新函数
  * 就是 `g(f(x))`。
  */
-import {compose} from '@ngrx/core/compose';
+import {
+  ActionReducerMap,
+  ActionReducer,
+  MetaReducer,
+  StoreModule,
+  compose,
+  createSelector,
+} from '@ngrx/store';
+import * as fromRouter from '@ngrx/router-store';
+import {StoreRouterConnectingModule} from '@ngrx/router-store';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {environment} from '../../environments/environment';
+import {Auth} from '../domain';
+import * as authActions from '../actions/auth.action';
+
 /**
  * storeFreeze 用于防止 state 被修改，在 Redux 中我们必须确保 state 是不可更改的，这个函数
  * 有助于帮我们检测 state 是否被有意或无意的修改了。当 state 发生修改时，会抛出一个异常，这一点
@@ -34,6 +38,7 @@ import * as fromProjects from './project.reducer';
 import * as fromTaskLists from './task-list.reducer';
 import * as fromTasks from './task.reducer';
 import * as fromUsers from './user.reducer';
+import { initialState } from './user.reducer';
 
 /**
  * 正如我们的 reducer 像数据库中的表一样，我们的顶层 state 也包含各个子 reducer 的 state
@@ -46,10 +51,10 @@ export interface State {
   taskLists: fromTaskLists.State;
   tasks: fromTasks.State;
   users: fromUsers.State;
-  router: fromRouter.RouterState;
+  router: fromRouter.RouterReducerState;
 }
 
-const reducers = {
+const reducers: ActionReducerMap<State> = {
   auth: fromAuth.reducer,
   quote: fromQuote.reducer,
   projects: fromProjects.reducer,
@@ -59,11 +64,20 @@ const reducers = {
   router: fromRouter.routerReducer,
 };
 
-const developmentReducer: ActionReducer<State> = compose(storeFreeze, combineReducers)(reducers);
-/**
- * 使用 combineReducers 把所有子 reducer 合并产生一个顶级 reducer
- */
-const productionReducer: ActionReducer<State> = combineReducers(reducers);
+
+export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
+  return function(state: State, action: any): State {
+    console.log('state', state);
+    console.log('action', action);
+
+    return reducer(state, action);
+  };
+}
+
+export const metaReducers: MetaReducer<State>[] = !environment.production
+  ? [logger]
+  : [];
+
 
 const initState = {
   auth: fromAuth.initialState,
@@ -72,15 +86,11 @@ const initState = {
   taskLists: fromTaskLists.initialState,
   tasks: fromTasks.initialState,
   users: fromUsers.initialState,
-  router: fromRouter.initialState
 };
 
 export function reducer(state: any, action: any) {
-  return action.type === authActions.ActionTypes.LOGOUT ?
-    initState :
-    environment.production ?
-      productionReducer(state, action) :
-      developmentReducer(state, action);
+  return action.type === authActions.LOGOUT ?
+    initState : reducers;
 }
 
 export const getAuthState = (state: State) => state.auth;
@@ -137,12 +147,10 @@ export const getUserTasks = createSelector(getAuthUser, getTasks, (user, tasks) 
      * StoreModule.provideStore  仅需引入一次，请把它包含在根模块或者 CoreModule 中
      * 我们这里为了方便组织，新建了一个 AppStoreModule，但也是只在 CoreModule 中引入的
      */
-    StoreModule.provideStore(reducer),
-    RouterStoreModule.connectRouter(),
+    StoreModule.forRoot(reducers, {initialState: initState, metaReducers: metaReducers }),
+    StoreRouterConnectingModule,
     // DevTool 需要在 StoreModule 之后导入
-    StoreDevtoolsModule.instrumentOnlyWithExtension({
-      maxAge: 5
-    })
+    // !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : []
   ]
 })
 export class AppStoreModule {

@@ -29,18 +29,18 @@ export interface Age {
   template: `
     <div [formGroup]="form" class="age-input">
       <div>
-        <md-input-container>
+        <md-form-field>
           <input mdInput [mdDatepicker]="birthPicker" type="text" placeholder="出生日期" formControlName="birthday" >
-          <button mdSuffix [mdDatepickerToggle]="birthPicker" type="button"></button>
+          <md-datepicker-toggle mdSuffix [for]="birthPicker"></md-datepicker-toggle>
           <md-error>日期不正确</md-error>
-        </md-input-container>
+        </md-form-field>
         <md-datepicker touchUi="true" #birthPicker></md-datepicker>
       </div>
       <ng-container formGroupName="age">
         <div class="age-num">
-          <md-input-container>
+          <md-form-field>
             <input mdInput type="number" placeholder="年龄" formControlName="ageNum">
-          </md-input-container>
+          </md-form-field>
         </div>
         <div>
           <md-button-toggle-group formControlName="ageUnit" [(ngModel)]="selectedUnit">
@@ -104,7 +104,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     const initDate = this.dateOfBirth ? this.dateOfBirth : toDate(subYears(Date.now(), 30));
     const initAge = this.toAge(initDate);
     this.form = this.fb.group({
-      birthday: [initDate, this.validateDate],
+      birthday: [parse(initDate), this.validateDate],
       age:  this.fb.group({
         ageNum: [initAge.age],
         ageUnit: [initAge.unit]
@@ -149,7 +149,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       } else {
         const ageToCompare = this.toAge(this.form.get('birthday').value);
         if (age.age !== ageToCompare.age || age.unit !== ageToCompare.unit) {
-          this.form.get('birthday').patchValue(date.date, {emitEvent: false});
+          this.form.get('birthday').patchValue(parse(date.date), {emitEvent: false});
           this.propagateChange(date.date);
         }
       }
@@ -165,7 +165,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   // 提供值的写入方法
   public writeValue(obj: Date) {
     if (obj) {
-      const date = toDate(obj);
+      const date = parse(toDate(obj));
       this.form.get('birthday').patchValue(date, {emitEvent: true});
     }
   }

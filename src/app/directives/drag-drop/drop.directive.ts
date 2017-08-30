@@ -26,6 +26,8 @@ export class DropDirective {
       this.drag$.subscribe(dragData => {
         if (this.dropTags.indexOf(dragData.tag) > -1) {
           this.rd.addClass(this.el.nativeElement, this.dragEnterClass);
+          this.rd.setProperty(this.el.nativeElement, 'dataTransfer.effectAllowed', 'all');
+          this.rd.setProperty(this.el.nativeElement, 'dataTransfer.dropEffect', 'move');
         }
       });
     }

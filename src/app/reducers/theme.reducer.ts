@@ -10,7 +10,7 @@ export const initialState: State = {
 
 export function reducer(state = initialState, action: actions.Actions): State {
   switch (action.type) {
-    case actions.ActionTypes.SWITCH_THEME: {
+    case actions.SWITCH_THEME: {
       return {...state, darkmode: action.payload};
     }
     default: {

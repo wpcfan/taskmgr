@@ -6,11 +6,11 @@ import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
   selector: 'app-new-task',
   template: `
     <form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
-      <h2 md-dialog-title>{{dialogTitle}}</h2>
-      <div md-dialog-content>
-        <md-input-container class="full-width">
+      <h2 mdDialogTitle>{{dialogTitle}}</h2>
+      <div mdDialogContent>
+        <md-form-field class="full-width">
           <input mdInput type="text" placeholder="任务内容" formControlName="desc">
-        </md-input-container>
+        </md-form-field>
         <md-radio-group class="full-width" formControlName="priority">
           <md-radio-button *ngFor="let priorityItem of priorities" [value]="priorityItem.value">
             {{priorityItem.label}}
@@ -19,29 +19,29 @@ import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
         <div class="full-width">
           <app-chips-list [label]="'更改执行者'" [multiple]="false" formControlName="owner"></app-chips-list>
         </div>
-        <md-input-container class="full-width">
+        <md-form-field class="full-width">
           <input mdInput [mdDatepicker]="dueDatePicker" placeholder="选择截止日期" formControlName="dueDate">
-          <button mdSuffix [mdDatepickerToggle]="dueDatePicker" type="button"></button>
-        </md-input-container>
+          <md-datepicker-toggle mdSuffix [for]="dueDatePicker"></md-datepicker-toggle>
+        </md-form-field>
         <md-datepicker touchUi="true" #dueDatePicker></md-datepicker>
-        <md-input-container class="full-width">
+        <md-form-field class="full-width">
           <input mdInput [mdDatepicker]="reminderPicker" placeholder="选择提醒日期" formControlName="reminder">
-          <button mdSuffix [mdDatepickerToggle]="reminderPicker" type="button"></button>
-        </md-input-container>
+          <md-datepicker-toggle mdSuffix [for]="reminderPicker"></md-datepicker-toggle>
+        </md-form-field>
         <md-datepicker touchUi="true" #reminderPicker></md-datepicker>
         <div class="full-width">
           <app-chips-list [label]="'更改参与者'" formControlName="followers"></app-chips-list>
         </div>
-        <md-input-container class="full-width">
+        <md-form-field class="full-width">
           <textarea mdInput placeholder="备注" formControlName="remark"></textarea>
-        </md-input-container>
+        </md-form-field>
       </div>
       <div md-dialog-actions>
         <div class="fill" *ngIf="notConfirm else confirm">
           <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">
             保存
           </button>
-          <button md-dialog-close md-raised-button type="button">关闭</button>
+          <button mdDialogClose md-raised-button type="button">关闭</button>
           <span class="fill-remaining-space">
           </span>
           <button md-button color="warn" type="button" [disabled]="delInvisible" (click)="onDelClick(false)">删除</button>

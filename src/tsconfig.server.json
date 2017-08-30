@@ -4,7 +4,7 @@
     "outDir": "../out-tsc/app",
     // required to set this for angular server rendering
     "module": "commonjs",
-    "baseUrl": "",
+    "baseUrl": "./",
     "types": []
   },
   "exclude": [

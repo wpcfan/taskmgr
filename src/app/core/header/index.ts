@@ -37,7 +37,7 @@ export class HeaderComponent {
   }
 
   logout() {
-    this.store$.dispatch({type: actions.ActionTypes.LOGOUT});
+    this.store$.dispatch({type: actions.LOGOUT});
   }
 
   onChange(checked) {

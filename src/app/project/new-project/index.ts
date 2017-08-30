@@ -7,20 +7,20 @@ import {Observable} from 'rxjs/Observable';
   selector: 'app-new-project',
   template: `
     <form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
-      <h3 md-dialog-title>{{dialogTitle}}</h3>
-      <div md-dialog-content>
-        <md-input-container class="full-width">
+      <h3 mdDialogTitle>{{dialogTitle}}</h3>
+      <div mdDialogContent>
+        <md-form-field class="full-width">
           <input mdInput placeholder="项目名称" formControlName="name">
-        </md-input-container>
-        <md-input-container class="full-width">
+        </md-form-field>
+        <md-form-field class="full-width">
           <input mdInput placeholder="项目简介（选填）" formControlName="desc">
-        </md-input-container>
+        </md-form-field>
         <app-image-list-select [cols]="6" [items]="thumbnails$ | async" formControlName="coverImg">
         </app-image-list-select>
       </div>
       <div md-dialog-actions>
         <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">保存</button>
-        <button md-dialog-close md-raised-button type="button">关闭</button>
+        <button mdDialogClose md-raised-button type="button">关闭</button>
       </div>
     </form>
   `,

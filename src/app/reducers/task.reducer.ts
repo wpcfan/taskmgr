@@ -1,5 +1,5 @@
 import {Task, Project} from '../domain';
-import {createSelector} from 'reselect';
+import {createSelector} from '@ngrx/store';
 import {
   covertArrToObj,
   buildObjFromArr,
@@ -62,21 +62,21 @@ const updateTask = (state, action) => {
   return updateOne(state, action.payload);
 };
 
-export function reducer (state = initialState, action: actions.Actions): State {
+export function reducer (state = initialState, action: actions.Actions | prjActions.Actions): State {
   switch (action.type) {
-    case actions.ActionTypes.ADD_SUCCESS:
+    case actions.ADD_SUCCESS:
       return addTask(state, action);
-    case actions.ActionTypes.DELETE_SUCCESS:
+    case actions.DELETE_SUCCESS:
       return delTask(state, action);
-    case prjActions.ActionTypes.DELETE_SUCCESS:
+    case prjActions.DELETE_SUCCESS:
       return delTasksByPrj(state, action);
-    case actions.ActionTypes.MOVE_SUCCESS:
-    case actions.ActionTypes.COMPLETE_SUCCESS:
-    case actions.ActionTypes.UPDATE_SUCCESS:
+    case actions.MOVE_SUCCESS:
+    case actions.COMPLETE_SUCCESS:
+    case actions.UPDATE_SUCCESS:
       return updateTask(state, action);
-    case actions.ActionTypes.LOAD_IN_LISTS_SUCCESS:
+    case actions.LOAD_IN_LISTS_SUCCESS:
       return loadTasks(state, action);
-    case actions.ActionTypes.MOVE_ALL_SUCCESS:
+    case actions.MOVE_ALL_SUCCESS:
       return moveAllTasks(state, action);
     default:
       return state;

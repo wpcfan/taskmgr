@@ -1,29 +1,26 @@
 import {Action} from '@ngrx/store';
-import {type} from '../utils/type.util';
 import {Err, Quote} from '../domain';
 
-export const ActionTypes = {
-  QUOTE: type('[Quote] Quote'),
-  QUOTE_SUCCESS: type('[Quote] Quote Success'),
-  QUOTE_FAIL: type('[Quote] Quote Fail')
-};
+export const QUOTE = '[Quote] Quote';
+export const QUOTE_SUCCESS = '[Quote] Quote Success';
+export const QUOTE_FAIL = '[Quote] Quote Fail';
 
 export class QuoteAction implements Action {
-  type = ActionTypes.QUOTE;
+  readonly type = QUOTE;
 
   constructor(public payload: any) {
   }
 }
 
 export class QuoteSuccessAction implements Action {
-  type = ActionTypes.QUOTE_SUCCESS;
+  readonly type = QUOTE_SUCCESS;
 
   constructor(public payload: Quote) {
   }
 }
 
 export class QuoteFailAction implements Action {
-  type = ActionTypes.QUOTE_FAIL;
+  readonly type = QUOTE_FAIL;
 
   constructor(public payload: string) {
   }

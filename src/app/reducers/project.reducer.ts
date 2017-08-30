@@ -1,5 +1,5 @@
 import {Project} from '../domain';
-import {createSelector} from 'reselect';
+import {createSelector} from '@ngrx/store';
 import {covertArrToObj, buildObjFromArr} from '../utils/reduer.util';
 import * as actions from '../actions/project.action';
 
@@ -63,17 +63,17 @@ const loadProjects = (state, action) => {
 
 export function reducer (state = initialState, action: actions.Actions): State {
   switch (action.type) {
-    case actions.ActionTypes.ADD_SUCCESS:
+    case actions.ADD_SUCCESS:
       return addProject(state, action);
-    case actions.ActionTypes.DELETE_SUCCESS:
+    case actions.DELETE_SUCCESS:
       return delProject(state, action);
-    case actions.ActionTypes.INVITE_SUCCESS:
-    case actions.ActionTypes.UPDATE_LISTS_SUCCESS:
-    case actions.ActionTypes.UPDATE_SUCCESS:
+    case actions.INVITE_SUCCESS:
+    case actions.UPDATE_LISTS_SUCCESS:
+    case actions.UPDATE_SUCCESS:
       return updateProject(state, action);
-    case actions.ActionTypes.LOADS_SUCCESS:
+    case actions.LOADS_SUCCESS:
       return loadProjects(state, action);
-    case actions.ActionTypes.SELECT:
+    case actions.SELECT:
       return {...state, selectedId: action.payload.id};
     default:
       return state;
