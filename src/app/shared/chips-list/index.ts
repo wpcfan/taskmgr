@@ -14,9 +14,9 @@ import {User} from '../../domain';
           {{member.name}} <span (click)="removeMember(member)" class="remove-tag">x</span>
         </md-chip>
       </md-chip-list>
-      <md-input-container *ngIf="displayInput" class="full-width">
+      <md-form-field *ngIf="displayInput" class="full-width">
         <input mdInput [placeholder]="placeholderText" [mdAutocomplete]="autoMember" formControlName="memberSearch">
-      </md-input-container>
+      </md-form-field>
     </div>
     <md-autocomplete #autoMember="mdAutocomplete" [displayWith]="displayUser">
       <md-option

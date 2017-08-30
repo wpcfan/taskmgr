@@ -23,7 +23,6 @@ import {
   MdSelectModule,
   MdTabsModule,
   MdTooltipModule,
-  MdSelectionModule,
   MdSlideToggleModule,
 } from '@angular/material';
 import {ConfirmDialogComponent} from './confirm-dialog';
@@ -61,7 +60,6 @@ import {DirectivesModule} from '../directives';
     MdToolbarModule,
     MdSidenavModule,
     MdSlideToggleModule,
-    MdSelectionModule,
     DirectivesModule,
   ],
   exports: [
@@ -87,7 +85,6 @@ import {DirectivesModule} from '../directives';
     MdAutocompleteModule,
     MdTabsModule,
     MdTooltipModule,
-    MdSelectionModule,
     MdToolbarModule,
     MdSidenavModule,
     MdSlideToggleModule,

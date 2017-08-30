@@ -4,9 +4,9 @@
       <md-card-title> 忘记密码：</md-card-title>
     </md-card-header>
     <md-card-content>
-      <md-input-container class="full-width">
+      <md-form-field class="full-width">
         <input mdInput placeholder="注册时使用的电子邮箱" formControlName="email">
-      </md-input-container>
+      </md-form-field>
       <button md-raised-button type="submit" [disabled]="!form.valid">找回密码</button>
     </md-card-content>
     <md-card-actions class="text-right">

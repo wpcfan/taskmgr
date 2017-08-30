@@ -29,18 +29,18 @@ export interface Age {
   template: `
     <div [formGroup]="form" class="age-input">
       <div>
-        <md-input-container>
+        <md-form-field>
           <input mdInput [mdDatepicker]="birthPicker" type="text" placeholder="出生日期" formControlName="birthday" >
-          <button mdSuffix [mdDatepickerToggle]="birthPicker" type="button"></button>
+          <md-datepicker-toggle mdSuffix [for]="birthPicker"></md-datepicker-toggle>
           <md-error>日期不正确</md-error>
-        </md-input-container>
+        </md-form-field>
         <md-datepicker touchUi="true" #birthPicker></md-datepicker>
       </div>
       <ng-container formGroupName="age">
         <div class="age-num">
-          <md-input-container>
+          <md-form-field>
             <input mdInput type="number" placeholder="年龄" formControlName="ageNum">
-          </md-input-container>
+          </md-form-field>
         </div>
         <div>
           <md-button-toggle-group formControlName="ageUnit" [(ngModel)]="selectedUnit">

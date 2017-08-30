@@ -10,11 +10,11 @@ export interface ConfirmDialog {
 @Component({
   selector: 'app-confirm-dialog',
   template: `
-    <h1 md-dialog-title>{{dialog.title}}</h1>
-    <div md-dialog-content>{{dialog.content}}</div>
+    <h1 mdDialogTitle>{{dialog.title}}</h1>
+    <div mdDialogContent>{{dialog.content}}</div>
     <div md-dialog-actions>
       <button md-raised-button color="primary" (click)="handleAction(true)">{{dialog.confirmAction}}</button>
-      <button md-raised-button md-dialog-close type="button" (click)="handleAction(false)">关闭</button>
+      <button md-raised-button mdDialogClose type="button" (click)="handleAction(false)">关闭</button>
     </div>
   `,
   styles: [``],

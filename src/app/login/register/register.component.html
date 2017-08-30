@@ -2,18 +2,18 @@
   <md-card class="card">
     <md-tab-group [dynamicHeight]="true" [selectedIndex]="selectedTab" (selectChange)="onTabChange($event.index)">
       <md-tab label="帐号信息">
-        <md-input-container class="full-width">
+        <md-form-field class="full-width">
           <input mdInput placeholder="电子邮件" formControlName="email">
-        </md-input-container>
-        <md-input-container class="full-width">
+        </md-form-field>
+        <md-form-field class="full-width">
           <input mdInput type="text" placeholder="您的名字" formControlName="name">
-        </md-input-container>
-        <md-input-container class="full-width">
+        </md-form-field>
+        <md-form-field class="full-width">
           <input mdInput type="password" placeholder="您的密码" formControlName="password">
-        </md-input-container>
-        <md-input-container class="full-width">
+        </md-form-field>
+        <md-form-field class="full-width">
           <input mdInput type="password" placeholder="为避免失误请再次输入" formControlName="repeat">
-        </md-input-container>
+        </md-form-field>
         <app-image-list-select
           [useSvgIcon]="true"
           [cols]="6"

@@ -8,8 +8,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   selector: 'app-copy-task',
   template: `
     <form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
-      <span md-dialog-title>{{dialogTitle}}</span>
-      <div md-dialog-content>
+      <span mdDialogTitle>{{dialogTitle}}</span>
+      <div mdDialogContent>
         <md-select placeholder="选择目标列表" formControlName="targetList" class="full-width">
           <md-option *ngFor="let list of lists$ | async" [value]="list.id">
             {{list.name}}
@@ -17,7 +17,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
         </md-select>
         <div>
           <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">确定</button>
-          <button md-dialog-close md-raised-button type="button">关闭</button>
+          <button mdDialogClose md-raised-button type="button">关闭</button>
         </div>
       </div>
     </form>

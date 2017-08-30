@@ -41,9 +41,9 @@ import {Address} from '../../domain';
         </md-select>
       </div>
       <div class="street">
-        <md-input-container class="full-width">
+        <md-form-field class="full-width">
           <input mdInput placeholder="街道地址" [(ngModel)]="_address.street" (change)="onStreetChange()">
-        </md-input-container>
+        </md-form-field>
       </div>
     </div>
     `,

@@ -18,10 +18,10 @@ import {isValidDate} from '../../utils/date.util';
       </md-select>
     </div>
     <div class="id-input">
-      <md-input-container class="full-width">
+      <md-form-field class="full-width">
         <input mdInput type="text" placeholder="证件号码" (change)="onIdNoChange($event.target.value)" [(ngModel)]="identity.identityNo">
         <md-error>证件号码输入有误</md-error>
-      </md-input-container>
+      </md-form-field>
     </div>
   `,
   styles: [`
