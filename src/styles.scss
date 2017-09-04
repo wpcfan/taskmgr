@@ -1,7 +1,7 @@
 @import 'theme.scss';
 @import url('~https://fonts.googleapis.com/icon?family=Material+Icons');
 
-html, body, app-root, md-sidenav-container, .site {
+html, body, app-root, md-sidenav-container {
   margin: 0;
   width: 100%;
   height: 100%;
@@ -12,6 +12,8 @@ html, body, app-root, md-sidenav-container, .site {
   display: -webkit-flex;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  min-height: 100%;
 }
 
 main {

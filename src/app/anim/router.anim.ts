@@ -20,8 +20,8 @@ export const slideToRight = trigger('routeAnim', [
 ]);
 
 const slideToBottom = trigger('routeAnim', [
-  state('void', style({position: 'fixed', width: '100%', height: '80%'}) ),
-  state('*', style({position: 'fixed', width: '100%', height: '80%'}) ),
+  state('void', style({width: '100%', height: '80%'}) ),
+  state('*', style({width: '100%', height: '80%'}) ),
   transition(':enter', [
     style({transform: 'translateY(-100%)'}),
     animate('0.5s ease-in-out', style({transform: 'translateY(0%)'}))

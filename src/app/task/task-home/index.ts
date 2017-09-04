@@ -83,6 +83,7 @@ import {TaskListVM} from '../../vm/task-list.vm';
     }
     :host {
       display: flex;
+      flex: 1;
     }
   `],
   animations: [defaultRouteAnim, listAnimation],

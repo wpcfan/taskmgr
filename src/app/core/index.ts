@@ -1,19 +1,20 @@
 import {NgModule, Optional, SkipSelf} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-// TODO: to remove this once @angular/material switch to HttpClient
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MdIconRegistry} from '@angular/material';
+import {DomSanitizer} from '@angular/platform-browser';
 import {SharedModule} from '../shared';
 import {AppRoutingModule} from './app-routing.module';
 import {AppEffectsModule} from '../effects';
 import {ServicesModule} from '../services';
 import {AppStoreModule} from '../reducers';
+
 import {HeaderComponent} from './header';
 import {FooterComponent} from './footer';
 import {SidebarComponent} from './sidebar';
 import {PageNotFoundComponent} from './page-not-found';
-import {MdIconRegistry} from '@angular/material';
-import {DomSanitizer} from '@angular/platform-browser';
+
 import {loadSvgResources} from '../utils/svg.util';
 
 import '../utils/debug.util';
@@ -44,9 +45,9 @@ import 'rxjs/add/operator/do';
 
 @NgModule({
   imports: [
+    HttpModule,
     SharedModule,
     HttpClientModule,
-    HttpModule,
     AppEffectsModule,
     ServicesModule.forRoot(),
     AppStoreModule,
