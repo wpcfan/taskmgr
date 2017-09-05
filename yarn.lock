@@ -16,9 +16,9 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/cdk@github:angular/cdk-builds":
-  version "2.0.0-beta.10-1b6b270"
-  resolved "https://codeload.github.com/angular/cdk-builds/tar.gz/aa8f6bbef1e643f65198c143c2a42f4405e3644c"
+"@angular/cdk@^2.0.0-beta.10":
+  version "2.0.0-beta.10"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-2.0.0-beta.10.tgz#7ffcc430d6f67dfde1df25e1fa693c188e4da08a"
   dependencies:
     tslib "^1.7.1"
 
@@ -139,9 +139,9 @@
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-4.3.4.tgz#3a44a227a2256941eb328057e3c1372868a8516f"
 
-"@angular/material@github:angular/material2-builds":
-  version "2.0.0-beta.10-1b6b270"
-  resolved "https://codeload.github.com/angular/material2-builds/tar.gz/c739b11c242a35f5c531b07ef6e223b13bfeb5bd"
+"@angular/material@^2.0.0-beta.10":
+  version "2.0.0-beta.10"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-2.0.0-beta.10.tgz#23f5887d5e34da89dd6da1fe4da0b3f779da4807"
   dependencies:
     tslib "^1.7.1"
 
@@ -1453,6 +1453,10 @@ dashdash@^1.12.0:
   resolved "https://registry.yarnpkg.com/dashdash/-/dashdash-1.14.1.tgz#853cfa0f7cbe2fed5de20326b8dd581035f6e2f0"
   dependencies:
     assert-plus "^1.0.0"
+
+date-fns@2.0.0-alpha.2:
+  version "2.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.0.0-alpha.2.tgz#d1ad4284d93541e8cc4ae829466e0ec87952b7fe"
 
 date-fns@^1.23.0, date-fns@^1.28.5:
   version "1.28.5"
