@@ -3,11 +3,11 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@
 @Component({
   selector: 'app-task-list-header',
   template: `
-    <div mdSubheader class="header-container">
+    <div mdSubheader class="header-container" fxLayout="row" fxLayoutAlign="center center">
       <div>
         <h4>{{header}}</h4>
       </div>
-      <div class="fill">
+      <div class="fill" fxFlex>
         <button md-button (click)="addNewTask($event)">
           <md-icon>add_circle_outline</md-icon>
           <span>新任务</span>
@@ -42,17 +42,10 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@
     }
 
     .fill{
-      flex: 1;
       text-align: center;
     }
 
     .header-container{
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      justify-content: center;
-      align-items: center;
-      align-content: center;
       width: 100%;
     }
   `],

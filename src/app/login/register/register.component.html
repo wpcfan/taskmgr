@@ -1,5 +1,5 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
-  <md-card class="card">
+<form fxFlex fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center stretch" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
+  <md-card fxFlex="1 1 auto">
     <md-tab-group [dynamicHeight]="true" [selectedIndex]="selectedTab" (selectChange)="onTabChange($event.index)">
       <md-tab label="帐号信息">
         <md-form-field class="full-width">
@@ -21,7 +21,7 @@
           [items]="avatars$ | async"
           formControlName="avatar">
         </app-image-list-select>
-        <div class="full-width action-area">
+        <div class="full-width" fxLayout="row">
           <button md-raised-button type="button" (click)="nextTab()">下一步</button>
           <span class="fill-remaining-space"></span>
           <span>
@@ -39,7 +39,7 @@
         <div class="full-width control-padding">
           <app-area-list formControlName="address"></app-area-list>
         </div>
-        <div class="full-width">
+        <div class="full-width" fxLayout="row">
           <button md-raised-button type="button" (click)="prevTab()">上一步</button>
           <button md-raised-button type="submit" [disabled]="!form.valid">注册</button>
           <span class="fill-remaining-space"></span>

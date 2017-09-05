@@ -1,8 +1,3 @@
-.card {
-  margin: 15px;
-  display: flex;
-}
-
 .text-right {
   margin: 10px;
   text-align: end;
@@ -13,22 +8,3 @@
   padding-top: 10px;
 }
 
-.action-area {
-  display: flex;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  flex: 0 1 auto;
-}
-
-md-tab {
-  display: flex;
-  flex: 0 1 auto;
-}
-
-:host {
-  display: flex;
-  flex-direction: column;
-}

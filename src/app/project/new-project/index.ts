@@ -6,7 +6,7 @@ import {Observable} from 'rxjs/Observable';
 @Component({
   selector: 'app-new-project',
   template: `
-    <form class="form" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
+    <form fxLayout="column" class="form" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
       <h3 mdDialogTitle>{{dialogTitle}}</h3>
       <div mdDialogContent>
         <md-form-field class="full-width">
@@ -28,9 +28,6 @@ import {Observable} from 'rxjs/Observable';
     .form {
       margin: 0;
       padding: 0;
-      display: flex;
-      flex-direction: column;
-      flex-wrap: nowrap;
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,

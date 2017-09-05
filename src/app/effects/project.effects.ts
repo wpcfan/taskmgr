@@ -10,7 +10,7 @@ import * as tasklistActions from '../actions/task-list.action';
 import * as userActions from '../actions/user.action';
 import * as fromRoot from '../reducers';
 import {Project} from '../domain';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 @Injectable()
 export class ProjectEffects {
 
