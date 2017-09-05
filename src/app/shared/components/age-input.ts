@@ -17,7 +17,7 @@ import {
   differenceInDays,
   differenceInMonths,
   differenceInYears,
-  parse
+  toDate
 } from 'date-fns';
 import {Observable} from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -112,7 +112,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     const initDate = convertToDate(subYears(Date.now(), 30));
     const initAge = this.toAge(initDate);
     this.form = this.fb.group({
-      birthday: [parse(initDate), this.validateDate],
+      birthday: [toDate(initDate), this.validateDate],
       age:  this.fb.group({
         ageNum: [initAge.age],
         ageUnit: [initAge.unit]
@@ -241,7 +241,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   }
 
   private toAge(dateStr: string): Age {
-    const date = parse(dateStr);
+    const date = toDate(dateStr);
     const now = new Date();
     if (isBefore(subDays(now, this.daysTop), date)) {
       return {
