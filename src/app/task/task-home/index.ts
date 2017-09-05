@@ -17,9 +17,10 @@ import {TaskListVM} from '../../vm/task-list.vm';
 @Component({
   selector: 'app-task-home',
   template: `
-    <div class="task-lists">
+    <div class="task-lists" fxLayout="row" fxLayoutAlign="start start">
       <app-task-list
         class="list-container"
+        fxFlex="0 0 360px"
         *ngFor="let taskList of lists$ | async"
         [ngStyle]="{'order': taskList.order}"
         app-droppable
@@ -60,19 +61,12 @@ import {TaskListVM} from '../../vm/task-list.vm';
     }
     .list-container {
       height: 100%;
-      flex: 0 0 360px;
       overflow-y: auto;
       overflow-x: hidden;
     }
     .task-lists {
       min-width: 100%;
       height: 100%;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      align-items: flex-start;
-      justify-content: flex-start;
-      align-content: flex-start;
       overflow-x: scroll;
     }
     .fab-button {
@@ -83,6 +77,7 @@ import {TaskListVM} from '../../vm/task-list.vm';
     }
     :host {
       display: flex;
+      flex: 1
     }
   `],
   animations: [defaultRouteAnim, listAnimation],

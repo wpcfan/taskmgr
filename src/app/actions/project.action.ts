@@ -107,9 +107,6 @@ export class DeleteProjectFailAction implements Action {
 
 export class LoadProjectsAction implements Action {
   readonly type = LOADS;
-
-  constructor(public payload: any) {
-  }
 }
 
 export class LoadProjectsSuccessAction implements Action {

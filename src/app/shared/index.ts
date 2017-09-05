@@ -25,6 +25,7 @@ import {
   MdTooltipModule,
   MdSlideToggleModule,
 } from '@angular/material';
+import {FlexLayoutModule} from '@angular/flex-layout';
 import {ConfirmDialogComponent} from './confirm-dialog';
 import {ImageListSelectComponent} from './image-list-select';
 import {ChipsListComponent} from './chips-list';
@@ -33,77 +34,49 @@ import {AreaListComponent} from './area-list';
 import {AgeInputComponent} from './age-input';
 import {DirectivesModule} from '../directives';
 
+const MATERIAL_MODULES = [
+  MdToolbarModule, MdSidenavModule, MdAutocompleteModule, MdButtonModule,
+  MdButtonToggleModule, MdCardModule, MdCheckboxModule, MdChipsModule,
+  MdDatepickerModule, MdDialogModule, MdGridListModule, MdIconModule,
+  MdInputModule, MdListModule, MdMenuModule, MdNativeDateModule,
+  MdProgressBarModule, MdRadioModule, MdSelectModule, MdTabsModule,
+  MdTooltipModule, MdSlideToggleModule,
+];
+
+const MODULES = [
+  ...MATERIAL_MODULES,
+  CommonModule,
+  ReactiveFormsModule,
+  FormsModule,
+  FlexLayoutModule,
+  DirectivesModule
+];
+
+const DECLARATIONS = [
+  ConfirmDialogComponent,
+  ImageListSelectComponent,
+  ChipsListComponent,
+  IdentityInputComponent,
+  AreaListComponent,
+  AgeInputComponent,
+];
+
+const EXPORT_COMPONENTS = [
+  ConfirmDialogComponent,
+  ImageListSelectComponent,
+  ChipsListComponent,
+  IdentityInputComponent,
+  AreaListComponent,
+  AgeInputComponent,
+];
+
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MdInputModule,
-    MdSelectModule,
-    MdButtonToggleModule,
-    MdCardModule,
-    MdButtonModule,
-    MdDialogModule,
-    MdGridListModule,
-    MdListModule,
-    MdMenuModule,
-    MdIconModule,
-    MdProgressBarModule,
-    MdCheckboxModule,
-    MdChipsModule,
-    MdDatepickerModule,
-    MdNativeDateModule,
-    MdRadioModule,
-    MdAutocompleteModule,
-    MdTabsModule,
-    MdTooltipModule,
-    MdToolbarModule,
-    MdSidenavModule,
-    MdSlideToggleModule,
-    DirectivesModule,
-  ],
+  imports: MODULES,
   exports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    MdInputModule,
-    MdSelectModule,
-    MdButtonToggleModule,
-    MdCardModule,
-    MdButtonModule,
-    MdDialogModule,
-    MdGridListModule,
-    MdListModule,
-    MdMenuModule,
-    MdIconModule,
-    MdProgressBarModule,
-    MdCheckboxModule,
-    MdChipsModule,
-    MdDatepickerModule,
-    MdNativeDateModule,
-    MdRadioModule,
-    MdAutocompleteModule,
-    MdTabsModule,
-    MdTooltipModule,
-    MdToolbarModule,
-    MdSidenavModule,
-    MdSlideToggleModule,
-    DirectivesModule,
-    ConfirmDialogComponent,
-    ImageListSelectComponent,
-    ChipsListComponent,
-    IdentityInputComponent,
-    AreaListComponent,
-    AgeInputComponent,
+    ...MODULES,
+    ...EXPORT_COMPONENTS
   ],
-  declarations: [
-    ConfirmDialogComponent,
-    ImageListSelectComponent,
-    ChipsListComponent,
-    IdentityInputComponent,
-    AreaListComponent,
-    AgeInputComponent,
-  ],
+  declarations: DECLARATIONS,
   entryComponents: [
     ConfirmDialogComponent
   ]

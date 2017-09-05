@@ -2,8 +2,15 @@ import { Component, Output, EventEmitter, HostListener, ChangeDetectionStrategy 
 
 @Component({
   selector: 'app-quick-task',
-  templateUrl: './quick-task.component.html',
-  styleUrls: ['./quick-task.component.scss'],
+  template: `
+    <md-form-field class="full-width" [md-tooltip]="'回车或者点击右侧图标确认'">
+      <input mdInput placeholder="在这里快速建立一个任务" [(ngModel)]="desc"/>
+      <button md-icon-button mdSuffix (click)="sendQuickTask()">
+        <md-icon>send</md-icon>
+      </button>
+    </md-form-field>
+  `,
+  styles: [``],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuickTaskComponent {

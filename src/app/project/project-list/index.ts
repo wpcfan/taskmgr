@@ -13,8 +13,10 @@ import { Project } from '../../domain';
 @Component({
   selector: 'app-project-list',
   template: `
-    <div class="container" [@listAnim]="listAnim$ | async">
+    <div fxLayout="row" fxLayoutWrap [@listAnim]="listAnim$ | async">
       <app-project-item
+        fxFlex="0 0 360px"
+        fxLayout="row"
         class="card"
         *ngFor="let project of (projects$ | async)"
         [item]="project"
@@ -29,16 +31,9 @@ import { Project } from '../../domain';
     </button>
   `,
   styles: [`
-    .container {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-    }
     .card {
       height: 360px;
-      flex: 0 0 360px;
       margin: 10px;
-      display: flex;
     }
     .fab-button {
       position: fixed;
@@ -58,7 +53,7 @@ export class ProjectListComponent {
 
   constructor(private store$: Store<fromRoot.State>,
               private dialog: MdDialog) {
-    this.store$.dispatch(new actions.LoadProjectsAction({}));
+    this.store$.dispatch(new actions.LoadProjectsAction());
     this.projects$ = this.store$.select(fromRoot.getProjects);
     this.listAnim$ = this.projects$.map(p => p.length);
   }

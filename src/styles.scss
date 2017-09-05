@@ -1,29 +1,15 @@
 @import 'theme.scss';
 @import url('~https://fonts.googleapis.com/icon?family=Material+Icons');
 
-html, body, app-root, md-sidenav-container, .site {
+html, body, app-root, md-sidenav-container {
   margin: 0;
   width: 100%;
   height: 100%;
 }
 
 .site {
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  flex-direction: column;
-}
-
-main {
-  -ms-flex: 1;
-  -webkit-flex: 1;
-  flex: 1;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  min-height: 100%;
 }
 
 .full-width {

@@ -7,9 +7,6 @@ export const QUOTE_FAIL = '[Quote] Quote Fail';
 
 export class QuoteAction implements Action {
   readonly type = QUOTE;
-
-  constructor(public payload: any) {
-  }
 }
 
 export class QuoteSuccessAction implements Action {

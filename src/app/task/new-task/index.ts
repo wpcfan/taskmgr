@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
+import {parse} from 'date-fns';
 
 @Component({
   selector: 'app-new-task',
@@ -36,32 +37,27 @@ import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
           <textarea mdInput placeholder="备注" formControlName="remark"></textarea>
         </md-form-field>
       </div>
-      <div md-dialog-actions>
-        <div class="fill" *ngIf="notConfirm else confirm">
+      <div md-dialog-actions class="full-width">
+        <div fxLayout="row" *ngIf="notConfirm else confirm">
           <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">
             保存
           </button>
           <button mdDialogClose md-raised-button type="button">关闭</button>
-          <span class="fill-remaining-space">
+          <span fxFlex>
           </span>
           <button md-button color="warn" type="button" [disabled]="delInvisible" (click)="onDelClick(false)">删除</button>
         </div>
       </div>
     </form>
     <ng-template #confirm>
-      <div class="fill">
+      <div fxLayout="row">
         <span class="fill-remaining-space mat-body-2">是否确定删除？</span>
         <button md-button color="warn" type="button" (click)="reallyDel()">确定</button>
         <button md-raised-button color="primary" type="button" (click)="onDelClick(true)">取消</button>
       </div>
     </ng-template>
   `,
-  styles: [`
-    .fill {
-      width: 100%;
-      display: flex;
-    }
-  `],
+  styles: [``],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewTaskComponent implements OnInit {
@@ -106,8 +102,8 @@ export class NewTaskComponent implements OnInit {
       this.form = this.fb.group({
         desc: [this.data.task.desc, Validators.compose([Validators.required, Validators.maxLength(20)])],
         priority: [this.data.task.priority],
-        dueDate: [this.data.task.dueDate],
-        reminder: [this.data.task.reminder],
+        dueDate: [parse(this.data.task.dueDate)],
+        reminder: [parse(this.data.task.reminder)],
         owner: [this.data.task.owner ? [{name: this.data.task.owner.name, value: this.data.task.owner.id}] : []],
         followers: [this.data.task.participants ? [...this.data.task.participants] : []],
         remark: [this.data.task.remark, Validators.maxLength(40)]
