@@ -1,8 +1,8 @@
-import {NgModule, Optional, SkipSelf} from '@angular/core';
+import {NgModule, Optional, SkipSelf, LOCALE_ID} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MdIconRegistry} from '@angular/material';
+import {MdIconRegistry, DateAdapter, MD_DATE_FORMATS, MdDatepickerIntl} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {SharedModule} from '../shared';
 import {AppRoutingModule} from './app-routing.module';
@@ -16,6 +16,9 @@ import {SidebarComponent} from './sidebar';
 import {PageNotFoundComponent} from './page-not-found';
 
 import {loadSvgResources} from '../utils/svg.util';
+import {DateFnsAdapter} from '../shared/adapters/date-fns-adapter';
+import {DatepickerI18n} from '../shared/adapters/datepicker-i18n';
+import { MD_FNS_DATE_FORMATS } from '../shared/adapters/date-formats';
 
 import '../utils/debug.util';
 import 'rxjs/add/observable/from';
@@ -61,13 +64,11 @@ import 'rxjs/add/operator/do';
     AppRoutingModule,
   ],
   providers: [
-    {
-      provide: 'BASE_CONFIG',
-      useValue: {
-        uri: 'http://localhost:3002'
-        // uri: 'http://manage.t.imooc.io/apis',
-      }
-    }
+    {provide: 'BASE_CONFIG', useValue: { uri: 'http://localhost:3002'}},
+    {provide: LOCALE_ID, useValue: 'zh-CN'},
+    {provide: DateAdapter, useClass: DateFnsAdapter},
+    {provide: MD_DATE_FORMATS, useValue: MD_FNS_DATE_FORMATS},
+    {provide: MdDatepickerIntl, useClass: DatepickerI18n},
   ],
   declarations: [
     HeaderComponent,

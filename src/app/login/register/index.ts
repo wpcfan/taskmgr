@@ -6,7 +6,7 @@ import {Subscription} from 'rxjs/Subscription';
 import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/auth.action';
 import {extractInfo, getAddrByCode, isValidAddr} from '../../utils/identity.util';
-import {isValidDate, toDate} from '../../utils/date.util';
+import {isValidDate} from '../../utils/date.util';
 
 @Component({
   selector: 'app-register',
