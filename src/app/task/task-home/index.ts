@@ -204,6 +204,5 @@ export class TaskHomeComponent {
         createDate: new Date()
       }));
     })
-
   }
 }

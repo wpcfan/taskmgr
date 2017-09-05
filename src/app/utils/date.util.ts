@@ -1,9 +1,9 @@
-import {isFuture, isDate, isValid, differenceInYears, parse, format} from 'date-fns';
+import {isValid, differenceInYears, toDate, format} from 'date-fns';
 export const isValidDate = (dateStr) => {
-  const date = parse(dateStr);
-  return isDate(date) && isValid(date) && !isFuture(date);
+  const date = toDate(dateStr);
+  return isValid(date);
 };
 
-export const toDate = (date: Date) => {
+export const convertToDate = (date: Date) => {
   return format(date, 'YYYY-MM-DD');
 };

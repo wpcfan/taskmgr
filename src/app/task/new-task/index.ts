@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
-import {parse} from 'date-fns';
+import {toDate} from 'date-fns';
 
 @Component({
   selector: 'app-new-task',
@@ -102,8 +102,8 @@ export class NewTaskComponent implements OnInit {
       this.form = this.fb.group({
         desc: [this.data.task.desc, Validators.compose([Validators.required, Validators.maxLength(20)])],
         priority: [this.data.task.priority],
-        dueDate: [parse(this.data.task.dueDate)],
-        reminder: [parse(this.data.task.reminder)],
+        dueDate: [toDate(this.data.task.dueDate)],
+        reminder: [toDate(this.data.task.reminder)],
         owner: [this.data.task.owner ? [{name: this.data.task.owner.name, value: this.data.task.owner.id}] : []],
         followers: [this.data.task.participants ? [...this.data.task.participants] : []],
         remark: [this.data.task.remark, Validators.maxLength(40)]
