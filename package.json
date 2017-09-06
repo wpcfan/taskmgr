@@ -6,6 +6,7 @@
     "server": "json-server --watch mock/data.json --port 3002",
     "ng": "ng",
     "start": "concurrently \"ng serve --hmr -e=hmr --port=8000\" \"npm run server\"",
+    "prod": "concurrently \"ng serve --prod --port=8000\" \"npm run server\"",
     "build": "ng build --prod && ng build -prod -app 1 --output-hashing none && webpack -p",
     "test": "ng test",
     "lint": "ng lint",
