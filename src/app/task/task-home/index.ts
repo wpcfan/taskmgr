@@ -60,13 +60,13 @@ import {TaskListVM} from '../../vm/task-list.vm';
       background-color: dimgray;
     }
     .list-container {
-      height: 100%;
+      min-height: 100%;
       overflow-y: auto;
       overflow-x: hidden;
     }
     .task-lists {
       min-width: 100%;
-      height: 100%;
+      min-height: 100%;
       overflow-x: scroll;
     }
     .fab-button {
