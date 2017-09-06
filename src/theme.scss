@@ -5,6 +5,75 @@
 // 所以请确保只在此处包含一次即可，其他地方不要再包含了。
 @include mat-core();
 
+$md-tcpalette: (
+  50 : #eee4e9,
+  100 : #d5bbc8,
+  200 : #ba8da3,
+  300 : #9e5f7e,
+  400 : #893d63,
+  500 : #741b47,
+  600 : #6c1840,
+  700 : #611437,
+  800 : #57102f,
+  900 : #440820,
+  A100 : #ff7aa7,
+  A200 : #ff4786,
+  A400 : #ff1464,
+  A700 : #fa0055,
+  contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #ffffff,
+      400 : #ffffff,
+      500 : #ffffff,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #ffffff,
+      A700 : #ffffff,
+  )
+);
+
+$md-tcspalette: (
+  50 : #e9f0f1,
+  100 : #c7d9dd,
+  200 : #a2c0c7,
+  300 : #7da7b0,
+  400 : #61949f,
+  500 : #45818e,
+  600 : #3e7986,
+  700 : #366e7b,
+  800 : #2e6471,
+  900 : #1f515f,
+  A100 : #9fe9ff,
+  A200 : #6cddff,
+  A400 : #39d2ff,
+  A700 : #1fccff,
+  contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #000000,
+      500 : #ffffff,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+  )
+);
+
+$tc-primary: mat-palette($md-tcpalette);
+$tc-accent:  mat-palette($md-tcspalette, A200, A100, A400);
+
 // 使用在 palette.scss 中定义的 Material Design 调色板来定义我们自有主题的调色板
 // 对于每个调色板，你可以指定默认、轻柔或更重的色调
 $my-app-primary: mat-palette($mat-indigo);
@@ -14,7 +83,9 @@ $my-app-accent: mat-palette($mat-pink, A200, A100, A400);
 $my-app-warn: mat-palette($mat-red);
 
 // 创建一个主题对象 (包含所有自定义的调色板).
-$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+// $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+
+$my-app-theme: mat-light-theme($tc-primary, $tc-accent, $my-app-warn);
 
 // 包含主题风格和每个组件使用的风格。此处可以 @import 或 @include 你的自定义 mixins
 @include angular-material-theme($my-app-theme);

@@ -64,6 +64,14 @@ const reducers: ActionReducerMap<State> = {
   router: fromRouter.routerReducer,
 };
 
+const initState = {
+  auth: fromAuth.initialState,
+  quote: fromQuote.initialState,
+  projects: fromProjects.initialState,
+  taskLists: fromTaskLists.initialState,
+  tasks: fromTasks.initialState,
+  users: fromUsers.initialState,
+};
 
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
   return function(state: State, action: any): State {
@@ -74,24 +82,19 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
   };
 }
 
-export const metaReducers: MetaReducer<State>[] = !environment.production
-  ? [logger]
-  : [];
+export function storeStateGuard(reducer) {
+  return function (state, action) {
+      if (action.type === authActions.LOGOUT) {
+          return reducer(undefined, action);
+      }
 
-
-const initState = {
-  auth: fromAuth.initialState,
-  quote: fromQuote.initialState,
-  projects: fromProjects.initialState,
-  taskLists: fromTaskLists.initialState,
-  tasks: fromTasks.initialState,
-  users: fromUsers.initialState,
-};
-
-export function reducer(state: any, action: any) {
-  return action.type === authActions.LOGOUT ?
-    initState : reducers;
+      return reducer(state, action);
+  }
 }
+
+export const metaReducers: MetaReducer<State>[] = !environment.production
+  ? [logger, storeStateGuard]
+  : [storeStateGuard];
 
 export const getAuthState = (state: State) => state.auth;
 export const getQuoteState = (state: State) => state.quote;

@@ -8,11 +8,12 @@ import {
   differenceInDays,
   differenceInMonths,
   differenceInYears,
-  parse
+  toDate
 } from 'date-fns';
 import {Observable} from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { toDate, isValidDate } from '../../utils/date.util';
+import { convertToDate, isValidDate } from '../../utils/date.util';
+import { parse } from 'date-fns';
 export enum AgeUnit {
   Year = 0,
   Month,
@@ -101,10 +102,10 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
-    const initDate = this.dateOfBirth ? this.dateOfBirth : toDate(subYears(Date.now(), 30));
+    const initDate = this.dateOfBirth ? this.dateOfBirth : convertToDate(subYears(Date.now(), 30));
     const initAge = this.toAge(initDate);
     this.form = this.fb.group({
-      birthday: [parse(initDate), this.validateDate],
+      birthday: [toDate(initDate), this.validateDate],
       age:  this.fb.group({
         ageNum: [initAge.age],
         ageUnit: [initAge.unit]
@@ -149,7 +150,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       } else {
         const ageToCompare = this.toAge(this.form.get('birthday').value);
         if (age.age !== ageToCompare.age || age.unit !== ageToCompare.unit) {
-          this.form.get('birthday').patchValue(parse(date.date), {emitEvent: false});
+          this.form.get('birthday').patchValue(toDate(date.date), {emitEvent: false});
           this.propagateChange(date.date);
         }
       }
@@ -165,7 +166,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   // 提供值的写入方法
   public writeValue(obj: Date) {
     if (obj) {
-      const date = parse(toDate(obj));
+      const date = toDate(convertToDate(obj));
       this.form.get('birthday').patchValue(date, {emitEvent: true});
     }
   }
@@ -233,7 +234,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   }
 
   private toAge(dateStr: string): Age {
-    const date = parse(dateStr);
+    const date = toDate(dateStr);
     const now = new Date();
     if (isBefore(subDays(now, this.daysTop), date)) {
       return {
@@ -257,13 +258,13 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     const now = new Date();
     switch (age.unit) {
       case AgeUnit.Year: {
-        return toDate(subYears(now, age.age));
+        return convertToDate(subYears(now, age.age));
       }
       case AgeUnit.Month: {
-        return toDate(subMonths(now, age.age));
+        return convertToDate(subMonths(now, age.age));
       }
       case AgeUnit.Day: {
-        return toDate(subDays(now, age.age));
+        return convertToDate(subDays(now, age.age));
       }
       default: {
         return this.dateOfBirth;

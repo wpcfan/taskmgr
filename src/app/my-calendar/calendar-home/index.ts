@@ -12,7 +12,7 @@ import {defaultRouteAnim} from '../../anim';
   selector: 'app-cal-home',
   template: `
     <md-card>
-    <div class="toolbar">
+    <div fxLayout="row">
       <button
         md-icon-button
         mwlCalendarPreviousView
@@ -64,10 +64,6 @@ import {defaultRouteAnim} from '../../anim';
      </md-card>
   `,
   styles: [`
-    .toolbar{
-      display: flex;
-      flex-direction: row;
-    }
     :host{
       width: 100%;
     }
