@@ -97,7 +97,11 @@ export function storeStateGuard(reducer) {
 }
 
 export const metaReducers: MetaReducer<State>[] = !environment.production
-  ? [logger, storeStateGuard]
+  ? [
+      logger,
+      //storeFreeze, wait for ngrx/router-store's serialization issue resolved
+      storeStateGuard
+    ]
   : [storeStateGuard];
 
 export const getAuthState = (state: State) => state.auth;
