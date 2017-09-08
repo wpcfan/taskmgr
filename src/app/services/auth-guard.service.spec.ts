@@ -4,7 +4,7 @@ import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AuthGuardService} from './auth-guard.service';
 import {Store, StoreModule} from '@ngrx/store';
-import {getAuth, reducer, State} from '../reducers';
+import {getAuth, reducers, metaReducers, initState, State} from '../reducers';
 import * as authActions from '../actions/auth.action';
 
 const mockSnapshot: any = jasmine
@@ -31,7 +31,7 @@ describe('测试路由守卫服务：AuthGuardService', () => {
           {path: 'route1', component: DummyComponent},
           {path: 'route2', component: DummyComponent},
         ]),
-        StoreModule.provideStore(reducer),
+        StoreModule.forRoot(reducers, {initialState: initState, metaReducers: metaReducers }),
       ],
       declarations: [DummyComponent, RoutingComponent],
       providers: [
@@ -53,7 +53,7 @@ describe('测试路由守卫服务：AuthGuardService', () => {
           expect(r.result).toBe(r.auth);
         });
         store$.dispatch({
-          type: authActions.ActionTypes.LOGIN_SUCCESS,
+          type: authActions.LOGIN_SUCCESS,
           payload: {
             token: 'xxxx',
             user: {id: 'xxxx', email: 'abc@dev.local', name: 'xxxx', password: 'sssss'}

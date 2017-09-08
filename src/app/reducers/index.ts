@@ -54,7 +54,7 @@ export interface State {
   router: fromRouter.RouterReducerState;
 }
 
-const reducers: ActionReducerMap<State> = {
+export const reducers: ActionReducerMap<State> = {
   auth: fromAuth.reducer,
   quote: fromQuote.reducer,
   projects: fromProjects.reducer,
@@ -64,7 +64,7 @@ const reducers: ActionReducerMap<State> = {
   router: fromRouter.routerReducer,
 };
 
-const initState = {
+export const initState = {
   auth: fromAuth.initialState,
   quote: fromQuote.initialState,
   projects: fromProjects.initialState,

@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {LoginComponent} from './';
 import {SharedModule} from '../../shared';
 import {StoreModule} from '@ngrx/store';
-import {reducer} from '../../reducers';
+import {reducers, metaReducers, initState} from '../../reducers';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('测试登录组件：LoginComponent', () => {
@@ -15,7 +15,7 @@ describe('测试登录组件：LoginComponent', () => {
       declarations: [LoginComponent],
       imports: [
         SharedModule,
-        StoreModule.provideStore(reducer),
+        StoreModule.forRoot(reducers, {initialState: initState, metaReducers: metaReducers }),
         BrowserAnimationsModule
       ]
     })
@@ -30,6 +30,6 @@ describe('测试登录组件：LoginComponent', () => {
 
   it('组件模板的元素应该被正确创建', () => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.card md-card-header md-card-title').innerText).toContain('登录');
+    expect(compiled.querySelector('md-card-header md-card-title').innerText).toContain('登录');
   });
 });

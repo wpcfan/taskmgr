@@ -1,6 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {StoreModule} from '@ngrx/store';
-import {reducer} from '../../reducers';
+import {reducers, metaReducers, initState} from '../../reducers';
 import {MdSlideToggleModule, MdToolbarModule} from '@angular/material';
 import {HeaderComponent} from './';
 
@@ -12,7 +12,7 @@ describe('测试顶部组件：HeaderComponent', () => {
     TestBed.configureTestingModule({
       declarations: [HeaderComponent],
       imports: [
-        StoreModule.provideStore(reducer),
+        StoreModule.forRoot(reducers, {initialState: initState, metaReducers: metaReducers }),
         MdToolbarModule,
         MdSlideToggleModule
       ]
