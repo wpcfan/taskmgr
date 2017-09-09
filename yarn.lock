@@ -233,6 +233,10 @@
   version "0.0.33"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.0.33.tgz#bc0b28356af46fe9ec64495588ee61503fd34ce5"
 
+"@schematics/angular@~0.0.30":
+  version "0.0.33"
+  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.0.33.tgz#bc0b28356af46fe9ec64495588ee61503fd34ce5"
+
 "@types/crypto-js@^3.1.33":
   version "3.1.33"
   resolved "https://registry.yarnpkg.com/@types/crypto-js/-/crypto-js-3.1.33.tgz#7e6c91603533e0cd9f279a8405a9b9e379880c5d"
