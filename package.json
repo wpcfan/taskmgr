@@ -34,10 +34,10 @@
     "@ngrx/store": "^4.0.3",
     "@ngrx/store-devtools": "^4.0.0",
     "@nguniversal/express-engine": "^1.0.0-beta.2",
-    "angular-calendar": "^0.20.1",
+    "angular-calendar": "^0.21.2",
     "core-js": "^2.4.1",
     "crypto-js": "^3.1.9-1",
-    "date-fns": "2.0.0-alpha.2",
+    "date-fns": "^2.0.0-alpha.2",
     "express": "^4.15.4",
     "hammerjs": "^2.0.8",
     "lodash": "^4.17.4",
@@ -46,7 +46,7 @@
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
-    "@angular/cli": "^1.3.2",
+    "@angular/cli": "^1.4.1",
     "@angular/compiler-cli": "^4.3.4",
     "@angular/language-service": "^4.3.4",
     "@angular/platform-server": "^4.3.4",
