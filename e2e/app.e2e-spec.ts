@@ -1,14 +1,22 @@
-import { TaskMgrPage } from './app.po';
+import { TaskmgrPage } from './app.po';
+import { createWriteStream } from 'fs';
+// abstract writing screen shot to a file
+function writeScreenShot(data, filename) {
+  const stream = createWriteStream(filename);
+  stream.write(new Buffer(data, 'base64'));
+  stream.end();
+}
 
 describe('taskmgr App', () => {
-  let page: TaskMgrPage;
+  let page: TaskmgrPage;
 
   beforeEach(() => {
-    page = new TaskMgrPage();
+    page = new TaskmgrPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should display welcome message', () => {
     page.navigateTo();
+    page.fillInfo().then(result => writeScreenShot(result, 'sc001.jpg'));
     expect(page.getParagraphText()).toContain('企业协作平台');
   });
 });
