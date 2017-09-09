@@ -124,9 +124,9 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/flex-layout@^2.0.0-beta.9":
-  version "2.0.0-beta.9"
-  resolved "https://registry.yarnpkg.com/@angular/flex-layout/-/flex-layout-2.0.0-beta.9.tgz#3e54f898e805d0b1426d15e6139db415d04ee75f"
+"@angular/flex-layout@github:angular/flex-layout-builds":
+  version "2.0.0-beta.9-c3c7151"
+  resolved "https://codeload.github.com/angular/flex-layout-builds/tar.gz/92e1c2025672ca0e9f96f119c08ec83ee2bae118"
   dependencies:
     tslib "^1.7.1"
 
@@ -1530,10 +1530,6 @@ dashdash@^1.12.0:
   resolved "https://registry.yarnpkg.com/dashdash/-/dashdash-1.14.1.tgz#853cfa0f7cbe2fed5de20326b8dd581035f6e2f0"
   dependencies:
     assert-plus "^1.0.0"
-
-date-fns@2.0.0-alpha.2:
-  version "2.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.0.0-alpha.2.tgz#d1ad4284d93541e8cc4ae829466e0ec87952b7fe"
 
 date-fns@^1.23.0, date-fns@^1.28.5:
   version "1.28.5"
