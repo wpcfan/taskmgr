@@ -23,10 +23,10 @@ import {TaskListVM} from '../../vm/task-list.vm';
         fxFlex="0 0 360px"
         *ngFor="let taskList of lists$ | async"
         [ngStyle]="{'order': taskList.order}"
-        app-droppable
+        appDroppable
         [dropTags]="['task-item', 'task-list']"
         [dragEnterClass]="'drag-enter'"
-        [app-draggable]="true"
+        [appDraggable]="true"
         [dragTag]="'task-list'"
         [draggedClass]="'drag-start'"
         [dragData]="taskList"

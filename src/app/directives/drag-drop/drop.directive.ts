@@ -2,7 +2,7 @@ import {Directive, Input, Output, EventEmitter, HostListener, ElementRef, Render
 import {DragDropService, DragData} from '../drag-drop.service';
 
 @Directive({
-  selector: '[app-droppable][dropTags][dragEnterClass]',
+  selector: '[appDroppable][dropTags][dragEnterClass]',
 })
 export class DropDirective {
 
