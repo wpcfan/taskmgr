@@ -9,7 +9,7 @@ import * as actions from '../actions/project.action';
 import * as tasklistActions from '../actions/task-list.action';
 import * as userActions from '../actions/user.action';
 import * as fromRoot from '../reducers';
-import {Project} from '../domain';
+import {Project, User} from '../domain';
 import {Router} from '@angular/router';
 @Injectable()
 export class ProjectEffects {
@@ -81,13 +81,13 @@ export class ProjectEffects {
   loadTaskLists$: Observable<Action> = this.actions$
     .ofType<actions.SelectProjectAction>(actions.SELECT)
     .map(action => action.payload)
-    .map(project => new tasklistActions.LoadTaskListsAction(project.id));
+    .map(project => new tasklistActions.LoadTaskListsAction(<string>project.id));
 
   @Effect()
   toLoadUsersByPrj$: Observable<Action> = this.actions$
     .ofType<actions.SelectProjectAction>(actions.SELECT)
     .map(action => action.payload)
-    .map(project => new userActions.LoadUsersByPrjAction(project.id));
+    .map(project => new userActions.LoadUsersByPrjAction(<string>project.id));
 
   @Effect()
   startInitTaskLists$: Observable<Action> = this.actions$
@@ -100,7 +100,7 @@ export class ProjectEffects {
     .ofType<actions.AddProjectSuccessAction>(actions.ADD_SUCCESS)
     .map(action => action.payload)
     .map((prj: Project) => prj.id)
-    .withLatestFrom(this.store$.select(fromRoot.getAuth).map(auth => auth.user), (projectId, user) => {
+    .withLatestFrom(this.store$.select(fromRoot.getAuth).map(auth => auth.user), (projectId: string, user: User) => {
       return new userActions.AddUserProjectAction({user: user, projectId: projectId});
     });
 
@@ -109,7 +109,7 @@ export class ProjectEffects {
     .ofType<actions.DeleteProjectSuccessAction>(actions.DELETE_SUCCESS)
     .map(action => action.payload)
     .map((prj: Project) => prj.id)
-    .withLatestFrom(this.store$.select(fromRoot.getAuth).map(auth => auth.user), (projectId, user) => {
+    .withLatestFrom(this.store$.select(fromRoot.getAuth).map(auth => auth.user), (projectId: string, user: User) => {
       return new userActions.RemoveUserProjectAction({user: user, projectId: projectId});
     });
 

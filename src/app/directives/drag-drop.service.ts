@@ -10,13 +10,13 @@ export interface DragData {
 @Injectable()
 export class DragDropService {
 
-  private _dragData = new BehaviorSubject<DragData>(null);
+  private _dragData = new BehaviorSubject<DragData | null>(null);
 
   setDragData(data: DragData) {
     this._dragData.next(data);
   }
 
-  getDragData(): Observable<DragData> {
+  getDragData(): Observable<DragData | null> {
     return this._dragData.asObservable();
   }
 

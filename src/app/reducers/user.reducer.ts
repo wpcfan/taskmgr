@@ -18,28 +18,28 @@ const register = (state, action) => {
   const auth = <Auth>action.payload;
   return state.ids.indexOf(auth.userId) === -1 ?
     {
-      ids: [...state.ids, auth.user.id],
-      entities: {...state.entities, [auth.user.id]: auth.user}
+      ids: [...state.ids, <string>auth!.user!.id],
+      entities: {...state.entities, [<string>auth!.user!.id]: auth!.user}
     } : state;
 };
 
 const addPrjRef = (state, action) => {
   const user = <User>action.payload;
   const ids = [...state.ids, user.id];
-  const entities = {...state.entities, [user.id]: user};
-  return state.entities[user.id] ?
+  const entities = {...state.entities, [<string>user.id]: user};
+  return state.entities[<string>user.id] ?
     {...state, entities: entities} : {...state, ids: ids, entities: entities};
 };
 
 const removePrjRef = (state, action) => {
   const user = <User>action.payload;
-  return state.entities[user.id] ?
-    {...state, entities: {...state.entities, [user.id]: user}} : state;
+  return state.entities[<string>user.id] ?
+    {...state, entities: {...state.entities, [<string>user.id]: user}} : state;
 };
 
 const searchUsers = (state, action) => {
   const users = <User[]>action.payload;
-  const newUsers = users.filter(user => !state.entities[user.id]);
+  const newUsers = users.filter(user => !state.entities[<string>user.id]);
   const newIds = newUsers.map(user => user.id);
   const newEntities = covertArrToObj(newUsers);
   return {
@@ -50,7 +50,7 @@ const searchUsers = (state, action) => {
 
 const loadByPrj = (state, action) => {
   const users = <User[]>action.payload;
-  const newUsers = users.filter(user => !state.entities[user.id]);
+  const newUsers = users.filter(user => !state.entities[<string>user.id]);
   const newIds = newUsers.map(user => user.id);
   const newEntities = covertArrToObj(newUsers);
   return {
