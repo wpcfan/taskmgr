@@ -143,8 +143,21 @@ export const getTasksByList = createSelector<State, TaskList[], TaskVM[], TaskLi
     <TaskListVM>{
       ...list,
       tasks: tasks.filter(task => task.taskListId === list.id),
+      id: list.id,
     }
   ));
+
+  // return lists.map(list => {
+  //   const taskVMs: TaskVM[] = tasks.filter(task => task.taskListId === list.id);
+  //   const taskListVM: TaskListVM = {
+  //     name: list.name,
+  //     projectId: list.projectId,
+  //     order: list.order,
+  //     tasks: taskVMs,
+  //   }
+
+  //   return taskListVM;
+  // })
 });
 export const getProjectMembers = (projectId: string) => createSelector(getProjectsState, getUserEntities, (state, entities) => {
   return state!.entities[projectId]!.members!.map(id => entities[id]);

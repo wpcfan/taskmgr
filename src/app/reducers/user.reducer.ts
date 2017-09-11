@@ -19,22 +19,22 @@ const register = (state: State, action: authActions.LoginSuccessAction | authAct
   return state.ids.indexOf(<string>auth.userId) === -1 ?
     {
       ids: [...state.ids, <string>auth!.user!.id],
-      entities: {...state.entities, [<string>auth!.user!.id]: <User>auth!.user}
+      entities: { ...state.entities, [<string>auth!.user!.id]: <User>auth!.user }
     } : state;
 };
 
 const addPrjRef = (state: State, action: actions.AddUserProjectSuccessAction) => {
   const user = <User>action.payload;
   const ids: string[] = [...state.ids, <string>user.id];
-  const entities = {...state.entities, [<string>user.id]: user};
+  const entities = { ...state.entities, [<string>user.id]: user };
   return state.entities[<string>user.id] ?
-    {...state, entities: entities} : {...state, ids: ids, entities: entities};
+    { ...state, entities: entities } : { ...state, ids: ids, entities: entities };
 };
 
 const removePrjRef = (state: State, action: actions.RemoveUserProjectSuccessAction) => {
   const user = <User>action.payload;
   return state.entities[<string>user.id] ?
-    {...state, entities: {...state.entities, [<string>user.id]: user}} : state;
+    { ...state, entities: { ...state.entities, [<string>user.id]: user } } : state;
 };
 
 const searchUsers = (state: State, action: actions.SearchUsersSuccessAction) => {
@@ -66,7 +66,7 @@ const batchUpdatePrjRef = (state: State, action: actions.BatchUpdateUserProjectS
   return { ...state, entities: newEnities };
 };
 
-export function reducer (state: State = initialState, action: actions.Actions | authActions.Actions): State {
+export function reducer(state: State = initialState, action: actions.Actions | authActions.Actions): State {
   switch (action.type) {
     case authActions.LOGIN_SUCCESS:
     case authActions.REGISTER_SUCCESS:
@@ -90,5 +90,5 @@ export function reducer (state: State = initialState, action: actions.Actions | 
 export const getEntities = (state: State): { [id: string]: User } => state.entities;
 export const getIds = (state: State): string[] => state.ids;
 export const getUsers = createSelector<State, { [id: string]: User }, string[], User[]>(getEntities, getIds, (entities, ids) => {
-  return ids.map(id => entities[id]);
+  return ids.map((id: string) => entities[id]);
 });
