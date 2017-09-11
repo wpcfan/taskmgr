@@ -1,11 +1,11 @@
 import * as actions from '../actions/user.action';
 import * as authActions from '../actions/auth.action';
-import {covertArrToObj} from '../utils/reduer.util';
-import {User, Auth} from '../domain';
-import {createSelector} from '@ngrx/store';
+import { covertArrToObj } from '../utils/reduer.util';
+import { User, Auth } from '../domain';
+import { createSelector } from '@ngrx/store';
 
 export interface State {
-  ids: string [];
+  ids: string[];
   entities: { [id: string]: User };
 }
 
@@ -19,22 +19,22 @@ const register = (state, action) => {
   return state.ids.indexOf(auth.userId) === -1 ?
     {
       ids: [...state.ids, auth.user.id],
-      entities: {...state.entities, [auth.user.id]: auth.user}
+      entities: { ...state.entities, [auth.user.id]: auth.user }
     } : state;
 };
 
 const addPrjRef = (state, action) => {
   const user = <User>action.payload;
   const ids = [...state.ids, user.id];
-  const entities = {...state.entities, [user.id]: user};
+  const entities = { ...state.entities, [user.id]: user };
   return state.entities[user.id] ?
-    {...state, entities: entities} : {...state, ids: ids, entities: entities};
+    { ...state, entities: entities } : { ...state, ids: ids, entities: entities };
 };
 
 const removePrjRef = (state, action) => {
   const user = <User>action.payload;
   return state.entities[user.id] ?
-    {...state, entities: {...state.entities, [user.id]: user}} : state;
+    { ...state, entities: { ...state.entities, [user.id]: user } } : state;
 };
 
 const searchUsers = (state, action) => {
@@ -44,7 +44,7 @@ const searchUsers = (state, action) => {
   const newEntities = covertArrToObj(newUsers);
   return {
     ids: [...state.ids, ...newIds],
-    entities: {...state.entities, ...newEntities}
+    entities: { ...state.entities, ...newEntities }
   };
 };
 
@@ -55,18 +55,18 @@ const loadByPrj = (state, action) => {
   const newEntities = covertArrToObj(newUsers);
   return {
     ids: [...state.ids, ...newIds],
-    entities: {...state.entities, ...newEntities}
+    entities: { ...state.entities, ...newEntities }
   };
 };
 
 const batchUpdatePrjRef = (state, action) => {
   const users = <User[]>action.payload;
   const userProjects = covertArrToObj(users);
-  const newEnities = {...state.entities, ...userProjects};
-  return {...state, entities: newEnities};
+  const newEnities = { ...state.entities, ...userProjects };
+  return { ...state, entities: newEnities };
 };
 
-export function reducer (state = initialState, action: actions.Actions | authActions.Actions): State {
+export function reducer(state = initialState, action: actions.Actions | authActions.Actions): State {
   switch (action.type) {
     case authActions.LOGIN_SUCCESS:
     case authActions.REGISTER_SUCCESS:
@@ -87,8 +87,8 @@ export function reducer (state = initialState, action: actions.Actions | authAct
   }
 }
 
-export const getEntities = (state) => state.entities;
-export const getIds = (state) => state.ids;
-export const getUsers = createSelector(getEntities, getIds, (entities, ids) => {
+export const getEntities = (state: State): { [id: string]: User } => state.entities;
+export const getIds = (state: State): string[] => state.ids;
+export const getUsers = createSelector<State, { [id: string]: User }, string[], User[]>(getEntities, getIds, (entities, ids) => {
   return ids.map(id => entities[id]);
 });

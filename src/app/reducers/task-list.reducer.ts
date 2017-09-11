@@ -1,12 +1,12 @@
-import {TaskList, Project} from '../domain';
-import {createSelector} from '@ngrx/store';
-import {covertArrToObj, buildObjFromArr} from '../utils/reduer.util';
+import { TaskList, Project } from '../domain';
+import { createSelector } from '@ngrx/store';
+import { covertArrToObj, buildObjFromArr } from '../utils/reduer.util';
 import * as _ from 'lodash';
 import * as actions from '../actions/task-list.action';
 import * as prjActions from '../actions/project.action';
 
 export interface State {
-  ids: string [];
+  ids: string[];
   entities: { [id: string]: TaskList };
   selectedIds: string[];
 }
@@ -23,7 +23,7 @@ const addList = (state, action) => {
     return state;
   }
   const newIds = [...state.ids, taskList.id];
-  const newEntities = {...state.entities, [taskList.id]: taskList};
+  const newEntities = { ...state.entities, [taskList.id]: taskList };
   return {
     ids: newIds,
     entities: newEntities,
@@ -58,8 +58,8 @@ const delListByPrj = (state, action) => {
 
 const updateList = (state, action) => {
   const taskList = <TaskList>action.payload;
-  const entities = {...state.entities, [taskList.id]: taskList};
-  return {...state, entities: entities};
+  const entities = { ...state.entities, [taskList.id]: taskList };
+  return { ...state, entities: entities };
 };
 
 const swapOrder = (state, action) => {
@@ -68,8 +68,8 @@ const swapOrder = (state, action) => {
     return state;
   }
   const updated = covertArrToObj(taskLists);
-  const updatedEntities = {...state.entities, ...updated};
-  return {...state, entities: updatedEntities};
+  const updatedEntities = { ...state.entities, ...updated };
+  return { ...state, entities: updatedEntities };
 };
 
 const loadLists = (state, action) => {
@@ -86,17 +86,17 @@ const loadLists = (state, action) => {
   const newEntities = covertArrToObj(newTaskLists);
   return {
     ids: [...state.ids, ...newIds],
-    entities: {...state.entities, ...newEntities},
+    entities: { ...state.entities, ...newEntities },
     selectedIds: [...newIds]
   };
 };
 
 const selectPrj = (state, action) => {
   const selectedIds = state.ids.filter(id => state.entities[id].projectId === (<Project>action.payload).id);
-  return {...state, selectedIds: selectedIds};
+  return { ...state, selectedIds: selectedIds };
 };
 
-export function reducer (state = initialState, action: actions.Actions | prjActions.Actions): State {
+export function reducer(state = initialState, action: actions.Actions | prjActions.Actions): State {
   switch (action.type) {
     case actions.ADD_SUCCESS:
       return addList(state, action);
@@ -117,9 +117,9 @@ export function reducer (state = initialState, action: actions.Actions | prjActi
   }
 }
 
-export const getEntities = (state) => state.entities;
-export const getIds = (state) => state.ids;
-export const getSelectedIds = (state) => state.selectedIds;
-export const getTaskLists = createSelector(getEntities, getIds, (entities, ids) => {
+export const getEntities = (state: State): { [id: string]: TaskList } => state.entities;
+export const getIds = (state: State): string[] => state.ids;
+export const getSelectedIds = (state: State): string[] => state.selectedIds;
+export const getTaskLists = createSelector<State, { [id: string]: TaskList }, string[], TaskList[]>(getEntities, getIds, (entities, ids) => {
   return ids.map(id => entities[id]);
 });

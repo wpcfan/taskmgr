@@ -16,7 +16,7 @@ export class SidebarComponent {
   @Output() navClicked = new EventEmitter<void>();
 
   today = 'day';
-  projects$: Observable<Project>;
+  projects$: Observable<Project[]>;
   auth$: Observable<Auth>;
 
   constructor(private store$: Store<fromRoot.State>) {

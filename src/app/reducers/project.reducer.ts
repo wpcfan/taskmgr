@@ -1,6 +1,6 @@
-import {Project} from '../domain';
-import {createSelector} from '@ngrx/store';
-import {covertArrToObj, buildObjFromArr} from '../utils/reduer.util';
+import { Project } from '../domain';
+import { createSelector } from '@ngrx/store';
+import { covertArrToObj, buildObjFromArr } from '../utils/reduer.util';
 import * as actions from '../actions/project.action';
 
 export interface State {
@@ -21,8 +21,8 @@ const addProject = (state, action) => {
     return state;
   }
   const ids = [...state.ids, project.id];
-  const entities = {...state.entities, [project.id]: project};
-  return {...state, ids: ids, entities: entities};
+  const entities = { ...state.entities, [project.id]: project };
+  return { ...state, ids: ids, entities: entities };
 };
 
 const delProject = (state, action) => {
@@ -38,8 +38,8 @@ const delProject = (state, action) => {
 
 const updateProject = (state, action) => {
   const project = action.payload;
-  const entities = {...state.entities, [project.id]: project};
-  return {...state, entities: entities};
+  const entities = { ...state.entities, [project.id]: project };
+  return { ...state, entities: entities };
 };
 
 const loadProjects = (state, action) => {
@@ -56,12 +56,12 @@ const loadProjects = (state, action) => {
   const newEntities = covertArrToObj(newProjects);
   return {
     ids: [...state.ids, ...newIds],
-    entities: {...state.entities, ...newEntities},
+    entities: { ...state.entities, ...newEntities },
     selectedId: null
   };
 };
 
-export function reducer (state = initialState, action: actions.Actions): State {
+export function reducer(state = initialState, action: actions.Actions): State {
   switch (action.type) {
     case actions.ADD_SUCCESS:
       return addProject(state, action);
@@ -74,18 +74,18 @@ export function reducer (state = initialState, action: actions.Actions): State {
     case actions.LOADS_SUCCESS:
       return loadProjects(state, action);
     case actions.SELECT:
-      return {...state, selectedId: action.payload.id};
+      return { ...state, selectedId: action.payload.id };
     default:
       return state;
   }
 }
 
-export const getEntities = (state) => state.entities;
-export const getSelectedId = (state) => state.selectedId;
-export const getIds = (state) => state.ids;
+export const getEntities = (state: State): { [id: string]: Project } => state.entities;
+export const getSelectedId = (state: State): string => state.selectedId;
+export const getIds = (state: State): string[] => state.ids;
 export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
   return entities[selectedId];
 });
-export const getAll = createSelector(getEntities, getIds, (entities, ids) => {
+export const getAll = createSelector<State, { [id: string]: Project }, string[], Project[]>(getEntities, getIds, (entities, ids) => {
   return ids.map(id => entities[id]);
 });

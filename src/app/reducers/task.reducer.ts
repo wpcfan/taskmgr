@@ -1,5 +1,5 @@
-import {Task, Project} from '../domain';
-import {createSelector} from '@ngrx/store';
+import { Task, Project } from '../domain';
+import { createSelector } from '@ngrx/store';
 import {
   covertArrToObj,
   buildObjFromArr,
@@ -47,7 +47,7 @@ const moveAllTasks = (state, action) => {
     return state;
   }
   const updatedEntities = covertArrToObj(tasks);
-  return {...state, entities: {...state.entities, ...updatedEntities}};
+  return { ...state, entities: { ...state.entities, ...updatedEntities } };
 };
 
 const delTasksByPrj = (state, action) => {
@@ -55,14 +55,14 @@ const delTasksByPrj = (state, action) => {
   const listIds = project.taskLists;
   const remainingIds = state.ids.filter(id => _.indexOf(listIds, state.entities[id].taskListId) === -1);
   const remainingEntities = buildObjFromArr(remainingIds, state.entities);
-  return {ids: remainingIds, entities: remainingEntities};
+  return { ids: remainingIds, entities: remainingEntities };
 };
 
 const updateTask = (state, action) => {
   return updateOne(state, action.payload);
 };
 
-export function reducer (state = initialState, action: actions.Actions | prjActions.Actions): State {
+export function reducer(state = initialState, action: actions.Actions | prjActions.Actions): State {
   switch (action.type) {
     case actions.ADD_SUCCESS:
       return addTask(state, action);
@@ -83,8 +83,8 @@ export function reducer (state = initialState, action: actions.Actions | prjActi
   }
 }
 
-export const getEntities = (state) => state.entities;
-export const getIds = (state) => state.ids;
-export const getTasks = createSelector(getEntities, getIds, (entities, ids) => {
+export const getEntities = (state: State): { [id: string]: Task } => state.entities;
+export const getIds = (state: State): string[] => state.ids;
+export const getTasks = createSelector<State, { [id: string]: Task }, string[], Task[]>(getEntities, getIds, (entities, ids) => {
   return ids.map(id => entities[id]);
 });
