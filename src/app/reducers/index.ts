@@ -98,10 +98,10 @@ export function storeStateGuard(reducer: ActionReducer<State>): ActionReducer<St
 
 export const metaReducers: MetaReducer<State>[] = !environment.production
   ? [
-      logger,
-      // storeFreeze, wait for ngrx/router-store's serialization issue resolved
-      storeStateGuard
-    ]
+    logger,
+    // storeFreeze, wait for ngrx/router-store's serialization issue resolved
+    storeStateGuard
+  ]
   : [storeStateGuard];
 
 export const getAuthState = (state: State) => state.auth;
@@ -160,7 +160,7 @@ export const getProjectMembers = (projectId: string) => createSelector(getProjec
   return state!.entities[projectId]!.members!.map(id => entities[id]);
 });
 export const getAuth = createSelector(getAuthState, getUserEntities, (_auth, _entities) => {
-  return {..._auth, user: _entities[<string>_auth.userId]};
+  return { ..._auth, user: _entities[<string>_auth.userId] };
 });
 export const getAuthUser = createSelector(getAuthState, getUserEntities, (_auth, _entities) => {
   return _entities[<string>_auth.userId];
