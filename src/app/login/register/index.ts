@@ -43,10 +43,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       address: ['', Validators.maxLength(80)],
       identity: []
     });
-    const id$ = this.form.get('identity').valueChanges
+    const id$ = this.form.get('identity')!.valueChanges
       .debug('id$: ')
       .debounceTime(300)
-      .filter(v => this.form.get('identity').valid);
+      .filter(v => this.form.get('identity')!.valid);
 
     this._sub = id$.subscribe(id => {
       const info = extractInfo(id.identityNo);
