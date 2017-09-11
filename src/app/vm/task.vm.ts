@@ -1,4 +1,5 @@
 import { User } from '../domain/user';
+import { TaskHistory } from '../domain/history';
 export interface TaskVM {
   id?: string;
   taskListId: string;
@@ -13,4 +14,5 @@ export interface TaskVM {
   // tags?: string[];
   reminder?: Date;
   createDate?: Date;
+  history?: TaskHistory[];
 }
