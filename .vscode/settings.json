@@ -22,5 +22,5 @@
   "files.insertFinalNewline": true,
   "terminal.integrated.fontSize": 18,
   "terminal.integrated.fontFamily": "'Fira Code', 'Operator Mono', Menlo, Monaco, 'Courier New', monospace",
-  "terminal.integrated.fontLigatures": true,
+  "terminal.integrated.fontLigatures": true
 }
