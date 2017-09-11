@@ -107,7 +107,7 @@ export class DateFnsAdapter extends DateAdapter<Date> {
     ].join('-');
   }
   isDateInstance(obj: any): boolean {
-    return ;
+    return obj instanceof Date;
   }
   isValid(date: Date): boolean {
     return isValid(date);

@@ -44,9 +44,9 @@ export class MyCalService {
     return this.http
       .get(uri, {params})
       .map((tasks: Task[]) => tasks.map(
-        task => ({
-          start: startOfDay(task.createDate),
-          end: task.dueDate ? endOfDay(task.dueDate) : endOfDay(task.createDate),
+        (task: Task) => ({
+          start: startOfDay(<Date>task.createDate),
+          end: task.dueDate ? endOfDay(<Date>task.dueDate) : endOfDay(<Date>task.createDate),
           title: task.desc,
           color: getPriorityColor(task.priority)
         })

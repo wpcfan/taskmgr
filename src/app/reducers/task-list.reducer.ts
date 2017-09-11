@@ -23,7 +23,7 @@ const addList = (state, action) => {
     return state;
   }
   const newIds = [...state.ids, taskList.id];
-  const newEntities = { ...state.entities, [taskList.id]: taskList };
+  const newEntities = {...state.entities, [<string>taskList.id]: taskList};
   return {
     ids: newIds,
     entities: newEntities,
@@ -45,7 +45,7 @@ const delList = (state, action) => {
 
 const delListByPrj = (state, action) => {
   const project = <Project>action.payload;
-  const taskListIds = project.taskLists;
+  const taskListIds = <string[]>project.taskLists;
   const remaningIds = _.difference(state.ids, taskListIds);
   const remainingEntities = buildObjFromArr(remaningIds, state.entities);
   const selectedIds = _.difference(state.selectedIds, taskListIds);
@@ -58,8 +58,8 @@ const delListByPrj = (state, action) => {
 
 const updateList = (state, action) => {
   const taskList = <TaskList>action.payload;
-  const entities = { ...state.entities, [taskList.id]: taskList };
-  return { ...state, entities: entities };
+  const entities = {...state.entities, [<string>taskList.id]: taskList};
+  return {...state, entities: entities};
 };
 
 const swapOrder = (state, action) => {
@@ -78,7 +78,7 @@ const loadLists = (state, action) => {
   if (taskLists === null) {
     return state;
   }
-  const newTaskLists = taskLists.filter(taskList => !state.entities[taskList.id]);
+  const newTaskLists = taskLists.filter(taskList => !state.entities[<string>taskList.id]);
   if (newTaskLists.length === 0) {
     return state;
   }

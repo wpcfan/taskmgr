@@ -91,7 +91,7 @@ export class TaskHomeComponent {
   constructor(private route: ActivatedRoute,
               private dialog: MdDialog,
               private store$: Store<fromRoot.State>) {
-    this.projectId$ = this.route.paramMap.map(p => p.get('id'));
+    this.projectId$ = this.route.paramMap.map(p => <string>p.get('id'));
     this.lists$ = this.store$.select(fromRoot.getTasksByList);
   }
 

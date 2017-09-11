@@ -160,10 +160,10 @@ export const getProjectMembers = (projectId: string) => createSelector(getProjec
   return state.entities[projectId].members.map(id => entities[id]);
 });
 export const getAuth = createSelector(getAuthState, getUserEntities, (_auth, _entities) => {
-  return { ..._auth, user: _entities[_auth.userId] };
+  return {..._auth, user: _entities[<string>_auth.userId]};
 });
 export const getAuthUser = createSelector(getAuthState, getUserEntities, (_auth, _entities) => {
-  return _entities[_auth.userId];
+  return _entities[<string>_auth.userId];
 });
 export const getMaxListOrder = createSelector(getTaskListEntities, getTaskListSelectedIds, (entities, ids) => {
   const orders: number[] = ids.map(id => entities[id].order);

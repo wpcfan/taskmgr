@@ -10,7 +10,7 @@ export function reducer(state: Auth = initialState, action: actions.Actions): Au
       const auth = <Auth>action.payload;
       return {
         token: auth.token,
-        userId: auth.user.id
+        userId: auth.user!.id
       };
     }
     case actions.LOGIN_FAIL:

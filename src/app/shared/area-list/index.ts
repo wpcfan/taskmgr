@@ -126,7 +126,7 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
   }
 
   // 验证表单，验证结果正确返回 null 否则返回一个验证结果对象
-  validate(c: FormControl): {[key: string]: any} {
+  validate(c: FormControl): {[key: string]: any} | null {
     const val = c.value;
     if (!val) {
       return null;
