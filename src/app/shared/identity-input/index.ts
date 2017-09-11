@@ -106,7 +106,7 @@ export class IdentityInputComponent implements ControlValueAccessor, OnInit, OnD
   }
 
   // 验证表单，验证结果正确返回 null 否则返回一个验证结果对象
-  validate(c: FormControl): {[key: string]: any} {
+  validate(c: FormControl): {[key: string]: any} | null {
     if (!c.value) {
       return null;
     }
@@ -127,7 +127,7 @@ export class IdentityInputComponent implements ControlValueAccessor, OnInit, OnD
     }
   }
 
-  private validateIdNumber(c: FormControl): {[key: string]: any} {
+  private validateIdNumber(c: FormControl): {[key: string]: any} | null {
     const val = c.value.identityNo;
     if (val.length !== 18) {
       return {
@@ -145,7 +145,7 @@ export class IdentityInputComponent implements ControlValueAccessor, OnInit, OnD
     return result ? null : {idNotValid:  true};
   }
 
-  private validatePassport(c: FormControl): {[key: string]: any} {
+  private validatePassport(c: FormControl): {[key: string]: any} | null {
     const value = c.value.identityNo;
     if (value.length !== 9) {
       return {idNotValid: true};
@@ -158,7 +158,7 @@ export class IdentityInputComponent implements ControlValueAccessor, OnInit, OnD
     return result ? null : {idNotValid:  true};
   }
 
-  private validateMilitary(c: FormControl): {[key: string]: any} {
+  private validateMilitary(c: FormControl): {[key: string]: any} | null {
     const value = c.value.identityNo;
     const pattern = /[\u4e00-\u9fa5](字第)(\d{4,8})(号?)$/;
     let result = false;

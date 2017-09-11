@@ -15,8 +15,8 @@ export interface Address {
 }
 
 export interface Identity {
-  identityNo: string;
-  identityType: IdentityType;
+  identityNo: string | null;
+  identityType: IdentityType | null;
 }
 
 export interface User {
