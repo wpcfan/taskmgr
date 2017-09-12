@@ -38,6 +38,7 @@ import * as fromQuote from './quote.reducer';
 import * as fromProjects from './project.reducer';
 import * as fromTaskLists from './task-list.reducer';
 import * as fromTasks from './task.reducer';
+import * as fromTaskHistory from './task-history.reducer';
 import * as fromUsers from './user.reducer';
 import { initialState } from './user.reducer';
 
@@ -51,6 +52,7 @@ export interface State {
   projects: fromProjects.State;
   taskLists: fromTaskLists.State;
   tasks: fromTasks.State;
+  taskHistory: fromTaskHistory.State;
   users: fromUsers.State;
   router: fromRouter.RouterReducerState;
 }
@@ -60,6 +62,7 @@ const reducers: ActionReducerMap<State> = {
   quote: fromQuote.reducer,
   projects: fromProjects.reducer,
   taskLists: fromTaskLists.reducer,
+  taskHistory: fromTaskHistory.reducer,
   tasks: fromTasks.reducer,
   users: fromUsers.reducer,
   router: fromRouter.routerReducer,
@@ -86,6 +89,7 @@ const initState = {
   projects: fromProjects.initialState,
   taskLists: fromTaskLists.initialState,
   tasks: fromTasks.initialState,
+  taskHistory: fromTaskHistory.initialState,
   users: fromUsers.initialState,
 };
 
