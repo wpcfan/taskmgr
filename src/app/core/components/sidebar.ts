@@ -9,12 +9,12 @@ import {Project} from '../../domain';
       <mat-nav-list>
         <h3 matSubheader>项目</h3>
         <mat-list-item [routerLink]="['/projects']" (click)="handleClicked($event)">
-          <mat-icon mat-list-icon svgIcon="projects"></mat-icon>
+          <mat-icon matListIcon svgIcon="projects"></mat-icon>
           <span matLine>项目首页</span>
           <span matLine matSubheader> 查看您参与的全部项目 </span>
         </mat-list-item>
         <mat-list-item *ngFor="let prj of projects" (click)="onPrjClicked($event, prj)">
-          <mat-icon mat-list-icon svgIcon="project"></mat-icon>
+          <mat-icon matListIcon svgIcon="project"></mat-icon>
           <a matLine>
             {{prj.name}}
           </a>
@@ -23,17 +23,17 @@ import {Project} from '../../domain';
         <mat-divider></mat-divider>
         <h3 matSubheader>日历</h3>
         <mat-list-item [routerLink]="['/mycal/month']" (click)="handleClicked($event)">
-          <mat-icon mat-list-icon svgIcon="month"></mat-icon>
+          <mat-icon matListIcon svgIcon="month"></mat-icon>
           <span matLine>月视图</span>
           <span matLine matSubheader> 按月方式查看事件 </span>
         </mat-list-item>
         <mat-list-item [routerLink]="['/mycal/week']" (click)="handleClicked($event)">
-          <mat-icon mat-list-icon svgIcon="week"></mat-icon>
+          <mat-icon matListIcon svgIcon="week"></mat-icon>
           <span matLine>星期视图</span>
           <span matLine matSubheader> 按星期方式查看事件 </span>
         </mat-list-item>
         <mat-list-item [routerLink]="['/mycal/day']" (click)="handleClicked($event)">
-          <mat-icon mat-list-icon [svgIcon]="today"></mat-icon>
+          <mat-icon matListIcon [svgIcon]="today"></mat-icon>
           <span matLine>当日视图</span>
           <span matLine matSubheader> 按天方式查看事件 </span>
         </mat-list-item>

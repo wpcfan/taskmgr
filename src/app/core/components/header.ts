@@ -1,17 +1,22 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Output, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
+import * as fromRoot from '../../reducers';
+import * as actions from '../../actions/auth.action';
+import {Auth} from '../../domain';
 
 @Component({
   selector: 'app-header',
   template: `
-    <mat-toolbar color="primary">
-      <button mat-icon-button (click)="onClick()" *ngIf="auth">
-        <mat-icon>menu</mat-icon>
+    <md-toolbar color="primary">
+      <button md-icon-button (click)="onClick()" *ngIf="(auth$ | async)?.token">
+        <md-icon>menu</md-icon>
       </button>
       <span>企业协作平台</span>
       <span class="fill-remaining-space"></span>
-      <mat-slide-toggle (change)="onChange($event.checked)">黑夜模式</mat-slide-toggle>
-      <span><a mat-button *ngIf="auth" (click)="handleLogout()">退出</a></span>
-    </mat-toolbar>
+      <md-slide-toggle (change)="onChange($event.checked)">黑夜模式</md-slide-toggle>
+      <span><a md-button *ngIf="(auth$ | async)?.token" (click)="logout()">退出</a></span>
+    </md-toolbar>
   `,
   styles: [`
   `],
@@ -19,17 +24,20 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Output, Input} from '@
 })
 export class HeaderComponent {
 
-  @Input() auth = false;
+  auth$: Observable<Auth>;
   @Output() toggle = new EventEmitter<void>();
   @Output() toggleDarkTheme = new EventEmitter<boolean>();
-  @Output() logout = new EventEmitter();
+
+  constructor(private store$: Store<fromRoot.State>) {
+    this.auth$ = this.store$.select(fromRoot.getAuth);
+  }
 
   onClick() {
     this.toggle.emit();
   }
 
-  handleLogout() {
-    this.logout.emit();
+  logout() {
+    this.store$.dispatch({type: actions.LOGOUT});
   }
 
   onChange(checked: boolean) {
