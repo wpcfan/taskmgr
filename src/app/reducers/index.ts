@@ -132,7 +132,7 @@ export const getTasksByList = createSelector(getProjectTaskList, getTasksWithOwn
   return lists.map(list => ({...list, tasks: tasks.filter(task => task.taskListId === list.id)}));
 });
 export const getProjectMembers = (projectId: string) => createSelector(getProjectsState, getUserEntities, (state, entities) => {
-  return state.entities[projectId].members.map(id => entities[id]);
+  return state!.entities[projectId]!.members!.map(id => entities[id]);
 });
 export const getAuth = createSelector(getAuthState, getUserEntities, (_auth, _entities) => {
   return {..._auth, user: _entities[<string>_auth.userId]};

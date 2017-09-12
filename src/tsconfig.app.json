@@ -4,6 +4,7 @@
     "outDir": "../out-tsc/app",
     "module": "es2015",
     "strictNullChecks": true,
+    "skipLibCheck": true,
     "baseUrl": "",
     "types": []
   },
