@@ -1,5 +1,4 @@
 import { User } from './user';
-import { TaskHistory } from './history';
 
 export interface Task {
   id?: string;
@@ -15,5 +14,5 @@ export interface Task {
   // tags?: string[];
   reminder?: Date;
   createDate?: Date;
-  history?: TaskHistory[];
+  historyIds?: string[];
 }

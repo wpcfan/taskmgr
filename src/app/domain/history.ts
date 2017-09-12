@@ -1,4 +1,3 @@
-import { User } from './user'
 
 export const CREATE_TASK = "createTask";
 export const COMPLETE_TASK = "completeTask";
@@ -10,7 +9,7 @@ export const UPDATE_TASK_REMARK = "updateTaskRemark";
 
 export interface OperationHistory {
   id?: string;
-  operator: User;
+  operatorId: string;
   date: Date;
 }
 
