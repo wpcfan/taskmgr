@@ -14,33 +14,33 @@ export const initialState: State = {
   entities: {}
 };
 
-const register = (state, action) => {
+const register = (state: State, action: authActions.LoginSuccessAction | authActions.RegisterSuccessAction) => {
   const auth = <Auth>action.payload;
-  return state.ids.indexOf(auth.userId) === -1 ?
+  return state.ids.indexOf(<string>auth.userId) === -1 ?
     {
       ids: [...state.ids, <string>auth!.user!.id],
-      entities: {...state.entities, [<string>auth!.user!.id]: auth!.user}
+      entities: {...state.entities, [<string>auth!.user!.id]: <User>auth!.user}
     } : state;
 };
 
-const addPrjRef = (state, action) => {
+const addPrjRef = (state: State, action: actions.AddUserProjectSuccessAction) => {
   const user = <User>action.payload;
-  const ids = [...state.ids, user.id];
+  const ids: string[] = [...state.ids, <string>user.id];
   const entities = {...state.entities, [<string>user.id]: user};
   return state.entities[<string>user.id] ?
     {...state, entities: entities} : {...state, ids: ids, entities: entities};
 };
 
-const removePrjRef = (state, action) => {
+const removePrjRef = (state: State, action: actions.RemoveUserProjectSuccessAction) => {
   const user = <User>action.payload;
   return state.entities[<string>user.id] ?
     {...state, entities: {...state.entities, [<string>user.id]: user}} : state;
 };
 
-const searchUsers = (state, action) => {
+const searchUsers = (state: State, action: actions.SearchUsersSuccessAction) => {
   const users = <User[]>action.payload;
   const newUsers = users.filter(user => !state.entities[<string>user.id]);
-  const newIds = newUsers.map(user => user.id);
+  const newIds = newUsers.map(user => <string>user.id);
   const newEntities = covertArrToObj(newUsers);
   return {
     ids: [...state.ids, ...newIds],
@@ -48,10 +48,10 @@ const searchUsers = (state, action) => {
   };
 };
 
-const loadByPrj = (state, action) => {
+const loadByPrj = (state: State, action: actions.LoadUsersByPrjSuccessAction) => {
   const users = <User[]>action.payload;
   const newUsers = users.filter(user => !state.entities[<string>user.id]);
-  const newIds = newUsers.map(user => user.id);
+  const newIds: string[] = newUsers.map(user => <string>user.id);
   const newEntities = covertArrToObj(newUsers);
   return {
     ids: [...state.ids, ...newIds],
@@ -59,36 +59,36 @@ const loadByPrj = (state, action) => {
   };
 };
 
-const batchUpdatePrjRef = (state, action) => {
+const batchUpdatePrjRef = (state: State, action: actions.BatchUpdateUserProjectSuccessAction) => {
   const users = <User[]>action.payload;
   const userProjects = covertArrToObj(users);
   const newEnities = {...state.entities, ...userProjects};
   return {...state, entities: newEnities};
 };
 
-export function reducer (state = initialState, action: actions.Actions | authActions.Actions): State {
+export function reducer (state: State = initialState, action: actions.Actions | authActions.Actions): State {
   switch (action.type) {
     case authActions.LOGIN_SUCCESS:
     case authActions.REGISTER_SUCCESS:
-      return register(state, action);
+      return register(state, <authActions.LoginSuccessAction | authActions.RegisterSuccessAction>action);
     case actions.ADD_USER_PROJECT_SUCCESS:
-      return addPrjRef(state, action);
+      return addPrjRef(state, <actions.AddUserProjectSuccessAction>action);
     case actions.REMOVE_USER_PROJECT_SUCCESS:
-      return removePrjRef(state, action);
+      return removePrjRef(state, <actions.RemoveUserProjectSuccessAction>action);
     case actions.SEARCH_USERS_SUCCESS:
-      return searchUsers(state, action);
+      return searchUsers(state, <actions.SearchUsersSuccessAction>action);
     case actions.LOAD_USERS_BY_PRJ_SUCCESS:
-      return loadByPrj(state, action);
+      return loadByPrj(state, <actions.LoadUsersByPrjSuccessAction>action);
     case actions.BATCH_UPDATE_USER_PROJECT_SUCCESS:
-      return batchUpdatePrjRef(state, action);
+      return batchUpdatePrjRef(state, <actions.BatchUpdateUserProjectSuccessAction>action);
     default: {
       return state;
     }
   }
 }
 
-export const getEntities = (state) => state.entities;
-export const getIds = (state) => state.ids;
+export const getEntities = (state: State) => state.entities;
+export const getIds = (state: State) => state.ids;
 export const getUsers = createSelector(getEntities, getIds, (entities, ids) => {
   return ids.map(id => entities[id]);
 });

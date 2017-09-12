@@ -23,7 +23,7 @@ export class ForgotComponent implements OnInit {
     });
   }
 
-  onSubmit({value, valid}) {
+  onSubmit({value, valid}: FormGroup) {
     if (!valid) {
       return;
     }

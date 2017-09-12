@@ -168,11 +168,11 @@ export class IdentityInputComponent implements ControlValueAccessor, OnInit, OnD
     return result ? null : {idNotValid:  true};
   }
 
-  onIdTypeChange(idType) {
+  onIdTypeChange(idType: IdentityType) {
     this._idType.next(idType);
   }
 
-  onIdNoChange(idNo) {
+  onIdNoChange(idNo: string) {
     this._idNo.next(idNo);
   }
 

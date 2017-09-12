@@ -9,7 +9,7 @@ export class UserService {
   private headers = new HttpHeaders()
     .set('Content-Type', 'application/json');
 
-  constructor(@Inject('BASE_CONFIG') private config,
+  constructor(@Inject('BASE_CONFIG') private config: {uri: string},
               private http: HttpClient) {
   }
 

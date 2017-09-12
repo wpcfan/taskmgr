@@ -3,7 +3,7 @@ import {environment} from '../../environments/environment';
 
 declare module 'rxjs/Observable' {
   interface Observable<T> {
-    debug: (...any) => Observable<T>;
+    debug: (...any: any[]) => Observable<T>;
   }
 }
 
