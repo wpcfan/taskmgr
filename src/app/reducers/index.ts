@@ -40,6 +40,7 @@ import * as fromTasks from './task.reducer';
 import * as fromUsers from './user.reducer';
 import { initialState } from './user.reducer';
 
+import { TaskListVM } from '../vm';
 /**
  * 正如我们的 reducer 像数据库中的表一样，我们的顶层 state 也包含各个子 reducer 的 state
  * 并且使用一个 key 来标识各个子 state
@@ -82,7 +83,7 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
   };
 }
 
-export function storeStateGuard(reducer) {
+export function storeStateGuard(reducer: ActionReducer<State>): ActionReducer<State> {
   return function (state, action) {
       if (action.type === authActions.LOGOUT) {
           return reducer(undefined, action);
@@ -129,7 +130,7 @@ export const getProjectTaskList = createSelector(getSelectedProjectId, getTaskLi
   return taskLists.filter(taskList => taskList.projectId === projectId);
 });
 export const getTasksByList = createSelector(getProjectTaskList, getTasksWithOwner, (lists, tasks) => {
-  return lists.map(list => ({...list, tasks: tasks.filter(task => task.taskListId === list.id)}));
+  return lists.map(list => (<TaskListVM>{...list, tasks: tasks.filter(task => task.taskListId === list.id)}));
 });
 export const getProjectMembers = (projectId: string) => createSelector(getProjectsState, getUserEntities, (state, entities) => {
   return state!.entities[projectId]!.members!.map(id => entities[id]);

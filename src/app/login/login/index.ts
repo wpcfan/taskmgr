@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     this.store$.dispatch({type: actions.QUOTE});
   }
 
-  onSubmit({value, valid}, e: Event) {
+  onSubmit({value, valid}: FormGroup, e: Event) {
     e.preventDefault();
     if (!valid) {
       return;

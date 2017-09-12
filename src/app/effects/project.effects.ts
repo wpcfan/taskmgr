@@ -22,7 +22,7 @@ export class ProjectEffects {
     .ofType<actions.LoadProjectsAction>(actions.LOADS)
     .withLatestFrom(this.store$.select(fromRoot.getAuth))
     .switchMap(([_, auth]) => this.service
-      .get(auth.user.id)
+      .get(<string>auth.user.id)
       .map(projects => new actions.LoadProjectsSuccessAction(projects))
       .catch(err => of(new actions.LoadProjectsFailAction(JSON.stringify(err))))
     );

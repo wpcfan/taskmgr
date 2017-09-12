@@ -23,7 +23,7 @@ export class AuthService {
    * @param config 注入基础配置
    */
   constructor(private http: HttpClient,
-              @Inject('BASE_CONFIG') private config) {
+              @Inject('BASE_CONFIG') private config: {uri: string}) {
   }
 
   /**

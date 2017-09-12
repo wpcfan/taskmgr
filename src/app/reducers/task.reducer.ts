@@ -22,25 +22,25 @@ export const initialState: State = {
   entities: {}
 };
 
-const addTask = (state, action) => {
+const addTask = (state: State, action: actions.AddTaskSuccessAction) => {
   if (state.entities[<string>(<Task>action.payload).id]) {
     return state;
   }
-  return addOne(state, action.payload);
+  return addOne(state, <Task>action.payload);
 };
 
-const delTask = (state, action) => {
+const delTask = (state: State, action: actions.DeleteTaskSuccessAction) => {
   return deleteOne(state, action.payload);
 };
 
-const loadTasks = (state, action) => {
+const loadTasks = (state: State, action: actions.LoadTasksInListsSuccessAction) => {
   if ((<Task[]>action.payload).length === 0) {
     return state;
   }
-  return loadCollection(state, action.payload);
+  return loadCollection(state, <Task[]>action.payload);
 };
 
-const moveAllTasks = (state, action) => {
+const moveAllTasks = (state: State, action: actions.MoveAllSuccessAction) => {
   const tasks = <Task[]>action.payload;
   // if task is null then return the orginal state
   if (tasks === null) {
@@ -50,7 +50,7 @@ const moveAllTasks = (state, action) => {
   return {...state, entities: {...state.entities, ...updatedEntities}};
 };
 
-const delTasksByPrj = (state, action) => {
+const delTasksByPrj = (state: State, action: prjActions.DeleteProjectSuccessAction) => {
   const project = <Project>action.payload;
   const listIds = project.taskLists;
   const remainingIds = state.ids.filter(id => _.indexOf(listIds, state.entities[id].taskListId) === -1);
@@ -58,33 +58,33 @@ const delTasksByPrj = (state, action) => {
   return {ids: remainingIds, entities: remainingEntities};
 };
 
-const updateTask = (state, action) => {
+const updateTask = (state: State, action: actions.CompleteTaskSuccessAction| actions.MoveTaskSuccessAction | actions.UpdateTaskSuccessAction) => {
   return updateOne(state, action.payload);
 };
 
 export function reducer (state = initialState, action: actions.Actions | prjActions.Actions): State {
   switch (action.type) {
     case actions.ADD_SUCCESS:
-      return addTask(state, action);
+      return addTask(state, <actions.AddTaskSuccessAction>action);
     case actions.DELETE_SUCCESS:
-      return delTask(state, action);
+      return delTask(state, <actions.DeleteTaskSuccessAction>action);
     case prjActions.DELETE_SUCCESS:
-      return delTasksByPrj(state, action);
+      return delTasksByPrj(state, <prjActions.DeleteProjectSuccessAction>action);
     case actions.MOVE_SUCCESS:
     case actions.COMPLETE_SUCCESS:
     case actions.UPDATE_SUCCESS:
-      return updateTask(state, action);
+      return updateTask(state, <actions.CompleteTaskSuccessAction| actions.MoveTaskSuccessAction | actions.UpdateTaskSuccessAction>action);
     case actions.LOAD_IN_LISTS_SUCCESS:
-      return loadTasks(state, action);
+      return loadTasks(state, <actions.LoadTasksInListsSuccessAction>action);
     case actions.MOVE_ALL_SUCCESS:
-      return moveAllTasks(state, action);
+      return moveAllTasks(state, <actions.MoveAllSuccessAction>action);
     default:
       return state;
   }
 }
 
-export const getEntities = (state) => state.entities;
-export const getIds = (state) => state.ids;
+export const getEntities = (state: State) => state.entities;
+export const getIds = (state: State) => state.ids;
 export const getTasks = createSelector(getEntities, getIds, (entities, ids) => {
-  return ids.map(id => entities[id]);
+  return ids.map((id: string) => entities[id]);
 });

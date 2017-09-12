@@ -1,5 +1,6 @@
 import {Component, OnInit, Inject} from '@angular/core';
 import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
+import {NgForm} from '@angular/forms';
 import {User} from '../../domain';
 
 @Component({
@@ -33,7 +34,7 @@ export class InviteComponent implements OnInit {
     this.dialogTitle = this.data.dialogTitle ? this.data.dialogTitle : '邀请成员';
   }
 
-  onSubmit(ev: Event, {value, valid}) {
+  onSubmit(ev: Event, {value, valid}: NgForm) {
     ev.preventDefault();
     if (!valid) {
       return;

@@ -40,7 +40,7 @@ export class HeaderComponent {
     this.store$.dispatch({type: actions.LOGOUT});
   }
 
-  onChange(checked) {
+  onChange(checked: boolean) {
     this.toggleDarkTheme.emit(checked);
   }
 }

@@ -97,7 +97,6 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     {value: AgeUnit.Month, label: '月'},
     {value: AgeUnit.Day, label: '天'}
   ];
-  dateOfBirth;
   @Input() daysTop = 90;
   @Input() daysBottom = 0;
   @Input() monthsTop = 24;
@@ -111,7 +110,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
-    const initDate = this.dateOfBirth ? this.dateOfBirth : convertToDate(subYears(Date.now(), 30));
+    const initDate = convertToDate(subYears(Date.now(), 30));
     const initAge = this.toAge(initDate);
     this.form = this.fb.group({
       birthday: [toDate(initDate), this.validateDate],
@@ -276,7 +275,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
         return convertToDate(subDays(now, age.age));
       }
       default: {
-        return this.dateOfBirth;
+        return '1991-01-01';
       }
     }
   }

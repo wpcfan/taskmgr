@@ -99,7 +99,7 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
     const city$ = this._city.asObservable().startWith('');
     const district$ = this._district.asObservable().startWith('');
     const street$ = this._street.asObservable().startWith('');
-    const val$ = Observable.combineLatest([province$, city$, district$, street$], (_p, _c, _d, _s) => {
+    const val$ = Observable.combineLatest([province$, city$, district$, street$], (_p: string, _c: string, _d: string, _s: string) => {
       return {
         province: _p,
         city: _c,
