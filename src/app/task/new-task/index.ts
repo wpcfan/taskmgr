@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core'
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
 import {toDate} from 'date-fns';
+import {User} from '../../domain';
 
 @Component({
   selector: 'app-new-task',
@@ -113,14 +114,14 @@ export class NewTaskComponent implements OnInit {
     }
   }
 
-  onSubmit({value, valid}, ev: Event) {
+  onSubmit({value, valid}: FormGroup, ev: Event) {
     ev.preventDefault();
     if (!valid) {
       return;
     }
     this.dialogRef.close({type: 'addOrUpdate', task: {
       desc: value.desc,
-      participantIds: value.followers.map(u => u.id),
+      participantIds: value.followers.map((u: User) => u.id),
       ownerId: value.owner.length > 0 ? value.owner[0].id : null,
       dueDate: value.dueDate,
       reminder: value.reminder,
