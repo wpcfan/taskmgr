@@ -44,14 +44,14 @@ export class UserService {
   }
 
   batchUpdateProjectRef(project: Project): Observable<User[]> {
-    const projectId = project.id;
+    const projectId = <string>project.id;
     const memberIds = project.members ? project.members : [];
     return Observable.from(memberIds)
       .switchMap(id => {
         const uri = `${this.config.uri}/${this.domain}/${id}`;
         return this.http.get(uri);
       })
-      .filter((user: User) => user.projectIds.indexOf(projectId) < 0)
+      .filter((user: User) => user.projectIds!.indexOf(projectId) < 0)
       .switchMap((u: User) => this.addProjectRef(u, projectId))
       .reduce((users: User[], curr) => [...users, curr], []);
   }

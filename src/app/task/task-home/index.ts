@@ -23,10 +23,10 @@ import {TaskListVM} from '../../vm/task-list.vm';
         fxFlex="0 0 360px"
         *ngFor="let taskList of lists$ | async"
         [ngStyle]="{'order': taskList.order}"
-        app-droppable
+        appDroppable
         [dropTags]="['task-item', 'task-list']"
         [dragEnterClass]="'drag-enter'"
-        [app-draggable]="true"
+        [appDraggable]="true"
         [dragTag]="'task-list'"
         [draggedClass]="'drag-start'"
         [dragData]="taskList"
@@ -91,7 +91,7 @@ export class TaskHomeComponent {
   constructor(private route: ActivatedRoute,
               private dialog: MdDialog,
               private store$: Store<fromRoot.State>) {
-    this.projectId$ = this.route.paramMap.map(p => p.get('id'));
+    this.projectId$ = this.route.paramMap.map(p => <string>p.get('id'));
     this.lists$ = this.store$.select(fromRoot.getTasksByList);
   }
 
@@ -148,11 +148,11 @@ export class TaskHomeComponent {
   handleMove(srcData, taskList: TaskList) {
     switch (srcData.tag) {
       case 'task-item': {
-        this.store$.dispatch(new taskActions.MoveTaskAction({taskId: srcData.data.id, taskListId: taskList.id}));
+        this.store$.dispatch(new taskActions.MoveTaskAction({taskId: <string>srcData.data.id, taskListId: <string>taskList.id}));
         break;
       }
       case 'task-list': {
-        this.store$.dispatch(new listActions.SwapOrderAction({src: srcData.data, target: taskList}));
+        this.store$.dispatch(new listActions.SwapOrderAction({src: <TaskList>srcData.data, target: <TaskList>taskList}));
         break;
       }
       default:
@@ -196,7 +196,6 @@ export class TaskHomeComponent {
       this.store$.dispatch(new taskActions.AddTaskAction({
         desc: desc,
         priority: 3,
-        remark: null,
         ownerId: user.id,
         participantIds: [],
         taskListId: listId,

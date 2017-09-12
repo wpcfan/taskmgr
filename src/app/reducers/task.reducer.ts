@@ -23,7 +23,7 @@ export const initialState: State = {
 };
 
 const addTask = (state, action) => {
-  if (state.entities[(<Task>action.payload).id]) {
+  if (state.entities[<string>(<Task>action.payload).id]) {
     return state;
   }
   return addOne(state, action.payload);

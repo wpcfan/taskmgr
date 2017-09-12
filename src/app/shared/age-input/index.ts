@@ -1,5 +1,14 @@
 import {ChangeDetectionStrategy, Component, forwardRef, OnInit, OnDestroy, Input} from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  Validators,
+  AbstractControl
+} from '@angular/forms';
 import {
   subYears,
   subMonths,
@@ -45,12 +54,12 @@ export interface Age {
         </div>
         <div>
           <md-button-toggle-group formControlName="ageUnit" [(ngModel)]="selectedUnit">
-            <md-button-toggle *ngFor="let unit of ageUnits" [value]="unit.value">
-              {{ unit.label }}
+            <md-button-toggle *ngFor="let unit of ageUnits" [value]="unit?.value">
+              {{ unit?.label }}
             </md-button-toggle>
           </md-button-toggle-group>
         </div>
-        <md-error class="mat-body-2" *ngIf="form.get('age').hasError('ageInvalid')">年龄或单位不正确</md-error>
+        <md-error class="mat-body-2" *ngIf="form.get('age')?.hasError('ageInvalid')">年龄或单位不正确</md-error>
       </ng-container>
     </div>
     `,
@@ -112,26 +121,26 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       }, {validator: this.validateAge('ageNum', 'ageUnit')})
     });
     const birthday = this.form.get('birthday');
-    const ageNum = this.form.get('age').get('ageNum');
-    const ageUnit = this.form.get('age').get('ageUnit');
+    const ageNum = this.form.get('age')!.get('ageNum');
+    const ageUnit = this.form.get('age')!.get('ageUnit');
 
-    const birthday$ = birthday.valueChanges
+    const birthday$ = birthday!.valueChanges
       .map(d => ({date: d, from: 'birthday'}))
       .debounceTime(this.debounceTime)
       .distinctUntilChanged()
-      .filter(date => birthday.valid);
-    const ageNum$ = ageNum.valueChanges
-      .startWith(ageNum.value)
+      .filter(date => birthday!.valid);
+    const ageNum$ = ageNum!.valueChanges
+      .startWith(ageNum!.value)
       .debounceTime(this.debounceTime)
       .distinctUntilChanged();
-    const ageUnit$ = ageUnit.valueChanges
-      .startWith(ageUnit.value)
+    const ageUnit$ = ageUnit!.valueChanges
+      .startWith(ageUnit!.value)
       .debounceTime(this.debounceTime)
       .distinctUntilChanged();
     const age$ = Observable
       .combineLatest(ageNum$, ageUnit$, (_num, _unit) => this.toDate({age: _num, unit: _unit}))
       .map(d => ({date: d, from: 'age'}))
-      .filter(_ => this.form.get('age').valid);
+      .filter(_ => this.form.get('age')!.valid);
     const merged$ = Observable
       .merge(birthday$, age$)
       .filter(_ => this.form.valid)
@@ -139,18 +148,18 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     this.subBirth = merged$.subscribe(date => {
       const age = this.toAge(date.date);
       if (date.from === 'birthday') {
-        if (age.age === ageNum.value && age.unit === ageUnit.value) {
+        if (age.age === ageNum!.value && age.unit === ageUnit!.value) {
           return;
         }
-        ageUnit.patchValue(age.unit, {emitEvent: false, emitModelToViewChange: true, emitViewToModelChange: true});
-        ageNum.patchValue(age.age, {emitEvent: false});
+        ageUnit!.patchValue(age.unit, {emitEvent: false, emitModelToViewChange: true, emitViewToModelChange: true});
+        ageNum!.patchValue(age.age, {emitEvent: false});
         this.selectedUnit = age.unit;
         this.propagateChange(date.date);
 
       } else {
-        const ageToCompare = this.toAge(this.form.get('birthday').value);
+        const ageToCompare = this.toAge(birthday!.value);
         if (age.age !== ageToCompare.age || age.unit !== ageToCompare.unit) {
-          this.form.get('birthday').patchValue(toDate(date.date), {emitEvent: false});
+          birthday!.patchValue(toDate(date.date), {emitEvent: false});
           this.propagateChange(date.date);
         }
       }
@@ -167,7 +176,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   public writeValue(obj: Date) {
     if (obj) {
       const date = toDate(convertToDate(obj));
-      this.form.get('birthday').patchValue(date, {emitEvent: true});
+      this.form.get('birthday')!.patchValue(date, {emitEvent: true});
     }
   }
 
@@ -182,7 +191,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   }
 
   // 验证表单，验证结果正确返回 null 否则返回一个验证结果对象
-  validate(c: FormControl): {[key: string]: any} {
+  validate(c: FormControl): {[key: string]: any} | null {
     const val = c.value;
     if (!val) {
       return null;
@@ -195,7 +204,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     };
   }
 
-  validateDate(c: FormControl): {[key: string]: any} {
+  validateDate(c: FormControl): {[key: string]: any} | null {
     const val = c.value;
     return isValidDate(val) ? null : {
       birthdayInvalid: true
@@ -203,7 +212,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   }
 
   validateAge(ageNumKey: string, ageUnitKey: string) {
-    return (group: FormGroup): {[key: string]: any} => {
+    return (group: FormGroup): {[key: string]: any} | null => {
       const ageNum = group.controls[ageNumKey];
       const ageUnit = group.controls[ageUnitKey];
       let result = false;

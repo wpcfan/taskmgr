@@ -83,7 +83,7 @@ export class CalendarHomeComponent {
               private service$: MyCalService,
               private store$: Store<fromRoot.State>) {
     this.viewDate = new Date();
-    this.view$ = this.route.paramMap.map(p => p.get('view'));
+    this.view$ = this.route.paramMap.map(p => <string>p.get('view'));
     this.events$ = this.store$.select(fromRoot.getAuthUser)
       .switchMap(user => this.service$.getUserTasks(user.id));
   }

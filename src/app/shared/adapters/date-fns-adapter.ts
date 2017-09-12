@@ -1,5 +1,5 @@
 import { Optional, Inject, Injectable } from '@angular/core';
-import { DateAdapter } from "@angular/material";
+import { DateAdapter } from '@angular/material';
 import {
   getYear,
   getMonth,
@@ -57,12 +57,12 @@ export class DateFnsAdapter extends DateAdapter<Date> {
   getDayOfWeekNames(style: 'long' | 'short' | 'narrow'): string[] {
     switch (style) {
       case 'long': {
-        return ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
+        return ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
       }
       case 'short':
       case 'narrow':
       default: {
-        return ['日','一','二','三','四','五','六'];
+        return ['日', '一', '二', '三', '四', '五', '六'];
       }
     }
   }
@@ -107,7 +107,7 @@ export class DateFnsAdapter extends DateAdapter<Date> {
     ].join('-');
   }
   isDateInstance(obj: any): boolean {
-    return ;
+    return obj instanceof Date;
   }
   isValid(date: Date): boolean {
     return isValid(date);

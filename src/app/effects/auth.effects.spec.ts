@@ -1,4 +1,6 @@
-import {EffectsRunner, EffectsTestingModule} from '@ngrx/effects/testing';
+import {provideMockActions} from '@ngrx/effects/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {hot, cold} from 'jasmine-marbles';
 import {Observable} from 'rxjs/Observable';
 import {fakeAsync, TestBed} from '@angular/core/testing';
 import {AuthEffects} from './auth.effects';
@@ -6,18 +8,25 @@ import {AuthService} from '../services/auth.service';
 import * as actions from '../actions/auth.action';
 
 describe('测试 AuthEffects', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [
-      EffectsTestingModule
-    ],
-    providers: [
-      AuthEffects,
-      {
-        provide: AuthService,
-        useValue: jasmine.createSpyObj('authService', ['login', 'register'])
-      }
-    ]
-  }));
+  let effects: AuthEffects;
+  let actions$: Observable<any>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule.withRoutes([]),
+      ],
+      providers: [
+        AuthEffects,
+        {
+          provide: AuthService,
+          useValue: jasmine.createSpyObj('authService', ['login', 'register'])
+        },
+        provideMockActions(() => actions$),
+      ]
+    });
+    effects = TestBed.get(AuthEffects);
+  });
 
   function setup(methodName: string, params?: { returnedAuth: any }) {
     const authService = TestBed.get(AuthService);
@@ -30,13 +39,13 @@ describe('测试 AuthEffects', () => {
     }
 
     return {
-      runner: TestBed.get(EffectsRunner),
       authEffects: TestBed.get(AuthEffects)
     };
   }
 
   describe('登录逻辑：login$', () => {
     it('登录成功发送 LoginSuccessAction', fakeAsync(() => {
+
       const auth = {
         token: '',
         user: {
@@ -45,25 +54,11 @@ describe('测试 AuthEffects', () => {
           email: 'wang@163.com'
         }
       };
+      actions$ = hot('--a-', { a: new actions.LoginAction({email: 'wang@dev.local', password: '123abc'}) });
+      const {authEffects} = setup('login', {returnedAuth: Observable.of(auth)});
 
-      const {runner, authEffects} = setup('login', {returnedAuth: Observable.of(auth)});
-
-      const expectedResult = new actions.LoginSuccessAction(auth);
-      runner.queue(new actions.LoginAction({email: 'wang@dev.local', password: '123abc'}));
-
-      authEffects.login$.subscribe(_result => expect(_result).toEqual(expectedResult));
+      const expectedResult = cold('--b', { b: new actions.LoginSuccessAction(auth)});
+      expect(effects.login$).toBeObservable(expectedResult);
     }));
-
-    it('登录失败逻辑：如果返回异常则发送 LoginFailAction', () => {
-      const error = new Error('msg');
-      const {runner, authEffects} = setup('login', {returnedAuth: Observable.throw(error)});
-
-      runner.queue(new actions.LoginAction({email: 'wang@dev.local', password: '123abc'}));
-
-      authEffects.login$.subscribe(result => {
-        console.log(JSON.stringify(result));
-        expect(result.payload.message).toEqual('msg');
-      });
-    });
   });
 });

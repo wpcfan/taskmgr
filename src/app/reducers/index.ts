@@ -54,7 +54,7 @@ export interface State {
   router: fromRouter.RouterReducerState;
 }
 
-const reducers: ActionReducerMap<State> = {
+export const reducers: ActionReducerMap<State> = {
   auth: fromAuth.reducer,
   quote: fromQuote.reducer,
   projects: fromProjects.reducer,
@@ -64,7 +64,7 @@ const reducers: ActionReducerMap<State> = {
   router: fromRouter.routerReducer,
 };
 
-const initState = {
+export const initState = {
   auth: fromAuth.initialState,
   quote: fromQuote.initialState,
   projects: fromProjects.initialState,
@@ -93,7 +93,11 @@ export function storeStateGuard(reducer) {
 }
 
 export const metaReducers: MetaReducer<State>[] = !environment.production
-  ? [logger, storeStateGuard]
+  ? [
+      logger,
+      // storeFreeze, wait for ngrx/router-store's serialization issue resolved
+      storeStateGuard
+    ]
   : [storeStateGuard];
 
 export const getAuthState = (state: State) => state.auth;
@@ -128,13 +132,13 @@ export const getTasksByList = createSelector(getProjectTaskList, getTasksWithOwn
   return lists.map(list => ({...list, tasks: tasks.filter(task => task.taskListId === list.id)}));
 });
 export const getProjectMembers = (projectId: string) => createSelector(getProjectsState, getUserEntities, (state, entities) => {
-  return state.entities[projectId].members.map(id => entities[id]);
+  return state!.entities[projectId]!.members!.map(id => entities[id]);
 });
 export const getAuth = createSelector(getAuthState, getUserEntities, (_auth, _entities) => {
-  return {..._auth, user: _entities[_auth.userId]};
+  return {..._auth, user: _entities[<string>_auth.userId]};
 });
 export const getAuthUser = createSelector(getAuthState, getUserEntities, (_auth, _entities) => {
-  return _entities[_auth.userId];
+  return _entities[<string>_auth.userId];
 });
 export const getMaxListOrder = createSelector(getTaskListEntities, getTaskListSelectedIds, (entities, ids) => {
   const orders: number[] = ids.map(id => entities[id].order);

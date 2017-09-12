@@ -76,10 +76,10 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   public writeValue(obj: User[]) {
     if (obj && this.multiple) {
       const userEntities = obj.reduce((entities, user) => {
-        return {...entities, [user.id]: user};
+        return {...entities, [<string>user.id]: user};
       }, {});
       if (this.items) {
-        const remaining = this.items.filter(item => !userEntities[item.id]);
+        const remaining = this.items.filter(item => !userEntities[<string>item.id]);
         this.items = [...remaining, ...obj];
       }
     } else if (obj && !this.multiple) {
@@ -131,14 +131,14 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   }
 
   displayUser(user: User): string {
-    return user ? user.name : '';
+    return user ? <string>user.name : '';
   }
 
   searchUsers(obs: Observable<string>): Observable<User[]> {
     return obs.startWith('')
       .debounceTime(300)
       .distinctUntilChanged()
-      .filter(s => s && s.length > 1)
+      .filter((s: string) => (s !== null || s !== undefined) && s.length > 1)
       .switchMap(str => this.service.searchUsers(str));
   }
 

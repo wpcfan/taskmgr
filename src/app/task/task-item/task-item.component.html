@@ -1,7 +1,7 @@
 <md-list-item
   class="container"
   [@item]="widerPriority"
-  [app-draggable]="true"
+  [appDraggable]="true"
   [dragTag]="'task-item'"
   [draggedClass]="'drag-start'"
   [dragData]="item"
@@ -16,7 +16,7 @@
     (click)="onCheckboxClick($event)"
     (change)="checkboxChanged()">
   </md-checkbox>
-  <div mdLine [md-tooltip]="item.desc" class="content" [ngClass]="{'completed': item.completed}">
+  <div mdLine [mdTooltip]="item.desc" class="content" [ngClass]="{'completed': item.completed}">
     {{item.desc}}
   </div>
   <div mdLine class="bottom-bar">
