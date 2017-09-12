@@ -66,14 +66,14 @@ export class TaskService {
 
   getByLists(lists: TaskList[]): Observable<Task[]> {
     return Observable.from(lists)
-      .mergeMap((list: TaskList) => this.get(list.id))
+      .mergeMap((list: TaskList) => this.get(<string>list.id))
       .reduce((tasks: Task[], t: Task[]) => [...tasks, ...t], []);
   }
 
-  moveAll(srcListId, targetListId): Observable<Task[]> {
+  moveAll(srcListId: string, targetListId: string): Observable<Task[]> {
     return this.get(srcListId)
       .mergeMap((tasks: Task[]) => Observable.from(tasks))
-      .mergeMap((task: Task) => this.move(task.id, targetListId))
+      .mergeMap((task: Task) => this.move(<string>task.id, targetListId))
       .reduce((arrTasks: Task[], t: Task) => {
         return [...arrTasks, t];
       }, []);

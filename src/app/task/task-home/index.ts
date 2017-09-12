@@ -148,11 +148,11 @@ export class TaskHomeComponent {
   handleMove(srcData, taskList: TaskList) {
     switch (srcData.tag) {
       case 'task-item': {
-        this.store$.dispatch(new taskActions.MoveTaskAction({taskId: srcData.data.id, taskListId: taskList.id}));
+        this.store$.dispatch(new taskActions.MoveTaskAction({taskId: <string>srcData.data.id, taskListId: <string>taskList.id}));
         break;
       }
       case 'task-list': {
-        this.store$.dispatch(new listActions.SwapOrderAction({src: srcData.data, target: taskList}));
+        this.store$.dispatch(new listActions.SwapOrderAction({src: <TaskList>srcData.data, target: <TaskList>taskList}));
         break;
       }
       default:
@@ -196,7 +196,6 @@ export class TaskHomeComponent {
       this.store$.dispatch(new taskActions.AddTaskAction({
         desc: desc,
         priority: 3,
-        remark: null,
         ownerId: user.id,
         participantIds: [],
         taskListId: listId,

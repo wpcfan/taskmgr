@@ -74,7 +74,7 @@ export function reducer(state = initialState, action: actions.Actions): State {
     case actions.LOADS_SUCCESS:
       return loadProjects(state, action);
     case actions.SELECT:
-      return { ...state, selectedId: action.payload.id };
+      return {...state, selectedId: <string>action.payload.id};
     default:
       return state;
   }
