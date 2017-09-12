@@ -59,8 +59,10 @@ export class TaskListService {
   initializeTaskLists(prj: Project): Observable<Project> {
     const id = <string>prj.id;
     return Observable.merge(
+      this.add({id: undefined, name: '待办', projectId: id, order: 1}),
       this.add({id: undefined, name: '进行中', projectId: id, order: 2}),
       this.add({id: undefined, name: '已完成', projectId: id, order: 3}))
       .reduce((r: TaskList[], x: TaskList) => [...r, x], [])
       .map((tls: TaskList[]) => ({...prj, taskLists: tls.map(tl => <string>tl.id)}));
   }
+}
