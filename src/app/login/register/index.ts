@@ -69,7 +69,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit({value, valid}, e: Event) {
+  onSubmit({value, valid}: FormGroup, e: Event) {
     e.preventDefault();
     if (!valid) {
       return;
@@ -94,7 +94,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.selectedTab = 1;
   }
 
-  onTabChange(index) {
+  onTabChange(index: number) {
     this.selectedTab = index;
   }
 }
