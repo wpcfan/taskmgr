@@ -259,10 +259,10 @@
       "priority": 3,
       "order": 1,
       "remark": "",
-      "id": 1
+      "id": "1"
     },
     {
-      "id": 2,
+      "id": "2",
       "desc": "赶快出发去万达",
       "taskListId": "SkG3Ba6Tgb",
       "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
@@ -278,7 +278,7 @@
       "remark": "something"
     },
     {
-      "id": 3,
+      "id": "3",
       "desc": "什么情况啊",
       "taskListId": "BkenST66lb",
       "ownerId": "BkkDvwee-",
@@ -301,7 +301,7 @@
       "remark": "",
       "reminder": "2017-06-27T16:00:00.000Z",
       "createDate": "2017-05-24T06:11:05.625Z",
-      "id": 4
+      "id": "4"
     },
     {
       "taskListId": "BkWpk7jGZb",
@@ -314,7 +314,10 @@
       "remark": "",
       "reminder": "2017-07-17T16:00:00.000Z",
       "createDate": "2017-05-24T06:11:48.513Z",
-      "id": 5
+      "id": "5",
+      "historyId": [
+        "ryoklWH9-"
+      ]
     },
     {
       "taskListId": "BylTyXiM-b",
@@ -329,7 +332,7 @@
       "remark": "",
       "reminder": null,
       "createDate": "2017-05-24T06:12:59.718Z",
-      "id": 6
+      "id": "6"
     },
     {
       "taskListId": "BkWpk7jGZb",
@@ -344,7 +347,7 @@
       "remark": "",
       "reminder": "2017-07-17T16:00:00.000Z",
       "createDate": "2017-05-24T06:14:47.575Z",
-      "id": 7
+      "id": "7"
     },
     {
       "taskListId": "H1fTyXjMWW",
@@ -357,7 +360,7 @@
       "remark": "",
       "reminder": "2017-05-20T16:00:00.000Z",
       "createDate": "2017-05-24T06:16:24.575Z",
-      "id": 8
+      "id": "8"
     },
     {
       "taskListId": "BkWpk7jGZb",
@@ -370,7 +373,19 @@
       "remark": "",
       "reminder": null,
       "createDate": "2017-06-15T12:03:36.290Z",
-      "id": 9
+      "id": "9"
+    }
+  ],
+  "history": [
+    {
+      "taskId": "5",
+      "operatorId": "37489e0c-df34-c261-71c4-ce75357e3035",
+      "operation": {
+        "payload": "增加统计报表功能",
+        "type": "createTask"
+      },
+      "date": "2017-05-24T06:11:48.513Z",
+      "id": "ryoklWH9-"
     }
   ],
   "quotes": [
