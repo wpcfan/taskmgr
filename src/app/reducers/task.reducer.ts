@@ -12,6 +12,7 @@ import * as actions from '../actions/task.action';
 import * as prjActions from '../actions/project.action';
 import * as _ from 'lodash';
 
+type combinedAction = actions.CompleteTaskSuccessAction| actions.MoveTaskSuccessAction | actions.UpdateTaskSuccessAction;
 export interface State {
   ids: string[];
   entities: { [id: string]: Task };
@@ -58,7 +59,7 @@ const delTasksByPrj = (state: State, action: prjActions.DeleteProjectSuccessActi
   return {ids: remainingIds, entities: remainingEntities};
 };
 
-const updateTask = (state: State, action: actions.CompleteTaskSuccessAction| actions.MoveTaskSuccessAction | actions.UpdateTaskSuccessAction) => {
+const updateTask = (state: State, action: combinedAction) => {
   return updateOne(state, action.payload);
 };
 
@@ -73,7 +74,7 @@ export function reducer (state = initialState, action: actions.Actions | prjActi
     case actions.MOVE_SUCCESS:
     case actions.COMPLETE_SUCCESS:
     case actions.UPDATE_SUCCESS:
-      return updateTask(state, <actions.CompleteTaskSuccessAction| actions.MoveTaskSuccessAction | actions.UpdateTaskSuccessAction>action);
+      return updateTask(state, <combinedAction>action);
     case actions.LOAD_IN_LISTS_SUCCESS:
       return loadTasks(state, <actions.LoadTasksInListsSuccessAction>action);
     case actions.MOVE_ALL_SUCCESS:
