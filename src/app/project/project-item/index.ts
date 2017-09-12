@@ -8,6 +8,7 @@ import {
   Output
 } from '@angular/core';
 import {cardAnim} from '../../anim';
+import {Project} from '../../domain';
 
 @Component({
   selector: 'app-project-item',
@@ -45,7 +46,7 @@ import {cardAnim} from '../../anim';
   animations: [cardAnim],
 })
 export class ProjectItemComponent {
-  @Input() item;
+  @Input() item: Project;
   @Output() itemSelected = new EventEmitter<void>();
   @Output() launchUpdateDialog = new EventEmitter<void>();
   @Output() launchInviteDailog = new EventEmitter<void>();

@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit, forwardRef, Input, ViewChild} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormGroup, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {MdAutocomplete} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import {UserService} from '../../services';
 import {User} from '../../domain';
@@ -48,7 +49,7 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   // fix the lint complaints about using a reference in template
   // It seems tslint requires now that a `@ViewChild` need to be declared
   // 'you are using blablabla that you're trying to access does not exist in the class declaration.'
-  @ViewChild('autoMember') autoMember;
+  @ViewChild('autoMember') autoMember: MdAutocomplete;
   @Input() multiple = true;
   @Input() label = '添加/修改成员';
   @Input() placeholderText = '请输入成员 email';
@@ -75,7 +76,7 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   // 设置初始值
   public writeValue(obj: User[]) {
     if (obj && this.multiple) {
-      const userEntities = obj.reduce((entities, user) => {
+      const userEntities: {[id: string]: User} = obj.reduce((entities, user) => {
         return {...entities, [<string>user.id]: user};
       }, {});
       if (this.items) {

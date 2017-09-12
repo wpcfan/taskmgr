@@ -19,4 +19,4 @@ export function reducer(state = initialState, action: actions.Actions): State {
   }
 }
 
-export const getTheme = (state) => state.darkmode;
+export const getTheme = (state: State) => state.darkmode;

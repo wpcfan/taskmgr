@@ -1,5 +1,5 @@
 import {isValid, differenceInYears, toDate, format} from 'date-fns';
-export const isValidDate = (dateStr) => {
+export const isValidDate = (dateStr: string) => {
   const date = toDate(dateStr);
   return isValid(date);
 };

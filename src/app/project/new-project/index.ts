@@ -62,7 +62,7 @@ export class NewProjectComponent implements OnInit {
 
   }
 
-  onSubmit({value, valid}, event: Event) {
+  onSubmit({value, valid}: FormGroup, event: Event) {
     event.preventDefault();
     if (!valid) {
       return;

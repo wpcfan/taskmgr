@@ -86,7 +86,7 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
   };
 }
 
-export function storeStateGuard(reducer) {
+export function storeStateGuard(reducer: ActionReducer<State>): ActionReducer<State> {
   return function (state, action) {
     if (action.type === authActions.LOGOUT) {
       return reducer(undefined, action);
@@ -137,7 +137,7 @@ export const getProjectTaskList = createSelector<State, string, TaskList[], Task
 //TODO: Error Message: Property 'id' is optional in type '{ tasks: TaskVM[]; id?: string; name: string; projectId: string; order: number; taskIds?: string[...' but required in type 'TaskListVM'.
 export const getTasksByList = createSelector<State, TaskList[], TaskVM[], TaskListVM[]>(getProjectTaskList, getTasksWithOwner, (lists, tasks) => {
   return lists.map(list => (
-    {
+    <TaskListVM>{
       ...list,
       tasks: tasks.filter(task => task.taskListId === list.id),
       id: list.id,

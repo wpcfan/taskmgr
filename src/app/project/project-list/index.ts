@@ -8,7 +8,7 @@ import {NewProjectComponent} from '../new-project';
 import {InviteComponent} from '../invite';
 import {ConfirmDialogComponent} from '../../shared';
 import {defaultRouteAnim, listAnimation} from '../../anim';
-import { Project } from '../../domain';
+import { Project, User } from '../../domain';
 
 @Component({
   selector: 'app-project-list',
@@ -47,7 +47,7 @@ import { Project } from '../../domain';
 })
 export class ProjectListComponent {
 
-  @HostBinding('@routeAnim') state;
+  @HostBinding('@routeAnim') state: string;
   projects$: Observable<Project[]>;
   listAnim$: Observable<number>;
 
@@ -74,7 +74,7 @@ export class ProjectListComponent {
     });
   }
 
-  openUpdateDialog(project) {
+  openUpdateDialog(project: Project) {
     const thumbnails$ = this.getThumbnailsObs();
     const dialogRef = this.dialog.open(NewProjectComponent, {data: { project: project, thumbnails: thumbnails$}});
     dialogRef.afterClosed().take(1).subscribe(val => {
@@ -85,17 +85,17 @@ export class ProjectListComponent {
     });
   }
 
-  openInviteDialog(project) {
-    this.store$.select(fromRoot.getProjectMembers(project.id))
+  openInviteDialog(project: Project) {
+    this.store$.select(fromRoot.getProjectMembers(<string>project.id))
       .take(1)
       .map(members => this.dialog.open(InviteComponent, {data: { members: members}}))
       .switchMap(dialogRef => dialogRef.afterClosed().take(1).filter(n => n))
       .subscribe(val => {
-        this.store$.dispatch(new actions.InviteMembersAction({projectId: project.id, members: val}));
+        this.store$.dispatch(new actions.InviteMembersAction({projectId: <string>project.id, members: <User[]>val}));
       });
   }
 
-  openDeleteDialog(project) {
+  openDeleteDialog(project: Project) {
     const confirm = {
       title: '删除项目：',
       content: '确认要删除该项目？',

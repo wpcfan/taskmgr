@@ -5,7 +5,7 @@ import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
 @Component({
   selector: 'app-new-task-list',
   template: `
-    <form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
+    <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
       <h3 mdDialogTitle>{{dialogTitle}}</h3>
       <div mdDialogContent>
         <md-form-field class="full-width">
@@ -52,11 +52,11 @@ export class NewTaskListComponent implements OnInit {
     }
   }
 
-  onSubmit({value, valid}, ev: Event) {
+  onSubmit(ev: Event) {
     ev.preventDefault();
-    if (!valid) {
+    if (!this.form.valid) {
       return;
     }
-    this.dialogRef.close(value.name);
+    this.dialogRef.close(this.form.value.name);
   }
 }

@@ -85,7 +85,7 @@ import {TaskListVM} from '../../vm/task-list.vm';
 })
 export class TaskHomeComponent {
 
-  @HostBinding('@routeAnim') state;
+  @HostBinding('@routeAnim') state: string;
   lists$: Observable<TaskListVM[]>;
   private projectId$: Observable<string>;
   constructor(private route: ActivatedRoute,
@@ -141,11 +141,11 @@ export class TaskHomeComponent {
     });
   }
 
-  handleCompleteTask(task) {
+  handleCompleteTask(task: Task) {
     this.store$.dispatch(new taskActions.CompleteTaskAction(task));
   }
 
-  handleMove(srcData, taskList: TaskList) {
+  handleMove(srcData: {tag: string; data: any}, taskList: TaskList) {
     switch (srcData.tag) {
       case 'task-item': {
         this.store$.dispatch(new taskActions.MoveTaskAction({taskId: <string>srcData.data.id, taskListId: <string>taskList.id}));
@@ -196,7 +196,7 @@ export class TaskHomeComponent {
       this.store$.dispatch(new taskActions.AddTaskAction({
         desc: desc,
         priority: 3,
-        ownerId: user.id,
+        ownerId: <string>user.id,
         participantIds: [],
         taskListId: listId,
         completed: false,

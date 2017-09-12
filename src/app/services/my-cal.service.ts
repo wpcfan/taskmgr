@@ -34,7 +34,7 @@ const getPriorityColor = (priority: number) => {
 
 @Injectable()
 export class MyCalService {
-  constructor(@Inject('BASE_CONFIG') private config, private http: HttpClient) {
+  constructor(@Inject('BASE_CONFIG') private config: {uri: string}, private http: HttpClient) {
   }
 
   getUserTasks(userId: string): Observable<CalendarEvent[]> {

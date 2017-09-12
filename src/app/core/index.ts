@@ -10,10 +10,10 @@ import {AppEffectsModule} from '../effects';
 import {ServicesModule} from '../services';
 import {AppStoreModule} from '../reducers';
 
-import {HeaderComponent} from './header';
-import {FooterComponent} from './footer';
-import {SidebarComponent} from './sidebar';
-import {PageNotFoundComponent} from './page-not-found';
+import {HeaderComponent} from './components/header';
+import {FooterComponent} from './components/footer';
+import {SidebarComponent} from './components/sidebar';
+import {PageNotFoundComponent} from './containers/page-not-found';
 
 import {loadSvgResources} from '../utils/svg.util';
 import {DateFnsAdapter} from '../shared/adapters/date-fns-adapter';
