@@ -95,7 +95,7 @@ export function storeStateGuard(reducer) {
 export const metaReducers: MetaReducer<State>[] = !environment.production
   ? [
       logger,
-      //storeFreeze, wait for ngrx/router-store's serialization issue resolved
+      // storeFreeze, wait for ngrx/router-store's serialization issue resolved
       storeStateGuard
     ]
   : [storeStateGuard];
