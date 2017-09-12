@@ -3,6 +3,7 @@ import { createSelector } from '@ngrx/store';
 import { covertArrToObj, buildObjFromArr } from '../utils/reduer.util';
 import * as actions from '../actions/project.action';
 
+type combinedAction = actions.InviteMembersSuccessAction | actions.UpdateListsSuccessAction | actions.UpdateProjectSuccessAction;
 export interface State {
   ids: string[];
   entities: { [id: string]: Project };
@@ -36,7 +37,7 @@ const delProject = (state: State, action: actions.DeleteProjectSuccessAction) =>
   };
 };
 
-const updateProject = (state: State, action: actions.InviteMembersSuccessAction | actions.UpdateListsSuccessAction | actions.UpdateProjectSuccessAction) => {
+const updateProject = (state: State, action: combinedAction) => {
   const project = action.payload;
   const entities = {...state.entities, [<string>project.id]: project};
   return {...state, entities: entities};
@@ -70,7 +71,7 @@ export function reducer(state = initialState, action: actions.Actions): State {
     case actions.INVITE_SUCCESS:
     case actions.UPDATE_LISTS_SUCCESS:
     case actions.UPDATE_SUCCESS:
-      return updateProject(state, <actions.InviteMembersSuccessAction | actions.UpdateListsSuccessAction | actions.UpdateProjectSuccessAction>action);
+      return updateProject(state, <combinedAction>action);
     case actions.LOADS_SUCCESS:
       return loadProjects(state, <actions.LoadProjectsSuccessAction>action);
     case actions.SELECT:

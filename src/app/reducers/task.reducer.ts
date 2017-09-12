@@ -12,6 +12,7 @@ import * as actions from '../actions/task.action';
 import * as prjActions from '../actions/project.action';
 import * as _ from 'lodash';
 
+type combinedAction = actions.CompleteTaskSuccessAction| actions.MoveTaskSuccessAction | actions.UpdateTaskSuccessAction;
 export interface State {
   ids: string[];
   entities: { [id: string]: Task };

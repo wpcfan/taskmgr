@@ -2,7 +2,7 @@ export function covertArrToObj<T extends {id?: string}>(arr: T[]) {
   return arr.reduce((entities, obj: T) => ({...entities, [<string>obj.id]: obj}), {});
 };
 
-export function buildObjFromArr<T>(arr: string[], dict:{[id: string]: T}) {
+export function buildObjFromArr<T>(arr: string[], dict: {[id: string]: T}) {
   return arr.reduce((entities, id) => ({...entities, [id]: dict[id]}), {});
 };
 
