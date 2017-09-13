@@ -1,29 +1,38 @@
 import { Action } from '@ngrx/store';
 import { TaskHistory } from '../domain';
 
-export const CREATE_TASK = '[TaskHistory] Create Task';
-export const CREATE_TASK_SUCCESS = '[TaskHistory] Create Task Success';
-export const CREATE_TASK_FAIL = '[TaskHistory] Create Task Fail';
+export const SELECT_TASK = '[TaskHistory] Select Task';
 
 export const LOAD = '[TaskHistory] Load';
 export const LOAD_SUCCESS = '[TaskHistory] Load Success';
 export const LOAD_FAIL = '[TaskHistory] Load Fail';
 
-export class LoadTaskHistory implements Action {
+export const CREATE_TASK = '[TaskHistory] Create Task';
+export const CREATE_TASK_SUCCESS = '[TaskHistory] Create Task Success';
+export const CREATE_TASK_FAIL = '[TaskHistory] Create Task Fail';
+
+export class SelectTaskAction implements Action {
+  readonly type = SELECT_TASK;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class LoadTaskHistoryAction implements Action {
   readonly type = LOAD;
 
   constructor(public payload: string) {
   }
 }
 
-export class LoadHistorySuccess implements Action {
+export class LoadHistorySuccessAction implements Action {
   readonly type = LOAD_SUCCESS;
 
   constructor(public payload: TaskHistory[]) {
   }
 }
 
-export class LoadHistoryFail implements Action {
+export class LoadHistoryFailAction implements Action {
   readonly type = LOAD_FAIL;
 
   constructor(public payload: string) {
@@ -52,9 +61,10 @@ export class CreateTaskFailAction implements Action {
 }
 
 export type Actions
-  = LoadTaskHistory
-  | LoadHistorySuccess
-  | LoadHistoryFail
+  = SelectTaskAction
+  | LoadTaskHistoryAction
+  | LoadHistorySuccessAction
+  | LoadHistoryFailAction
   | CreateTaskAction
   | CreateTaskSuccessAction
   | CreateTaskFailAction

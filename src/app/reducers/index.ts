@@ -109,6 +109,7 @@ export const getQuoteState = (state: State) => state.quote;
 export const getProjectsState = (state: State) => state.projects;
 export const getTaskListsState = (state: State) => state.taskLists;
 export const getTasksState = (state: State) => state.tasks;
+export const getTaskHistory = (state: State) => state.taskHistory;
 export const getUserState = (state: State) => state.users;
 
 export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
@@ -134,27 +135,13 @@ export const getProjectTaskList = createSelector<State, string | null, TaskList[
   return taskLists.filter(taskList => taskList.projectId === projectId);
 });
 
-//TODO: Error Message: Property 'id' is optional in type '{ tasks: TaskVM[]; id?: string; name: string; projectId: string; order: number; taskIds?: string[...' but required in type 'TaskListVM'.
 export const getTasksByList = createSelector<State, TaskList[], TaskVM[], TaskListVM[]>(getProjectTaskList, getTasksWithOwner, (lists, tasks) => {
   return lists.map(list => (
     <TaskListVM>{
       ...list,
       tasks: tasks.filter(task => task.taskListId === list.id),
-      id: list.id,
     }
   ));
-
-  // return lists.map(list => {
-  //   const taskVMs: TaskVM[] = tasks.filter(task => task.taskListId === list.id);
-  //   const taskListVM: TaskListVM = {
-  //     name: list.name,
-  //     projectId: list.projectId,
-  //     order: list.order,
-  //     tasks: taskVMs,
-  //   }
-
-  //   return taskListVM;
-  // })
 });
 export const getProjectMembers = (projectId: string) => createSelector(getProjectsState, getUserEntities, (state, entities) => {
   return state!.entities[projectId]!.members!.map(id => entities[id]);

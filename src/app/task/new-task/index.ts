@@ -1,8 +1,10 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
-import {toDate} from 'date-fns';
-import {User} from '../../domain';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
+import { Store } from '@ngrx/store';
+import { toDate } from 'date-fns';
+import { User } from '../../domain';
+import * as fromRoot from '../../reducers';
 
 @Component({
   selector: 'app-new-task',
@@ -83,8 +85,9 @@ export class NewTaskComponent implements OnInit {
   ];
 
   constructor(private fb: FormBuilder,
-              @Inject(MD_DIALOG_DATA) private data: any,
-              private dialogRef: MdDialogRef<NewTaskComponent>) {}
+    @Inject(MD_DIALOG_DATA) private data: any,
+    private dialogRef: MdDialogRef<NewTaskComponent>,
+    private store$: Store<fromRoot.State>) { }
 
   ngOnInit() {
     if (!this.data.task) {
@@ -95,7 +98,7 @@ export class NewTaskComponent implements OnInit {
         reminder: [],
         owner: [[this.data.owner]],
         followers: [[]],
-        remark: ['',  Validators.maxLength(40)]
+        remark: ['', Validators.maxLength(40)]
       });
       this.dialogTitle = '创建任务：';
       this.delInvisible = true;
@@ -105,7 +108,7 @@ export class NewTaskComponent implements OnInit {
         priority: [this.data.task.priority],
         dueDate: [toDate(this.data.task.dueDate)],
         reminder: [toDate(this.data.task.reminder)],
-        owner: [this.data.task.owner ? [{name: this.data.task.owner.name, value: this.data.task.owner.id}] : []],
+        owner: [this.data.task.owner ? [{ name: this.data.task.owner.name, value: this.data.task.owner.id }] : []],
         followers: [this.data.task.participants ? [...this.data.task.participants] : []],
         remark: [this.data.task.remark, Validators.maxLength(40)]
       });
@@ -114,20 +117,22 @@ export class NewTaskComponent implements OnInit {
     }
   }
 
-  onSubmit({value, valid}: FormGroup, ev: Event) {
+  onSubmit({ value, valid }: FormGroup, ev: Event) {
     ev.preventDefault();
     if (!valid) {
       return;
     }
-    this.dialogRef.close({type: 'addOrUpdate', task: {
-      desc: value.desc,
-      participantIds: value.followers.map((u: User) => u.id),
-      ownerId: value.owner.length > 0 ? value.owner[0].id : null,
-      dueDate: value.dueDate,
-      reminder: value.reminder,
-      priority: value.priority,
-      remark: value.remark
-    }});
+    this.dialogRef.close({
+      type: 'addOrUpdate', task: {
+        desc: value.desc,
+        participantIds: value.followers.map((u: User) => u.id),
+        ownerId: value.owner.length > 0 ? value.owner[0].id : null,
+        dueDate: value.dueDate,
+        reminder: value.reminder,
+        priority: value.priority,
+        remark: value.remark
+      }
+    });
   }
 
   onDelClick(confirm: boolean) {
@@ -135,6 +140,6 @@ export class NewTaskComponent implements OnInit {
   }
 
   reallyDel() {
-    this.dialogRef.close({type: 'delete', task: this.data.task})
+    this.dialogRef.close({ type: 'delete', task: this.data.task })
   }
 }
