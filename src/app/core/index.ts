@@ -14,7 +14,7 @@ import {HeaderComponent} from './components/header';
 import {FooterComponent} from './components/footer';
 import {SidebarComponent} from './components/sidebar';
 import {PageNotFoundComponent} from './containers/page-not-found';
-import {AppComponent} from './containers/app.component';
+import {AppComponent} from './containers/app';
 
 import {loadSvgResources} from '../utils/svg.util';
 import {DateFnsAdapter} from '../shared/adapters/date-fns-adapter';
