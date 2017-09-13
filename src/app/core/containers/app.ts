@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {OverlayContainer} from '@angular/cdk/overlay';
+import {OverlayContainer} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
@@ -10,14 +10,14 @@ import {Auth, Project} from '../../domain';
 @Component({
   selector: 'app-root',
   template: `
-  <mat-sidenav-container [class.myapp-dark-theme]="dark" fullscreen>
-    <mat-sidenav #sidenav mode="over">
+  <md-sidenav-container [class.myapp-dark-theme]="dark" fullscreen>
+    <md-sidenav #sidenav mode="over">
       <app-sidebar
-        [auth]="(auth$ | async)?.token"
+        [auth]="(auth$ | async).token"
         [projects]="projects$ | async"
         (navClicked)="sidenav.close()"
         (prjClicked)="onPrjClicked($event)"></app-sidebar>
-    </mat-sidenav>
+    </md-sidenav>
     <div class="site" fxLayout="column">
       <header>
         <app-header
@@ -34,14 +34,14 @@ import {Auth, Project} from '../../domain';
         <app-footer></app-footer>
       </footer>
     </div>
-  </mat-sidenav-container>
+  </md-sidenav-container>
   `,
   styles: [`
-    mat-sidenav-container.myapp-dark-theme {
+    md-sidenav-container.myapp-dark-theme {
       background: black;
     }
 
-    mat-sidenav {
+    md-sidenav {
       width: 300px;
     }
   `]
@@ -65,7 +65,7 @@ export class AppComponent {
 
   switchDarkTheme(dark: boolean) {
     this._dark = dark;
-    this.oc.getContainerElement().classList.add(dark ? 'myapp-dark-theme' : '');
+    this.oc.themeClass = dark ? 'myapp-dark-theme' : '';
   }
 
   onLogout() {
