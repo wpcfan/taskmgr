@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { DragDirective } from './drag-drop/drag.directive';
 import { DropDirective } from './drag-drop/drop.directive';
 import { DragDropService, DragData } from './drag-drop.service';
-import { ScrollMonitorDirective } from './scroll-monitor.directive';
+import { ScrollMonitorDirective } from './scroll-monitor/scroll-monitor.directive';
 
 @NgModule({
   providers: [
