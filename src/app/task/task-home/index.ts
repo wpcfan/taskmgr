@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/task-list.action';
 import * as taskActions from '../../actions/task.action';
+import * as TaskHistoryActions from '../../actions/task-history.action';
 import { Task, TaskList } from '../../domain';
 import { NewTaskListComponent } from '../new-task-list';
 import { NewTaskComponent } from '../new-task';
