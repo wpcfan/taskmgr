@@ -1,15 +1,11 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Output, Input} from '@angular/core';
 import {getDate} from 'date-fns';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
-import {Auth, Project} from '../../domain';
-import * as fromRoot from '../../reducers';
-import * as actions from '../../actions/project.action';
+import {Project} from '../../domain';
 
 @Component({
   selector: 'app-sidebar',
   template: `
-    <div *ngIf="(auth$ | async)?.user">
+    <div *ngIf="auth">
       <md-nav-list>
         <h3 mdSubheader>项目</h3>
         <md-list-item [routerLink]="['/projects']" (click)="handleClicked($event)">
@@ -17,7 +13,7 @@ import * as actions from '../../actions/project.action';
           <span mdLine>项目首页</span>
           <span mdLine mdSubheader> 查看您参与的全部项目 </span>
         </md-list-item>
-        <md-list-item *ngFor="let prj of projects$ | async" (click)="handlePrjClicked($event, prj)">
+        <md-list-item *ngFor="let prj of projects" (click)="onPrjClicked($event, prj)">
           <md-icon md-list-icon svgIcon="project"></md-icon>
           <a mdLine>
             {{prj.name}}
@@ -58,15 +54,15 @@ import * as actions from '../../actions/project.action';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent {
+
+  @Input() projects: Project[];
+  @Input() auth = false;
   @Output() navClicked = new EventEmitter<void>();
+  @Output() prjClicked = new EventEmitter<Project>();
 
   today = 'day';
-  projects$: Observable<Project[]>;
-  auth$: Observable<Auth>;
 
-  constructor(private store$: Store<fromRoot.State>) {
-    this.auth$ = this.store$.select(fromRoot.getAuth);
-    this.projects$ = this.store$.select(fromRoot.getProjects);
+  constructor() {
     this.today = `day${getDate(new Date())}`;
   }
 
@@ -75,9 +71,8 @@ export class SidebarComponent {
     this.navClicked.emit();
   }
 
-  handlePrjClicked(ev: Event, prj: Project) {
+  onPrjClicked(ev: Event, prj: Project) {
     ev.preventDefault();
-    this.store$.dispatch(new actions.SelectProjectAction(prj));
-    this.navClicked.emit();
+    this.prjClicked.emit(prj)
   }
 }

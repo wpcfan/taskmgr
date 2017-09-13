@@ -54,7 +54,7 @@ export class RegisterFailAction implements Action {
 export class LogoutAction implements Action {
   readonly type = LOGOUT;
 
-  constructor(public payload: Auth) {
+  constructor() {
   }
 }
 
