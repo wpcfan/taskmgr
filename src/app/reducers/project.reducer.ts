@@ -22,8 +22,8 @@ const addProject = (state: State, action: actions.AddProjectSuccessAction) => {
     return state;
   }
   const ids = [...state.ids, <string>project.id];
-  const entities = {...state.entities, [<string>project.id]: project};
-  return {...state, ids: ids, entities: entities};
+  const entities = { ...state.entities, [<string>project.id]: project };
+  return { ...state, ids: ids, entities: entities };
 };
 
 const delProject = (state: State, action: actions.DeleteProjectSuccessAction) => {
@@ -39,8 +39,8 @@ const delProject = (state: State, action: actions.DeleteProjectSuccessAction) =>
 
 const updateProject = (state: State, action: combinedAction) => {
   const project = action.payload;
-  const entities = {...state.entities, [<string>project.id]: project};
-  return {...state, entities: entities};
+  const entities = { ...state.entities, [<string>project.id]: project };
+  return { ...state, entities: entities };
 };
 
 const loadProjects = (state: State, action: actions.LoadProjectsSuccessAction) => {
@@ -75,18 +75,18 @@ export function reducer(state = initialState, action: actions.Actions): State {
     case actions.LOADS_SUCCESS:
       return loadProjects(state, <actions.LoadProjectsSuccessAction>action);
     case actions.SELECT:
-      return {...state, selectedId: <string>action.payload.id};
+      return { ...state, selectedId: <string>action.payload.id };
     default:
       return state;
   }
 }
 
 export const getEntities = (state: State): { [id: string]: Project } => state.entities;
-export const getSelectedId = (state: State): string => state.selectedId;
+export const getSelectedId = (state: State): string | null => state.selectedId;
 export const getIds = (state: State): string[] => state.ids;
-export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
-  return entities[selectedId];
-});
+// export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId) => {
+//   return entities[selectedId];
+// });
 export const getAll = createSelector<State, { [id: string]: Project }, string[], Project[]>(getEntities, getIds, (entities, ids) => {
   return ids.map(id => entities[id]);
 });

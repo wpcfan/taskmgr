@@ -115,7 +115,7 @@ export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
 export const getProjects = createSelector<State, fromProjects.State, Project[]>(getProjectsState, fromProjects.getAll);
 export const getTasks = createSelector<State, fromTasks.State, Task[]>(getTasksState, fromTasks.getTasks);
 
-const getSelectedProjectId = createSelector<State, fromProjects.State, string>(getProjectsState, fromProjects.getSelectedId);
+const getSelectedProjectId = createSelector<State, fromProjects.State, string | null>(getProjectsState, fromProjects.getSelectedId);
 const getTaskLists = createSelector<State, fromTaskLists.State, TaskList[]>(getTaskListsState, fromTaskLists.getTaskLists);
 const getTaskListEntities = createSelector<State, fromTaskLists.State, { [id: string]: TaskList }>(getTaskListsState, fromTaskLists.getEntities);
 const getTaskListSelectedIds = createSelector<State, fromTaskLists.State, string[]>(getTaskListsState, fromTaskLists.getSelectedIds);
@@ -130,7 +130,7 @@ const getTasksWithOwner = createSelector<State, Task[], { [id: string]: User }, 
     }
   )));
 
-export const getProjectTaskList = createSelector<State, string, TaskList[], TaskList[]>(getSelectedProjectId, getTaskLists, (projectId, taskLists) => {
+export const getProjectTaskList = createSelector<State, string | null, TaskList[], TaskList[]>(getSelectedProjectId, getTaskLists, (projectId, taskLists) => {
   return taskLists.filter(taskList => taskList.projectId === projectId);
 });
 

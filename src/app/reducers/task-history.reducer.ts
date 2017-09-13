@@ -13,14 +13,14 @@ export const initialState: State = {
   entities: {}
 };
 
-const createTaskHistory = (state, action) => {
+const createTaskHistory = (state: State, action: actions.CreateTaskSuccessAction) => {
   return addOne(state, action.payload);
 }
 
 export function reducer(state = initialState, action: actions.Actions): State {
   switch (action.type) {
     case actions.CREATE_TASK_SUCCESS:
-      return createTaskHistory(state, action);
+      return createTaskHistory(state, <actions.CreateTaskSuccessAction>action);
     default:
       return state;
   }

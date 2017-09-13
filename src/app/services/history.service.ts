@@ -8,7 +8,7 @@ export class HistoryService {
   private readonly domain = 'history';
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  constructor( @Inject('BASE_CONFIG') private config, private http: HttpClient) {
+  constructor( @Inject('BASE_CONFIG') private config: { uri: string }, private http: HttpClient) {
   }
 
   addTaskHistory(history: TaskHistory): Observable<TaskHistory> {
