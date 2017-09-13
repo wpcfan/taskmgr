@@ -10,8 +10,73 @@ import {isValidDate} from '../../utils/date.util';
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
+  template: `
+  <form fxFlex fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center stretch" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
+    <md-card fxFlex="1 1 auto">
+      <md-tab-group [dynamicHeight]="true" [selectedIndex]="selectedTab" (selectChange)="onTabChange($event.index)">
+        <md-tab label="帐号信息">
+          <md-form-field class="full-width">
+            <input mdInput placeholder="电子邮件" formControlName="email">
+          </md-form-field>
+          <md-form-field class="full-width">
+            <input mdInput type="text" placeholder="您的名字" formControlName="name">
+          </md-form-field>
+          <md-form-field class="full-width">
+            <input mdInput type="password" placeholder="您的密码" formControlName="password">
+          </md-form-field>
+          <md-form-field class="full-width">
+            <input mdInput type="password" placeholder="为避免失误请再次输入" formControlName="repeat">
+          </md-form-field>
+          <app-image-list-select
+            [useSvgIcon]="true"
+            [cols]="6"
+            [title]="'选择头像：'"
+            [items]="avatars$ | async"
+            formControlName="avatar">
+          </app-image-list-select>
+          <div class="full-width" fxLayout="row">
+            <button md-raised-button type="button" (click)="nextTab()">下一步</button>
+            <span class="fill-remaining-space"></span>
+            <span>
+              <span>已有账户？ <a routerLink="/login">登录</a></span>
+              <span>忘记 <a routerLink="/forgot">密码？</a></span>
+            </span>
+          </div>
+        </md-tab>
+        <md-tab label="个人信息">
+          <app-indentity-input formControlName="identity" class="full-width control-padding">
+          </app-indentity-input>
+          <div class="full-width control-padding">
+            <app-age-input formControlName="dateOfBirth"></app-age-input>
+          </div>
+          <div class="full-width control-padding">
+            <app-area-list formControlName="address"></app-area-list>
+          </div>
+          <div class="full-width" fxLayout="row">
+            <button md-raised-button type="button" (click)="prevTab()">上一步</button>
+            <button md-raised-button type="submit" [disabled]="!form.valid">注册</button>
+            <span class="fill-remaining-space"></span>
+            <span>
+              <span>已有账户？ <a routerLink="/login">登录</a></span>
+              <span>忘记 <a routerLink="/forgot">密码？</a></span>
+            </span>
+          </div>
+        </md-tab>
+      </md-tab-group>
+    </md-card>
+  </form>
+  `,
+  styles: [`
+    .text-right {
+      margin: 10px;
+      text-align: end;
+    }
+
+    .control-padding{
+      margin-top: 10px;
+      padding-top: 10px;
+    }
+  `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegisterComponent implements OnInit, OnDestroy {
