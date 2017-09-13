@@ -1,7 +1,7 @@
 import { TaskHistory } from '../domain';
 import { createSelector } from '@ngrx/store';
 import { addOne } from '../utils/reduer.util';
-import * as actions from '../actions/history.action';
+import * as actions from '../actions/task-history.action';
 
 export interface State {
   ids: string[];
