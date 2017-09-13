@@ -7,7 +7,7 @@ import { TaskService } from './task.service';
 import { AuthGuardService } from './auth-guard.service';
 import { UserService } from './user.service';
 import { MyCalService } from './my-cal.service';
-import { HistoryService } from './history.service'
+import { TaskHistoryService } from './task-history.service'
 
 export {
   AuthGuardService,
@@ -16,9 +16,9 @@ export {
   QuoteService,
   TaskListService,
   TaskService,
+  TaskHistoryService,
   UserService,
   MyCalService,
-  HistoryService,
 }
 
 @NgModule()
@@ -33,9 +33,9 @@ export class ServicesModule {
         QuoteService,
         TaskListService,
         TaskService,
+        TaskHistoryService,
         UserService,
         MyCalService,
-        HistoryService,
       ]
     };
   }

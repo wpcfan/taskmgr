@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { TaskHistory } from '../domain';
 
 @Injectable()
-export class HistoryService {
+export class TaskHistoryService {
   private readonly domain = 'history';
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
 
