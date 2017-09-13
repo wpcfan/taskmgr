@@ -20,7 +20,7 @@ import {loadSvgResources} from '../utils/svg.util';
 import {DateFnsAdapter} from '../shared/adapters/date-fns-adapter';
 import {DatepickerI18n} from '../shared/adapters/datepicker-i18n';
 import {MD_FNS_DATE_FORMATS} from '../shared/adapters/date-formats';
-
+import '../utils/debug.util';
 @NgModule({
   imports: [
     HttpModule,

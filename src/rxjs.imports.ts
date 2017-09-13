@@ -1,4 +1,3 @@
-import './app/utils/debug.util';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/observable/concat';
