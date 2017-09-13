@@ -12,21 +12,21 @@ import {isValidDate} from '../../utils/date.util';
   selector: 'app-register',
   template: `
   <form fxFlex fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center stretch" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
-    <mat-card fxFlex="1 1 auto">
-      <mat-tab-group [dynamicHeight]="true" [selectedIndex]="selectedTab" (selectChange)="onTabChange($event.index)">
-        <mat-tab label="帐号信息">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="电子邮件" formControlName="email">
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <input matInput type="text" placeholder="您的名字" formControlName="name">
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <input matInput type="password" placeholder="您的密码" formControlName="password">
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <input matInput type="password" placeholder="为避免失误请再次输入" formControlName="repeat">
-          </mat-form-field>
+    <md-card fxFlex="1 1 auto">
+      <md-tab-group [dynamicHeight]="true" [selectedIndex]="selectedTab" (selectChange)="onTabChange($event.index)">
+        <md-tab label="帐号信息">
+          <md-form-field class="full-width">
+            <input mdInput placeholder="电子邮件" formControlName="email">
+          </md-form-field>
+          <md-form-field class="full-width">
+            <input mdInput type="text" placeholder="您的名字" formControlName="name">
+          </md-form-field>
+          <md-form-field class="full-width">
+            <input mdInput type="password" placeholder="您的密码" formControlName="password">
+          </md-form-field>
+          <md-form-field class="full-width">
+            <input mdInput type="password" placeholder="为避免失误请再次输入" formControlName="repeat">
+          </md-form-field>
           <app-image-list-select
             [useSvgIcon]="true"
             [cols]="6"
@@ -35,15 +35,15 @@ import {isValidDate} from '../../utils/date.util';
             formControlName="avatar">
           </app-image-list-select>
           <div class="full-width" fxLayout="row">
-            <button mat-raised-button type="button" (click)="nextTab()">下一步</button>
+            <button md-raised-button type="button" (click)="nextTab()">下一步</button>
             <span class="fill-remaining-space"></span>
             <span>
               <span>已有账户？ <a routerLink="/login">登录</a></span>
               <span>忘记 <a routerLink="/forgot">密码？</a></span>
             </span>
           </div>
-        </mat-tab>
-        <mat-tab label="个人信息">
+        </md-tab>
+        <md-tab label="个人信息">
           <app-indentity-input formControlName="identity" class="full-width control-padding">
           </app-indentity-input>
           <div class="full-width control-padding">
@@ -53,17 +53,17 @@ import {isValidDate} from '../../utils/date.util';
             <app-area-list formControlName="address"></app-area-list>
           </div>
           <div class="full-width" fxLayout="row">
-            <button mat-raised-button type="button" (click)="prevTab()">上一步</button>
-            <button mat-raised-button type="submit" [disabled]="!form.valid">注册</button>
+            <button md-raised-button type="button" (click)="prevTab()">上一步</button>
+            <button md-raised-button type="submit" [disabled]="!form.valid">注册</button>
             <span class="fill-remaining-space"></span>
             <span>
               <span>已有账户？ <a routerLink="/login">登录</a></span>
               <span>忘记 <a routerLink="/forgot">密码？</a></span>
             </span>
           </div>
-        </mat-tab>
-      </mat-tab-group>
-    </mat-card>
+        </md-tab>
+      </md-tab-group>
+    </md-card>
   </form>
   `,
   styles: [`
@@ -141,7 +141,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
     this.store$.dispatch(
       new actions.RegisterAction({
-        id: undefined,
         password: value.password,
         name: value.name,
         email: value.email,
