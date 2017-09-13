@@ -1,21 +1,16 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
-import * as fromRoot from '../../reducers';
-import * as actions from '../../actions/auth.action';
-import {Auth} from '../../domain';
+import {ChangeDetectionStrategy, Component, EventEmitter, Output, Input} from '@angular/core';
 
 @Component({
   selector: 'app-header',
   template: `
     <md-toolbar color="primary">
-      <button md-icon-button (click)="onClick()" *ngIf="(auth$ | async)?.token">
+      <button md-icon-button (click)="onClick()" *ngIf="auth">
         <md-icon>menu</md-icon>
       </button>
       <span>企业协作平台</span>
       <span class="fill-remaining-space"></span>
       <md-slide-toggle (change)="onChange($event.checked)">黑夜模式</md-slide-toggle>
-      <span><a md-button *ngIf="(auth$ | async)?.token" (click)="logout()">退出</a></span>
+      <span><a md-button *ngIf="auth" (click)="handleLogout()">退出</a></span>
     </md-toolbar>
   `,
   styles: [`
@@ -24,20 +19,17 @@ import {Auth} from '../../domain';
 })
 export class HeaderComponent {
 
-  auth$: Observable<Auth>;
+  @Input() auth = false;
   @Output() toggle = new EventEmitter<void>();
   @Output() toggleDarkTheme = new EventEmitter<boolean>();
-
-  constructor(private store$: Store<fromRoot.State>) {
-    this.auth$ = this.store$.select(fromRoot.getAuth);
-  }
+  @Output() logout = new EventEmitter();
 
   onClick() {
     this.toggle.emit();
   }
 
-  logout() {
-    this.store$.dispatch({type: actions.LOGOUT});
+  handleLogout() {
+    this.logout.emit();
   }
 
   onChange(checked: boolean) {

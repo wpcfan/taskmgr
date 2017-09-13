@@ -14,6 +14,7 @@ import {HeaderComponent} from './components/header';
 import {FooterComponent} from './components/footer';
 import {SidebarComponent} from './components/sidebar';
 import {PageNotFoundComponent} from './containers/page-not-found';
+import {AppComponent} from './containers/app.component';
 
 import {loadSvgResources} from '../utils/svg.util';
 import {DateFnsAdapter} from '../shared/adapters/date-fns-adapter';
@@ -32,9 +33,7 @@ import {MD_FNS_DATE_FORMATS} from '../shared/adapters/date-formats';
     BrowserAnimationsModule
   ],
   exports: [
-    HeaderComponent,
-    FooterComponent,
-    SidebarComponent,
+    AppComponent,
     AppRoutingModule,
   ],
   providers: [
@@ -49,6 +48,7 @@ import {MD_FNS_DATE_FORMATS} from '../shared/adapters/date-formats';
     FooterComponent,
     SidebarComponent,
     PageNotFoundComponent,
+    AppComponent
   ]
 })
 export class CoreModule {
