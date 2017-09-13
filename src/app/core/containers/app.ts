@@ -13,7 +13,7 @@ import {Auth, Project} from '../../domain';
   <md-sidenav-container [class.myapp-dark-theme]="dark" fullscreen>
     <md-sidenav #sidenav mode="over">
       <app-sidebar
-        [auth]="(auth$ | async).token"
+        [auth]="(auth$ | async)?.token"
         [projects]="projects$ | async"
         (navClicked)="sidenav.close()"
         (prjClicked)="onPrjClicked($event)"></app-sidebar>
