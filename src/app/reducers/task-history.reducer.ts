@@ -1,6 +1,6 @@
 import { TaskHistory } from '../domain';
 import { createSelector } from '@ngrx/store';
-import { addOne } from '../utils/reduer.util';
+import { addOne, covertArrToObj, buildObjFromArr } from '../utils/reduer.util';
 import * as actions from '../actions/task-history.action';
 
 export interface State {
@@ -18,17 +18,29 @@ export const initialState: State = {
 const selectTask = (state: State, action: actions.SelectTaskAction): State => {
   const taskId: string = action.payload;
 
-  return { ...state, taskId: taskId };
+  return { ids: [], entities: {}, taskId: taskId };
 }
 
-const loadTaskHistory = (state: State, action: actions.LoadHistorySuccessAction): State => {
+const loadTaskHistories = (state: State, action: actions.LoadHistorySuccessAction): State => {
   const taskHistories: TaskHistory[] = action.payload;
-  if (null === taskHistories) {
+  if (taskHistories.length === 0) {
     return state;
   }
 
-  // const newIds =
-  return state;
+  const newTaskHistories = taskHistories.filter(taskHistory => taskHistory.taskId === state.taskId);
+  const newIds: string[] = newTaskHistories.map(taskHistory => <string>taskHistory.id);
+  const newEntities = covertArrToObj(newTaskHistories);
+  console.log('<<Load History>>', JSON.stringify({
+    ids: [...state.ids, ...newIds],
+    entities: { ...state.entities, ...newEntities },
+    taskId: state.taskId
+  }));
+
+  return {
+    ids: [...state.ids, ...newIds],
+    entities: { ...state.entities, ...newEntities },
+    taskId: state.taskId
+  }
 }
 
 const createTaskHistory = (state: State, action: actions.CreateTaskSuccessAction): State => {
@@ -45,7 +57,7 @@ export function reducer(state = initialState, action: actions.Actions): State {
     case actions.SELECT_TASK:
       return selectTask(state, <actions.SelectTaskAction>action);
     case actions.LOAD_SUCCESS:
-      return loadTaskHistory(state, <actions.LoadHistorySuccessAction>action);
+      return loadTaskHistories(state, <actions.LoadHistorySuccessAction>action);
     case actions.CREATE_TASK_SUCCESS:
       return createTaskHistory(state, <actions.CreateTaskSuccessAction>action);
     default:
@@ -55,6 +67,6 @@ export function reducer(state = initialState, action: actions.Actions): State {
 
 export const getEntities = (state: State): { [id: string]: TaskHistory } => state.entities;
 export const getIds = (state: State): string[] => state.ids;
-export const getTaskHistory = createSelector<State, { [id: string]: TaskHistory }, string[], TaskHistory[]>(getEntities, getIds, (entities, ids) => {
+export const getTaskHistories = createSelector<State, { [id: string]: TaskHistory }, string[], TaskHistory[]>(getEntities, getIds, (entities, ids) => {
   return ids.map((id: string) => entities[id]);
 });
