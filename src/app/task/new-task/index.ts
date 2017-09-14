@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { toDate } from 'date-fns';
-import { User } from '../../domain';
+import { User, TaskHistory } from '../../domain';
 import * as fromRoot from '../../reducers';
 import * as TaskHistoryActions from '../../actions/task-history.action';
 
@@ -41,6 +42,12 @@ import * as TaskHistoryActions from '../../actions/task-history.action';
         <md-form-field class="full-width">
           <textarea mdInput placeholder="备注" formControlName="remark"></textarea>
         </md-form-field>
+        <md-list>
+          <md-list-item *ngFor="let history of taskHistories let i = index">
+          <md-icon mdListIcon [svgIcon]="icons[i]"></md-icon>
+            {{history.operator.name}}
+          </md-list-item>
+        </md-list>
       </div>
       <div md-dialog-actions class="full-width">
         <div fxLayout="row" *ngIf="notConfirm else confirm">
@@ -65,7 +72,12 @@ import * as TaskHistoryActions from '../../actions/task-history.action';
   styles: [``],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewTaskComponent implements OnInit {
+export class NewTaskComponent implements OnInit, OnDestroy {
+
+  private taskHistories$: Observable<TaskHistory[]>;
+  private _sub: Subscription;
+  taskHistories: TaskHistory[] = [];
+  icons: string[] = ['project', 'week'];
 
   form: FormGroup;
   dialogTitle: string;
@@ -89,7 +101,9 @@ export class NewTaskComponent implements OnInit {
   constructor(private fb: FormBuilder,
     @Inject(MD_DIALOG_DATA) private data: any,
     private dialogRef: MdDialogRef<NewTaskComponent>,
-    private store$: Store<fromRoot.State>) { }
+    private store$: Store<fromRoot.State>) {
+    this.taskHistories$ = this.store$.select(fromRoot.getTaskHistories);
+  }
 
   ngOnInit() {
     if (!this.data.task) {
@@ -117,8 +131,23 @@ export class NewTaskComponent implements OnInit {
       this.dialogTitle = '修改任务：';
       this.delInvisible = false;
 
-      this.store$.dispatch(new TaskHistoryActions.LoadTaskHistoryAction(this.data.task.id));
+      this.loadTaskHistories();
     }
+  }
+
+  ngOnDestroy() {
+    if (this._sub) {
+      this._sub.unsubscribe();
+    }
+  }
+
+  loadTaskHistories() {
+    this.store$.dispatch(new TaskHistoryActions.LoadTaskHistoryAction(this.data.task.id));
+
+    this._sub = this.taskHistories$.subscribe(histories => {
+      console.log('<loadTaskHistories>', JSON.stringify(histories));
+      this.taskHistories = histories;
+    });
   }
 
   onSubmit({ value, valid }: FormGroup, ev: Event) {

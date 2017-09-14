@@ -30,11 +30,6 @@ const loadTaskHistories = (state: State, action: actions.LoadHistorySuccessActio
   const newTaskHistories = taskHistories.filter(taskHistory => taskHistory.taskId === state.taskId);
   const newIds: string[] = newTaskHistories.map(taskHistory => <string>taskHistory.id);
   const newEntities = covertArrToObj(newTaskHistories);
-  console.log('<<Load History>>', JSON.stringify({
-    ids: [...state.ids, ...newIds],
-    entities: { ...state.entities, ...newEntities },
-    taskId: state.taskId
-  }));
 
   return {
     ids: [...state.ids, ...newIds],
