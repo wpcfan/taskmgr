@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { toDate } from 'date-fns';
 import { User, TaskHistory } from '../../domain';
+import { TaskHistoryVM } from '../../vm';
+import { getTaskHistoryVMs } from '../../utils/history.util';
 import * as fromRoot from '../../reducers';
 import * as TaskHistoryActions from '../../actions/task-history.action';
 
@@ -42,10 +44,11 @@ import * as TaskHistoryActions from '../../actions/task-history.action';
         <md-form-field class="full-width">
           <textarea mdInput placeholder="备注" formControlName="remark"></textarea>
         </md-form-field>
-        <md-list>
+        <md-list dense>
           <md-list-item *ngFor="let history of taskHistories let i = index">
-          <md-icon mdListIcon [svgIcon]="icons[i]"></md-icon>
-            {{history.operator.name}}
+            <md-icon mdListIcon [svgIcon]="history.icon"></md-icon>
+            {{history.desc}}
+            <span style="flex-grow: 2; text-align: end;">{{history.date | date: "MMdd"}}</span>
           </md-list-item>
         </md-list>
       </div>
@@ -76,8 +79,7 @@ export class NewTaskComponent implements OnInit, OnDestroy {
 
   private taskHistories$: Observable<TaskHistory[]>;
   private _sub: Subscription;
-  taskHistories: TaskHistory[] = [];
-  icons: string[] = ['project', 'week'];
+  taskHistories: TaskHistoryVM[] = [];
 
   form: FormGroup;
   dialogTitle: string;
@@ -146,7 +148,7 @@ export class NewTaskComponent implements OnInit, OnDestroy {
 
     this._sub = this.taskHistories$.subscribe(histories => {
       console.log('<loadTaskHistories>', JSON.stringify(histories));
-      this.taskHistories = histories;
+      this.taskHistories = getTaskHistoryVMs(histories);
     });
   }
 

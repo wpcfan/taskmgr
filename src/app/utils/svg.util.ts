@@ -14,6 +14,7 @@ export const loadSvgResources = (ir: MdIconRegistry, ds: DomSanitizer) => {
   const sidebarDir = `${imgDir}/sidebar`;
   const iconDir = `${imgDir}/icons`;
   const dayDir = `${imgDir}/days`;
+  const historyDir = `${imgDir}/history`;
   ir.addSvgIconSetInNamespace('avatars', ds.bypassSecurityTrustResourceUrl(`${avatarDir}/avatars.svg`))
     .addSvgIcon('unassigned', ds.bypassSecurityTrustResourceUrl(`${avatarDir}/unassigned.svg`))
     .addSvgIcon('project', ds.bypassSecurityTrustResourceUrl(`${sidebarDir}/project.svg`))
@@ -21,6 +22,7 @@ export const loadSvgResources = (ir: MdIconRegistry, ds: DomSanitizer) => {
     .addSvgIcon('month', ds.bypassSecurityTrustResourceUrl(`${sidebarDir}/month.svg`))
     .addSvgIcon('week', ds.bypassSecurityTrustResourceUrl(`${sidebarDir}/week.svg`))
     .addSvgIcon('day', ds.bypassSecurityTrustResourceUrl(`${sidebarDir}/day.svg`))
+    .addSvgIcon('create-task', ds.bypassSecurityTrustResourceUrl(`${historyDir}/create-task.svg`))
     .addSvgIcon('move', ds.bypassSecurityTrustResourceUrl(`${iconDir}/move.svg`));
   const days = _.range(1, 31);
   days.forEach(day => ir.addSvgIcon(`day${day}`, ds.bypassSecurityTrustResourceUrl(`${dayDir}/day${day}.svg`)));

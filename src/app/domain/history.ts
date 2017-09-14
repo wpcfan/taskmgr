@@ -16,7 +16,7 @@ export interface OperationHistory {
 
 export interface TaskHistory extends OperationHistory {
   taskId: string;
-  operation: Operations;
+  operation: TaskOperations;
 }
 
 export interface Operation {
@@ -59,7 +59,7 @@ export class updateRemarkOperation implements Operation {
   }
 }
 
-export type Operations
+export type TaskOperations
   = CreateTaskOperation
   | completeTaskOperation
   | recreateTaskOperation
