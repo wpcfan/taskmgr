@@ -14,5 +14,4 @@ export interface Task {
   // tags?: string[];
   reminder?: Date;
   createDate?: Date;
-  historyIds?: string[];
 }

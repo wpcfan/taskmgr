@@ -314,10 +314,7 @@
       "remark": "",
       "reminder": "2017-07-17T16:00:00.000Z",
       "createDate": "2017-05-24T06:11:48.513Z",
-      "id": "5",
-      "historyId": [
-        "ryoklWH9-"
-      ]
+      "id": "5"
     },
     {
       "taskListId": "BylTyXiM-b",
@@ -376,10 +373,15 @@
       "id": "9"
     }
   ],
-  "history": [
+  "taskHistory": [
     {
       "taskId": "5",
-      "operatorId": "37489e0c-df34-c261-71c4-ce75357e3035",
+      "operator": {
+        "id": "37489e0c-df34-c261-71c4-ce75357e3035",
+        "name": "王芃",
+        "avatar": "avatars:svg-1",
+        "email": "wpcfan@163.com"
+      },
       "operation": {
         "payload": "增加统计报表功能",
         "type": "createTask"

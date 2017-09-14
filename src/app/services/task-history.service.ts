@@ -5,7 +5,7 @@ import { TaskHistory } from '../domain';
 
 @Injectable()
 export class TaskHistoryService {
-  private readonly domain = 'history';
+  private readonly domain = 'taskHistory';
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   constructor( @Inject('BASE_CONFIG') private config: { uri: string }, private http: HttpClient) {
