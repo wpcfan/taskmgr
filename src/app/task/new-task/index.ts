@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { toDate } from 'date-fns';
 import { User } from '../../domain';
 import * as fromRoot from '../../reducers';
+import * as TaskHistoryActions from '../../actions/task-history.action';
 
 @Component({
   selector: 'app-new-task',
@@ -114,6 +116,8 @@ export class NewTaskComponent implements OnInit {
       });
       this.dialogTitle = '修改任务：';
       this.delInvisible = false;
+
+      this.store$.dispatch(new TaskHistoryActions.LoadTaskHistoryAction(this.data.task.id));
     }
   }
 

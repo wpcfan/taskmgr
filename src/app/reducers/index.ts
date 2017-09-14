@@ -20,7 +20,7 @@ import * as fromRouter from '@ngrx/router-store';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../../environments/environment';
-import { Auth, User, Project, TaskList, Task } from '../domain';
+import { Auth, User, Project, TaskList, Task, TaskHistory } from '../domain';
 import { TaskListVM, TaskVM } from '../vm';
 import * as authActions from '../actions/auth.action';
 
@@ -52,7 +52,7 @@ export interface State {
   projects: fromProjects.State;
   taskLists: fromTaskLists.State;
   tasks: fromTasks.State;
-  taskHistory: fromTaskHistory.State;
+  taskHistories: fromTaskHistory.State;
   users: fromUsers.State;
   router: fromRouter.RouterReducerState;
 }
@@ -62,7 +62,7 @@ export const reducers: ActionReducerMap<State> = {
   quote: fromQuote.reducer,
   projects: fromProjects.reducer,
   taskLists: fromTaskLists.reducer,
-  taskHistory: fromTaskHistory.reducer,
+  taskHistories: fromTaskHistory.reducer,
   tasks: fromTasks.reducer,
   users: fromUsers.reducer,
   router: fromRouter.routerReducer,
@@ -74,6 +74,7 @@ export const initState = {
   projects: fromProjects.initialState,
   taskLists: fromTaskLists.initialState,
   tasks: fromTasks.initialState,
+  taskHistories: fromTaskHistory.initialState,
   users: fromUsers.initialState,
 };
 
@@ -109,12 +110,13 @@ export const getQuoteState = (state: State) => state.quote;
 export const getProjectsState = (state: State) => state.projects;
 export const getTaskListsState = (state: State) => state.taskLists;
 export const getTasksState = (state: State) => state.tasks;
-export const getTaskHistory = (state: State) => state.taskHistory;
+export const getTaskHistoriesState = (state: State) => state.taskHistories;
 export const getUserState = (state: State) => state.users;
 
 export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
 export const getProjects = createSelector<State, fromProjects.State, Project[]>(getProjectsState, fromProjects.getAll);
 export const getTasks = createSelector<State, fromTasks.State, Task[]>(getTasksState, fromTasks.getTasks);
+export const getTaskHistories = createSelector<State, fromTaskHistory.State, TaskHistory[]>(getTaskHistoriesState, fromTaskHistory.getTaskHistories);
 
 const getSelectedProjectId = createSelector<State, fromProjects.State, string | null>(getProjectsState, fromProjects.getSelectedId);
 const getTaskLists = createSelector<State, fromTaskLists.State, TaskList[]>(getTaskListsState, fromTaskLists.getTaskLists);
