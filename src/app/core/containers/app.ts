@@ -27,7 +27,7 @@ import {Auth, Project} from '../../domain';
           [auth]="(auth$ | async)?.token">
         </app-header>
       </header>
-      <main fxFlex="1" fxLayout="column" fxLayoutAlign="center center">
+      <main fxFlex="1" fxLayout="column" fxLayoutAlign="center">
         <router-outlet></router-outlet>
       </main>
       <footer>
