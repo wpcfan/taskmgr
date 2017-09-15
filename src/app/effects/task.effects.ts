@@ -1,10 +1,12 @@
-import {Injectable} from '@angular/core';
-import {Actions, Effect} from '@ngrx/effects';
-import {Action} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
-import {of} from 'rxjs/observable/of';
-import {TaskService} from '../services';
+import { Injectable } from '@angular/core';
+import { Actions, Effect } from '@ngrx/effects';
+import { Action } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { TaskService } from '../services';
+import { Task } from '../domain'
 import * as actions from '../actions/task.action';
+import * as taskHistoryActions from '../actions/task-history.action';
 
 @Injectable()
 export class TaskEffects {
@@ -18,7 +20,7 @@ export class TaskEffects {
         .getByLists(taskLists)
         .map(tasks => new actions.LoadTasksInListsSuccessAction(tasks))
         .catch(err => of(new actions.LoadTasksInListsFailAction(JSON.stringify(err))));
-      }
+    }
     );
 
   @Effect()
@@ -30,8 +32,14 @@ export class TaskEffects {
         .add(task)
         .map(t => new actions.AddTaskSuccessAction(t))
         .catch(err => of(new actions.AddTaskFailAction(JSON.stringify(err))));
-      }
+    }
     );
+
+  @Effect()
+  createTaskHistory$: Observable<Action> = this.actions$
+    .ofType<actions.AddTaskSuccessAction>(actions.ADD_SUCCESS)
+    .map(action => action.payload)
+    .map((task: Task) => new taskHistoryActions.CreateTaskAction(task));
 
   @Effect()
   updateTask$: Observable<Action> = this.actions$
@@ -67,7 +75,7 @@ export class TaskEffects {
   moveTask$: Observable<Action> = this.actions$
     .ofType<actions.MoveTaskAction>(actions.MOVE)
     .map(action => action.payload)
-    .switchMap(({taskId, taskListId}) => this.service$
+    .switchMap(({ taskId, taskListId }) => this.service$
       .move(taskId, taskListId)
       .map(task => new actions.MoveTaskSuccessAction(task))
       .catch(err => of(new actions.MoveTaskFailAction(JSON.stringify(err))))
@@ -77,7 +85,7 @@ export class TaskEffects {
   moveAllTask$: Observable<Action> = this.actions$
     .ofType<actions.MoveAllAction>(actions.MOVE_ALL)
     .map(action => action.payload)
-    .switchMap(({srcListId, targetListId}) => this.service$.moveAll(srcListId, targetListId)
+    .switchMap(({ srcListId, targetListId }) => this.service$.moveAll(srcListId, targetListId)
       .map(tasks => new actions.MoveAllSuccessAction(tasks))
       .catch(err => of(new actions.MoveAllFailAction(err)))
     );
@@ -89,5 +97,5 @@ export class TaskEffects {
    * @param store$ 注入 redux store
    */
   constructor(private actions$: Actions,
-              private service$: TaskService) {}
+    private service$: TaskService) { }
 }

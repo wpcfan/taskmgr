@@ -2,6 +2,7 @@ import { TaskHistory } from '../domain';
 import { createSelector } from '@ngrx/store';
 import { addOne, covertArrToObj, buildObjFromArr } from '../utils/reduer.util';
 import * as actions from '../actions/task-history.action';
+import * as taskActions from '../actions/task.action';
 
 export interface State {
   ids: string[];
@@ -15,7 +16,7 @@ export const initialState: State = {
   taskId: null
 };
 
-const selectTask = (state: State, action: actions.SelectTaskAction): State => {
+const selectTask = (state: State, action: taskActions.SelectTaskAction): State => {
   const taskId: string = action.payload;
 
   return { ids: [], entities: {}, taskId: taskId };
@@ -47,10 +48,10 @@ const createTaskHistory = (state: State, action: actions.CreateTaskSuccessAction
   return { ...state, ids: ids, entities: entities };
 }
 
-export function reducer(state = initialState, action: actions.Actions): State {
+export function reducer(state = initialState, action: actions.Actions | taskActions.Actions): State {
   switch (action.type) {
-    case actions.SELECT_TASK:
-      return selectTask(state, <actions.SelectTaskAction>action);
+    case taskActions.SELECT:
+      return selectTask(state, <taskActions.SelectTaskAction>action);
     case actions.LOAD_SUCCESS:
       return loadTaskHistories(state, <actions.LoadHistorySuccessAction>action);
     case actions.CREATE_TASK_SUCCESS:

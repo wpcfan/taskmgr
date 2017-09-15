@@ -30,29 +30,29 @@ export class CreateTaskOperation implements Operation {
   }
 }
 
-export class completeTaskOperation implements Operation {
+export class CompleteTaskOperation implements Operation {
   readonly type = COMPLETE_TASK;
 }
 
-export class recreateTaskOperation implements Operation {
+export class RecreateTaskOperation implements Operation {
   readonly type = RECREATE_TASK;
 }
 
-export class updateTaskContentOperation implements Operation {
+export class UpdateTaskContentOperation implements Operation {
   readonly type = UPDATE_TASK_CONTENT;
 
   constructor(public payload: string) {
   }
 }
 
-export class updatePriorityOperation implements Operation {
+export class UpdatePriorityOperation implements Operation {
   readonly type = UPDATE_TASK_PRIORITY;
 
   constructor(public payload: number) {
   }
 }
 
-export class updateRemarkOperation implements Operation {
+export class UpdateRemarkOperation implements Operation {
   readonly type = UPDATE_TASK_REMARK;
 
   constructor(public payload: string) {
@@ -61,9 +61,9 @@ export class updateRemarkOperation implements Operation {
 
 export type TaskOperations
   = CreateTaskOperation
-  | completeTaskOperation
-  | recreateTaskOperation
-  | updateTaskContentOperation
-  | updatePriorityOperation
-  | updateRemarkOperation
+  | CompleteTaskOperation
+  | RecreateTaskOperation
+  | UpdateTaskContentOperation
+  | UpdatePriorityOperation
+  | UpdateRemarkOperation
   ;

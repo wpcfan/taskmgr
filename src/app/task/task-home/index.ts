@@ -6,7 +6,6 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as listActions from '../../actions/task-list.action';
 import * as taskActions from '../../actions/task.action';
-import * as TaskHistoryActions from '../../actions/task-history.action';
 import { Task, TaskList } from '../../domain';
 import { NewTaskListComponent } from '../new-task-list';
 import { NewTaskComponent } from '../new-task';
@@ -178,7 +177,7 @@ export class TaskHomeComponent {
   }
 
   handleUpdateTask(task: Task) {
-    this.store$.dispatch(new TaskHistoryActions.SelectTaskAction(<string>task.id));
+    this.store$.dispatch(new taskActions.SelectTaskAction(<string>task.id));
 
     const dialogRef = this.dialog.open(NewTaskComponent, { data: { task: task } });
     dialogRef.afterClosed()

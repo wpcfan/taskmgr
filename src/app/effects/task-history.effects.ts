@@ -22,4 +22,13 @@ export class TaskHistoryEffects {
       .map((taskHistories: TaskHistory[]) => new actions.LoadHistorySuccessAction(taskHistories))
       .catch(err => of(new actions.LoadHistoryFailAction(JSON.stringify(err))))
     );
+
+  // @Effect()
+  // addTaskHistory$: Observable<Action> = this.actions$
+  //   .ofType<actions.CreateTaskAction>(actions.CREATE_TASK)
+  //   .map(action => action.payload)
+  //   .switchMap((history: TaskHistory) => this.services$.addTaskHistory(history)
+  //     .map((history: TaskHistory) => new actions.CreateTaskSuccessAction(history))
+  //     .catch(err => of(new actions.CreateTaskFailAction(JSON.stringify(err))))
+  //   );
 }

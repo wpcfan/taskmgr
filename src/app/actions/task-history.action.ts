@@ -1,7 +1,5 @@
 import { Action } from '@ngrx/store';
-import { TaskHistory } from '../domain';
-
-export const SELECT_TASK = '[TaskHistory] Select Task';
+import { Task, TaskHistory } from '../domain';
 
 export const LOAD = '[TaskHistory] Load';
 export const LOAD_SUCCESS = '[TaskHistory] Load Success';
@@ -10,13 +8,6 @@ export const LOAD_FAIL = '[TaskHistory] Load Fail';
 export const CREATE_TASK = '[TaskHistory] Create Task';
 export const CREATE_TASK_SUCCESS = '[TaskHistory] Create Task Success';
 export const CREATE_TASK_FAIL = '[TaskHistory] Create Task Fail';
-
-export class SelectTaskAction implements Action {
-  readonly type = SELECT_TASK;
-
-  constructor(public payload: string) {
-  }
-}
 
 export class LoadTaskHistoryAction implements Action {
   readonly type = LOAD;
@@ -42,7 +33,7 @@ export class LoadHistoryFailAction implements Action {
 export class CreateTaskAction implements Action {
   readonly type = CREATE_TASK;
 
-  constructor(public payload: TaskHistory) {
+  constructor(public payload: Task) {
   }
 }
 
@@ -61,8 +52,7 @@ export class CreateTaskFailAction implements Action {
 }
 
 export type Actions
-  = SelectTaskAction
-  | LoadTaskHistoryAction
+  = LoadTaskHistoryAction
   | LoadHistorySuccessAction
   | LoadHistoryFailAction
   | CreateTaskAction

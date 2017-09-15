@@ -1,6 +1,7 @@
-import {Action} from '@ngrx/store';
-import {Task, TaskList} from '../domain';
+import { Action } from '@ngrx/store';
+import { Task, TaskList } from '../domain';
 
+export const SELECT = '[Task] Select';
 export const ADD = '[Task] Add';
 export const ADD_SUCCESS = '[Task] Add Success';
 export const ADD_FAIL = '[Task] Add Fail';
@@ -22,6 +23,13 @@ export const MOVE_FAIL = '[Task] Move Fail';
 export const COMPLETE = '[Task] Complete';
 export const COMPLETE_SUCCESS = '[Task] Complete Success';
 export const COMPLETE_FAIL = '[Task] Complete Fail';
+
+export class SelectTaskAction implements Action {
+  readonly type = SELECT;
+
+  constructor(public payload: string) {
+  }
+}
 
 export class AddTaskAction implements Action {
   readonly type = ADD;
@@ -171,7 +179,8 @@ export class MoveAllFailAction implements Action {
 }
 
 export type Actions
-  = AddTaskAction
+  = SelectTaskAction
+  | AddTaskAction
   | AddTaskSuccessAction
   | AddTaskFailAction
   | UpdateTaskAction
