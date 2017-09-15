@@ -14,12 +14,13 @@ import {HeaderComponent} from './components/header';
 import {FooterComponent} from './components/footer';
 import {SidebarComponent} from './components/sidebar';
 import {PageNotFoundComponent} from './containers/page-not-found';
+import {AppComponent} from './containers/app';
 
 import {loadSvgResources} from '../utils/svg.util';
 import {DateFnsAdapter} from '../shared/adapters/date-fns-adapter';
 import {DatepickerI18n} from '../shared/adapters/datepicker-i18n';
 import {MD_FNS_DATE_FORMATS} from '../shared/adapters/date-formats';
-
+import '../utils/debug.util';
 @NgModule({
   imports: [
     HttpModule,
@@ -32,9 +33,7 @@ import {MD_FNS_DATE_FORMATS} from '../shared/adapters/date-formats';
     BrowserAnimationsModule
   ],
   exports: [
-    HeaderComponent,
-    FooterComponent,
-    SidebarComponent,
+    AppComponent,
     AppRoutingModule,
   ],
   providers: [
@@ -49,6 +48,7 @@ import {MD_FNS_DATE_FORMATS} from '../shared/adapters/date-formats';
     FooterComponent,
     SidebarComponent,
     PageNotFoundComponent,
+    AppComponent
   ]
 })
 export class CoreModule {

@@ -10,7 +10,7 @@ import {Task, TaskList} from '../../domain';
 import {NewTaskListComponent} from '../new-task-list';
 import {NewTaskComponent} from '../new-task';
 import {CopyTaskComponent} from '../copy-task';
-import {ConfirmDialogComponent} from '../../shared/confirm-dialog';
+import {ConfirmDialogComponent} from '../../shared/components/confirm-dialog';
 import {defaultRouteAnim, listAnimation} from '../../anim';
 import {TaskListVM} from '../../vm/task-list.vm';
 

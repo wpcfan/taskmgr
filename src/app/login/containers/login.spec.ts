@@ -1,5 +1,5 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {LoginComponent} from './';
+import {LoginComponent} from './login';
 import {SharedModule} from '../../shared';
 import {StoreModule} from '@ngrx/store';
 import {reducers, metaReducers, initState} from '../../reducers';

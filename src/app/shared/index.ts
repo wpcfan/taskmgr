@@ -26,12 +26,12 @@ import {
   MdSlideToggleModule,
 } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {ConfirmDialogComponent} from './confirm-dialog';
-import {ImageListSelectComponent} from './image-list-select';
-import {ChipsListComponent} from './chips-list';
-import {IdentityInputComponent} from './identity-input';
-import {AreaListComponent} from './area-list';
-import {AgeInputComponent} from './age-input';
+import {ConfirmDialogComponent} from './components/confirm-dialog';
+import {ImageListSelectComponent} from './components/image-list-select';
+import {ChipsListComponent} from './components/chips-list';
+import {IdentityInputComponent} from './components/identity-input';
+import {AreaListComponent} from './components/area-list';
+import {AgeInputComponent} from './components/age-input';
 import {DirectivesModule} from '../directives';
 
 const MATERIAL_MODULES = [
