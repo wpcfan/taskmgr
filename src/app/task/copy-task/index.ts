@@ -15,7 +15,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
             {{list.name}}
           </md-option>
         </md-select>
-        <div>
+        <div mdDialogActions>
           <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">确定</button>
           <button mdDialogClose md-raised-button type="button">关闭</button>
         </div>
@@ -36,9 +36,7 @@ export class CopyTaskComponent implements OnInit {
 
   ngOnInit() {
     this.lists$ = this.data.lists;
-    if (this.data.type === 'move') {
-      this.dialogTitle = '移动所有任务';
-    }
+    this.dialogTitle = '移动所有任务';
     this.form = this.fb.group({
       targetList: ['', Validators.required]
     });

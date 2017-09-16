@@ -12,7 +12,7 @@ import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
           <input mdInput placeholder="列表名称" formControlName="name">
         </md-form-field>
       </div>
-      <div md-dialog-actions>
+      <div mdDialogActions>
         <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">保存</button>
         <button mdDialogClose md-raised-button type="button">关闭</button>
       </div>

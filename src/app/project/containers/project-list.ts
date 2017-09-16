@@ -16,6 +16,7 @@ import { Project, User } from '../../domain';
     <div fxLayout="row" fxLayoutWrap [@listAnim]="listAnim$ | async">
       <app-project-item
         fxFlex="0 0 360px"
+        fxFlex.xs="1 1 auto"
         fxLayout="row"
         class="card"
         *ngFor="let project of (projects$ | async)"
@@ -32,7 +33,6 @@ import { Project, User } from '../../domain';
   `,
   styles: [`
     .card {
-      height: 360px;
       margin: 10px;
     }
     .fab-button {

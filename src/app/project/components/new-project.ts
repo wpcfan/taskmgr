@@ -18,7 +18,7 @@ import {Observable} from 'rxjs/Observable';
         <app-image-list-select [cols]="6" [items]="thumbnails$ | async" formControlName="coverImg">
         </app-image-list-select>
       </div>
-      <div md-dialog-actions>
+      <div mdDialogActions>
         <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">保存</button>
         <button mdDialogClose md-raised-button type="button">关闭</button>
       </div>
