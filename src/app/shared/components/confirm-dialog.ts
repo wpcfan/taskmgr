@@ -12,7 +12,7 @@ export interface ConfirmDialog {
   template: `
     <h1 mdDialogTitle>{{dialog.title}}</h1>
     <div mdDialogContent>{{dialog.content}}</div>
-    <div md-dialog-actions>
+    <div mdDialogActions>
       <button md-raised-button color="primary" (click)="handleAction(true)">{{dialog.confirmAction}}</button>
       <button md-raised-button mdDialogClose type="button" (click)="handleAction(false)">关闭</button>
     </div>

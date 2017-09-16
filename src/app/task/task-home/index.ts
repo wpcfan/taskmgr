@@ -18,7 +18,7 @@ import { TaskListVM } from '../../vm/task-list.vm';
 @Component({
   selector: 'app-task-home',
   template: `
-    <div class="task-lists" fxLayout="row" fxLayoutAlign="start start">
+    <div class="task-lists" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
       <app-task-list
         class="list-container"
         fxFlex="0 0 360px"

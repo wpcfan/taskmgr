@@ -52,7 +52,7 @@ import * as TaskHistoryActions from '../../actions/task-history.action';
           </md-list-item>
         </md-list>
       </div>
-      <div md-dialog-actions class="full-width">
+      <div mdDialogActions class="full-width">
         <div fxLayout="row" *ngIf="notConfirm else confirm">
           <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">
             保存

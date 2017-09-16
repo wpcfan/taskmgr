@@ -10,7 +10,7 @@ import * as actions from '../../actions/quote.action';
 @Component({
   selector: 'app-login',
   template: `
-  <form fxFlex fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center stretch" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
+  <form fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
     <md-card fxFlex="0 1 20rem">
       <md-card-header>
         <md-card-title> 登录：</md-card-title>
