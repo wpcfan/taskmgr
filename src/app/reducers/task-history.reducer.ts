@@ -7,19 +7,19 @@ import * as taskActions from '../actions/task.action';
 export interface State {
   ids: string[];
   entities: { [id: string]: TaskHistory };
-  task: Task | null;
+  selectedTask: Task | null;
 }
 
 export const initialState: State = {
   ids: [],
   entities: {},
-  task: null
+  selectedTask: null
 };
 
 const selectTask = (state: State, action: taskActions.SelectTaskAction): State => {
   const task: Task = action.payload;
 
-  return { ids: [], entities: {}, task: task };
+  return { ids: [], entities: {}, selectedTask: task };
 }
 
 const loadTaskHistories = (state: State, action: actions.LoadHistorySuccessAction): State => {
@@ -29,11 +29,11 @@ const loadTaskHistories = (state: State, action: actions.LoadHistorySuccessActio
   }
 
   const newTaskHistories = taskHistories.filter(taskHistory => {
-    if (!state.task) {
+    if (!state.selectedTask) {
       return false;
     }
 
-    return taskHistory.taskId === state.task.id;
+    return taskHistory.taskId === state.selectedTask.id;
   })
   const newIds: string[] = newTaskHistories.map(taskHistory => <string>taskHistory.id);
   const newEntities = covertArrToObj(newTaskHistories);
@@ -41,7 +41,7 @@ const loadTaskHistories = (state: State, action: actions.LoadHistorySuccessActio
   return {
     ids: [...state.ids, ...newIds],
     entities: { ...state.entities, ...newEntities },
-    task: state.task
+    selectedTask: state.selectedTask
   }
 }
 
@@ -69,6 +69,7 @@ export function reducer(state = initialState, action: actions.Actions | taskActi
 
 export const getEntities = (state: State): { [id: string]: TaskHistory } => state.entities;
 export const getIds = (state: State): string[] => state.ids;
+export const getSelectedTask = (state: State): Task | null => state.selectedTask;
 export const getTaskHistories = createSelector<State, { [id: string]: TaskHistory }, string[], TaskHistory[]>(getEntities, getIds, (entities, ids) => {
   return ids.map((id: string) => entities[id]);
 });

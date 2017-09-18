@@ -116,6 +116,7 @@ export const getUserState = (state: State) => state.users;
 export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
 export const getProjects = createSelector<State, fromProjects.State, Project[]>(getProjectsState, fromProjects.getAll);
 export const getTasks = createSelector<State, fromTasks.State, Task[]>(getTasksState, fromTasks.getTasks);
+export const getSelectedTask = createSelector<State, fromTaskHistory.State, Task | null>(getTaskHistoriesState, fromTaskHistory.getSelectedTask);
 export const getTaskHistories = createSelector<State, fromTaskHistory.State, TaskHistory[]>(getTaskHistoriesState, fromTaskHistory.getTaskHistories);
 
 const getSelectedProjectId = createSelector<State, fromProjects.State, string | null>(getProjectsState, fromProjects.getSelectedId);

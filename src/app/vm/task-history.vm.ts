@@ -4,6 +4,7 @@ export interface TaskHistoryVM {
   id?: string;
   taskId: string;
   icon?: string;
-  desc: string;
+  title: string;
+  content?: string;
   date: Date;
 }

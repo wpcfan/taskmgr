@@ -8,31 +8,61 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
         return {
           ...history,
           icon: 'create-task',
-          desc: `${history.operator.name} 创建了任务`,
+          title: `${history.operator.name} 创建了任务`,
         };
       case History.COMPLETE_TASK:
         return {
           ...history,
           icon: 'create-task',
-          desc: `${history.operator.name} 完成了任务`,
+          title: `${history.operator.name} 完成了任务`,
         }
       case History.RECREATE_TASK:
         return {
           ...history,
           icon: 'create-task',
-          desc: `${history.operator.name} 重做了任务`,
+          title: `${history.operator.name} 重做了任务`,
         }
-      case History.UPDATE_TASK_CONTENT:
-        const payload: string = (<History.UpdateTaskContentOperation>history.operation).payload;
+      case History.UPDATE_TASK_CONTENT: {
+        const content: string = (<History.UpdateTaskContentOperation>history.operation).payload;
         return {
           ...history,
           icon: 'create-task',
-          desc: `${history.operator.name} 更新了内容`,
+          title: `${history.operator.name} 更新了内容`,
+          content: content,
         }
+      }
+      case History.UPDATE_TASK_PRIORITY: {
+        let priority: string;
+        switch ((<History.UpdatePriorityOperation>history.operation).payload) {
+          case 1:
+            priority = '紧急'
+            break;
+          case 2:
+            priority = '重要'
+            break;
+          default:
+            priority = '普通'
+            break;
+        }
+        return {
+          ...history,
+          icon: 'create-task',
+          title: `${history.operator.name} 更新任务优先级为 ${priority}`,
+        }
+      }
+      case History.UPDATE_TASK_REMARK: {
+        const content: string = (<History.UpdateRemarkOperation>history.operation).payload;
+        return {
+          ...history,
+          icon: 'create-task',
+          title: `${history.operator.name} 更新了备注`,
+          content: content,
+        }
+      }
       default:
         return {
           ...history,
-          desc: '未知类型'
+          title: '未知类型'
         }
     }
   });
