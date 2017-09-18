@@ -33,7 +33,7 @@ export class TaskHistoryEffects {
     .ofType<actions.AddTaskHistoryAction>(actions.ADD)
     .map(action => action.payload)
     .withLatestFrom(this.store$.select(fromRoot.getAuthUser))
-    .switchMap(([data, user]: [{ taskId: string; operation: History.TaskOperations }, User]) => {
+    .mergeMap(([data, user]: [{ taskId: string; operation: History.TaskOperations }, User]) => {
       const operator: User = {
         id: user.id,
         email: user.email,
@@ -60,24 +60,18 @@ export class TaskHistoryEffects {
     .ofType<taskActions.AddTaskSuccessAction>(taskActions.ADD_SUCCESS)
     .map(action => action.payload)
     .map((task: Task) => {
-      const operation: History.CreateTaskOperation = {
-        type: History.CREATE_TASK,
-        payload: task.desc
-      };
+      const operation: History.CreateTaskOperation = new History.CreateTaskOperation(task.desc);
 
       return new actions.AddTaskHistoryAction({ taskId: <string>task.id, operation: operation });
     })
 
-  // @Effect()
-  // addCreateOrRecreateTaskHistory$: Observable<Action> = this.actions$
-  //   .ofType<taskActions.CompleteTaskSuccessAction>(taskActions.COMPLETE_SUCCESS)
-  //   .map(action => {
-  //     const task: Task = action.payload;
+  @Effect()
+  addCompleteOrRecreateTaskHistory$: Observable<Action> = this.actions$
+    .ofType<taskActions.CompleteTaskSuccessAction>(taskActions.COMPLETE_SUCCESS)
+    .map(action => action.payload)
+    .map((task: Task) => {
+      const operation: History.TaskOperations = task.completed ? new History.CompleteTaskOperation() : new History.RecreateTaskOperation();
 
-  //     if (task.completed) {
-  //       return new actions.CompleteTaskAction(task);
-  //     } else {
-  //       return new actions.RecreateTaskAction(task);
-  //     }
-  //   });
+      return new actions.AddTaskHistoryAction({ taskId: <string>task.id, operation: operation });
+    });
 }
