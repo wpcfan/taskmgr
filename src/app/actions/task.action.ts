@@ -27,7 +27,7 @@ export const COMPLETE_FAIL = '[Task] Complete Fail';
 export class SelectTaskAction implements Action {
   readonly type = SELECT;
 
-  constructor(public payload: string) {
+  constructor(public payload: Task) {
   }
 }
 

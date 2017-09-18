@@ -177,7 +177,7 @@ export class TaskHomeComponent {
   }
 
   handleUpdateTask(task: Task) {
-    this.store$.dispatch(new taskActions.SelectTaskAction(<string>task.id));
+    this.store$.dispatch(new taskActions.SelectTaskAction(task));
 
     const dialogRef = this.dialog.open(NewTaskComponent, { data: { task: task } });
     dialogRef.afterClosed()

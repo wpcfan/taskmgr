@@ -1,4 +1,4 @@
-import { TaskHistory } from '../domain';
+import { Task, TaskHistory } from '../domain';
 import { createSelector } from '@ngrx/store';
 import { addOne, covertArrToObj, buildObjFromArr } from '../utils/reduer.util';
 import * as actions from '../actions/task-history.action';
@@ -7,19 +7,19 @@ import * as taskActions from '../actions/task.action';
 export interface State {
   ids: string[];
   entities: { [id: string]: TaskHistory };
-  taskId: string | null;
+  task: Task | null;
 }
 
 export const initialState: State = {
   ids: [],
   entities: {},
-  taskId: null
+  task: null
 };
 
 const selectTask = (state: State, action: taskActions.SelectTaskAction): State => {
-  const taskId: string = action.payload;
+  const task: Task = action.payload;
 
-  return { ids: [], entities: {}, taskId: taskId };
+  return { ids: [], entities: {}, task: task };
 }
 
 const loadTaskHistories = (state: State, action: actions.LoadHistorySuccessAction): State => {
@@ -28,14 +28,20 @@ const loadTaskHistories = (state: State, action: actions.LoadHistorySuccessActio
     return state;
   }
 
-  const newTaskHistories = taskHistories.filter(taskHistory => taskHistory.taskId === state.taskId);
+  const newTaskHistories = taskHistories.filter(taskHistory => {
+    if (!state.task) {
+      return false;
+    }
+
+    return taskHistory.taskId === state.task.id;
+  })
   const newIds: string[] = newTaskHistories.map(taskHistory => <string>taskHistory.id);
   const newEntities = covertArrToObj(newTaskHistories);
 
   return {
     ids: [...state.ids, ...newIds],
     entities: { ...state.entities, ...newEntities },
-    taskId: state.taskId
+    task: state.task
   }
 }
 
