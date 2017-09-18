@@ -36,12 +36,6 @@ export class TaskEffects {
     );
 
   @Effect()
-  createTaskHistory$: Observable<Action> = this.actions$
-    .ofType<actions.AddTaskSuccessAction>(actions.ADD_SUCCESS)
-    .map(action => action.payload)
-    .map((task: Task) => new taskHistoryActions.CreateTaskAction(task));
-
-  @Effect()
   updateTask$: Observable<Action> = this.actions$
     .ofType<actions.UpdateTaskAction>(actions.UPDATE)
     .map(action => action.payload)

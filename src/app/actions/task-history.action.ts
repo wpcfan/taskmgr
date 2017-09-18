@@ -1,13 +1,13 @@
 import { Action } from '@ngrx/store';
-import { Task, TaskHistory } from '../domain';
+import { Task, TaskHistory, TaskOperations } from '../domain';
 
 export const LOAD = '[TaskHistory] Load';
 export const LOAD_SUCCESS = '[TaskHistory] Load Success';
 export const LOAD_FAIL = '[TaskHistory] Load Fail';
 
-export const CREATE_TASK = '[TaskHistory] Create Task';
-export const CREATE_TASK_SUCCESS = '[TaskHistory] Create Task Success';
-export const CREATE_TASK_FAIL = '[TaskHistory] Create Task Fail';
+export const ADD = '[TaskHistory] Add';
+export const ADD_SUCCESS = '[TaskHistory] Add Success';
+export const ADD_FAIL = '[TaskHistory] Add Fail';
 
 export class LoadTaskHistoryAction implements Action {
   readonly type = LOAD;
@@ -30,22 +30,22 @@ export class LoadHistoryFailAction implements Action {
   }
 }
 
-export class CreateTaskAction implements Action {
-  readonly type = CREATE_TASK;
+export class AddTaskHistoryAction implements Action {
+  readonly type = ADD;
 
-  constructor(public payload: Task) {
+  constructor(public payload: { taskId: string, operation: TaskOperations }) {
   }
 }
 
-export class CreateTaskSuccessAction implements Action {
-  readonly type = CREATE_TASK_SUCCESS;
+export class AddTaskHistorySuccessAction implements Action {
+  readonly type = ADD_SUCCESS;
 
   constructor(public payload: TaskHistory) {
   }
 }
 
-export class CreateTaskFailAction implements Action {
-  readonly type = CREATE_TASK_FAIL;
+export class AddTaskHistoryFailAction implements Action {
+  readonly type = ADD_FAIL;
 
   constructor(public payload: string) {
   }
@@ -55,7 +55,7 @@ export type Actions
   = LoadTaskHistoryAction
   | LoadHistorySuccessAction
   | LoadHistoryFailAction
-  | CreateTaskAction
-  | CreateTaskSuccessAction
-  | CreateTaskFailAction
+  | AddTaskHistoryAction
+  | AddTaskHistorySuccessAction
+  | AddTaskHistoryFailAction
   ;

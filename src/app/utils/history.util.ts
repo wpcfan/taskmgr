@@ -10,6 +10,18 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
           icon: 'create-task',
           desc: `${history.operator.name} 创建了任务`,
         };
+      case History.COMPLETE_TASK:
+        return {
+          ...history,
+          icon: 'create-task',
+          desc: `${history.operator.name} 完成了任务`,
+        }
+      case History.RECREATE_TASK:
+        return {
+          ...history,
+          icon: 'create-task',
+          desc: `${history.operator.name} 重做了任务`,
+        }
       case History.UPDATE_TASK_CONTENT:
         const payload: string = (<History.UpdateTaskContentOperation>history.operation).payload;
         return {

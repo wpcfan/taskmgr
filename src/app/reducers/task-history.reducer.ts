@@ -45,7 +45,7 @@ const loadTaskHistories = (state: State, action: actions.LoadHistorySuccessActio
   }
 }
 
-const createTaskHistory = (state: State, action: actions.CreateTaskSuccessAction): State => {
+const addTaskHistory = (state: State, action: actions.AddTaskHistorySuccessAction): State => {
   const taskHistory: TaskHistory = action.payload;
   const ids: string[] = [...state.ids, <string>taskHistory.id];
   const entities: { [id: string]: TaskHistory } = { ...state.entities, [<string>taskHistory.id]: taskHistory };
@@ -60,8 +60,8 @@ export function reducer(state = initialState, action: actions.Actions | taskActi
       return selectTask(state, <taskActions.SelectTaskAction>action);
     case actions.LOAD_SUCCESS:
       return loadTaskHistories(state, <actions.LoadHistorySuccessAction>action);
-    case actions.CREATE_TASK_SUCCESS:
-      return createTaskHistory(state, <actions.CreateTaskSuccessAction>action);
+    case actions.ADD_SUCCESS:
+      return addTaskHistory(state, <actions.AddTaskHistorySuccessAction>action);
     default:
       return state;
   }

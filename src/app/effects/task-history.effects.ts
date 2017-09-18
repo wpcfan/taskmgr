@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { TaskHistoryService } from '../services';
 import * as actions from '../actions/task-history.action';
+import * as taskActions from '../actions/task.action';
 import * as fromRoot from '../reducers';
 import * as History from '../domain/history';
 import { User, Task, TaskHistory } from '../domain';
@@ -28,35 +29,55 @@ export class TaskHistoryEffects {
     );
 
   @Effect()
-  addCreateTaskHistory$: Observable<Action> = this.actions$
-    .ofType<actions.CreateTaskAction>(actions.CREATE_TASK)
+  addTaskHistory$: Observable<Action> = this.actions$
+    .ofType<actions.AddTaskHistoryAction>(actions.ADD)
     .map(action => action.payload)
     .withLatestFrom(this.store$.select(fromRoot.getAuthUser))
-    .switchMap(([task, user]: [Task, User]) => {
+    .switchMap(([data, user]: [{ taskId: string; operation: History.TaskOperations }, User]) => {
       const operator: User = {
         id: user.id,
         email: user.email,
         name: user.name,
         avatar: user.avatar,
+      };
+
+      const taskHistory: TaskHistory = {
+        taskId: data.taskId,
+        operator: operator,
+        operation: data.operation,
+        date: new Date(),
       }
 
+      console.log('<<Add Task History>>', JSON.stringify(taskHistory));
+
+      return this.services$.addTaskHistory(taskHistory)
+        .map((history: TaskHistory) => new actions.AddTaskHistorySuccessAction(history))
+        .catch(err => of(new actions.AddTaskHistoryFailAction(JSON.stringify(err))))
+    });
+
+  @Effect()
+  addCreateTaskHistory$: Observable<Action> = this.actions$
+    .ofType<taskActions.AddTaskSuccessAction>(taskActions.ADD_SUCCESS)
+    .map(action => action.payload)
+    .map((task: Task) => {
       const operation: History.CreateTaskOperation = {
         type: History.CREATE_TASK,
         payload: task.desc
       };
 
-      const taskHistory: TaskHistory = {
-        taskId: <string>task.id,
-        operator: operator,
-        operation: operation,
-        date: new Date(),
-      }
+      return new actions.AddTaskHistoryAction({ taskId: <string>task.id, operation: operation });
+    })
 
-      console.log('<<Create Task History>>', JSON.stringify(taskHistory));
+  // @Effect()
+  // addCreateOrRecreateTaskHistory$: Observable<Action> = this.actions$
+  //   .ofType<taskActions.CompleteTaskSuccessAction>(taskActions.COMPLETE_SUCCESS)
+  //   .map(action => {
+  //     const task: Task = action.payload;
 
-      return this.services$
-        .addTaskHistory(taskHistory)
-        .map((history: TaskHistory) => new actions.CreateTaskSuccessAction(history))
-        .catch(err => of(new actions.CreateTaskFailAction(JSON.stringify(err))))
-    });
+  //     if (task.completed) {
+  //       return new actions.CompleteTaskAction(task);
+  //     } else {
+  //       return new actions.RecreateTaskAction(task);
+  //     }
+  //   });
 }
