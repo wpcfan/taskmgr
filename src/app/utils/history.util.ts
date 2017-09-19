@@ -33,7 +33,7 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
       }
       case History.UPDATE_TASK_PRIORITY: {
         let priority: string;
-        switch ((<History.UpdatePriorityOperation>history.operation).payload) {
+        switch ((<History.UpdateTaskPriorityOperation>history.operation).payload) {
           case 1:
             priority = '紧急'
             break;
@@ -51,7 +51,7 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
         }
       }
       case History.UPDATE_TASK_REMARK: {
-        const content: string = (<History.UpdateRemarkOperation>history.operation).payload;
+        const content: string = (<History.UpdateTaskRemarkOperation>history.operation).payload;
         return {
           ...history,
           icon: 'create-task',

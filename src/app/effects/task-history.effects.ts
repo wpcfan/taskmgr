@@ -74,4 +74,34 @@ export class TaskHistoryEffects {
 
       return new actions.AddTaskHistoryAction({ taskId: <string>task.id, operation: operation });
     });
+
+  @Effect({ dispatch: false })
+  addUpdateTaskHistory$: Observable<[Task, Task | null]> = this.actions$
+    .ofType<taskActions.UpdateTaskSuccessAction>(taskActions.UPDATE_SUCCESS)
+    .map(action => action.payload)
+    .withLatestFrom(this.store$.select(fromRoot.getSelectedTask))
+    .do(([updatedTask, selectedTask]: [Task, Task | null]) => {
+      if (null === selectedTask)
+        return;
+
+      if (updatedTask.desc !== selectedTask.desc) {
+        const operation: History.TaskOperations = new History.UpdateTaskContentOperation(updatedTask.desc);
+        this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTask.id, operation: operation }));
+      }
+
+      if (updatedTask.priority !== selectedTask.priority) {
+        const operation: History.TaskOperations = new History.UpdateTaskPriorityOperation(updatedTask.priority);
+        this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTask.id, operation: operation }));
+      }
+
+      if (updatedTask.remark !== selectedTask.remark) {
+        //The remark of Quick-Task is undefined and the remark of updated task may be null
+        if (!updatedTask.remark && !selectedTask.remark)
+          return;
+
+        const operation: History.TaskOperations = new History.UpdateTaskRemarkOperation(<string>updatedTask.remark);
+        this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTask.id, operation: operation }));
+      }
+    });
+
 }

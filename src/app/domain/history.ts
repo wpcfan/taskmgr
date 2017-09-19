@@ -5,7 +5,7 @@ export const COMPLETE_TASK = "completeTask";
 export const RECREATE_TASK = "recreateTask";
 
 export const UPDATE_TASK_CONTENT = "updateTaskContent";
-export const UPDATE_TASK_PRIORITY = "updatePriority";
+export const UPDATE_TASK_PRIORITY = "updateTaskPriority";
 export const UPDATE_TASK_REMARK = "updateTaskRemark";
 
 export interface OperationHistory {
@@ -45,14 +45,14 @@ export class UpdateTaskContentOperation implements Operation {
   }
 }
 
-export class UpdatePriorityOperation implements Operation {
+export class UpdateTaskPriorityOperation implements Operation {
   readonly type = UPDATE_TASK_PRIORITY;
 
   constructor(public payload: number) {
   }
 }
 
-export class UpdateRemarkOperation implements Operation {
+export class UpdateTaskRemarkOperation implements Operation {
   readonly type = UPDATE_TASK_REMARK;
 
   constructor(public payload: string) {
@@ -64,6 +64,6 @@ export type TaskOperations
   | CompleteTaskOperation
   | RecreateTaskOperation
   | UpdateTaskContentOperation
-  | UpdatePriorityOperation
-  | UpdateRemarkOperation
+  | UpdateTaskPriorityOperation
+  | UpdateTaskRemarkOperation
   ;
