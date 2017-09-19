@@ -59,6 +59,13 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
           content: content,
         }
       }
+      case History.CLEAR_TASK_REMARK: {
+        return {
+          ...history,
+          icon: 'create-task',
+          title: `${history.operator.name} 清空了备注`,
+        }
+      }
       default:
         return {
           ...history,

@@ -7,6 +7,7 @@ export const RECREATE_TASK = "recreateTask";
 export const UPDATE_TASK_CONTENT = "updateTaskContent";
 export const UPDATE_TASK_PRIORITY = "updateTaskPriority";
 export const UPDATE_TASK_REMARK = "updateTaskRemark";
+export const CLEAR_TASK_REMARK = "clearTaskRemark";
 
 export interface OperationHistory {
   id?: string;
@@ -59,6 +60,10 @@ export class UpdateTaskRemarkOperation implements Operation {
   }
 }
 
+export class ClearTaskRemarkOperation implements Operation {
+  readonly type = CLEAR_TASK_REMARK;
+}
+
 export type TaskOperations
   = CreateTaskOperation
   | CompleteTaskOperation
@@ -66,4 +71,5 @@ export type TaskOperations
   | UpdateTaskContentOperation
   | UpdateTaskPriorityOperation
   | UpdateTaskRemarkOperation
+  | ClearTaskRemarkOperation
   ;

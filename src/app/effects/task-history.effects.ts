@@ -95,12 +95,17 @@ export class TaskHistoryEffects {
       }
 
       if (updatedTask.remark !== selectedTask.remark) {
-        //The remark of Quick-Task is undefined and the remark of updated task may be null
-        if (!updatedTask.remark && !selectedTask.remark)
-          return;
+        //The remark of Quick-Task is undefined and the remark of updated task will be null event if you did nothing.
 
-        const operation: History.TaskOperations = new History.UpdateTaskRemarkOperation(<string>updatedTask.remark);
-        this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTask.id, operation: operation }));
+        if (updatedTask.remark) {
+          const operation: History.TaskOperations = new History.UpdateTaskRemarkOperation(<string>updatedTask.remark);
+          this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTask.id, operation: operation }));
+        } else {
+          if (selectedTask.remark) {
+            const operation: History.TaskOperations = new History.ClearTaskRemarkOperation();
+            this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTask.id, operation: operation }));
+          }
+        }
       }
     });
 
