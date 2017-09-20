@@ -1,6 +1,6 @@
 import {Project} from '../domain';
 import {createSelector} from '@ngrx/store';
-import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity'
+import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity';
 import * as actions from '../actions/project.action';
 
 export interface State extends EntityState<Project> {

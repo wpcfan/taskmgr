@@ -1,6 +1,6 @@
 import {TaskList, Project} from '../domain';
 import {createSelector} from '@ngrx/store';
-import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity'
+import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity';
 import * as _ from 'lodash';
 import * as actions from '../actions/task-list.action';
 import * as prjActions from '../actions/project.action';
