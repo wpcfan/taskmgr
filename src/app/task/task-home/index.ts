@@ -112,7 +112,7 @@ export class TaskHomeComponent {
       .withLatestFrom(this.store$.select(fromRoot.getMaxListOrder), (_n, _o) => ({ name: _n, order: _o }))
       .withLatestFrom(this.projectId$, (val, projectId) => ({ ...val, projectId: projectId }))
       .subscribe(({ name, order, projectId }) => {
-        this.store$.dispatch(new listActions.AddTaskListAction({ name: name, order: order + 1, projectId: projectId }));
+        this.store$.dispatch(new listActions.AddTaskListAction({ id: undefined, name: name, order: order + 1, projectId: projectId }));
       });
   }
 
@@ -197,6 +197,7 @@ export class TaskHomeComponent {
     const user$ = this.store$.select(fromRoot.getAuthUser);
     user$.take(1).subscribe(user => {
       this.store$.dispatch(new taskActions.AddTaskAction({
+        id: undefined,
         desc: desc,
         priority: 3,
         ownerId: <string>user.id,
