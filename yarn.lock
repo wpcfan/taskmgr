@@ -192,6 +192,10 @@
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-4.0.5.tgz#1224763800621b7305f9b18bc17ee09b25c861d1"
 
+"@ngrx/entity@github:ngrx/entity-builds":
+  version "4.0.2"
+  resolved "https://codeload.github.com/ngrx/entity-builds/tar.gz/048865335020ac9b658222d651248e41e1ea4522"
+
 "@ngrx/router-store@^4.0.4":
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/@ngrx/router-store/-/router-store-4.0.4.tgz#ab59f35aae93465088384faf009e21b22edd456a"
