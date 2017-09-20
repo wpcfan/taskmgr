@@ -15,6 +15,7 @@ import {
   StoreModule,
   compose,
   createSelector,
+  createFeatureSelector,
 } from '@ngrx/store';
 import * as fromRouter from '@ngrx/router-store';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
@@ -98,22 +99,32 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
 
 export const getAuthState = (state: State) => state.auth;
 export const getQuoteState = (state: State) => state.quote;
-export const getProjectsState = (state: State) => state.projects;
-export const getTaskListsState = (state: State) => state.taskLists;
 export const getTasksState = (state: State) => state.tasks;
 export const getTaskHistoriesState = (state: State) => state.taskHistories;
 export const getUserState = (state: State) => state.users;
 
 export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
-export const getProjects = createSelector<State, fromProjects.State, Project[]>(getProjectsState, fromProjects.getAll);
-export const getTasks = createSelector<State, fromTasks.State, Task[]>(getTasksState, fromTasks.getTasks);
+export const getProjectsState = createFeatureSelector<fromProjects.State>('projects');
+export const getTaskListsState = createFeatureSelector<fromTaskLists.State>('taskLists');
+export const getTasks = createSelector(getTasksState, fromTasks.getTasks);
 export const getSelectedTask = createSelector<State, fromTaskHistory.State, Task | null>(getTaskHistoriesState, fromTaskHistory.getSelectedTask);
 export const getTaskHistories = createSelector<State, fromTaskHistory.State, TaskHistory[]>(getTaskHistoriesState, fromTaskHistory.getTaskHistories);
 
-const getSelectedProjectId = createSelector<State, fromProjects.State, string | null>(getProjectsState, fromProjects.getSelectedId);
-const getTaskLists = createSelector<State, fromTaskLists.State, TaskList[]>(getTaskListsState, fromTaskLists.getTaskLists);
-const getTaskListEntities = createSelector<State, fromTaskLists.State, { [id: string]: TaskList }>(getTaskListsState, fromTaskLists.getEntities);
-const getTaskListSelectedIds = createSelector<State, fromTaskLists.State, string[]>(getTaskListsState, fromTaskLists.getSelectedIds);
+export const {
+  selectIds: getProjectIds,
+  selectEntities: getProjectEntities,
+  selectAll: getProjects,
+  selectTotal: getProjectTotal
+} = fromProjects.adapter.getSelectors(getProjectsState);
+
+export const {
+  selectIds: getTaskListIds,
+  selectEntities: getTaskListEntities,
+  selectAll: getTaskLists,
+  selectTotal: getTaskListTotal
+} = fromTaskLists.adapter.getSelectors(getTaskListsState);
+
+const getSelectedProjectId = createSelector(getProjectsState, fromProjects.getSelectedId);
 
 const getUserEntities = createSelector<State, fromUsers.State, { [id: string]: User }>(getUserState, fromUsers.getEntities);
 const getTasksWithOwner = createSelector<State, Task[], { [id: string]: User }, TaskVM[]>(getTasks, getUserEntities, (tasks, entities) => tasks.map(task =>
@@ -146,10 +157,7 @@ export const getAuth = createSelector(getAuthState, getUserEntities, (_auth, _en
 export const getAuthUser = createSelector(getAuthState, getUserEntities, (_auth, _entities) => {
   return _entities[<string>_auth.userId];
 });
-export const getMaxListOrder = createSelector(getTaskListEntities, getTaskListSelectedIds, (entities, ids) => {
-  const orders: number[] = ids.map(id => entities[id].order);
-  return orders.sort()[orders.length - 1];
-});
+
 export const getUserTasks = createSelector(getAuthUser, getTasks, (user, tasks) => {
   return tasks.filter(task => task.ownerId === user.id)
 });

@@ -109,7 +109,7 @@ export class TaskHomeComponent {
     dialogRef.afterClosed()
       .take(1)
       .filter(n => n)
-      .withLatestFrom(this.store$.select(fromRoot.getMaxListOrder), (_n, _o) => ({ name: _n, order: _o }))
+      .withLatestFrom(this.store$.select(fromRoot.getTaskListTotal), (_n, _o) => ({ name: _n, order: _o }))
       .withLatestFrom(this.projectId$, (val, projectId) => ({ ...val, projectId: projectId }))
       .subscribe(({ name, order, projectId }) => {
         this.store$.dispatch(new listActions.AddTaskListAction({ id: undefined, name: name, order: order + 1, projectId: projectId }));
