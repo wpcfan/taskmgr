@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import {TaskList} from '../../domain';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -8,16 +8,18 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   selector: 'app-copy-task',
   template: `
     <form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
-      <span mdDialogTitle>{{dialogTitle}}</span>
-      <div mdDialogContent>
-        <md-select placeholder="选择目标列表" formControlName="targetList" class="full-width">
-          <md-option *ngFor="let list of lists$ | async" [value]="list.id">
-            {{list.name}}
-          </md-option>
-        </md-select>
-        <div mdDialogActions>
-          <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">确定</button>
-          <button mdDialogClose md-raised-button type="button">关闭</button>
+      <span matDialogTitle>{{dialogTitle}}</span>
+      <div matDialogContent>
+        <mat-form-field>
+          <mat-select placeholder="选择目标列表" formControlName="targetList" class="full-width">
+            <mat-option *ngFor="let list of lists$ | async" [value]="list.id">
+              {{list.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div matDialogActions>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">确定</button>
+          <button matDialogClose mat-raised-button type="button">关闭</button>
         </div>
       </div>
     </form>
@@ -30,8 +32,8 @@ export class CopyTaskComponent implements OnInit {
   lists$: Observable<TaskList>;
 
   constructor(private fb: FormBuilder,
-              @Inject(MD_DIALOG_DATA) private data: any,
-              private dialogRef: MdDialogRef<CopyTaskComponent>) {
+              @Inject(MAT_DIALOG_DATA) private data: any,
+              private dialogRef: MatDialogRef<CopyTaskComponent>) {
   }
 
   ngOnInit() {
