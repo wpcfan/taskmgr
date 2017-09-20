@@ -48,7 +48,7 @@ import * as TaskHistoryActions from '../../actions/task-history.action';
           <md-list-item *ngFor="let history of taskHistories let i = index">
             <md-icon mdListIcon [svgIcon]="history.icon"></md-icon>
             {{history.title}}
-            <span style="flex-grow: 2; text-align: end;">{{history.date | date: "MMdd"}}</span>
+            <span style="flex-grow: 2; text-align: end;">{{history.dateDesc}}</span>
           </md-list-item>
         </md-list>
       </div>
@@ -147,8 +147,8 @@ export class NewTaskComponent implements OnInit, OnDestroy {
     this.store$.dispatch(new TaskHistoryActions.LoadTaskHistoryAction(this.data.task.id));
 
     this._sub = this.taskHistories$.subscribe(histories => {
-      console.log('<loadTaskHistories>', JSON.stringify(histories));
       this.taskHistories = getTaskHistoryVMs(histories);
+      console.log('<loadTaskHistories>', JSON.stringify(this.taskHistories));
     });
   }
 
