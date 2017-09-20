@@ -44,13 +44,14 @@ import * as fromUsers from './user.reducer';
 import { initialState } from './user.reducer';
 
 import { RouterStateUrl } from '../utils/router.util';
+import { Quote } from '../domain/quote';
 /**
  * 正如我们的 reducer 像数据库中的表一样，我们的顶层 state 也包含各个子 reducer 的 state
  * 并且使用一个 key 来标识各个子 state
  */
 export interface State {
   auth: Auth;
-  quote: fromQuote.State;
+  quote: Quote;
   projects: fromProjects.State;
   taskLists: fromTaskLists.State;
   tasks: fromTasks.State;
@@ -97,13 +98,13 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
   ]
   : [storeStateGuard];
 
-export const getAuthState = (state: State) => state.auth;
-export const getQuoteState = (state: State) => state.quote;
+
 export const getTasksState = (state: State) => state.tasks;
 export const getTaskHistoriesState = (state: State) => state.taskHistories;
 export const getUserState = (state: State) => state.users;
 
-export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
+export const getAuthState = createFeatureSelector<Auth>('auth');
+export const getQuoteState = createFeatureSelector<Quote>('quote');
 export const getProjectsState = createFeatureSelector<fromProjects.State>('projects');
 export const getTaskListsState = createFeatureSelector<fromTaskLists.State>('taskLists');
 export const getTasks = createSelector(getTasksState, fromTasks.getTasks);
@@ -171,7 +172,7 @@ export const getUserTasks = createSelector(getAuthUser, getTasks, (user, tasks) 
     StoreModule.forRoot(reducers, { metaReducers: metaReducers }),
     StoreRouterConnectingModule,
     // DevTool 需要在 StoreModule 之后导入
-    // !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : []
+    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : []
   ]
 })
 export class AppStoreModule {

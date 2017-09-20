@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private store$: Store<fromRoot.State>) {
-    this.quote$ = this.store$.select(fromRoot.getQuote);
+    this.quote$ = this.store$.select(fromRoot.getQuoteState);
   }
 
   ngOnInit() {
