@@ -41,6 +41,7 @@ import * as fromUsers from './user.reducer';
 import { initialState } from './user.reducer';
 
 import { TaskListVM } from '../vm';
+import { RouterStateUrl } from '../utils/router.util';
 /**
  * 正如我们的 reducer 像数据库中的表一样，我们的顶层 state 也包含各个子 reducer 的 state
  * 并且使用一个 key 来标识各个子 state
@@ -52,7 +53,7 @@ export interface State {
   taskLists: fromTaskLists.State;
   tasks: fromTasks.State;
   users: fromUsers.State;
-  router: fromRouter.RouterReducerState;
+  router: fromRouter.RouterReducerState<RouterStateUrl>;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -63,15 +64,6 @@ export const reducers: ActionReducerMap<State> = {
   tasks: fromTasks.reducer,
   users: fromUsers.reducer,
   router: fromRouter.routerReducer,
-};
-
-export const initState = {
-  auth: fromAuth.initialState,
-  quote: fromQuote.initialState,
-  projects: fromProjects.initialState,
-  taskLists: fromTaskLists.initialState,
-  tasks: fromTasks.initialState,
-  users: fromUsers.initialState,
 };
 
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
@@ -155,7 +147,7 @@ export const getUserTasks = createSelector(getAuthUser, getTasks, (user, tasks) 
      * StoreModule.provideStore  仅需引入一次，请把它包含在根模块或者 CoreModule 中
      * 我们这里为了方便组织，新建了一个 AppStoreModule，但也是只在 CoreModule 中引入的
      */
-    StoreModule.forRoot(reducers, {initialState: initState, metaReducers: metaReducers }),
+    StoreModule.forRoot(reducers, {metaReducers: metaReducers }),
     StoreRouterConnectingModule,
     // DevTool 需要在 StoreModule 之后导入
     // !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : []
