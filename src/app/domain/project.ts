@@ -1,5 +1,5 @@
 export interface Project {
-  id?: string;
+  id: string | undefined;
   name: string;
   desc?: string;
   coverImg?: string;
