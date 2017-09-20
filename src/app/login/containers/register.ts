@@ -141,6 +141,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
     this.store$.dispatch(
       new actions.RegisterAction({
+        id: undefined,
         password: value.password,
         name: value.name,
         email: value.email,
