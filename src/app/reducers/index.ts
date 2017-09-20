@@ -99,14 +99,14 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
   : [storeStateGuard];
 
 
-export const getTasksState = (state: State) => state.tasks;
-export const getTaskHistoriesState = (state: State) => state.taskHistories;
-export const getUserState = (state: State) => state.users;
-
 export const getAuthState = createFeatureSelector<Auth>('auth');
 export const getQuoteState = createFeatureSelector<Quote>('quote');
 export const getProjectsState = createFeatureSelector<fromProjects.State>('projects');
 export const getTaskListsState = createFeatureSelector<fromTaskLists.State>('taskLists');
+export const getUsersState = createFeatureSelector<fromUsers.State>('users');
+export const getTasksState = createFeatureSelector<fromTasks.State>('tasks');
+export const getTaskHistoriesState = (state: State) => state.taskHistories;
+
 export const getTasks = createSelector(getTasksState, fromTasks.getTasks);
 export const getSelectedTask = createSelector<State, fromTaskHistory.State, Task | null>(getTaskHistoriesState, fromTaskHistory.getSelectedTask);
 export const getTaskHistories = createSelector<State, fromTaskHistory.State, TaskHistory[]>(getTaskHistoriesState, fromTaskHistory.getTaskHistories);
@@ -125,10 +125,16 @@ export const {
   selectTotal: getTaskListTotal
 } = fromTaskLists.adapter.getSelectors(getTaskListsState);
 
+export const {
+  selectIds: getUserIds,
+  selectEntities: getUserEntities,
+  selectAll: getUsers,
+  selectTotal: getUserTotal
+} = fromUsers.adapter.getSelectors(getUsersState);
+
 const getSelectedProjectId = createSelector(getProjectsState, fromProjects.getSelectedId);
 
-const getUserEntities = createSelector<State, fromUsers.State, { [id: string]: User }>(getUserState, fromUsers.getEntities);
-const getTasksWithOwner = createSelector<State, Task[], { [id: string]: User }, TaskVM[]>(getTasks, getUserEntities, (tasks, entities) => tasks.map(task =>
+const getTasksWithOwner = createSelector(getTasks, getUserEntities, (tasks, entities) => tasks.map(task =>
   (
     {
       ...task,
