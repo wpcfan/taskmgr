@@ -96,13 +96,13 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
   : [storeStateGuard];
 
 
-export const getTasksState = (state: State) => state.tasks;
-export const getUserState = (state: State) => state.users;
-
 export const getAuthState = createFeatureSelector<Auth>('auth');
 export const getQuoteState = createFeatureSelector<Quote>('quote');
 export const getProjectsState = createFeatureSelector<fromProjects.State>('projects');
 export const getTaskListsState = createFeatureSelector<fromTaskLists.State>('taskLists');
+export const getUsersState = createFeatureSelector<fromUsers.State>('users');
+export const getTasksState = createFeatureSelector<fromTasks.State>('tasks');
+
 export const getTasks = createSelector(getTasksState, fromTasks.getTasks);
 
 export const {
@@ -119,9 +119,15 @@ export const {
   selectTotal: getTaskListTotal
 } = fromTaskLists.adapter.getSelectors(getTaskListsState);
 
+export const {
+  selectIds: getUserIds,
+  selectEntities: getUserEntities,
+  selectAll: getUsers,
+  selectTotal: getUserTotal
+} = fromUsers.adapter.getSelectors(getUsersState);
+
 const getSelectedProjectId = createSelector(getProjectsState, fromProjects.getSelectedId);
 
-const getUserEntities = createSelector(getUserState, fromUsers.getEntities);
 const getTasksWithOwner = createSelector(getTasks, getUserEntities, (tasks, entities) => tasks.map(task =>
   (
     {...task,
