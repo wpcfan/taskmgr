@@ -1,12 +1,7 @@
 import {Project} from '../domain';
 import {createSelector} from '@ngrx/store';
 import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity'
-import {covertArrToObj, buildObjFromArr} from '../utils/reduer.util';
 import * as actions from '../actions/project.action';
-
-type combinedAction = actions.InviteMembersSuccessAction
-  | actions.UpdateListsSuccessAction
-  | actions.UpdateProjectSuccessAction;
 
 export interface State extends EntityState<Project> {
   selectedId: string | null;
@@ -26,34 +21,18 @@ export const initialState: State = adapter.getInitialState({
   selectedId: null
 });
 
-const addProject = (state: State, action: actions.AddProjectSuccessAction) => {
-  return adapter.addOne(action.payload, state);
-};
-
-const delProject = (state: State, action: actions.DeleteProjectSuccessAction) => {
-  return adapter.removeOne(<string>action.payload.id, state);
-};
-
-const updateProject = (state: State, action: combinedAction) => {
-  return adapter.updateOne({id: <string>action.payload.id, changes: action.payload}, state);
-};
-
-const loadProjects = (state: State, action: actions.LoadProjectsSuccessAction) => {
-  return adapter.addAll(action.payload, state);
-};
-
 export function reducer (state = initialState, action: actions.Actions): State {
   switch (action.type) {
     case actions.ADD_SUCCESS:
-      return addProject(state, <actions.AddProjectSuccessAction>action);
+      return adapter.addOne(action.payload, state);
     case actions.DELETE_SUCCESS:
-      return delProject(state, <actions.DeleteProjectSuccessAction>action);
+      return adapter.removeOne(<string>action.payload.id, state);
     case actions.INVITE_SUCCESS:
     case actions.UPDATE_LISTS_SUCCESS:
     case actions.UPDATE_SUCCESS:
-      return updateProject(state, <combinedAction>action);
+      return adapter.updateOne({id: <string>action.payload.id, changes: action.payload}, state);
     case actions.LOADS_SUCCESS:
-      return loadProjects(state, <actions.LoadProjectsSuccessAction>action);
+      return adapter.addAll(action.payload, state);
     case actions.SELECT:
       return {...state, selectedId: <string>action.payload.id};
     default:
@@ -61,12 +40,4 @@ export function reducer (state = initialState, action: actions.Actions): State {
   }
 }
 
-export const getEntities = (state: State) => state.entities;
 export const getSelectedId = (state: State) => state.selectedId;
-export const getIds = (state: State) => state.ids;
-export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId: string) => {
-  return entities[selectedId];
-});
-export const getAll = createSelector(getEntities, getIds, (entities, ids) => {
-  return ids.map(id => entities[id]);
-});
