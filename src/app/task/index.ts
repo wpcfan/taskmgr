@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
 import {SharedModule} from '../shared';
-import {TaskListComponent} from './task-list';
-import {TaskItemComponent} from './task-item';
+import {TaskListComponent} from './components/task-list';
+import {TaskItemComponent} from './components/task-item';
 import {TaskRoutingModule} from './task-routing.module';
-import {TaskHomeComponent} from './task-home';
-import {TaskListHeaderComponent} from './task-list-header';
-import {NewTaskComponent} from './new-task';
-import {NewTaskListComponent} from './new-task-list';
-import {CopyTaskComponent} from './copy-task';
-import {QuickTaskComponent} from './quick-task';
+import {TaskHomeComponent} from './containers/task-home';
+import {TaskListHeaderComponent} from './components/task-list-header';
+import {NewTaskComponent} from './components/new-task';
+import {NewTaskListComponent} from './components/new-task-list';
+import {CopyTaskComponent} from './components/copy-task';
+import {QuickTaskComponent} from './components/quick-task';
 
 @NgModule({
   imports: [

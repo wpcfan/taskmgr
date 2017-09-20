@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
-import {Task} from '../../domain';
-import {itemAnim} from '../../anim/item.anim';
-import {TaskVM} from '../../vm/task.vm';
+import {Task} from '../../../domain';
+import {itemAnim} from '../../../anim/item.anim';
+import {TaskVM} from '../../../vm/task.vm';
 
 @Component({
   selector: 'app-task-item',
