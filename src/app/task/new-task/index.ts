@@ -38,7 +38,7 @@ import {User} from '../../domain';
           <textarea mdInput placeholder="备注" formControlName="remark"></textarea>
         </md-form-field>
       </div>
-      <div md-dialog-actions class="full-width">
+      <div mdDialogActions class="full-width">
         <div fxLayout="row" *ngIf="notConfirm else confirm">
           <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">
             保存

@@ -1,7 +1,7 @@
 import { User } from './user';
 
 export interface Task {
-  id?: string;
+  id: string | undefined;
   taskListId: string;
   desc: string;
   completed: boolean;

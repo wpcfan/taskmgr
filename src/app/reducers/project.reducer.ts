@@ -1,79 +1,38 @@
 import {Project} from '../domain';
 import {createSelector} from '@ngrx/store';
-import {covertArrToObj, buildObjFromArr} from '../utils/reduer.util';
+import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity'
 import * as actions from '../actions/project.action';
 
-type combinedAction = actions.InviteMembersSuccessAction | actions.UpdateListsSuccessAction | actions.UpdateProjectSuccessAction;
-export interface State {
-  ids: string[];
-  entities: { [id: string]: Project };
+export interface State extends EntityState<Project> {
   selectedId: string | null;
 }
 
-export const initialState: State = {
-  ids: [],
-  entities: {},
-  selectedId: null,
-};
+export function sortByName(a: Project, b: Project): number {
+  return a.name.localeCompare(b.name);
+}
 
-const addProject = (state: State, action: actions.AddProjectSuccessAction) => {
-  const project = action.payload;
-  if (state.entities[<string>project.id]) {
-    return state;
-  }
-  const ids = [...state.ids, <string>project.id];
-  const entities = {...state.entities, [<string>project.id]: project};
-  return {...state, ids: ids, entities: entities};
-};
+export const adapter: EntityAdapter<Project> = createEntityAdapter<Project>({
+  selectId: (project: Project) => <string>project.id,
+  sortComparer: sortByName,
+});
 
-const delProject = (state: State, action: actions.DeleteProjectSuccessAction) => {
-  const project = action.payload;
-  const ids = state.ids.filter(id => id !== project.id);
-  const newEntities = buildObjFromArr(ids, state.entities);
-  return {
-    ids: ids,
-    entities: newEntities,
-    selectedId: null
-  };
-};
-
-const updateProject = (state: State, action: combinedAction) => {
-  const project = action.payload;
-  const entities = {...state.entities, [<string>project.id]: project};
-  return {...state, entities: entities};
-};
-
-const loadProjects = (state: State, action: actions.LoadProjectsSuccessAction) => {
-  const projects = action.payload;
-  // if projects is null then return the orginal state
-  if (projects === null) {
-    return state;
-  }
-  const newProjects = projects.filter(project => !state.entities[<string>project.id]);
-  const newIds = newProjects.map(project => <string>project.id);
-  if (newProjects.length === 0) {
-    return state;
-  }
-  const newEntities = covertArrToObj(newProjects);
-  return {
-    ids: [...state.ids, ...newIds],
-    entities: {...state.entities, ...newEntities},
-    selectedId: null
-  };
-};
+export const initialState: State = adapter.getInitialState({
+  // additional entity state properties
+  selectedId: null
+});
 
 export function reducer (state = initialState, action: actions.Actions): State {
   switch (action.type) {
     case actions.ADD_SUCCESS:
-      return addProject(state, <actions.AddProjectSuccessAction>action);
+      return adapter.addOne(action.payload, state);
     case actions.DELETE_SUCCESS:
-      return delProject(state, <actions.DeleteProjectSuccessAction>action);
+      return adapter.removeOne(<string>action.payload.id, state);
     case actions.INVITE_SUCCESS:
     case actions.UPDATE_LISTS_SUCCESS:
     case actions.UPDATE_SUCCESS:
-      return updateProject(state, <combinedAction>action);
+      return adapter.updateOne({id: <string>action.payload.id, changes: action.payload}, state);
     case actions.LOADS_SUCCESS:
-      return loadProjects(state, <actions.LoadProjectsSuccessAction>action);
+      return adapter.addAll(action.payload, state);
     case actions.SELECT:
       return {...state, selectedId: <string>action.payload.id};
     default:
@@ -81,12 +40,4 @@ export function reducer (state = initialState, action: actions.Actions): State {
   }
 }
 
-export const getEntities = (state: State) => state.entities;
 export const getSelectedId = (state: State) => state.selectedId;
-export const getIds = (state: State) => state.ids;
-export const getSelected = createSelector(getEntities, getSelectedId, (entities, selectedId: string) => {
-  return entities[selectedId];
-});
-export const getAll = createSelector(getEntities, getIds, (entities, ids) => {
-  return ids.map(id => entities[id]);
-});

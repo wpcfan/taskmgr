@@ -15,6 +15,7 @@ import {
   StoreModule,
   compose,
   createSelector,
+  createFeatureSelector,
 } from '@ngrx/store';
 import * as fromRouter from '@ngrx/router-store';
 import {StoreRouterConnectingModule} from '@ngrx/router-store';
@@ -41,6 +42,7 @@ import * as fromUsers from './user.reducer';
 import { initialState } from './user.reducer';
 
 import { TaskListVM } from '../vm';
+import { RouterStateUrl } from '../utils/router.util';
 /**
  * 正如我们的 reducer 像数据库中的表一样，我们的顶层 state 也包含各个子 reducer 的 state
  * 并且使用一个 key 来标识各个子 state
@@ -52,7 +54,7 @@ export interface State {
   taskLists: fromTaskLists.State;
   tasks: fromTasks.State;
   users: fromUsers.State;
-  router: fromRouter.RouterReducerState;
+  router: fromRouter.RouterReducerState<RouterStateUrl>;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -63,15 +65,6 @@ export const reducers: ActionReducerMap<State> = {
   tasks: fromTasks.reducer,
   users: fromUsers.reducer,
   router: fromRouter.routerReducer,
-};
-
-export const initState = {
-  auth: fromAuth.initialState,
-  quote: fromQuote.initialState,
-  projects: fromProjects.initialState,
-  taskLists: fromTaskLists.initialState,
-  tasks: fromTasks.initialState,
-  users: fromUsers.initialState,
 };
 
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
@@ -103,19 +96,29 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
 
 export const getAuthState = (state: State) => state.auth;
 export const getQuoteState = (state: State) => state.quote;
-export const getProjectsState = (state: State) => state.projects;
-export const getTaskListsState = (state: State) => state.taskLists;
 export const getTasksState = (state: State) => state.tasks;
 export const getUserState = (state: State) => state.users;
 
 export const getQuote = createSelector(getQuoteState, fromQuote.getQuote);
-export const getProjects = createSelector(getProjectsState, fromProjects.getAll);
+export const getProjectsState = createFeatureSelector<fromProjects.State>('projects');
+export const getTaskListsState = createFeatureSelector<fromTaskLists.State>('taskLists');
 export const getTasks = createSelector(getTasksState, fromTasks.getTasks);
 
+export const {
+  selectIds: getProjectIds,
+  selectEntities: getProjectEntities,
+  selectAll: getProjects,
+  selectTotal: getProjectTotal
+} = fromProjects.adapter.getSelectors(getProjectsState);
+
+export const {
+  selectIds: getTaskListIds,
+  selectEntities: getTaskListEntities,
+  selectAll: getTaskLists,
+  selectTotal: getTaskListTotal
+} = fromTaskLists.adapter.getSelectors(getTaskListsState);
+
 const getSelectedProjectId = createSelector(getProjectsState, fromProjects.getSelectedId);
-const getTaskLists = createSelector(getTaskListsState, fromTaskLists.getTaskLists);
-const getTaskListEntities = createSelector(getTaskListsState, fromTaskLists.getEntities);
-const getTaskListSelectedIds = createSelector(getTaskListsState, fromTaskLists.getSelectedIds);
 
 const getUserEntities = createSelector(getUserState, fromUsers.getEntities);
 const getTasksWithOwner = createSelector(getTasks, getUserEntities, (tasks, entities) => tasks.map(task =>
@@ -141,10 +144,7 @@ export const getAuth = createSelector(getAuthState, getUserEntities, (_auth, _en
 export const getAuthUser = createSelector(getAuthState, getUserEntities, (_auth, _entities) => {
   return _entities[<string>_auth.userId];
 });
-export const getMaxListOrder = createSelector(getTaskListEntities, getTaskListSelectedIds, (entities, ids) => {
-  const orders: number[] = ids.map(id => entities[id].order);
-  return orders.sort()[orders.length - 1];
-});
+
 export const getUserTasks = createSelector(getAuthUser, getTasks, (user, tasks) => {
   return tasks.filter(task => task.ownerId === user.id)
 });
@@ -155,7 +155,7 @@ export const getUserTasks = createSelector(getAuthUser, getTasks, (user, tasks) 
      * StoreModule.provideStore  仅需引入一次，请把它包含在根模块或者 CoreModule 中
      * 我们这里为了方便组织，新建了一个 AppStoreModule，但也是只在 CoreModule 中引入的
      */
-    StoreModule.forRoot(reducers, {initialState: initState, metaReducers: metaReducers }),
+    StoreModule.forRoot(reducers, {metaReducers: metaReducers }),
     StoreRouterConnectingModule,
     // DevTool 需要在 StoreModule 之后导入
     // !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : []
