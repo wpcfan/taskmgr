@@ -1,11 +1,11 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
-import {Task} from '../../domain';
-import {itemAnim} from '../../anim/item.anim';
-import {TaskVM} from '../../vm/task.vm';
+import {Task} from '../../../domain';
+import {itemAnim} from '../../../anim/item.anim';
+import {TaskVM} from '../../../vm/task.vm';
 
 @Component({
   selector: 'app-task-item',
-  templateUrl: './task-item.component.html',
+  template: './task-item.component.html',
   styleUrls: ['./task-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [itemAnim]
