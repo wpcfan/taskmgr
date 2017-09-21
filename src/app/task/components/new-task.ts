@@ -46,7 +46,7 @@ import * as TaskHistoryActions from '../../actions/task-history.action';
         </md-form-field>
         <md-list dense>
           <md-list-item *ngFor="let history of taskHistories let i = index">
-            <md-icon mdListIcon [svgIcon]="history.icon"></md-icon>
+            <md-icon mdListIcon>{{history.icon}}</md-icon>
             {{history.title}}
             <span style="flex-grow: 2; text-align: end;">{{history.dateDesc}}</span>
           </md-list-item>

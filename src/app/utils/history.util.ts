@@ -8,21 +8,21 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
       case History.CREATE_TASK:
         return {
           ...history,
-          icon: 'create-task',
+          icon: 'add',
           title: `${history.operator.name} 创建了任务`,
           dateDesc: getDateDesc(history.date),
         };
       case History.COMPLETE_TASK:
         return {
           ...history,
-          icon: 'create-task',
+          icon: 'done',
           title: `${history.operator.name} 完成了任务`,
           dateDesc: getDateDesc(history.date),
         }
       case History.RECREATE_TASK:
         return {
           ...history,
-          icon: 'create-task',
+          icon: 'redo',
           title: `${history.operator.name} 重做了任务`,
           dateDesc: getDateDesc(history.date),
         }
@@ -30,7 +30,7 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
         const content: string = (<History.UpdateTaskContentOperation>history.operation).payload;
         return {
           ...history,
-          icon: 'create-task',
+          icon: 'create',
           title: `${history.operator.name} 更新了内容`,
           content: content,
           dateDesc: getDateDesc(history.date),
@@ -51,7 +51,7 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
         }
         return {
           ...history,
-          icon: 'create-task',
+          icon: 'priority_high',
           title: `${history.operator.name} 更新任务优先级为 ${priority}`,
           dateDesc: getDateDesc(history.date),
         }
@@ -60,7 +60,7 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
         const content: string = (<History.UpdateTaskRemarkOperation>history.operation).payload;
         return {
           ...history,
-          icon: 'create-task',
+          icon: 'create',
           title: `${history.operator.name} 更新了备注`,
           content: content,
           dateDesc: getDateDesc(history.date),
@@ -69,7 +69,7 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
       case History.CLEAR_TASK_REMARK: {
         return {
           ...history,
-          icon: 'create-task',
+          icon: 'clear',
           title: `${history.operator.name} 清空了备注`,
           dateDesc: getDateDesc(history.date),
         }
