@@ -105,11 +105,10 @@ export const getProjectsState = createFeatureSelector<fromProjects.State>('proje
 export const getTaskListsState = createFeatureSelector<fromTaskLists.State>('taskLists');
 export const getUsersState = createFeatureSelector<fromUsers.State>('users');
 export const getTasksState = createFeatureSelector<fromTasks.State>('tasks');
-export const getTaskHistoriesState = (state: State) => state.taskHistories;
+export const getTaskHistoriesState = createFeatureSelector<fromTaskHistory.State>('taskHistories');
 
 export const getTasks = createSelector(getTasksState, fromTasks.getTasks);
 export const getSelectedTask = createSelector<State, fromTaskHistory.State, Task | null>(getTaskHistoriesState, fromTaskHistory.getSelectedTask);
-export const getTaskHistories = createSelector<State, fromTaskHistory.State, TaskHistory[]>(getTaskHistoriesState, fromTaskHistory.getTaskHistories);
 
 export const {
   selectIds: getProjectIds,
@@ -124,6 +123,13 @@ export const {
   selectAll: getTaskLists,
   selectTotal: getTaskListTotal
 } = fromTaskLists.adapter.getSelectors(getTaskListsState);
+
+export const {
+  selectIds: getTaskHistoryIds,
+  selectEntities: getTaskHistoryEntities,
+  selectAll: getTaskHistories,
+  selectTotal: getTaskHistoryTotal
+} = fromTaskHistory.adapter.getSelectors(getTaskHistoriesState);
 
 export const {
   selectIds: getUserIds,

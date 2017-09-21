@@ -1,22 +1,21 @@
 import { Task, TaskHistory } from '../domain';
 import { createSelector } from '@ngrx/store';
-import { addOne, covertArrToObj, buildObjFromArr } from '../utils/reduer.util';
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import * as actions from '../actions/task-history.action';
 import * as taskActions from '../actions/task.action';
 
-export interface State {
-  ids: string[];
-  entities: { [id: string]: TaskHistory };
+export interface State extends EntityState<TaskHistory> {
   selectedTask: Task | null;
 }
 
-export const initialState: State = {
-  ids: [],
-  entities: {},
-  selectedTask: null
-};
+export const adapter: EntityAdapter<TaskHistory> = createEntityAdapter<TaskHistory>({
+});
 
-const selectTask = (state: State, action: taskActions.SelectTaskAction): State => {
+export const initialState: State = adapter.getInitialState({
+  selectedTask: null
+});
+
+/*const selectTask = (state: State, action: taskActions.SelectTaskAction): State => {
   const task: Task = action.payload;
 
   return { ids: [], entities: {}, selectedTask: task };
@@ -50,26 +49,23 @@ const addTaskHistory = (state: State, action: actions.AddTaskHistorySuccessActio
   const ids: string[] = [...state.ids, <string>taskHistory.id];
   const entities: { [id: string]: TaskHistory } = { ...state.entities, [<string>taskHistory.id]: taskHistory };
 
-  // return addOne(state, action.payload);
   return { ...state, ids: ids, entities: entities };
-}
+}*/
 
 export function reducer(state = initialState, action: actions.Actions | taskActions.Actions): State {
   switch (action.type) {
     case taskActions.SELECT:
-      return selectTask(state, <taskActions.SelectTaskAction>action);
+      // return selectTask(state, <taskActions.SelectTaskAction>action);
+      return { ids: [], entities: {}, selectedTask: action.payload };
     case actions.LOAD_SUCCESS:
-      return loadTaskHistories(state, <actions.LoadHistorySuccessAction>action);
+      // return loadTaskHistories(state, <actions.LoadHistorySuccessAction>action);
+      return adapter.addAll(action.payload, state);
     case actions.ADD_SUCCESS:
-      return addTaskHistory(state, <actions.AddTaskHistorySuccessAction>action);
+      // return addTaskHistory(state, <actions.AddTaskHistorySuccessAction>action);
+      return adapter.addOne(action.payload, state);
     default:
       return state;
   }
 }
 
-export const getEntities = (state: State): { [id: string]: TaskHistory } => state.entities;
-export const getIds = (state: State): string[] => state.ids;
 export const getSelectedTask = (state: State): Task | null => state.selectedTask;
-export const getTaskHistories = createSelector<State, { [id: string]: TaskHistory }, string[], TaskHistory[]>(getEntities, getIds, (entities, ids) => {
-  return ids.map((id: string) => entities[id]);
-});
