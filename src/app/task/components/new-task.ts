@@ -45,11 +45,10 @@ import * as TaskHistoryActions from '../../actions/task-history.action';
           <textarea mdInput placeholder="备注" formControlName="remark"></textarea>
         </md-form-field>
         <md-list dense>
-          <md-list-item *ngFor="let history of taskHistories let i = index">
-            <md-icon mdListIcon>{{history.icon}}</md-icon>
-            {{history.title}}
-            <span style="flex-grow: 2; text-align: end;">{{history.dateDesc}}</span>
-          </md-list-item>
+        <app-task-history-item
+          *ngFor="let history of taskHistories"
+          [item]="history">
+        </app-task-history-item>
         </md-list>
       </div>
       <div mdDialogActions class="full-width">
