@@ -10,14 +10,14 @@ import {Auth, Project} from '../../domain';
 @Component({
   selector: 'app-root',
   template: `
-  <md-sidenav-container [class.myapp-dark-theme]="dark" fullscreen>
-    <md-sidenav #sidenav mode="over">
+  <mat-sidenav-container [class.myapp-dark-theme]="dark" fullscreen>
+    <mat-sidenav #sidenav mode="over">
       <app-sidebar
         [auth]="(auth$ | async)?.token"
         [projects]="projects$ | async"
         (navClicked)="sidenav.close()"
         (prjClicked)="onPrjClicked($event)"></app-sidebar>
-    </md-sidenav>
+    </mat-sidenav>
     <div class="site" fxLayout="column">
       <header>
         <app-header
@@ -34,14 +34,14 @@ import {Auth, Project} from '../../domain';
         <app-footer></app-footer>
       </footer>
     </div>
-  </md-sidenav-container>
+  </mat-sidenav-container>
   `,
   styles: [`
-    md-sidenav-container.myapp-dark-theme {
+    mat-sidenav-container.myapp-dark-theme {
       background: black;
     }
 
-    md-sidenav {
+    mat-sidenav {
       width: 300px;
     }
   `]
@@ -65,7 +65,7 @@ export class AppComponent {
 
   switchDarkTheme(dark: boolean) {
     this._dark = dark;
-    this.oc.themeClass = dark ? 'myapp-dark-theme' : '';
+    this.oc.getContainerElement().classList.add(dark ? 'myapp-dark-theme' : '');
   }
 
   onLogout() {
