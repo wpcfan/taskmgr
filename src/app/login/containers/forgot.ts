@@ -9,21 +9,21 @@ import * as fromRoot from '../../reducers';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <form fxLayout="row" [formGroup]="form" (ngSubmit)="onSubmit(form)">
-    <md-card fxFlex>
-      <md-card-header>
-        <md-card-title> 忘记密码：</md-card-title>
-      </md-card-header>
-      <md-card-content>
-        <md-form-field class="full-width">
-          <input mdInput placeholder="注册时使用的电子邮箱" formControlName="email">
-        </md-form-field>
-        <button md-raised-button type="submit" [disabled]="!form.valid">找回密码</button>
-      </md-card-content>
-      <md-card-actions class="text-right">
+    <mat-card fxFlex>
+      <mat-card-header>
+        <mat-card-title> 忘记密码：</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="注册时使用的电子邮箱" formControlName="email">
+        </mat-form-field>
+        <button mat-raised-button type="submit" [disabled]="!form.valid">找回密码</button>
+      </mat-card-content>
+      <mat-card-actions class="text-right">
         <p>还没有账户？ <a routerLink="/register">注册</a></p>
         <p>已有账户 <a routerLink="/login">登录</a></p>
-      </md-card-actions>
-    </md-card>
+      </mat-card-actions>
+    </mat-card>
   </form>
   `,
   styles: [`

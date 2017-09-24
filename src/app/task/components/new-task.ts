@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
-import { toDate } from 'date-fns';
+import { parse } from 'date-fns';
 import { User, TaskHistory } from '../../domain';
 import { TaskHistoryVM } from '../../vm';
 import { getTaskHistoryVMs } from '../../utils/history.util';
@@ -15,59 +15,59 @@ import * as TaskHistoryActions from '../../actions/task-history.action';
   selector: 'app-new-task',
   template: `
     <form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
-      <h2 mdDialogTitle>{{dialogTitle}}</h2>
-      <div mdDialogContent>
-        <md-form-field class="full-width">
-          <input mdInput type="text" placeholder="任务内容" formControlName="desc">
-        </md-form-field>
-        <md-radio-group class="full-width" formControlName="priority">
-          <md-radio-button *ngFor="let priorityItem of priorities" [value]="priorityItem.value">
+      <h2 matDialogTitle>{{dialogTitle}}</h2>
+      <div matDialogContent>
+        <mat-form-field class="full-width">
+          <input matInput type="text" placeholder="任务内容" formControlName="desc">
+        </mat-form-field>
+        <mat-radio-group class="full-width" formControlName="priority">
+          <mat-radio-button *ngFor="let priorityItem of priorities" [value]="priorityItem.value">
             {{priorityItem.label}}
-          </md-radio-button>
-        </md-radio-group>
+          </mat-radio-button>
+        </mat-radio-group>
         <div class="full-width">
           <app-chips-list [label]="'更改执行者'" [multiple]="false" formControlName="owner"></app-chips-list>
         </div>
-        <md-form-field class="full-width">
-          <input mdInput [mdDatepicker]="dueDatePicker" placeholder="选择截止日期" formControlName="dueDate">
-          <md-datepicker-toggle mdSuffix [for]="dueDatePicker"></md-datepicker-toggle>
-        </md-form-field>
-        <md-datepicker touchUi="true" #dueDatePicker></md-datepicker>
-        <md-form-field class="full-width">
-          <input mdInput [mdDatepicker]="reminderPicker" placeholder="选择提醒日期" formControlName="reminder">
-          <md-datepicker-toggle mdSuffix [for]="reminderPicker"></md-datepicker-toggle>
-        </md-form-field>
-        <md-datepicker touchUi="true" #reminderPicker></md-datepicker>
+        <mat-form-field class="full-width">
+          <input matInput [matDatepicker]="dueDatePicker" placeholder="选择截止日期" formControlName="dueDate">
+          <mat-datepicker-toggle matSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+        </mat-form-field>
+        <mat-datepicker touchUi="true" #dueDatePicker></mat-datepicker>
+        <mat-form-field class="full-width">
+          <input matInput [matDatepicker]="reminderPicker" placeholder="选择提醒日期" formControlName="reminder">
+          <mat-datepicker-toggle matSuffix [for]="reminderPicker"></mat-datepicker-toggle>
+        </mat-form-field>
+        <mat-datepicker touchUi="true" #reminderPicker></mat-datepicker>
         <div class="full-width">
           <app-chips-list [label]="'更改参与者'" formControlName="followers"></app-chips-list>
         </div>
-        <md-form-field class="full-width">
-          <textarea mdInput placeholder="备注" formControlName="remark"></textarea>
-        </md-form-field>
-        <md-list dense>
+        <mat-form-field class="full-width">
+          <textarea matInput placeholder="备注" formControlName="remark"></textarea>
+        </mat-form-field>
+        <mat-list dense>
         <app-task-history-item
           *ngFor="let history of taskHistories"
           [item]="history">
         </app-task-history-item>
-        </md-list>
+        </mat-list>
       </div>
-      <div mdDialogActions class="full-width">
+      <div matDialogActions class="full-width">
         <div fxLayout="row" *ngIf="notConfirm else confirm">
-          <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
             保存
           </button>
-          <button mdDialogClose md-raised-button type="button">关闭</button>
+          <button matDialogClose mat-raised-button type="button">关闭</button>
           <span fxFlex>
           </span>
-          <button md-button color="warn" type="button" [disabled]="delInvisible" (click)="onDelClick(false)">删除</button>
+          <button mat-button color="warn" type="button" [disabled]="delInvisible" (click)="onDelClick(false)">删除</button>
         </div>
       </div>
     </form>
     <ng-template #confirm>
       <div fxLayout="row">
         <span class="fill-remaining-space mat-body-2">是否确定删除？</span>
-        <button md-button color="warn" type="button" (click)="reallyDel()">确定</button>
-        <button md-raised-button color="primary" type="button" (click)="onDelClick(true)">取消</button>
+        <button mat-button color="warn" type="button" (click)="reallyDel()">确定</button>
+        <button mat-raised-button color="primary" type="button" (click)="onDelClick(true)">取消</button>
       </div>
     </ng-template>
   `,
@@ -100,8 +100,8 @@ export class NewTaskComponent implements OnInit, OnDestroy {
   ];
 
   constructor(private fb: FormBuilder,
-    @Inject(MD_DIALOG_DATA) private data: any,
-    private dialogRef: MdDialogRef<NewTaskComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: any,
+    private dialogRef: MatDialogRef<NewTaskComponent>,
     private store$: Store<fromRoot.State>) {
     this.taskHistories$ = this.store$.select(fromRoot.getTaskHistories);
   }
@@ -123,8 +123,8 @@ export class NewTaskComponent implements OnInit, OnDestroy {
       this.form = this.fb.group({
         desc: [this.data.task.desc, Validators.compose([Validators.required, Validators.maxLength(20)])],
         priority: [this.data.task.priority],
-        dueDate: [toDate(this.data.task.dueDate)],
-        reminder: [toDate(this.data.task.reminder)],
+        dueDate: [parse(this.data.task.dueDate)],
+        reminder: [parse(this.data.task.reminder)],
         owner: [this.data.task.owner ? [{ name: this.data.task.owner.name, value: this.data.task.owner.id }] : []],
         followers: [this.data.task.participants ? [...this.data.task.participants] : []],
         remark: [this.data.task.remark, Validators.maxLength(40)]

@@ -17,12 +17,11 @@ import {
   differenceInDays,
   differenceInMonths,
   differenceInYears,
-  toDate
+  parse
 } from 'date-fns';
 import {Observable} from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { convertToDate, isValidDate } from '../../utils/date.util';
-import { parse } from 'date-fns';
 export enum AgeUnit {
   Year = 0,
   Month,
@@ -39,27 +38,27 @@ export interface Age {
   template: `
     <div [formGroup]="form" class="age-input">
       <div>
-        <md-form-field>
-          <input mdInput [mdDatepicker]="birthPicker" type="text" placeholder="出生日期" formControlName="birthday" >
-          <md-datepicker-toggle mdSuffix [for]="birthPicker"></md-datepicker-toggle>
-          <md-error>日期不正确</md-error>
-        </md-form-field>
-        <md-datepicker touchUi="true" #birthPicker></md-datepicker>
+        <mat-form-field>
+          <input matInput [matDatepicker]="birthPicker" type="text" placeholder="出生日期" formControlName="birthday" >
+          <mat-datepicker-toggle matSuffix [for]="birthPicker"></mat-datepicker-toggle>
+          <mat-error>日期不正确</mat-error>
+        </mat-form-field>
+        <mat-datepicker touchUi="true" #birthPicker></mat-datepicker>
       </div>
       <ng-container formGroupName="age">
         <div class="age-num">
-          <md-form-field>
-            <input mdInput type="number" placeholder="年龄" formControlName="ageNum">
-          </md-form-field>
+          <mat-form-field>
+            <input matInput type="number" placeholder="年龄" formControlName="ageNum">
+          </mat-form-field>
         </div>
         <div>
-          <md-button-toggle-group formControlName="ageUnit" [(ngModel)]="selectedUnit">
-            <md-button-toggle *ngFor="let unit of ageUnits" [value]="unit?.value">
+          <mat-button-toggle-group formControlName="ageUnit" [(ngModel)]="selectedUnit">
+            <mat-button-toggle *ngFor="let unit of ageUnits" [value]="unit?.value">
               {{ unit?.label }}
-            </md-button-toggle>
-          </md-button-toggle-group>
+            </mat-button-toggle>
+          </mat-button-toggle-group>
         </div>
-        <md-error class="mat-body-2" *ngIf="form.get('age')?.hasError('ageInvalid')">年龄或单位不正确</md-error>
+        <mat-error class="mat-body-2" *ngIf="form.get('age')?.hasError('ageInvalid')">年龄或单位不正确</mat-error>
       </ng-container>
     </div>
     `,
@@ -113,7 +112,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     const initDate = convertToDate(subYears(Date.now(), 30));
     const initAge = this.toAge(initDate);
     this.form = this.fb.group({
-      birthday: [toDate(initDate), this.validateDate],
+      birthday: [parse(initDate), this.validateDate],
       age:  this.fb.group({
         ageNum: [initAge.age],
         ageUnit: [initAge.unit]
@@ -158,7 +157,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       } else {
         const ageToCompare = this.toAge(birthday!.value);
         if (age.age !== ageToCompare.age || age.unit !== ageToCompare.unit) {
-          birthday!.patchValue(toDate(date.date), {emitEvent: false});
+          birthday!.patchValue(parse(date.date), {emitEvent: false});
           this.propagateChange(date.date);
         }
       }
@@ -174,7 +173,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   // 提供值的写入方法
   public writeValue(obj: Date) {
     if (obj) {
-      const date = toDate(convertToDate(obj));
+      const date = parse(convertToDate(obj));
       this.form.get('birthday')!.patchValue(date, {emitEvent: true});
     }
   }
@@ -242,7 +241,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   }
 
   private toAge(dateStr: string): Age {
-    const date = toDate(dateStr);
+    const date = parse(dateStr);
     const now = new Date();
     if (isBefore(subDays(now, this.daysTop), date)) {
       return {

@@ -6,38 +6,38 @@ import {Project} from '../../domain';
   selector: 'app-sidebar',
   template: `
     <div *ngIf="auth">
-      <md-nav-list>
-        <h3 mdSubheader>项目</h3>
-        <md-list-item [routerLink]="['/projects']" (click)="handleClicked($event)">
-          <md-icon md-list-icon svgIcon="projects"></md-icon>
-          <span mdLine>项目首页</span>
-          <span mdLine mdSubheader> 查看您参与的全部项目 </span>
-        </md-list-item>
-        <md-list-item *ngFor="let prj of projects" (click)="onPrjClicked($event, prj)">
-          <md-icon md-list-icon svgIcon="project"></md-icon>
-          <a mdLine>
+      <mat-nav-list>
+        <h3 matSubheader>项目</h3>
+        <mat-list-item [routerLink]="['/projects']" (click)="handleClicked($event)">
+          <mat-icon mat-list-icon svgIcon="projects"></mat-icon>
+          <span matLine>项目首页</span>
+          <span matLine matSubheader> 查看您参与的全部项目 </span>
+        </mat-list-item>
+        <mat-list-item *ngFor="let prj of projects" (click)="onPrjClicked($event, prj)">
+          <mat-icon mat-list-icon svgIcon="project"></mat-icon>
+          <a matLine>
             {{prj.name}}
           </a>
-          <span mdLine mdSubheader> {{prj.desc}} </span>
-        </md-list-item>
-        <md-divider></md-divider>
-        <h3 mdSubheader>日历</h3>
-        <md-list-item [routerLink]="['/mycal/month']" (click)="handleClicked($event)">
-          <md-icon md-list-icon svgIcon="month"></md-icon>
-          <span mdLine>月视图</span>
-          <span mdLine mdSubheader> 按月方式查看事件 </span>
-        </md-list-item>
-        <md-list-item [routerLink]="['/mycal/week']" (click)="handleClicked($event)">
-          <md-icon md-list-icon svgIcon="week"></md-icon>
-          <span mdLine>星期视图</span>
-          <span mdLine mdSubheader> 按星期方式查看事件 </span>
-        </md-list-item>
-        <md-list-item [routerLink]="['/mycal/day']" (click)="handleClicked($event)">
-          <md-icon md-list-icon [svgIcon]="today"></md-icon>
-          <span mdLine>当日视图</span>
-          <span mdLine mdSubheader> 按天方式查看事件 </span>
-        </md-list-item>
-      </md-nav-list>
+          <span matLine matSubheader> {{prj.desc}} </span>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <h3 matSubheader>日历</h3>
+        <mat-list-item [routerLink]="['/mycal/month']" (click)="handleClicked($event)">
+          <mat-icon mat-list-icon svgIcon="month"></mat-icon>
+          <span matLine>月视图</span>
+          <span matLine matSubheader> 按月方式查看事件 </span>
+        </mat-list-item>
+        <mat-list-item [routerLink]="['/mycal/week']" (click)="handleClicked($event)">
+          <mat-icon mat-list-icon svgIcon="week"></mat-icon>
+          <span matLine>星期视图</span>
+          <span matLine matSubheader> 按星期方式查看事件 </span>
+        </mat-list-item>
+        <mat-list-item [routerLink]="['/mycal/day']" (click)="handleClicked($event)">
+          <mat-icon mat-list-icon [svgIcon]="today"></mat-icon>
+          <span matLine>当日视图</span>
+          <span matLine matSubheader> 按天方式查看事件 </span>
+        </mat-list-item>
+      </mat-nav-list>
     </div>
   `,
   styles: [`
@@ -47,7 +47,7 @@ import {Project} from '../../domain';
       height: 48px;
     }
 
-    md-icon {
+    mat-icon {
       align-self: flex-start;
     }
   `],

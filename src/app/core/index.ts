@@ -2,7 +2,7 @@ import {NgModule, Optional, SkipSelf, LOCALE_ID} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MdIconRegistry, DateAdapter, MD_DATE_FORMATS, MdDatepickerIntl} from '@angular/material';
+import {MatIconRegistry, DateAdapter, MAT_DATE_FORMATS, MatDatepickerIntl, MATERIAL_COMPATIBILITY_MODE} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {RouterStateSerializer} from '@ngrx/router-store';
 
@@ -43,14 +43,15 @@ import '../utils/debug.util';
     {provide: 'BASE_CONFIG', useValue: { uri: 'http://localhost:3002'}},
     {provide: LOCALE_ID, useValue: 'zh-CN'},
     {provide: DateAdapter, useClass: DateFnsAdapter},
-    {provide: MD_DATE_FORMATS, useValue: MD_FNS_DATE_FORMATS},
-    {provide: MdDatepickerIntl, useClass: DatepickerI18n},
+    {provide: MAT_DATE_FORMATS, useValue: MD_FNS_DATE_FORMATS},
+    {provide: MatDatepickerIntl, useClass: DatepickerI18n},
     /**
      * The `RouterStateSnapshot` provided by the `Router` is a large complex structure.
      * A custom RouterStateSerializer is used to parse the `RouterStateSnapshot` provided
      * by `@ngrx/router-store` to include only the desired pieces of the snapshot.
      */
     { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer },
+    { provide: MATERIAL_COMPATIBILITY_MODE, useValue: true }
   ],
   declarations: [
     HeaderComponent,
@@ -64,7 +65,7 @@ export class CoreModule {
 
   constructor(
     @Optional() @SkipSelf() parentModule: CoreModule,
-    iconRegistry: MdIconRegistry,
+    iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer) {
     if (parentModule) {
       throw new Error('CoreModule 已经装载，请仅在 AppModule 中引入该模块。');

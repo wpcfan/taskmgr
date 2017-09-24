@@ -11,39 +11,39 @@ import {Address} from '../../domain';
   template: `
     <div class="address-group">
       <div>
-        <md-select
+        <mat-select
           placeholder="请选择省份"
           [(ngModel)]="_address.province"
           (change)="onProvinceChange()">
-          <md-option *ngFor="let p of provinces" [value]="p">
+          <mat-option *ngFor="let p of provinces" [value]="p">
             {{ p }}
-          </md-option>
-        </md-select>
+          </mat-option>
+        </mat-select>
       </div>
       <div>
-        <md-select
+        <mat-select
           placeholder="请选择城市"
           [(ngModel)]="_address.city"
           (change)="onCityChange()">
-          <md-option *ngFor="let c of cities$ | async" [value]="c">
+          <mat-option *ngFor="let c of cities$ | async" [value]="c">
             {{ c }}
-          </md-option>
-        </md-select>
+          </mat-option>
+        </mat-select>
       </div>
       <div>
-        <md-select
+        <mat-select
           placeholder="请选择区县"
           [(ngModel)]="_address.district"
           (change)="onDistrictChange()">
-          <md-option *ngFor="let d of districts$ | async" [value]="d">
+          <mat-option *ngFor="let d of districts$ | async" [value]="d">
             {{ d }}
-          </md-option>
-        </md-select>
+          </mat-option>
+        </mat-select>
       </div>
       <div class="street">
-        <md-form-field class="full-width">
-          <input mdInput placeholder="街道地址" [(ngModel)]="_address.street" (change)="onStreetChange()">
-        </md-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="街道地址" [(ngModel)]="_address.street" (change)="onStreetChange()">
+        </mat-form-field>
       </div>
     </div>
     `,

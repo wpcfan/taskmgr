@@ -1,20 +1,20 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 @Component({
   selector: 'app-new-task-list',
   template: `
     <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
-      <h3 mdDialogTitle>{{dialogTitle}}</h3>
-      <div mdDialogContent>
-        <md-form-field class="full-width">
-          <input mdInput placeholder="列表名称" formControlName="name">
-        </md-form-field>
+      <h3 matDialogTitle>{{dialogTitle}}</h3>
+      <div matDialogContent>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="列表名称" formControlName="name">
+        </mat-form-field>
       </div>
-      <div mdDialogActions>
-        <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">保存</button>
-        <button mdDialogClose md-raised-button type="button">关闭</button>
+      <div matDialogActions>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">保存</button>
+        <button matDialogClose mat-raised-button type="button">关闭</button>
       </div>
     </form>
   `,
@@ -34,8 +34,8 @@ export class NewTaskListComponent implements OnInit {
   dialogTitle: string;
 
   constructor(private fb: FormBuilder,
-              @Inject(MD_DIALOG_DATA) private data: any,
-              private dialogRef: MdDialogRef<NewTaskListComponent>) {
+              @Inject(MAT_DIALOG_DATA) private data: any,
+              private dialogRef: MatDialogRef<NewTaskListComponent>) {
   }
 
   ngOnInit() {

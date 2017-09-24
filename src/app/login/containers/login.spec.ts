@@ -30,6 +30,6 @@ describe('测试登录组件：LoginComponent', () => {
 
   it('组件模板的元素应该被正确创建', () => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('md-card-header md-card-title').innerText).toContain('登录');
+    expect(compiled.querySelector('mat-card-header mat-card-title').innerText).toContain('登录');
   });
 });

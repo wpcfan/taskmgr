@@ -11,27 +11,27 @@ import {defaultRouteAnim} from '../../anim';
 @Component({
   selector: 'app-cal-home',
   template: `
-    <md-card>
+    <mat-card>
     <div fxLayout="row">
       <button
-        md-icon-button
+        mat-icon-button
         mwlCalendarPreviousView
         [view]="view$ | async"
         [(viewDate)]="viewDate">
-        <md-icon class="md-48">chevron_left</md-icon>
+        <mat-icon class="md-48">chevron_left</mat-icon>
       </button>
       <button
-        md-button
+        mat-button
         mwlCalendarToday
         [(viewDate)]="viewDate">
         {{viewDate | date: 'yyyy-MM-dd'}}
       </button>
       <button
-        md-icon-button
+        mat-icon-button
         mwlCalendarNextView
         [view]="view$ | async"
         [(viewDate)]="viewDate">
-        <md-icon class="md-48">chevron_right</md-icon>
+        <mat-icon class="md-48">chevron_right</mat-icon>
       </button>
     </div>
     <div *ngIf="(events$ | async) as calEvents">
@@ -61,7 +61,7 @@ import {defaultRouteAnim} from '../../anim';
         </mwl-calendar-day-view>
       </div>
      </div>
-     </md-card>
+     </mat-card>
   `,
   styles: [`
     :host{

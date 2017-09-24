@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit, forwardRef, Input, ViewChild} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormGroup, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {MdAutocomplete} from '@angular/material';
+import {MatAutocomplete} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import {UserService} from '../../services';
 import {User} from '../../domain';
@@ -10,23 +10,23 @@ import {User} from '../../domain';
   template: `
     <div [formGroup]="chips" class="full-width">
       <span>{{label}}</span>
-      <md-chip-list>
-        <md-chip color="primary" selected="true" *ngFor="let member of items">
+      <mat-chip-list>
+        <mat-chip color="primary" selected="true" *ngFor="let member of items">
           {{member.name}} <span (click)="removeMember(member)" class="remove-tag">x</span>
-        </md-chip>
-      </md-chip-list>
-      <md-form-field *ngIf="displayInput" class="full-width">
-        <input mdInput [placeholder]="placeholderText" [mdAutocomplete]="autoMember" formControlName="memberSearch">
-      </md-form-field>
+        </mat-chip>
+      </mat-chip-list>
+      <mat-form-field *ngIf="displayInput" class="full-width">
+        <input matInput [placeholder]="placeholderText" [matAutocomplete]="autoMember" formControlName="memberSearch">
+      </mat-form-field>
     </div>
-    <md-autocomplete #autoMember="mdAutocomplete" [displayWith]="displayUser">
-      <md-option
+    <mat-autocomplete #autoMember="matAutocomplete" [displayWith]="displayUser">
+      <mat-option
         *ngFor="let item of memberResults$ | async"
         [value]="item"
         (onSelectionChange)="handleMemberSelection(item)">
         {{item.name}}
-      </md-option>
-    </md-autocomplete>
+      </mat-option>
+    </mat-autocomplete>
   `,
   styles: [`
   `],
@@ -49,7 +49,7 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   // fix the lint complaints about using a reference in template
   // It seems tslint requires now that a `@ViewChild` need to be declared
   // 'you are using blablabla that you're trying to access does not exist in the class declaration.'
-  @ViewChild('autoMember') autoMember: MdAutocomplete;
+  @ViewChild('autoMember') autoMember: MatAutocomplete;
   @Input() multiple = true;
   @Input() label = '添加/修改成员';
   @Input() placeholderText = '请输入成员 email';

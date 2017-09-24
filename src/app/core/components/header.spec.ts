@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {StoreModule} from '@ngrx/store';
 import {reducers, metaReducers, initState} from '../../reducers';
-import {MdSlideToggleModule, MdToolbarModule} from '@angular/material';
+import {MatSlideToggleModule, MatToolbarModule} from '@angular/material';
 import {HeaderComponent} from './header';
 
 describe('测试顶部组件：HeaderComponent', () => {
@@ -13,8 +13,8 @@ describe('测试顶部组件：HeaderComponent', () => {
       declarations: [HeaderComponent],
       imports: [
         StoreModule.forRoot(reducers, {initialState: initState, metaReducers: metaReducers }),
-        MdToolbarModule,
-        MdSlideToggleModule
+        MatToolbarModule,
+        MatSlideToggleModule
       ]
     })
       .compileComponents();
