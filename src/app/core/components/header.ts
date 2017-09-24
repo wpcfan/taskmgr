@@ -3,15 +3,15 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Output, Input} from '@
 @Component({
   selector: 'app-header',
   template: `
-    <md-toolbar color="primary">
-      <button md-icon-button (click)="onClick()" *ngIf="auth">
-        <md-icon>menu</md-icon>
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="onClick()" *ngIf="auth">
+        <mat-icon>menu</mat-icon>
       </button>
       <span>企业协作平台</span>
       <span class="fill-remaining-space"></span>
-      <md-slide-toggle (change)="onChange($event.checked)">黑夜模式</md-slide-toggle>
-      <span><a md-button *ngIf="auth" (click)="handleLogout()">退出</a></span>
-    </md-toolbar>
+      <mat-slide-toggle (change)="onChange($event.checked)">黑夜模式</mat-slide-toggle>
+      <span><a mat-button *ngIf="auth" (click)="handleLogout()">退出</a></span>
+    </mat-toolbar>
   `,
   styles: [`
   `],
