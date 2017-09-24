@@ -1,7 +1,7 @@
-import {MdDateFormats} from '@angular/material';
+import {MatDateFormats} from '@angular/material';
 
 
-export const MD_FNS_DATE_FORMATS: MdDateFormats = {
+export const MD_FNS_DATE_FORMATS: MatDateFormats = {
   parse: {
     dateInput: null,
   },

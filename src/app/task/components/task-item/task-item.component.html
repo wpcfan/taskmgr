@@ -1,4 +1,4 @@
-<md-list-item
+<mat-list-item
   class="container"
   [@item]="widerPriority"
   [appDraggable]="true"
@@ -10,19 +10,19 @@
     'priority-important': item.priority === 2,
     'priority-emergency': item.priority === 1}"
   (click)="itemClicked($event)">
-  <md-checkbox
+  <mat-checkbox
     class="status"
     [checked]="item.completed"
     (click)="onCheckboxClick($event)"
     (change)="checkboxChanged()">
-  </md-checkbox>
-  <div mdLine [mdTooltip]="item.desc" class="content" [ngClass]="{'completed': item.completed}">
+  </mat-checkbox>
+  <div matLine [matTooltip]="item.desc" class="content" [ngClass]="{'completed': item.completed}">
     {{item.desc}}
   </div>
-  <div mdLine class="bottom-bar">
+  <div matLine class="bottom-bar">
     <span class="duedate" *ngIf="item.dueDate">{{item.dueDate | date:"yy-MM-dd"}}</span>
-    <md-icon *ngIf="item.reminder" class="alarm">alarm</md-icon>
+    <mat-icon *ngIf="item.reminder" class="alarm">alarm</mat-icon>
   </div>
-  <md-icon md-list-avatar class="avatar" [svgIcon]="avatar"></md-icon>
+  <mat-icon mat-list-avatar class="avatar" [svgIcon]="avatar"></mat-icon>
 
-</md-list-item>
+</mat-list-item>

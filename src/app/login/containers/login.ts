@@ -11,38 +11,38 @@ import * as actions from '../../actions/quote.action';
   selector: 'app-login',
   template: `
   <form fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
-    <md-card fxFlex="0 1 20rem">
-      <md-card-header>
-        <md-card-title> 登录：</md-card-title>
-      </md-card-header>
-      <md-card-content>
-        <md-form-field class="full-width">
-          <input mdInput type="text" placeholder="您的Email" formControlName="email">
-          <md-error>用户名是必填项哦</md-error>
-        </md-form-field>
-        <md-form-field class="full-width">
-          <input mdInput type="password" placeholder="您的密码" formControlName="password">
-          <md-error>密码不正确哦</md-error>
-        </md-form-field>
-        <button md-raised-button type="submit" [disabled]="!form.valid">登录</button>
-      </md-card-content>
-      <md-card-actions class="text-right">
+    <mat-card fxFlex="0 1 20rem">
+      <mat-card-header>
+        <mat-card-title> 登录：</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field class="full-width">
+          <input matInput type="text" placeholder="您的Email" formControlName="email">
+          <mat-error>用户名是必填项哦</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput type="password" placeholder="您的密码" formControlName="password">
+          <mat-error>密码不正确哦</mat-error>
+        </mat-form-field>
+        <button mat-raised-button type="submit" [disabled]="!form.valid">登录</button>
+      </mat-card-content>
+      <mat-card-actions class="text-right">
         <p>还没有账户？ <a routerLink="/register">注册</a></p>
         <p>忘记 <a routerLink="/forgot">密码？</a></p>
-      </md-card-actions>
-    </md-card>
-    <md-card fxFlex="0 1 20rem">
-      <md-card-header>
-        <md-card-title> 佳句</md-card-title>
-        <md-card-subtitle>
+      </mat-card-actions>
+    </mat-card>
+    <mat-card fxFlex="0 1 20rem">
+      <mat-card-header>
+        <mat-card-title> 佳句</mat-card-title>
+        <mat-card-subtitle>
           {{(quote$ | async)?.cn}}
-        </md-card-subtitle>
-      </md-card-header>
-      <img mdCardImage [src]="(quote$ | async)?.pic">
-      <md-card-content>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <img matCardImage [src]="(quote$ | async)?.pic">
+      <mat-card-content>
         <p> {{(quote$ | async)?.en}}</p>
-      </md-card-content>
-    </md-card>
+      </mat-card-content>
+    </mat-card>
   </form>
   `,
   styles: [`

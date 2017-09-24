@@ -1,4 +1,4 @@
-import { MdIconRegistry } from '@angular/material';
+import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as _ from 'lodash';
 
@@ -8,7 +8,7 @@ import * as _ from 'lodash';
  * @param ir a MdIconRegistry instance to use external svg resources for md-icon use
  * @param ds a DomSanitizer instance to bypass security and return a url
  */
-export const loadSvgResources = (ir: MdIconRegistry, ds: DomSanitizer) => {
+export const loadSvgResources = (ir: MatIconRegistry, ds: DomSanitizer) => {
   const imgDir = 'assets/img';
   const avatarDir = `${imgDir}/avatar`;
   const sidebarDir = `${imgDir}/sidebar`;

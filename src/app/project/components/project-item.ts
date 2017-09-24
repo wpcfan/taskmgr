@@ -13,33 +13,33 @@ import {Project} from '../../domain';
 @Component({
   selector: 'app-project-item',
   template: `
-    <md-card (click)="onClick($event)">
-      <md-card-header>
-        <md-card-title>
+    <mat-card (click)="onClick($event)">
+      <mat-card-header>
+        <mat-card-title>
           <span>
             {{item.name}}
           </span>
-        </md-card-title>
-      </md-card-header>
-      <img mdCardImage [src]="item.coverImg">
-      <md-card-content>
+        </mat-card-title>
+      </mat-card-header>
+      <img matCardImage [src]="item.coverImg">
+      <mat-card-content>
         <p>{{item.desc}}</p>
-      </md-card-content>
-      <md-card-actions>
-        <button md-button (click)="openUpdateDialog($event)">
-          <md-icon>note</md-icon>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="openUpdateDialog($event)">
+          <mat-icon>note</mat-icon>
           <span>编辑</span>
         </button>
-        <button md-button (click)="openInviteDialog($event)">
-          <md-icon>group_add</md-icon>
+        <button mat-button (click)="openInviteDialog($event)">
+          <mat-icon>group_add</mat-icon>
           <span>邀请</span>
         </button>
-        <button md-button (click)="openDeleteDialog($event)">
-          <md-icon>delete</md-icon>
+        <button mat-button (click)="openDeleteDialog($event)">
+          <mat-icon>delete</mat-icon>
           <span>删除</span>
         </button>
-      </md-card-actions>
-    </md-card>
+      </mat-card-actions>
+    </mat-card>
   `,
   styles: [``],
   changeDetection: ChangeDetectionStrategy.OnPush,

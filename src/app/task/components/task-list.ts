@@ -3,9 +3,9 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 @Component({
   selector: 'app-task-list',
   template: `
-    <md-list>
+    <mat-list>
       <ng-content></ng-content>
-    </md-list>
+    </mat-list>
   `,
   styles: [``],
   changeDetection: ChangeDetectionStrategy.OnPush

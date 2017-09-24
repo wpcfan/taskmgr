@@ -11,7 +11,7 @@ import {
   addMonths,
   addDays,
   isValid,
-  toDate
+  parse
 } from 'date-fns';
 import * as dateFns from 'date-fns';
 import {range} from 'lodash';
@@ -76,7 +76,7 @@ export class DateFnsAdapter extends DateAdapter<Date> {
     return getDaysInMonth(date);
   }
   clone(date: Date): Date {
-    return toDate(this.createDate(this.getYear(date),  this.getMonth(date), this.getDate(date)));
+    return parse(this.createDate(this.getYear(date),  this.getMonth(date), this.getDate(date)));
   }
   createDate(year: number, month: number, date: number): Date {
     return new Date(year, month, date);
@@ -85,7 +85,7 @@ export class DateFnsAdapter extends DateAdapter<Date> {
     return new Date();
   }
   parse(value: any): Date | null {
-    return toDate(value);
+    return parse(value);
   }
   format(date: Date, displayFormat: Object): string {
     return format(date, <string>displayFormat);
@@ -111,6 +111,12 @@ export class DateFnsAdapter extends DateAdapter<Date> {
   }
   isValid(date: Date): boolean {
     return isValid(date);
+  }
+  fromIso8601(dateStr: string): Date | null {
+    return parse(dateStr);
+  }
+  toIso8601(date: Date): string {
+    return format(date, 'YYYY-MM-DD')
   }
     /**
    * Pads a number to make it two digits.

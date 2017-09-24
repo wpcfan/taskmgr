@@ -1,26 +1,26 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-new-project',
   template: `
     <form fxLayout="column" class="form" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
-      <h3 mdDialogTitle>{{dialogTitle}}</h3>
-      <div mdDialogContent>
-        <md-form-field class="full-width">
-          <input mdInput placeholder="项目名称" formControlName="name">
-        </md-form-field>
-        <md-form-field class="full-width">
-          <input mdInput placeholder="项目简介（选填）" formControlName="desc">
-        </md-form-field>
+      <h3 matDialogTitle>{{dialogTitle}}</h3>
+      <div matDialogContent>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="项目名称" formControlName="name">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <input matInput placeholder="项目简介（选填）" formControlName="desc">
+        </mat-form-field>
         <app-image-list-select [cols]="6" [items]="thumbnails$ | async" formControlName="coverImg">
         </app-image-list-select>
       </div>
-      <div mdDialogActions>
-        <button md-raised-button color="primary" type="submit" [disabled]="!form.valid">保存</button>
-        <button mdDialogClose md-raised-button type="button">关闭</button>
+      <div matDialogActions>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">保存</button>
+        <button matDialogClose mat-raised-button type="button">关闭</button>
       </div>
     </form>
   `,
@@ -38,8 +38,8 @@ export class NewProjectComponent implements OnInit {
   thumbnails$: Observable<string[]>;
 
   constructor(private fb: FormBuilder,
-              @Inject(MD_DIALOG_DATA) private data: any,
-              private dialogRef: MdDialogRef<NewProjectComponent>) {
+              @Inject(MAT_DIALOG_DATA) private data: any,
+              private dialogRef: MatDialogRef<NewProjectComponent>) {
     this.thumbnails$ = this.data.thumbnails;
   }
 
