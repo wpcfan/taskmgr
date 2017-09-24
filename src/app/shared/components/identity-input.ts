@@ -11,17 +11,17 @@ import {isValidDate} from '../../utils/date.util';
   selector: 'app-indentity-input',
   template: `
     <div>
-      <md-select placeholder="证件类型" (change)="onIdTypeChange($event.value)" [(ngModel)]="identity.identityType">
-        <md-option *ngFor="let type of identityTypes" [value]="type.value" >
+      <mat-select placeholder="证件类型" (change)="onIdTypeChange($event.value)" [(ngModel)]="identity.identityType">
+        <mat-option *ngFor="let type of identityTypes" [value]="type.value" >
           {{type.label}}
-        </md-option>
-      </md-select>
+        </mat-option>
+      </mat-select>
     </div>
     <div class="id-input">
-      <md-form-field class="full-width">
-        <input mdInput type="text" placeholder="证件号码" (change)="onIdNoChange($event.target.value)" [(ngModel)]="identity.identityNo">
-        <md-error>证件号码输入有误</md-error>
-      </md-form-field>
+      <mat-form-field class="full-width">
+        <input matInput type="text" placeholder="证件号码" (change)="onIdNoChange($event.target.value)" [(ngModel)]="identity.identityNo">
+        <mat-error>证件号码输入有误</mat-error>
+      </mat-form-field>
     </div>
   `,
   styles: [`

@@ -1,5 +1,5 @@
 import {Component,  HostBinding, ChangeDetectionStrategy} from '@angular/core';
-import {MdDialog} from '@angular/material';
+import {MatDialog} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import {ActivatedRoute} from '@angular/router';
 import {Store} from '@ngrx/store';
@@ -47,8 +47,8 @@ import {TaskListVM} from '../../vm/task-list.vm';
         </app-task-item>
       </app-task-list>
     </div>
-    <button md-fab (click)="handleNewTaskList($event)" type="button" class="fab-button">
-      <md-icon>add</md-icon>
+    <button mat-fab (click)="handleNewTaskList($event)" type="button" class="fab-button">
+      <mat-icon>add</mat-icon>
     </button>
   `,
   styles: [`
@@ -89,7 +89,7 @@ export class TaskHomeComponent {
   lists$: Observable<TaskListVM[]>;
   private projectId$: Observable<string>;
   constructor(private route: ActivatedRoute,
-              private dialog: MdDialog,
+              private dialog: MatDialog,
               private store$: Store<fromRoot.State>) {
     this.projectId$ = this.route.paramMap.map(p => <string>p.get('id'));
     this.lists$ = this.store$.select(fromRoot.getTasksByList);

@@ -6,7 +6,7 @@ export class TaskmgrPage {
   }
 
   getParagraphText() {
-    return element(by.css('app-root md-sidenav-container')).getText();
+    return element(by.css('app-root mat-sidenav-container')).getText();
   }
 
   fillInfo() {

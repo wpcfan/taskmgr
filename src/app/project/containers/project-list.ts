@@ -1,5 +1,5 @@
 import {Component, HostBinding, ChangeDetectionStrategy} from '@angular/core';
-import {MdDialog} from '@angular/material';
+import {MatDialog} from '@angular/material';
 import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import * as fromRoot from '../../reducers';
@@ -27,8 +27,8 @@ import { Project, User } from '../../domain';
         (launchDeleteDailog)="openDeleteDialog(project)">
       </app-project-item>
     </div>
-    <button md-fab (click)="openNewProjectDialog()" type="button" class="fab-button">
-      <md-icon>add</md-icon>
+    <button mat-fab (click)="openNewProjectDialog()" type="button" class="fab-button">
+      <mat-icon>add</mat-icon>
     </button>
   `,
   styles: [`
@@ -52,7 +52,7 @@ export class ProjectListComponent {
   listAnim$: Observable<number>;
 
   constructor(private store$: Store<fromRoot.State>,
-              private dialog: MdDialog) {
+              private dialog: MatDialog) {
     this.store$.dispatch(new actions.LoadProjectsAction());
     this.projects$ = this.store$.select(fromRoot.getProjects);
     this.listAnim$ = this.projects$.map(p => p.length);

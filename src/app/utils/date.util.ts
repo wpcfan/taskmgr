@@ -1,6 +1,6 @@
-import {isValid, differenceInYears, toDate, format} from 'date-fns';
+import {isValid, differenceInYears, parse, format} from 'date-fns';
 export const isValidDate = (dateStr: string) => {
-  const date = toDate(dateStr);
+  const date = parse(dateStr);
   return isValid(date);
 };
 

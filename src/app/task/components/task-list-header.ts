@@ -3,38 +3,38 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@
 @Component({
   selector: 'app-task-list-header',
   template: `
-    <div mdSubheader class="header-container" fxLayout="row" fxLayoutAlign="center center">
+    <div matSubheader class="header-container" fxLayout="row" fxLayoutAlign="center center">
       <div>
         <h4>{{header}}</h4>
       </div>
       <div class="fill" fxFlex>
-        <button md-button (click)="addNewTask($event)">
-          <md-icon>add_circle_outline</md-icon>
+        <button mat-button (click)="addNewTask($event)">
+          <mat-icon>add_circle_outline</mat-icon>
           <span>新任务</span>
         </button>
       </div>
       <div>
-        <button md-icon-button [mdMenuTriggerFor]="menu">
-          <md-icon>keyboard_arrow_down</md-icon>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>keyboard_arrow_down</mat-icon>
         </button>
       </div>
     </div>
-    <md-menu #menu="mdMenu">
-      <button md-menu-item (click)="onChangeListName($event)">
-        <md-icon>mode_edit</md-icon>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="onChangeListName($event)">
+        <mat-icon>mode_edit</mat-icon>
         <span> 修改列表名称 </span>
       </button>
-      <md-divider></md-divider>
-      <button md-menu-item (click)="onMoveAllTasks($event)">
-        <md-icon svgIcon="move" class="material-icon">content_copy</md-icon>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="onMoveAllTasks($event)">
+        <mat-icon svgIcon="move" class="material-icon">content_copy</mat-icon>
         <span> 移动本列表所有任务 </span>
       </button>
-      <md-divider></md-divider>
-      <button md-menu-item (click)="onDeleteList($event)">
-        <md-icon>delete_forever</md-icon>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="onDeleteList($event)">
+        <mat-icon>delete_forever</mat-icon>
         <span> 删除列表 </span>
       </button>
-    </md-menu>
+    </mat-menu>
   `,
   styles: [`
     .material-icon{

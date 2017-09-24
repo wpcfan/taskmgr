@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
-import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 export interface ConfirmDialog {
   title: string;
@@ -10,11 +10,11 @@ export interface ConfirmDialog {
 @Component({
   selector: 'app-confirm-dialog',
   template: `
-    <h1 mdDialogTitle>{{dialog.title}}</h1>
-    <div mdDialogContent>{{dialog.content}}</div>
-    <div mdDialogActions>
-      <button md-raised-button color="primary" (click)="handleAction(true)">{{dialog.confirmAction}}</button>
-      <button md-raised-button mdDialogClose type="button" (click)="handleAction(false)">关闭</button>
+    <h1 matDialogTitle>{{dialog.title}}</h1>
+    <div matDialogContent>{{dialog.content}}</div>
+    <div matDialogActions>
+      <button mat-raised-button color="primary" (click)="handleAction(true)">{{dialog.confirmAction}}</button>
+      <button mat-raised-button matDialogClose type="button" (click)="handleAction(false)">关闭</button>
     </div>
   `,
   styles: [``],
@@ -24,8 +24,8 @@ export class ConfirmDialogComponent {
 
   dialog: ConfirmDialog;
 
-  constructor(@Inject(MD_DIALOG_DATA) private data: any,
-              private dialogRef: MdDialogRef<ConfirmDialogComponent>) {
+  constructor(@Inject(MAT_DIALOG_DATA) private data: any,
+              private dialogRef: MatDialogRef<ConfirmDialogComponent>) {
     if (this.data.dialog !== undefined || this.data.dialog !== null) {
       this.dialog = this.data.dialog;
     }

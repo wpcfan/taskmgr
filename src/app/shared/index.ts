@@ -2,28 +2,28 @@ import {NgModule} from '@angular/core';
 import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {
-  MdToolbarModule,
-  MdSidenavModule,
-  MdAutocompleteModule,
-  MdButtonModule,
-  MdButtonToggleModule,
-  MdCardModule,
-  MdCheckboxModule,
-  MdChipsModule,
-  MdDatepickerModule,
-  MdDialogModule,
-  MdGridListModule,
-  MdIconModule,
-  MdInputModule,
-  MdListModule,
-  MdMenuModule,
-  MdNativeDateModule,
-  MdProgressBarModule,
-  MdRadioModule,
-  MdSelectModule,
-  MdTabsModule,
-  MdTooltipModule,
-  MdSlideToggleModule,
+  MatToolbarModule,
+  MatSidenavModule,
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatProgressBarModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatTabsModule,
+  MatTooltipModule,
+  MatSlideToggleModule,
 } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {ConfirmDialogComponent} from './components/confirm-dialog';
@@ -35,12 +35,12 @@ import {AgeInputComponent} from './components/age-input';
 import {DirectivesModule} from '../directives';
 
 const MATERIAL_MODULES = [
-  MdToolbarModule, MdSidenavModule, MdAutocompleteModule, MdButtonModule,
-  MdButtonToggleModule, MdCardModule, MdCheckboxModule, MdChipsModule,
-  MdDatepickerModule, MdDialogModule, MdGridListModule, MdIconModule,
-  MdInputModule, MdListModule, MdMenuModule, MdNativeDateModule,
-  MdProgressBarModule, MdRadioModule, MdSelectModule, MdTabsModule,
-  MdTooltipModule, MdSlideToggleModule,
+  MatToolbarModule, MatSidenavModule, MatAutocompleteModule, MatButtonModule,
+  MatButtonToggleModule, MatCardModule, MatCheckboxModule, MatChipsModule,
+  MatDatepickerModule, MatDialogModule, MatGridListModule, MatIconModule,
+  MatInputModule, MatListModule, MatMenuModule, MatNativeDateModule,
+  MatProgressBarModule, MatRadioModule, MatSelectModule, MatTabsModule,
+  MatTooltipModule, MatSlideToggleModule,
 ];
 
 const MODULES = [

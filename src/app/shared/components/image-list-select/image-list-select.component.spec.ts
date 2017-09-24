@@ -1,5 +1,5 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {MdGridListModule, MdIconModule} from '@angular/material';
+import {MatGridListModule, MatIconModule} from '@angular/material';
 import {ImageListSelectComponent} from './';
 
 describe('ImageListSelectComponent', () => {
@@ -9,7 +9,7 @@ describe('ImageListSelectComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ImageListSelectComponent],
-      imports: [MdGridListModule, MdIconModule]
+      imports: [MatGridListModule, MatIconModule]
     })
       .compileComponents();
   }));

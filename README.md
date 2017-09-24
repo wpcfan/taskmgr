@@ -2,7 +2,7 @@
 
 ## 采用的技术
 
-- 基于 `@ngrx/store` 和 `@ngrx/effects` 管理状态以及状态产生的影响。
+- 基于 `@ngrx/store` 和 `@ngrx/effects` 管理状态以及状态产生的影响。并且使用 `@ngrx/entity` 减少了 reducer 的重复代码。
 - 使用 `rxjs` 实现响应式编程
 - 使用 `json-server` 生成原型 REST API
 - 使用 `@angular/flex-layout` 作为布局类库
