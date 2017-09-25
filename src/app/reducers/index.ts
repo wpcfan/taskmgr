@@ -138,27 +138,6 @@ export const {
   selectTotal: getUserTotal
 } = fromUsers.adapter.getSelectors(getUsersState);
 
-export const {
-  selectIds: getProjectIds,
-  selectEntities: getProjectEntities,
-  selectAll: getProjects,
-  selectTotal: getProjectTotal
-} = fromProjects.adapter.getSelectors(getProjectsState);
-
-export const {
-  selectIds: getTaskListIds,
-  selectEntities: getTaskListEntities,
-  selectAll: getTaskLists,
-  selectTotal: getTaskListTotal
-} = fromTaskLists.adapter.getSelectors(getTaskListsState);
-
-export const {
-  selectIds: getUserIds,
-  selectEntities: getUserEntities,
-  selectAll: getUsers,
-  selectTotal: getUserTotal
-} = fromUsers.adapter.getSelectors(getUsersState);
-
 const getSelectedProjectId = createSelector(getProjectsState, fromProjects.getSelectedId);
 
 const getTasksWithOwner = createSelector(getTasks, getUserEntities, (tasks, entities) => tasks.map(task =>

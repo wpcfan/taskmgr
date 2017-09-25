@@ -5,7 +5,7 @@ import {TaskVM} from '../../../vm/task.vm';
 
 @Component({
   selector: 'app-task-item',
-  template: './task-item.component.html',
+  templateUrl: './task-item.component.html',
   styleUrls: ['./task-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [itemAnim]
