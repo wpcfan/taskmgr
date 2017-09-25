@@ -23,5 +23,5 @@
 2. git clone 项目
 3. `cd taskmgr`
 4. `yarn install`
-5. `npm start`
-
+5. `npm start` 启动前端和 json-server
+6. `npm run start:ssr` 启动服务端渲染版本 （Server Side Rendering）
