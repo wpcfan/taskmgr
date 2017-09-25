@@ -83,6 +83,14 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
           dateDesc: getDateDesc(history.date),
         }
       }
+      case History.CLEAR_TASK_UDEDATE: {
+        return {
+          ...history,
+          icon: 'date_range',
+          title: `${history.operator.name} 清除了截止时间`,
+          dateDesc: getDateDesc(history.date),
+        }
+      }
       default:
         return {
           ...history,

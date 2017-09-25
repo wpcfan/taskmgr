@@ -109,8 +109,15 @@ export class TaskHistoryEffects {
       }
 
       if (updatedTask.dueDate !== selectedTask.dueDate) {
-        const operation: History.UpdateTaskDueDateOperation = new History.UpdateTaskDueDateOperation(<Date>updatedTask.dueDate);
-        this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTask.id, operation: operation }));
+        if (updatedTask.dueDate) {
+          const operation: History.UpdateTaskDueDateOperation = new History.UpdateTaskDueDateOperation(<Date>updatedTask.dueDate);
+          this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTask.id, operation: operation }));
+        } else {
+          if (selectedTask.dueDate) {
+            const operation: History.ClearTaskDueDateOperation = new History.ClearTaskDueDateOperation();
+            this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTask.id, operation: operation }));
+          }
+        }
       }
     });
 

@@ -9,6 +9,7 @@ export const UPDATE_TASK_PRIORITY = "updateTaskPriority";
 export const UPDATE_TASK_REMARK = "updateTaskRemark";
 export const CLEAR_TASK_REMARK = "clearTaskRemark";
 export const UPDATE_TASK_DUEDATE = "updateTaskDueDate";
+export const CLEAR_TASK_UDEDATE = "clearTaskDueDate";
 
 export interface OperationHistory {
   id?: string;
@@ -72,6 +73,10 @@ export class UpdateTaskDueDateOperation implements Operation {
   }
 }
 
+export class ClearTaskDueDateOperation implements Operation {
+  readonly type = CLEAR_TASK_UDEDATE;
+}
+
 export type TaskOperations
   = CreateTaskOperation
   | CompleteTaskOperation
@@ -81,4 +86,5 @@ export type TaskOperations
   | UpdateTaskRemarkOperation
   | ClearTaskRemarkOperation
   | UpdateTaskDueDateOperation
+  | ClearTaskDueDateOperation
   ;
