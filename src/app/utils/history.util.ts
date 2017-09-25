@@ -74,6 +74,15 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
           dateDesc: getDateDesc(history.date),
         }
       }
+      case History.UPDATE_TASK_DUEDATE: {
+        const dueDate: Date = (<History.UpdateTaskDueDateOperation>history.operation).payload;
+        return {
+          ...history,
+          icon: 'date_range',
+          title: `${history.operator.name} 更新截止时间为 ${DateFns.format(dueDate, 'M月D日')}`,
+          dateDesc: getDateDesc(history.date),
+        }
+      }
       default:
         return {
           ...history,
@@ -132,7 +141,7 @@ const getDateDesc = (date: Date): string => {
     return `上周${getDayName(historyDate.getDay())} ${DateFns.format(historyDate, 'HH:mm')}`;
   }
 
-  return DateFns.format(date, 'MM-DD HH:mm');
+  return DateFns.format(date, 'M月D日 H:mm');
 }
 
 const getDayName = (day: number): string => {
