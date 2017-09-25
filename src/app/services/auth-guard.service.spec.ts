@@ -4,7 +4,7 @@ import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AuthGuardService} from './auth-guard.service';
 import {Store, StoreModule} from '@ngrx/store';
-import {getAuth, reducers, metaReducers, initState, State} from '../reducers';
+import {getAuth, reducers, metaReducers, State} from '../reducers';
 import * as authActions from '../actions/auth.action';
 
 const mockSnapshot: any = jasmine
@@ -31,7 +31,7 @@ describe('测试路由守卫服务：AuthGuardService', () => {
           {path: 'route1', component: DummyComponent},
           {path: 'route2', component: DummyComponent},
         ]),
-        StoreModule.forRoot(reducers, {initialState: initState, metaReducers: metaReducers }),
+        StoreModule.forRoot(reducers, { metaReducers: metaReducers }),
       ],
       declarations: [DummyComponent, RoutingComponent],
       providers: [

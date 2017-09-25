@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {LoginComponent} from './login';
 import {SharedModule} from '../../shared';
 import {StoreModule} from '@ngrx/store';
-import {reducers, metaReducers, initState} from '../../reducers';
+import {reducers, metaReducers} from '../../reducers';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('测试登录组件：LoginComponent', () => {
@@ -15,7 +15,7 @@ describe('测试登录组件：LoginComponent', () => {
       declarations: [LoginComponent],
       imports: [
         SharedModule,
-        StoreModule.forRoot(reducers, {initialState: initState, metaReducers: metaReducers }),
+        StoreModule.forRoot(reducers, { metaReducers: metaReducers }),
         BrowserAnimationsModule
       ]
     })
