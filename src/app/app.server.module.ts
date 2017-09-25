@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { ServerModule } from '@angular/platform-server';
-
 import { AppModule } from './app.module';
 import { AppComponent } from './core/containers/app';
 
@@ -10,7 +9,7 @@ import { AppComponent } from './core/containers/app';
 @NgModule({
   imports: [
     AppModule,
-    ServerModule,
+    ServerModule
   ],
   bootstrap: [
     AppComponent
