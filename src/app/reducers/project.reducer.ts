@@ -24,15 +24,15 @@ export const initialState: State = adapter.getInitialState({
 export function reducer (state = initialState, action: actions.Actions): State {
   switch (action.type) {
     case actions.ADD_SUCCESS:
-      return adapter.addOne(action.payload, state);
+      return {...adapter.addOne(action.payload, state), selectedId: null};
     case actions.DELETE_SUCCESS:
-      return adapter.removeOne(<string>action.payload.id, state);
+      return {...adapter.removeOne(<string>action.payload.id, state), selectedId: null};
     case actions.INVITE_SUCCESS:
     case actions.UPDATE_LISTS_SUCCESS:
     case actions.UPDATE_SUCCESS:
-      return adapter.updateOne({id: <string>action.payload.id, changes: action.payload}, state);
+      return {...adapter.updateOne({id: <string>action.payload.id, changes: action.payload}, state), selectedId: null};
     case actions.LOADS_SUCCESS:
-      return adapter.addAll(action.payload, state);
+      return {...adapter.addMany(action.payload, state), selectedId: null};
     case actions.SELECT:
       return { ...state, selectedId: <string>action.payload.id };
     default:
