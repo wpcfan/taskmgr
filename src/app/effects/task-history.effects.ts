@@ -77,16 +77,16 @@ export class TaskHistoryEffects {
     });
 
   @Effect({ dispatch: false })
-  addUpdateTaskHistory$: Observable<{ updatedTask: Task, selectedTaskVM: TaskVM; updatedTaskVM: TaskVM; user: User }> = this.actions$
+  addUpdateTaskHistory$: Observable<{ selectedTaskVM: TaskVM; updatedTaskVM: TaskVM; user: User }> = this.actions$
     .ofType<taskActions.UpdateTaskSuccessAction>(taskActions.UPDATE_SUCCESS)
     .map(action => action.payload)
-    .withLatestFrom(this.store$.select(fromRoot.getSelectedTask), (updatedTask: Task, selectedTaskVM: TaskVM) => ({ updatedTask: updatedTask, selectedTaskVM: selectedTaskVM }))
-    .withLatestFrom(this.store$.select(fromRoot.getUpdatedTask), (val, updatedTaskVM: TaskVM) => ({ ...val, updatedTaskVM: updatedTaskVM }))
+    .withLatestFrom(this.store$.select(fromRoot.getSelectedTask), (_: Task, selectedTaskVM: TaskVM) => selectedTaskVM)
+    .withLatestFrom(this.store$.select(fromRoot.getUpdatedTask), (selectedTaskVM: TaskVM, updatedTaskVM: TaskVM) => ({ selectedTaskVM: selectedTaskVM, updatedTaskVM: updatedTaskVM }))
     .withLatestFrom(this.store$.select(fromRoot.getAuthUser), (val, user: User) => ({ ...val, user: user }))
-    .do((data: { updatedTask: Task, selectedTaskVM: TaskVM; updatedTaskVM: TaskVM; user: User }) => {
+    .do((data: { selectedTaskVM: TaskVM; updatedTaskVM: TaskVM; user: User }) => {
       const selectedTaskVM: TaskVM = data.selectedTaskVM;
       const updatedTaskVM: TaskVM = data.updatedTaskVM;
-      const updatedTask: Task = data.updatedTask;
+      // const updatedTask: Task = data.updatedTask;
 
       if (null === selectedTaskVM || null === updatedTaskVM)
         return;
@@ -115,15 +115,16 @@ export class TaskHistoryEffects {
         }
       }
 
-      if (updatedTask.dueDate !== selectedTaskVM.dueDate) {
-        if (updatedTask.dueDate) {
-          const operation: History.UpdateTaskDueDateOperation = new History.UpdateTaskDueDateOperation(<Date>updatedTask.dueDate);
-          this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTask.id, operation: operation }));
+      const selectedTaskVMDueDate = selectedTaskVM.dueDate ? new Date(selectedTaskVM.dueDate).getTime() : null;
+      const updatedTaskVMDueDate = updatedTaskVM.dueDate ? new Date(updatedTaskVM.dueDate).getTime() : null;
+
+      if (selectedTaskVMDueDate !== updatedTaskVMDueDate) {
+        if (updatedTaskVMDueDate !== null) {
+          const operation: History.UpdateTaskDueDateOperation = new History.UpdateTaskDueDateOperation(<Date>updatedTaskVM.dueDate);
+          this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTaskVM.id, operation: operation }));
         } else {
-          if (updatedTask.dueDate) {
-            const operation: History.ClearTaskDueDateOperation = new History.ClearTaskDueDateOperation();
-            this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTask.id, operation: operation }));
-          }
+          const operation: History.ClearTaskDueDateOperation = new History.ClearTaskDueDateOperation();
+          this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTaskVM.id, operation: operation }));
         }
       }
     });
