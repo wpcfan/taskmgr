@@ -132,10 +132,6 @@ export class TaskHistoryEffects {
       const selectedOwnerUserId = selectedTaskVM.owner ? selectedTaskVM.owner.id : null;
       const updatedOwnerUserId = updatedTaskVM.owner ? updatedTaskVM.owner.id : null;
 
-      console.log('<<authUserId>>', authUserId);
-      console.log('<<selectedOwnerUserId>>', selectedOwnerUserId);
-      console.log('<<updatedOwnerUserId>>', updatedOwnerUserId);
-
       if (selectedOwnerUserId !== updatedOwnerUserId) {
         if (updatedOwnerUserId) {
           if (updatedOwnerUserId === authUserId) {
