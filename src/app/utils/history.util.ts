@@ -83,7 +83,7 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
           dateDesc: getDateDesc(history.date),
         }
       }
-      case History.CLEAR_TASK_UDEDATE: {
+      case History.CLEAR_TASK_DUEDATE: {
         return {
           ...history,
           icon: 'date_range',

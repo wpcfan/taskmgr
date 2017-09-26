@@ -9,6 +9,7 @@ import * as taskActions from '../actions/task.action';
 import * as fromRoot from '../reducers';
 import * as History from '../domain/history';
 import { User, Task, TaskHistory } from '../domain';
+import { TaskVM } from '../vm';
 
 @Injectable()
 export class TaskHistoryEffects {
@@ -76,44 +77,50 @@ export class TaskHistoryEffects {
     });
 
   @Effect({ dispatch: false })
-  addUpdateTaskHistory$: Observable<[Task, Task | null]> = this.actions$
+  addUpdateTaskHistory$: Observable<{ updatedTask: Task, selectedTaskVM: TaskVM; updatedTaskVM: TaskVM; user: User }> = this.actions$
     .ofType<taskActions.UpdateTaskSuccessAction>(taskActions.UPDATE_SUCCESS)
     .map(action => action.payload)
-    .withLatestFrom(this.store$.select(fromRoot.getSelectedTask))
-    .do(([updatedTask, selectedTask]: [Task, Task | null]) => {
-      if (null === selectedTask)
+    .withLatestFrom(this.store$.select(fromRoot.getSelectedTask), (updatedTask: Task, selectedTaskVM: TaskVM) => ({ updatedTask: updatedTask, selectedTaskVM: selectedTaskVM }))
+    .withLatestFrom(this.store$.select(fromRoot.getUpdatedTask), (val, updatedTaskVM: TaskVM) => ({ ...val, updatedTaskVM: updatedTaskVM }))
+    .withLatestFrom(this.store$.select(fromRoot.getAuthUser), (val, user: User) => ({ ...val, user: user }))
+    .do((data: { updatedTask: Task, selectedTaskVM: TaskVM; updatedTaskVM: TaskVM; user: User }) => {
+      const selectedTaskVM: TaskVM = data.selectedTaskVM;
+      const updatedTaskVM: TaskVM = data.updatedTaskVM;
+      const updatedTask: Task = data.updatedTask;
+
+      if (null === selectedTaskVM || null === updatedTaskVM)
         return;
 
-      if (updatedTask.desc !== selectedTask.desc) {
-        const operation: History.TaskOperations = new History.UpdateTaskContentOperation(updatedTask.desc);
-        this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTask.id, operation: operation }));
+      if (updatedTaskVM.desc !== selectedTaskVM.desc) {
+        const operation: History.TaskOperations = new History.UpdateTaskContentOperation(updatedTaskVM.desc);
+        this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTaskVM.id, operation: operation }));
       }
 
-      if (updatedTask.priority !== selectedTask.priority) {
-        const operation: History.TaskOperations = new History.UpdateTaskPriorityOperation(updatedTask.priority);
-        this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTask.id, operation: operation }));
+      if (updatedTaskVM.priority !== selectedTaskVM.priority) {
+        const operation: History.TaskOperations = new History.UpdateTaskPriorityOperation(updatedTaskVM.priority);
+        this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTaskVM.id, operation: operation }));
       }
 
-      if (updatedTask.remark !== selectedTask.remark) {
+      if (updatedTaskVM.remark !== selectedTaskVM.remark) {
         //The remark of Quick-Task is undefined and the remark of updated task will be null event if you did nothing.
 
-        if (updatedTask.remark) {
-          const operation: History.TaskOperations = new History.UpdateTaskRemarkOperation(<string>updatedTask.remark);
-          this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTask.id, operation: operation }));
+        if (updatedTaskVM.remark) {
+          const operation: History.TaskOperations = new History.UpdateTaskRemarkOperation(<string>updatedTaskVM.remark);
+          this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTaskVM.id, operation: operation }));
         } else {
-          if (selectedTask.remark) {
+          if (selectedTaskVM.remark) {
             const operation: History.TaskOperations = new History.ClearTaskRemarkOperation();
-            this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTask.id, operation: operation }));
+            this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTaskVM.id, operation: operation }));
           }
         }
       }
 
-      if (updatedTask.dueDate !== selectedTask.dueDate) {
+      if (updatedTask.dueDate !== selectedTaskVM.dueDate) {
         if (updatedTask.dueDate) {
           const operation: History.UpdateTaskDueDateOperation = new History.UpdateTaskDueDateOperation(<Date>updatedTask.dueDate);
           this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTask.id, operation: operation }));
         } else {
-          if (selectedTask.dueDate) {
+          if (updatedTask.dueDate) {
             const operation: History.ClearTaskDueDateOperation = new History.ClearTaskDueDateOperation();
             this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTask.id, operation: operation }));
           }

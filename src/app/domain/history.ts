@@ -1,15 +1,19 @@
 import { User } from './user';
 
-export const CREATE_TASK = "createTask";
-export const COMPLETE_TASK = "completeTask";
-export const RECREATE_TASK = "recreateTask";
+export const CREATE_TASK = 'createTask';
+export const COMPLETE_TASK = 'completeTask';
+export const RECREATE_TASK = 'recreateTask';
 
-export const UPDATE_TASK_CONTENT = "updateTaskContent";
-export const UPDATE_TASK_PRIORITY = "updateTaskPriority";
-export const UPDATE_TASK_REMARK = "updateTaskRemark";
-export const CLEAR_TASK_REMARK = "clearTaskRemark";
-export const UPDATE_TASK_DUEDATE = "updateTaskDueDate";
-export const CLEAR_TASK_UDEDATE = "clearTaskDueDate";
+export const UPDATE_TASK_CONTENT = 'updateTaskContent';
+export const UPDATE_TASK_PRIORITY = 'updateTaskPriority';
+export const UPDATE_TASK_REMARK = 'updateTaskRemark';
+export const CLEAR_TASK_REMARK = 'clearTaskRemark';
+export const UPDATE_TASK_DUEDATE = 'updateTaskDueDate';
+export const CLEAR_TASK_DUEDATE = 'clearTaskDueDate';
+
+export const CLAIM_TASK = 'claimTask';
+export const ASSIGN_TASK = 'assignTask';
+export const REMOVE_TASK_EXECUTOR = 'removeTaskExecutor';
 
 export interface OperationHistory {
   id?: string;
@@ -74,7 +78,22 @@ export class UpdateTaskDueDateOperation implements Operation {
 }
 
 export class ClearTaskDueDateOperation implements Operation {
-  readonly type = CLEAR_TASK_UDEDATE;
+  readonly type = CLEAR_TASK_DUEDATE;
+}
+
+export class ClaimTaskOperation implements Operation {
+  readonly type = CLAIM_TASK;
+}
+
+export class AssignTaskOperation implements Operation {
+  readonly type = ASSIGN_TASK;
+
+  constructor(public payload: User) {
+  }
+}
+
+export class RemoveTaskExecutorOperation implements Operation {
+  readonly type = REMOVE_TASK_EXECUTOR;
 }
 
 export type TaskOperations
@@ -87,4 +106,7 @@ export type TaskOperations
   | ClearTaskRemarkOperation
   | UpdateTaskDueDateOperation
   | ClearTaskDueDateOperation
+  | ClaimTaskOperation
+  | AssignTaskOperation
+  | RemoveTaskExecutorOperation
   ;

@@ -10,6 +10,7 @@ import { TaskHistoryVM } from '../../vm';
 import { getTaskHistoryVMs } from '../../utils/history.util';
 import * as fromRoot from '../../reducers';
 import * as TaskHistoryActions from '../../actions/task-history.action';
+import * as TaskActions from '../../actions/task.action';
 
 @Component({
   selector: 'app-new-task',
@@ -156,6 +157,18 @@ export class NewTaskComponent implements OnInit, OnDestroy {
     if (!valid) {
       return;
     }
+
+    this.store$.dispatch(new TaskActions.UpdatingTaskAction({
+      ...this.data.task,
+      desc: value.desc,
+      owner: value.owner,
+      participants: value.followers,
+      dueDate: value.dueDate,
+      priority: value.priority,
+      remark: value.remark,
+      reminder: value.reminder,
+    }));
+
     this.dialogRef.close({
       type: 'addOrUpdate', task: {
         desc: value.desc,

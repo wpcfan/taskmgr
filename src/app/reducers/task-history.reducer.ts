@@ -1,18 +1,21 @@
 import { Task, TaskHistory } from '../domain';
+import { TaskVM } from '../vm';
 import { createSelector } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import * as actions from '../actions/task-history.action';
 import * as taskActions from '../actions/task.action';
 
 export interface State extends EntityState<TaskHistory> {
-  selectedTask: Task | null;
+  selectedTask: TaskVM | null;
+  updatedTask: TaskVM | null;
 }
 
 export const adapter: EntityAdapter<TaskHistory> = createEntityAdapter<TaskHistory>({
 });
 
 export const initialState: State = adapter.getInitialState({
-  selectedTask: null
+  selectedTask: null,
+  updatedTask: null,
 });
 
 /*const selectTask = (state: State, action: taskActions.SelectTaskAction): State => {
@@ -56,7 +59,9 @@ export function reducer(state = initialState, action: actions.Actions | taskActi
   switch (action.type) {
     case taskActions.SELECT:
       // return selectTask(state, <taskActions.SelectTaskAction>action);
-      return { ids: [], entities: {}, selectedTask: action.payload };
+      return { ids: [], entities: {}, selectedTask: action.payload, updatedTask: null };
+    case taskActions.UPDATING:
+      return { ...state, updatedTask: action.payload };
     case actions.LOAD_SUCCESS:
       // return loadTaskHistories(state, <actions.LoadHistorySuccessAction>action);
       return adapter.addAll(action.payload, state);
@@ -68,4 +73,5 @@ export function reducer(state = initialState, action: actions.Actions | taskActi
   }
 }
 
-export const getSelectedTask = (state: State): Task | null => state.selectedTask;
+export const getSelectedTask = (state: State): TaskVM | null => state.selectedTask;
+export const getUpdatedTask = (state: State): TaskVM | null => state.updatedTask;

@@ -13,7 +13,7 @@ import { NewTaskComponent } from '../components/new-task';
 import { CopyTaskComponent } from '../components/copy-task';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog';
 import { defaultRouteAnim, listAnimation } from '../../anim';
-import { TaskListVM } from '../../vm/task-list.vm';
+import { TaskListVM, TaskVM } from '../../vm';
 
 @Component({
   selector: 'app-task-home',
@@ -177,7 +177,7 @@ export class TaskHomeComponent {
       });
   }
 
-  handleUpdateTask(task: Task) {
+  handleUpdateTask(task: TaskVM) {
     this.store$.dispatch(new taskActions.SelectTaskAction(task));
 
     const dialogRef = this.dialog.open(NewTaskComponent, { data: { task: task } });

@@ -108,7 +108,8 @@ export const getTasksState = createFeatureSelector<fromTasks.State>('tasks');
 export const getTaskHistoriesState = createFeatureSelector<fromTaskHistory.State>('taskHistories');
 
 export const getTasks = createSelector(getTasksState, fromTasks.getTasks);
-export const getSelectedTask = createSelector<State, fromTaskHistory.State, Task | null>(getTaskHistoriesState, fromTaskHistory.getSelectedTask);
+export const getSelectedTask = createSelector<State, fromTaskHistory.State, TaskVM | null>(getTaskHistoriesState, fromTaskHistory.getSelectedTask);
+export const getUpdatedTask = createSelector<State, fromTaskHistory.State, TaskVM | null>(getTaskHistoriesState, fromTaskHistory.getUpdatedTask);
 
 export const {
   selectIds: getProjectIds,
