@@ -126,7 +126,7 @@ export class NewTaskComponent implements OnInit, OnDestroy {
         priority: [this.data.task.priority],
         dueDate: [parse(this.data.task.dueDate)],
         reminder: [parse(this.data.task.reminder)],
-        owner: [this.data.task.owner ? [{ name: this.data.task.owner.name, value: this.data.task.owner.id }] : []],
+        owner: [this.data.task.owner ? [this.data.task.owner] : []],
         followers: [this.data.task.participants ? [...this.data.task.participants] : []],
         remark: [this.data.task.remark, Validators.maxLength(40)]
       });
@@ -161,7 +161,7 @@ export class NewTaskComponent implements OnInit, OnDestroy {
     this.store$.dispatch(new TaskActions.UpdatingTaskAction({
       ...this.data.task,
       desc: value.desc,
-      owner: value.owner,
+      owner: value.owner.length > 0 ? value.owner[0] : null,
       participants: value.followers,
       dueDate: value.dueDate,
       priority: value.priority,

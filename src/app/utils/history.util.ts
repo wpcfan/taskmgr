@@ -91,6 +91,31 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
           dateDesc: getDateDesc(history.date),
         }
       }
+      case History.CLAIM_TASK: {
+        return {
+          ...history,
+          icon: 'person',
+          title: `${history.operator.name} 认领了任务`,
+          dateDesc: getDateDesc(history.date),
+        }
+      }
+      case History.ASSIGN_TASK: {
+        const name = (<History.AssignTaskOperation>history.operation).payload.name;
+        return {
+          ...history,
+          icon: 'person',
+          title: `${history.operator.name} 指派给了 ${name}`,
+          dateDesc: getDateDesc(history.date),
+        }
+      }
+      case History.REMOVE_TASK_EXECUTOR: {
+        return {
+          ...history,
+          icon: 'person',
+          title: `${history.operator.name} 移除了执行者`,
+          dateDesc: getDateDesc(history.date),
+        }
+      }
       default:
         return {
           ...history,

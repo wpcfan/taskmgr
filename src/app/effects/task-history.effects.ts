@@ -115,15 +115,38 @@ export class TaskHistoryEffects {
         }
       }
 
-      const selectedTaskVMDueDate = selectedTaskVM.dueDate ? new Date(selectedTaskVM.dueDate).getTime() : null;
-      const updatedTaskVMDueDate = updatedTaskVM.dueDate ? new Date(updatedTaskVM.dueDate).getTime() : null;
+      const selectedDueDate = selectedTaskVM.dueDate ? new Date(selectedTaskVM.dueDate).getTime() : null;
+      const updatedDueDate = updatedTaskVM.dueDate ? new Date(updatedTaskVM.dueDate).getTime() : null;
 
-      if (selectedTaskVMDueDate !== updatedTaskVMDueDate) {
-        if (updatedTaskVMDueDate !== null) {
+      if (selectedDueDate !== updatedDueDate) {
+        if (updatedDueDate !== null) {
           const operation: History.UpdateTaskDueDateOperation = new History.UpdateTaskDueDateOperation(<Date>updatedTaskVM.dueDate);
           this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTaskVM.id, operation: operation }));
         } else {
           const operation: History.ClearTaskDueDateOperation = new History.ClearTaskDueDateOperation();
+          this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTaskVM.id, operation: operation }));
+        }
+      }
+
+      const authUserId = data.user.id;
+      const selectedOwnerUserId = selectedTaskVM.owner ? selectedTaskVM.owner.id : null;
+      const updatedOwnerUserId = updatedTaskVM.owner ? updatedTaskVM.owner.id : null;
+
+      console.log('<<authUserId>>', authUserId);
+      console.log('<<selectedOwnerUserId>>', selectedOwnerUserId);
+      console.log('<<updatedOwnerUserId>>', updatedOwnerUserId);
+
+      if (selectedOwnerUserId !== updatedOwnerUserId) {
+        if (updatedOwnerUserId) {
+          if (updatedOwnerUserId === authUserId) {
+            const operation: History.ClaimTaskOperation = new History.ClaimTaskOperation();
+            this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTaskVM.id, operation: operation }));
+          } else {
+            const operation: History.AssignTaskOperation = new History.AssignTaskOperation(<User>updatedTaskVM.owner);
+            this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTaskVM.id, operation: operation }));
+          }
+        } else {
+          const operation: History.RemoveTaskExecutorOperation = new History.RemoveTaskExecutorOperation();
           this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTaskVM.id, operation: operation }));
         }
       }
