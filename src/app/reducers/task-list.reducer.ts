@@ -36,17 +36,17 @@ const swapOrder = (state: State, action: actions.SwapOrderSuccessAction) => {
 export function reducer (state: State = initialState, action: actions.Actions | prjActions.Actions): State {
   switch (action.type) {
     case actions.ADD_SUCCESS:
-      return adapter.addOne(action.payload, state);
+      return {...adapter.addOne(action.payload, state)};
     case actions.DELETE_SUCCESS:
-      return adapter.removeOne(<string>action.payload.id, state);
+      return {...adapter.removeOne(<string>action.payload.id, state)};
     case actions.UPDATE_SUCCESS:
-      return adapter.updateOne({id: <string>action.payload.id, changes: action.payload}, state);
+      return {...adapter.updateOne({id: <string>action.payload.id, changes: action.payload}, state)};
     case actions.SWAP_ORDER_SUCCESS:
-      return swapOrder(state, <actions.SwapOrderSuccessAction>action);
+      return {...swapOrder(state, <actions.SwapOrderSuccessAction>action)};
     case actions.LOADS_SUCCESS:
-      return adapter.addAll(action.payload, state);
+      return {...adapter.addMany(action.payload, state)};
     case prjActions.DELETE_SUCCESS:
-      return delListByPrj(state, <prjActions.DeleteProjectSuccessAction>action);
+      return {...delListByPrj(state, <prjActions.DeleteProjectSuccessAction>action)};
     default:
       return state;
   }
