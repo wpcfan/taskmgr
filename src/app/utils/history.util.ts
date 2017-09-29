@@ -122,7 +122,7 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
         return {
           ...history,
           icon: 'person',
-          title: `${history.operator.name} 添加了参与者 ${getNameStr(users)}`,
+          title: `${history.operator.name} 添加了参与者 ${joinUserNames(users)}`,
           dateDesc: getDateDesc(history.date),
         }
       }
@@ -131,7 +131,7 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
         return {
           ...history,
           icon: 'person',
-          title: `${history.operator.name} 移除了参与者 ${getNameStr(users)}`,
+          title: `${history.operator.name} 移除了参与者 ${joinUserNames(users)}`,
           dateDesc: getDateDesc(history.date),
         }
       }
@@ -144,11 +144,6 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
     }
   });
 };
-
-const getNameStr = (users: User[]): string => {
-  const names = users.map((user: User) => user.name);
-  return names.join(', ');
-}
 
 const getDateDesc = (date: Date): string => {
   const nowDate: Date = new Date();
@@ -204,4 +199,9 @@ const getDateDesc = (date: Date): string => {
 const getDayName = (day: number): string => {
   const dayNames: string[] = ['一', '二', '三', '四', '五', '六', '日'];
   return dayNames[day - 1];
+}
+
+const joinUserNames = (users: User[]): string => {
+  const names = users.map((user: User) => user.name);
+  return names.join(', ');
 }

@@ -8,6 +8,7 @@ import * as actions from '../actions/task-history.action';
 import * as taskActions from '../actions/task.action';
 import * as fromRoot from '../reducers';
 import * as History from '../domain/history';
+import * as _ from 'lodash';
 import { User, Task, TaskHistory } from '../domain';
 import { TaskVM } from '../vm';
 
@@ -91,16 +92,19 @@ export class TaskHistoryEffects {
       if (null === selectedTaskVM || null === updatedTaskVM)
         return;
 
+      /** Desc */
       if (updatedTaskVM.desc !== selectedTaskVM.desc) {
         const operation: History.TaskOperations = new History.UpdateTaskContentOperation(updatedTaskVM.desc);
         this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTaskVM.id, operation: operation }));
       }
 
+      /** Priority */
       if (updatedTaskVM.priority !== selectedTaskVM.priority) {
         const operation: History.TaskOperations = new History.UpdateTaskPriorityOperation(updatedTaskVM.priority);
         this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTaskVM.id, operation: operation }));
       }
 
+      /** Remark */
       if (updatedTaskVM.remark !== selectedTaskVM.remark) {
         //The remark of Quick-Task is undefined and the remark of updated task will be null event if you did nothing.
 
@@ -115,6 +119,7 @@ export class TaskHistoryEffects {
         }
       }
 
+      /** DueDate */
       const selectedDueDate = selectedTaskVM.dueDate ? new Date(selectedTaskVM.dueDate).getTime() : null;
       const updatedDueDate = updatedTaskVM.dueDate ? new Date(updatedTaskVM.dueDate).getTime() : null;
 
@@ -128,6 +133,7 @@ export class TaskHistoryEffects {
         }
       }
 
+      /** Owner */
       const authUserId = data.user.id;
       const selectedOwnerUserId = selectedTaskVM.owner ? selectedTaskVM.owner.id : null;
       const updatedOwnerUserId = updatedTaskVM.owner ? updatedTaskVM.owner.id : null;
@@ -146,6 +152,22 @@ export class TaskHistoryEffects {
           this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTaskVM.id, operation: operation }));
         }
       }
-    });
 
+      /** Participants */
+      const selectedParticipants: User[] = selectedTaskVM.participants ? selectedTaskVM.participants : [];
+      const updatedParticipants: User[] = updatedTaskVM.participants ? updatedTaskVM.participants : [];
+
+      const removedParticipants: User[] = _.difference(selectedParticipants, updatedParticipants);
+      const addedParticipants: User[] = _.difference(updatedParticipants, selectedParticipants);
+
+      if (removedParticipants.length > 0) {
+        const operation: History.RemoveParticipantOperation = new History.RemoveParticipantOperation(removedParticipants);
+        this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTaskVM.id, operation: operation }));
+      }
+
+      if (addedParticipants.length > 0) {
+        const operation: History.AddParticipantOperation = new History.AddParticipantOperation(addedParticipants);
+        this.store$.dispatch(new actions.AddTaskHistoryAction({ taskId: <string>updatedTaskVM.id, operation: operation }));
+      }
+    });
 }
