@@ -1,9 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
-import * as fromRoot from '../../reducers';
-import * as actions from '../../actions/auth.action';
-import {Auth} from '../../domain';
+import {ChangeDetectionStrategy, Component, EventEmitter, Output, Input} from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -24,20 +19,17 @@ import {Auth} from '../../domain';
 })
 export class HeaderComponent {
 
-  auth$: Observable<Auth>;
+  @Input() auth = false;
   @Output() toggle = new EventEmitter<void>();
   @Output() toggleDarkTheme = new EventEmitter<boolean>();
-
-  constructor(private store$: Store<fromRoot.State>) {
-    this.auth$ = this.store$.select(fromRoot.getAuth);
-  }
+  @Output() logout = new EventEmitter();
 
   onClick() {
     this.toggle.emit();
   }
 
-  logout() {
-    this.store$.dispatch({type: actions.LOGOUT});
+  handleLogout() {
+    this.logout.emit();
   }
 
   onChange(checked: boolean) {
