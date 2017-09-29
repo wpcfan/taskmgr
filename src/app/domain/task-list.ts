@@ -1,5 +1,5 @@
 export interface TaskList {
-  id?: string;
+  id: string | undefined;
   name: string;
   projectId: string;
   order: number;

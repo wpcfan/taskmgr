@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Actions, Effect, toPayload} from '@ngrx/effects';
+import {Actions, Effect} from '@ngrx/effects';
 import {Action} from '@ngrx/store';
-import {go} from '@ngrx/router-store';
+import { Router } from '@angular/router';
+import * as routerActions from '../actions/router.action';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
 
@@ -16,8 +17,8 @@ export class AuthEffects {
    */
   @Effect()
   login$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.LOGIN)
-    .map(toPayload)
+    .ofType<actions.LoginAction>(actions.LOGIN)
+    .map((action: actions.LoginAction) => action.payload)
     .switchMap((val: { email: string, password: string }) => this.authService
       .login(val.email, val.password)
       .map(auth => new actions.LoginSuccessAction(auth))
@@ -35,8 +36,8 @@ export class AuthEffects {
    */
   @Effect()
   register$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.REGISTER)
-    .map(toPayload)
+    .ofType<actions.RegisterAction>(actions.REGISTER)
+    .map(action => action.payload)
     .switchMap((val) => this.authService
       .register(val)
       .map(auth => new actions.RegisterSuccessAction(auth))
@@ -45,22 +46,33 @@ export class AuthEffects {
 
   @Effect()
   navigateHome$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.LOGIN_SUCCESS)
-    .map(() => go(['/projects']));
+    .ofType<actions.LoginSuccessAction>(actions.LOGIN_SUCCESS)
+    .map(() => new routerActions.Go({path: ['/projects']}))
+    ;
 
   @Effect()
   registerAndHome$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.REGISTER_SUCCESS)
-    .map(() => go(['/projects']));
+    .ofType<actions.RegisterSuccessAction>(actions.REGISTER_SUCCESS)
+    .map(() => new routerActions.Go({path: ['/projects']}));
 
   @Effect()
   logout$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.LOGOUT)
-    .map(() => go(['/']));
+    .ofType<actions.LogoutAction>(actions.LOGOUT)
+    .map(() => new routerActions.Go({path: ['/']}));
+
+  @Effect({ dispatch: false })
+  navigate$ = this.actions$.ofType(routerActions.GO)
+    .map((action: routerActions.Go) => action.payload)
+    .do(({ path, query: queryParams, extras}) =>
+      this.router.navigate(path, { queryParams, ...extras }));
+
   /**
    *
    * @param actions$
    * @param authService
    */
-  constructor(private actions$: Actions, private authService: AuthService) {}
+  constructor(
+    private actions$: Actions,
+    private router: Router,
+    private authService: AuthService) {}
 }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Actions, Effect, toPayload} from '@ngrx/effects';
+import {Actions, Effect} from '@ngrx/effects';
 import {Action, Store} from '@ngrx/store';
-import {go} from '@ngrx/router-store';
+import * as routerActions from '../actions/router.action';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
 import {ProjectService} from '../services';
@@ -9,8 +9,8 @@ import * as actions from '../actions/project.action';
 import * as tasklistActions from '../actions/task-list.action';
 import * as userActions from '../actions/user.action';
 import * as fromRoot from '../reducers';
-import {Project} from '../domain';
-
+import {Project, User} from '../domain';
+import {Router} from '@angular/router';
 @Injectable()
 export class ProjectEffects {
 
@@ -19,19 +19,18 @@ export class ProjectEffects {
    */
   @Effect()
   loadProjects$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.LOADS)
-    .map(toPayload)
+    .ofType<actions.LoadProjectsAction>(actions.LOADS)
     .withLatestFrom(this.store$.select(fromRoot.getAuth))
     .switchMap(([_, auth]) => this.service
-      .get(auth.user.id)
+      .get(<string>auth.user.id)
       .map(projects => new actions.LoadProjectsSuccessAction(projects))
       .catch(err => of(new actions.LoadProjectsFailAction(JSON.stringify(err))))
     );
 
   @Effect()
   addProject$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.ADD)
-    .map(toPayload)
+    .ofType<actions.AddProjectAction>(actions.ADD)
+    .map(action => action.payload)
     .withLatestFrom(this.store$.select(fromRoot.getAuth))
     .switchMap(([project, auth]) => {
       const added = {...project, members: [`${auth.user.id}`]};
@@ -44,8 +43,8 @@ export class ProjectEffects {
 
   @Effect()
   updateProject$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.UPDATE)
-    .map(toPayload)
+    .ofType<actions.UpdateProjectAction>(actions.UPDATE)
+    .map(action => action.payload)
     .switchMap(project => this.service
       .update(project)
       .map(returned => new actions.UpdateProjectSuccessAction(returned))
@@ -54,8 +53,8 @@ export class ProjectEffects {
 
   @Effect()
   updateLists$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.UPDATE_LISTS)
-    .map(toPayload)
+    .ofType<actions.UpdateListsAction>(actions.UPDATE_LISTS)
+    .map(action => action.payload)
     .switchMap(project => this.service
       .updateTaskLists(project)
       .map(returned => new actions.UpdateListsSuccessAction(returned))
@@ -64,8 +63,8 @@ export class ProjectEffects {
 
   @Effect()
   removeProject$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.DELETE)
-    .map(toPayload)
+    .ofType<actions.DeleteProjectAction>(actions.DELETE)
+    .map(action => action.payload)
     .switchMap(project => this.service
       .del(project)
       .map(returned => new actions.DeleteProjectSuccessAction(returned))
@@ -74,50 +73,50 @@ export class ProjectEffects {
 
   @Effect()
   selectProject$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.SELECT)
-    .map(toPayload)
-    .map(project => go([`/tasklists/${project.id}`]));
+    .ofType<actions.SelectProjectAction>(actions.SELECT)
+    .map(action => action.payload)
+    .map(project => new routerActions.Go({path: [`/tasklists/${project.id}`]}));
 
   @Effect()
   loadTaskLists$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.SELECT)
-    .map(toPayload)
-    .map(project => new tasklistActions.LoadTaskListsAction(project.id));
+    .ofType<actions.SelectProjectAction>(actions.SELECT)
+    .map(action => action.payload)
+    .map(project => new tasklistActions.LoadTaskListsAction(<string>project.id));
 
   @Effect()
   toLoadUsersByPrj$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.SELECT)
-    .map(toPayload)
-    .map(project => new userActions.LoadUsersByPrjAction(project.id));
+    .ofType<actions.SelectProjectAction>(actions.SELECT)
+    .map(action => action.payload)
+    .map(project => new userActions.LoadUsersByPrjAction(<string>project.id));
 
   @Effect()
   startInitTaskLists$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.ADD_SUCCESS)
-    .map(toPayload)
+    .ofType<actions.AddProjectSuccessAction>(actions.ADD_SUCCESS)
+    .map(action => action.payload)
     .map(project => new tasklistActions.InitTaskListsAction(project));
 
   @Effect()
   addUserPrjRef$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.ADD_SUCCESS)
-    .map(toPayload)
+    .ofType<actions.AddProjectSuccessAction>(actions.ADD_SUCCESS)
+    .map(action => action.payload)
     .map((prj: Project) => prj.id)
-    .withLatestFrom(this.store$.select(fromRoot.getAuth).map(auth => auth.user), (projectId, user) => {
+    .withLatestFrom(this.store$.select(fromRoot.getAuth).map(auth => auth.user), (projectId: string, user: User) => {
       return new userActions.AddUserProjectAction({user: user, projectId: projectId});
     });
 
   @Effect()
   delUserPrjRef$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.DELETE_SUCCESS)
-    .map(toPayload)
+    .ofType<actions.DeleteProjectSuccessAction>(actions.DELETE_SUCCESS)
+    .map(action => action.payload)
     .map((prj: Project) => prj.id)
-    .withLatestFrom(this.store$.select(fromRoot.getAuth).map(auth => auth.user), (projectId, user) => {
+    .withLatestFrom(this.store$.select(fromRoot.getAuth).map(auth => auth.user), (projectId: string, user: User) => {
       return new userActions.RemoveUserProjectAction({user: user, projectId: projectId});
     });
 
   @Effect()
   inviteMembersRef$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.INVITE)
-    .map(toPayload)
+    .ofType<actions.InviteMembersAction>(actions.INVITE)
+    .map(action => action.payload)
     .switchMap(({projectId, members}) =>
       this.service.inviteMembers(projectId, members)
         .map((project: Project) => new actions.InviteMembersSuccessAction(project))
@@ -126,9 +125,15 @@ export class ProjectEffects {
 
   @Effect()
   updateUserPrjRef$: Observable<Action> = this.actions$
-    .ofType(actions.ActionTypes.INVITE_SUCCESS)
-    .map(toPayload)
+    .ofType<actions.InviteMembersSuccessAction>(actions.INVITE_SUCCESS)
+    .map(action => action.payload)
     .map((project: Project) => new userActions.BatchUpdateUserProjectAction(project));
+
+  @Effect({ dispatch: false })
+  navigate$ = this.actions$.ofType(routerActions.GO)
+    .map((action: routerActions.Go) => action.payload)
+    .do(({ path, query: queryParams, extras}) =>
+      this.router.navigate(path, { queryParams, ...extras }));
 
   /**
    *
@@ -138,5 +143,6 @@ export class ProjectEffects {
    */
   constructor(private actions$: Actions,
               private service: ProjectService,
+              private router: Router,
               private store$: Store<fromRoot.State>) {}
 }

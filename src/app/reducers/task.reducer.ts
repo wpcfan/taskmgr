@@ -1,5 +1,5 @@
-import {Task, Project} from '../domain';
-import {createSelector} from 'reselect';
+import { Task, Project } from '../domain';
+import { createSelector } from '@ngrx/store';
 import {
   covertArrToObj,
   buildObjFromArr,
@@ -12,6 +12,7 @@ import * as actions from '../actions/task.action';
 import * as prjActions from '../actions/project.action';
 import * as _ from 'lodash';
 
+type combinedAction = actions.CompleteTaskSuccessAction | actions.MoveTaskSuccessAction | actions.UpdateTaskSuccessAction;
 export interface State {
   ids: string[];
   entities: { [id: string]: Task };
@@ -22,69 +23,69 @@ export const initialState: State = {
   entities: {}
 };
 
-const addTask = (state, action) => {
-  if (state.entities[(<Task>action.payload).id]) {
+const addTask = (state: State, action: actions.AddTaskSuccessAction) => {
+  if (state.entities[<string>(<Task>action.payload).id]) {
     return state;
   }
-  return addOne(state, action.payload);
+  return addOne(state, <Task>action.payload);
 };
 
-const delTask = (state, action) => {
+const delTask = (state: State, action: actions.DeleteTaskSuccessAction) => {
   return deleteOne(state, action.payload);
 };
 
-const loadTasks = (state, action) => {
+const loadTasks = (state: State, action: actions.LoadTasksInListsSuccessAction) => {
   if ((<Task[]>action.payload).length === 0) {
     return state;
   }
-  return loadCollection(state, action.payload);
+  return loadCollection(state, <Task[]>action.payload);
 };
 
-const moveAllTasks = (state, action) => {
+const moveAllTasks = (state: State, action: actions.MoveAllSuccessAction) => {
   const tasks = <Task[]>action.payload;
   // if task is null then return the orginal state
   if (tasks === null) {
     return state;
   }
   const updatedEntities = covertArrToObj(tasks);
-  return {...state, entities: {...state.entities, ...updatedEntities}};
+  return { ...state, entities: { ...state.entities, ...updatedEntities } };
 };
 
-const delTasksByPrj = (state, action) => {
+const delTasksByPrj = (state: State, action: prjActions.DeleteProjectSuccessAction) => {
   const project = <Project>action.payload;
   const listIds = project.taskLists;
   const remainingIds = state.ids.filter(id => _.indexOf(listIds, state.entities[id].taskListId) === -1);
   const remainingEntities = buildObjFromArr(remainingIds, state.entities);
-  return {ids: remainingIds, entities: remainingEntities};
+  return { ids: remainingIds, entities: remainingEntities };
 };
 
-const updateTask = (state, action) => {
+const updateTask = (state: State, action: combinedAction) => {
   return updateOne(state, action.payload);
 };
 
-export function reducer (state = initialState, action: actions.Actions): State {
+export function reducer(state = initialState, action: actions.Actions | prjActions.Actions): State {
   switch (action.type) {
-    case actions.ActionTypes.ADD_SUCCESS:
-      return addTask(state, action);
-    case actions.ActionTypes.DELETE_SUCCESS:
-      return delTask(state, action);
-    case prjActions.ActionTypes.DELETE_SUCCESS:
-      return delTasksByPrj(state, action);
-    case actions.ActionTypes.MOVE_SUCCESS:
-    case actions.ActionTypes.COMPLETE_SUCCESS:
-    case actions.ActionTypes.UPDATE_SUCCESS:
-      return updateTask(state, action);
-    case actions.ActionTypes.LOAD_IN_LISTS_SUCCESS:
-      return loadTasks(state, action);
-    case actions.ActionTypes.MOVE_ALL_SUCCESS:
-      return moveAllTasks(state, action);
+    case actions.ADD_SUCCESS:
+      return addTask(state, <actions.AddTaskSuccessAction>action);
+    case actions.DELETE_SUCCESS:
+      return delTask(state, <actions.DeleteTaskSuccessAction>action);
+    case prjActions.DELETE_SUCCESS:
+      return delTasksByPrj(state, <prjActions.DeleteProjectSuccessAction>action);
+    case actions.MOVE_SUCCESS:
+    case actions.COMPLETE_SUCCESS:
+    case actions.UPDATE_SUCCESS:
+      return updateTask(state, <combinedAction>action);
+    case actions.LOAD_IN_LISTS_SUCCESS:
+      return loadTasks(state, <actions.LoadTasksInListsSuccessAction>action);
+    case actions.MOVE_ALL_SUCCESS:
+      return moveAllTasks(state, <actions.MoveAllSuccessAction>action);
     default:
       return state;
   }
 }
 
-export const getEntities = (state) => state.entities;
-export const getIds = (state) => state.ids;
-export const getTasks = createSelector(getEntities, getIds, (entities, ids) => {
-  return ids.map(id => entities[id]);
+export const getEntities = (state: State): { [id: string]: Task } => state.entities;
+export const getIds = (state: State): string[] => state.ids;
+export const getTasks = createSelector<State, { [id: string]: Task }, string[], Task[]>(getEntities, getIds, (entities, ids) => {
+  return ids.map((id: string) => entities[id]);
 });

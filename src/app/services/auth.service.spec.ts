@@ -36,6 +36,7 @@ describe('测试鉴权服务：AuthService', () => {
     async(inject([AuthService, MockBackend],
       (service: AuthService, mockBackend: MockBackend) => {
         const mockUser: User = {
+          id: undefined,
           name: 'someuser@dev.local',
           password: '123abc',
           email: 'someuser@dev.local'

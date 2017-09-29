@@ -2,7 +2,7 @@ import {Directive, Input, ElementRef, Renderer2, HostListener} from '@angular/co
 import {DragDropService} from '../drag-drop.service';
 
 @Directive({
-  selector: '[app-draggable][dragTag][draggedClass][dragData]',
+  selector: '[appDraggable][dragTag][draggedClass][dragData]',
 })
 export class DragDirective {
 
@@ -10,7 +10,7 @@ export class DragDirective {
   @Input() dragTag: string;
   @Input() draggedClass: string;
   @Input() dragData: any;
-  @Input('app-draggable')
+  @Input('appDraggable')
   set isDraggable(draggable: boolean) {
     this._isDraggable = draggable;
     this.rd.setAttribute(this.el.nativeElement, 'draggable', `${draggable}`);

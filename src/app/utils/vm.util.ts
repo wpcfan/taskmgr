@@ -1,5 +1,5 @@
 import {TaskVM, TaskListVM, ProjectVM} from '../vm';
-import {Task, TaskList, Project} from '../domain';
+import {Task, TaskList, Project, User} from '../domain';
 
 export const covertToTask = (taskVM: TaskVM): Task => {
   return {
@@ -12,29 +12,29 @@ export const covertToTask = (taskVM: TaskVM): Task => {
     createDate: taskVM.createDate,
     reminder: taskVM.reminder,
     remark: taskVM.remark,
-    ownerId: taskVM.owner.id,
-    participantIds: taskVM.participants.map(user => user.id)
+    ownerId: <string>taskVM!.owner!.id,
+    participantIds: <string[]>taskVM!.participants!.map(user => <string>user.id)
   }
 };
 
 export const converToTaskList = (taskListVM: TaskListVM): TaskList => {
   return {
-    id: taskListVM.id,
+    id: <string>taskListVM.id,
     name: taskListVM.name,
     order: taskListVM.order,
-    projectId: taskListVM.projectId,
-    taskIds: taskListVM.tasks.map(task => task.id)
+    projectId: <string>taskListVM.projectId,
+    taskIds: taskListVM.tasks.map((task: TaskVM) => <string>task.id)
   }
 };
 
 export const convertToProject = (projectVM: ProjectVM): Project => {
   return {
-    id: projectVM.id,
+    id: <string>projectVM.id,
     name: projectVM.name,
     coverImg: projectVM.coverImg,
     desc: projectVM.desc,
     enabled: projectVM.enabled,
-    members: projectVM.members.map(user => user.id),
-    taskLists: projectVM.taskLists.map(tl => tl.id)
+    members: <string[]>projectVM!.members!.map((user: User) => <string>user.id),
+    taskLists: <string[]>projectVM!.taskLists!.map((tl: TaskListVM) => <string>tl.id)
   }
 }

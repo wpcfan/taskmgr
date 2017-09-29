@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpHeaders, HttpParams, HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {Project, TaskList} from '../domain';
+import {Project, TaskList, Task} from '../domain';
 
 @Injectable()
 export class TaskListService {
@@ -9,7 +9,7 @@ export class TaskListService {
   private headers = new HttpHeaders()
     .set('Content-Type', 'application/json');
 
-  constructor(@Inject('BASE_CONFIG') private config,
+  constructor(@Inject('BASE_CONFIG') private config: {uri: string},
               private http: HttpClient) {
   }
 
@@ -57,12 +57,12 @@ export class TaskListService {
   }
 
   initializeTaskLists(prj: Project): Observable<Project> {
-    const id = prj.id;
+    const id = <string>prj.id;
     return Observable.merge(
-      this.add({name: '待办', projectId: id, order: 1}),
-      this.add({name: '进行中', projectId: id, order: 2}),
-      this.add({name: '已完成', projectId: id, order: 3}))
-      .reduce((r, x) => [...r, x], [])
-      .map(tls => ({...prj, taskLists: tls.map(tl => tl.id)}));
+      this.add({id: undefined, name: '待办', projectId: id, order: 1}),
+      this.add({id: undefined, name: '进行中', projectId: id, order: 2}),
+      this.add({id: undefined, name: '已完成', projectId: id, order: 3}))
+      .reduce((r: TaskList[], x: TaskList) => [...r, x], [])
+      .map((tls: TaskList[]) => ({...prj, taskLists: tls.map(tl => <string>tl.id)}));
   }
 }

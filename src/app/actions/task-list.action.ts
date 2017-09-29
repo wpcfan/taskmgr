@@ -1,149 +1,146 @@
 import {Action} from '@ngrx/store';
-import {type} from '../utils/type.util';
 import {Project, TaskList} from '../domain';
 
-export const ActionTypes = {
-  ADD: type('[TaskList] Add'),
-  ADD_SUCCESS: type('[TaskList] Add Success'),
-  ADD_FAIL: type('[TaskList] Add Fail'),
-  UPDATE: type('[TaskList] Update'),
-  UPDATE_SUCCESS: type('[TaskList] Update Success'),
-  UPDATE_FAIL: type('[TaskList] Update Fail'),
-  DELETE: type('[TaskList] Delete'),
-  DELETE_SUCCESS: type('[TaskList] Delete Success'),
-  DELETE_FAIL: type('[TaskList] Delete Fail'),
-  LOADS: type('[TaskList] Load'),
-  LOADS_SUCCESS: type('[TaskList] Load Success'),
-  LOADS_FAIL: type('[TaskList] Load Fail'),
-  SWAP_ORDER: type('[TaskList] Swap Order'),
-  SWAP_ORDER_SUCCESS: type('[TaskList] Swap Order Success'),
-  SWAP_ORDER_FAIL: type('[TaskList] Swap Order Fail'),
-  INITIALIZE: type('[TaskList] Init TaskLists'),
-  INITIALIZE_SUCCESS: type('[TaskList] Init TaskLists Success'),
-  INITIALIZE_FAIL: type('[TaskList] Init TaskLists Fail')
-};
+export const ADD = '[TaskList] Add';
+export const ADD_SUCCESS = '[TaskList] Add Success';
+export const ADD_FAIL = '[TaskList] Add Fail';
+export const UPDATE = '[TaskList] Update';
+export const UPDATE_SUCCESS = '[TaskList] Update Success';
+export const UPDATE_FAIL = '[TaskList] Update Fail';
+export const DELETE = '[TaskList] Delete';
+export const DELETE_SUCCESS = '[TaskList] Delete Success';
+export const DELETE_FAIL = '[TaskList] Delete Fail';
+export const LOADS = '[TaskList] Load';
+export const LOADS_SUCCESS = '[TaskList] Load Success';
+export const LOADS_FAIL = '[TaskList] Load Fail';
+export const SWAP_ORDER = '[TaskList] Swap Order';
+export const SWAP_ORDER_SUCCESS = '[TaskList] Swap Order Success';
+export const SWAP_ORDER_FAIL = '[TaskList] Swap Order Fail';
+export const INITIALIZE = '[TaskList] Init TaskLists';
+export const INITIALIZE_SUCCESS = '[TaskList] Init TaskLists Success';
+export const INITIALIZE_FAIL = '[TaskList] Init TaskLists Fail';
 
 export class AddTaskListAction implements Action {
-  type = ActionTypes.ADD;
+  readonly type = ADD;
 
   constructor(public payload: TaskList) {
   }
 }
 
 export class AddTaskListSuccessAction implements Action {
-  type = ActionTypes.ADD_SUCCESS;
+  readonly type = ADD_SUCCESS;
 
   constructor(public payload: TaskList) {
   }
 }
 
 export class AddTaskListFailAction implements Action {
-  type = ActionTypes.ADD_FAIL;
+  readonly type = ADD_FAIL;
 
   constructor(public payload: string) {
   }
 }
 
 export class UpdateTaskListAction implements Action {
-  type = ActionTypes.UPDATE;
+  readonly type = UPDATE;
 
   constructor(public payload: TaskList) {
   }
 }
 
 export class UpdateTaskListSuccessAction implements Action {
-  type = ActionTypes.UPDATE_SUCCESS;
+  readonly type = UPDATE_SUCCESS;
 
   constructor(public payload: TaskList) {
   }
 }
 
 export class UpdateTaskListFailAction implements Action {
-  type = ActionTypes.UPDATE_FAIL;
+  readonly type = UPDATE_FAIL;
 
   constructor(public payload: string) {
   }
 }
 
 export class DeleteTaskListAction implements Action {
-  type = ActionTypes.DELETE;
+  readonly type = DELETE;
 
   constructor(public payload: TaskList) {
   }
 }
 
 export class DeleteTaskListSuccessAction implements Action {
-  type = ActionTypes.DELETE_SUCCESS;
+  readonly type = DELETE_SUCCESS;
 
   constructor(public payload: TaskList) {
   }
 }
 
 export class DeleteTaskListFailAction implements Action {
-  type = ActionTypes.DELETE_FAIL;
+  readonly type = DELETE_FAIL;
 
   constructor(public payload: string) {
   }
 }
 
 export class LoadTaskListsAction implements Action {
-  type = ActionTypes.LOADS;
+  readonly type = LOADS;
 
   constructor(public payload: string) {
   }
 }
 
 export class LoadTaskListsSuccessAction implements Action {
-  type = ActionTypes.LOADS_SUCCESS;
+  readonly type = LOADS_SUCCESS;
 
   constructor(public payload: TaskList[]) {
   }
 }
 
 export class LoadTaskListsFailAction implements Action {
-  type = ActionTypes.LOADS_FAIL;
+  readonly type = LOADS_FAIL;
 
   constructor(public payload: string) {
   }
 }
 
 export class SwapOrderAction implements Action {
-  type = ActionTypes.SWAP_ORDER;
+  readonly type = SWAP_ORDER;
 
   constructor(public payload: {src: TaskList; target: TaskList}) {
   }
 }
 
 export class SwapOrderSuccessAction implements Action {
-  type = ActionTypes.SWAP_ORDER_SUCCESS;
+  readonly type = SWAP_ORDER_SUCCESS;
 
   constructor(public payload: TaskList[]) {
   }
 }
 
 export class SwapOrderFailAction implements Action {
-  type = ActionTypes.SWAP_ORDER_FAIL;
+  readonly type = SWAP_ORDER_FAIL;
 
   constructor(public payload: string) {
   }
 }
 
 export class InitTaskListsAction implements Action {
-  type = ActionTypes.INITIALIZE;
+  readonly type = INITIALIZE;
 
   constructor(public payload: Project) {
   }
 }
 
 export class InitTaskListsSuccessAction implements Action {
-  type = ActionTypes.INITIALIZE_SUCCESS;
+  readonly type = INITIALIZE_SUCCESS;
 
   constructor(public payload: Project) {
   }
 }
 
 export class InitTaskListsFailAction implements Action {
-  type = ActionTypes.INITIALIZE_FAIL;
+  readonly type = INITIALIZE_FAIL;
 
   constructor(public payload: string) {
   }

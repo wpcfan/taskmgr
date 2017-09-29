@@ -1,7 +1,7 @@
 import { city_data } from './area.data';
 
 export const getProvinces = () => {
-  const provinces = [];
+  const provinces: string[] = [];
   for (const province in city_data) {
     if (province) {
       provinces.push(province);
@@ -15,7 +15,7 @@ export const getCitiesByProvince = (province: string) => {
     return [];
   }
   const cities = city_data[province];
-  const citiesByProvice = [];
+  const citiesByProvice: string[] = [];
   for (const city in cities) {
     if (city) {
       citiesByProvice.push(city);

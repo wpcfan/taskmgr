@@ -15,12 +15,12 @@ export interface Address {
 }
 
 export interface Identity {
-  identityNo: string;
-  identityType: IdentityType;
+  identityNo: string | null;
+  identityType: IdentityType | null;
 }
 
 export interface User {
-  id?: string;
+  id: string | undefined;
   email: string;
   name?: string;
   password?: string;

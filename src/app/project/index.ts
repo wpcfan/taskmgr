@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {SharedModule} from '../shared';
 import {ProjectRoutingModule} from './project-routing.module';
-import {ProjectListComponent} from './project-list';
-import {NewProjectComponent} from './new-project';
-import {InviteComponent} from './invite';
-import {ProjectItemComponent} from './project-item';
+import {ProjectListComponent} from './containers/project-list';
+import {NewProjectComponent} from './components/new-project';
+import {InviteComponent} from './components/invite';
+import {ProjectItemComponent} from './components/project-item';
 
 @NgModule({
   imports: [

@@ -1,52 +1,34 @@
-import {NgModule, Optional, SkipSelf} from '@angular/core';
+import {NgModule, Optional, SkipSelf, LOCALE_ID} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-// TODO: to remove this once @angular/material switch to HttpClient
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatIconRegistry, DateAdapter, MAT_DATE_FORMATS, MatDatepickerIntl, MATERIAL_COMPATIBILITY_MODE} from '@angular/material';
+import {DomSanitizer} from '@angular/platform-browser';
+import {RouterStateSerializer} from '@ngrx/router-store';
+
 import {SharedModule} from '../shared';
 import {AppRoutingModule} from './app-routing.module';
 import {AppEffectsModule} from '../effects';
 import {ServicesModule} from '../services';
 import {AppStoreModule} from '../reducers';
-import {HeaderComponent} from './header';
-import {FooterComponent} from './footer';
-import {SidebarComponent} from './sidebar';
-import {PageNotFoundComponent} from './page-not-found';
-import {MdIconRegistry} from '@angular/material';
-import {DomSanitizer} from '@angular/platform-browser';
-import {loadSvgResources} from '../utils/svg.util';
-import 'hammerjs';
-import '../utils/debug.util';
-import 'rxjs/add/observable/from';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/observable/concat';
-import 'rxjs/add/observable/zip';
-import 'rxjs/add/observable/range';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/observable/combineLatest';
-import 'rxjs/add/operator/startWith';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mapTo';
-import 'rxjs/add/operator/pluck';
-import 'rxjs/add/operator/defaultIfEmpty';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/reduce';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/withLatestFrom';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/count';
-import 'rxjs/add/operator/do';
 
+import {HeaderComponent} from './components/header';
+import {FooterComponent} from './components/footer';
+import {SidebarComponent} from './components/sidebar';
+import {PageNotFoundComponent} from './containers/page-not-found';
+import {AppComponent} from './containers/app';
+
+import {loadSvgResources} from '../utils/svg.util';
+import {DateFnsAdapter} from '../shared/adapters/date-fns-adapter';
+import {DatepickerI18n} from '../shared/adapters/datepicker-i18n';
+import {MD_FNS_DATE_FORMATS} from '../shared/adapters/date-formats';
+import {CustomRouterStateSerializer} from '../utils/router.util';
+import '../utils/debug.util';
 @NgModule({
   imports: [
+    HttpModule,
     SharedModule,
     HttpClientModule,
-    HttpModule,
     AppEffectsModule,
     ServicesModule.forRoot(),
     AppStoreModule,
@@ -54,32 +36,36 @@ import 'rxjs/add/operator/do';
     BrowserAnimationsModule
   ],
   exports: [
-    HeaderComponent,
-    FooterComponent,
-    SidebarComponent,
+    AppComponent,
     AppRoutingModule,
   ],
   providers: [
-    {
-      provide: 'BASE_CONFIG',
-      useValue: {
-        uri: 'http://localhost:3002'
-        // uri: 'http://manage.t.imooc.io/apis',
-      }
-    }
+    {provide: 'BASE_CONFIG', useValue: { uri: 'http://localhost:3002'}},
+    {provide: LOCALE_ID, useValue: 'zh-CN'},
+    {provide: DateAdapter, useClass: DateFnsAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: MD_FNS_DATE_FORMATS},
+    {provide: MatDatepickerIntl, useClass: DatepickerI18n},
+    /**
+     * The `RouterStateSnapshot` provided by the `Router` is a large complex structure.
+     * A custom RouterStateSerializer is used to parse the `RouterStateSnapshot` provided
+     * by `@ngrx/router-store` to include only the desired pieces of the snapshot.
+     */
+    { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer },
+    { provide: MATERIAL_COMPATIBILITY_MODE, useValue: true }
   ],
   declarations: [
     HeaderComponent,
     FooterComponent,
     SidebarComponent,
     PageNotFoundComponent,
+    AppComponent
   ]
 })
 export class CoreModule {
 
   constructor(
     @Optional() @SkipSelf() parentModule: CoreModule,
-    iconRegistry: MdIconRegistry,
+    iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer) {
     if (parentModule) {
       throw new Error('CoreModule 已经装载，请仅在 AppModule 中引入该模块。');

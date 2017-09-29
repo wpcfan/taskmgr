@@ -11,27 +11,27 @@ import {defaultRouteAnim} from '../../anim';
 @Component({
   selector: 'app-cal-home',
   template: `
-    <md-card>
-    <div class="toolbar">
+    <mat-card>
+    <div fxLayout="row">
       <button
-        md-icon-button
+        mat-icon-button
         mwlCalendarPreviousView
         [view]="view$ | async"
         [(viewDate)]="viewDate">
-        <md-icon class="md-48">chevron_left</md-icon>
+        <mat-icon class="md-48">chevron_left</mat-icon>
       </button>
       <button
-        md-button
+        mat-button
         mwlCalendarToday
         [(viewDate)]="viewDate">
         {{viewDate | date: 'yyyy-MM-dd'}}
       </button>
       <button
-        md-icon-button
+        mat-icon-button
         mwlCalendarNextView
         [view]="view$ | async"
         [(viewDate)]="viewDate">
-        <md-icon class="md-48">chevron_right</md-icon>
+        <mat-icon class="md-48">chevron_right</mat-icon>
       </button>
     </div>
     <div *ngIf="(events$ | async) as calEvents">
@@ -61,13 +61,9 @@ import {defaultRouteAnim} from '../../anim';
         </mwl-calendar-day-view>
       </div>
      </div>
-     </md-card>
+     </mat-card>
   `,
   styles: [`
-    .toolbar{
-      display: flex;
-      flex-direction: row;
-    }
     :host{
       width: 100%;
     }
@@ -87,9 +83,9 @@ export class CalendarHomeComponent {
               private service$: MyCalService,
               private store$: Store<fromRoot.State>) {
     this.viewDate = new Date();
-    this.view$ = this.route.paramMap.map(p => p.get('view'));
+    this.view$ = this.route.paramMap.map(p => <string>p.get('view'));
     this.events$ = this.store$.select(fromRoot.getAuthUser)
-      .switchMap(user => this.service$.getUserTasks(user.id));
+      .switchMap(user => this.service$.getUserTasks(<string>user.id));
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
