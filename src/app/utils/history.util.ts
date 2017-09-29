@@ -1,5 +1,6 @@
 import * as History from '../domain/history';
 import { TaskHistoryVM } from '../vm';
+import { User } from '../domain';
 import * as DateFns from 'date-fns'
 
 export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistoryVM[] => {
@@ -116,6 +117,24 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
           dateDesc: getDateDesc(history.date),
         }
       }
+      case History.ADD_PARTICIPANT: {
+        const users: User[] = (<History.AddParticipantOperation>history.operation).payload;
+        return {
+          ...history,
+          icon: 'person',
+          title: `${history.operator.name} 添加了参与者 ${getNameStr(users)}`,
+          dateDesc: getDateDesc(history.date),
+        }
+      }
+      case History.REMOVE_PARTICIPANT: {
+        const users: User[] = (<History.RemoveParticipantOperation>history.operation).payload;
+        return {
+          ...history,
+          icon: 'person',
+          title: `${history.operator.name} 移除了参与者 ${getNameStr(users)}`,
+          dateDesc: getDateDesc(history.date),
+        }
+      }
       default:
         return {
           ...history,
@@ -125,6 +144,11 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
     }
   });
 };
+
+const getNameStr = (users: User[]): string => {
+  const names = users.map((user: User) => user.name);
+  return names.join(', ');
+}
 
 const getDateDesc = (date: Date): string => {
   const nowDate: Date = new Date();

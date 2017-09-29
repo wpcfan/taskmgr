@@ -15,6 +15,9 @@ export const CLAIM_TASK = 'claimTask';
 export const ASSIGN_TASK = 'assignTask';
 export const REMOVE_TASK_EXECUTOR = 'removeTaskExecutor';
 
+export const ADD_PARTICIPANT = 'addParticipant';
+export const REMOVE_PARTICIPANT = 'removeParticipant';
+
 export interface OperationHistory {
   id?: string;
   operator: User;
@@ -96,6 +99,20 @@ export class RemoveTaskExecutorOperation implements Operation {
   readonly type = REMOVE_TASK_EXECUTOR;
 }
 
+export class AddParticipantOperation implements Operation {
+  readonly type = ADD_PARTICIPANT;
+
+  constructor(public payload: User[]) {
+  }
+}
+
+export class RemoveParticipantOperation implements Operation {
+  readonly type = REMOVE_PARTICIPANT;
+
+  constructor(public payload: User[]) {
+  }
+}
+
 export type TaskOperations
   = CreateTaskOperation
   | CompleteTaskOperation
@@ -109,4 +126,6 @@ export type TaskOperations
   | ClaimTaskOperation
   | AssignTaskOperation
   | RemoveTaskExecutorOperation
+  | AddParticipantOperation
+  | RemoveParticipantOperation
   ;
