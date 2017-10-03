@@ -1,0 +1,32 @@
+.task-history-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 12px;
+  color: #A6A6A6;
+  margin-bottom: 10px;
+  // border: 2px solid black;
+}
+
+.task-history-item-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+// width: 100%; //task-history-item default align-items is stretch
+}
+
+.task-history-item-title-desc {
+  margin-left: 10px;
+}
+
+.task-history-item-title-date {
+  flex: 1 1 auto;
+  text-align: end;
+}
+
+.task-history-item-desc {
+  margin-left: 34px;
+  border-left: 5px solid #A6A6A6;
+  padding-left: 10px;
+  color: #383838;
+}
