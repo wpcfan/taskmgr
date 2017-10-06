@@ -11,11 +11,13 @@ import {isValidDate} from '../../utils/date.util';
   selector: 'app-indentity-input',
   template: `
     <div>
-      <mat-select placeholder="证件类型" (change)="onIdTypeChange($event.value)" [(ngModel)]="identity.identityType">
-        <mat-option *ngFor="let type of identityTypes" [value]="type.value" >
-          {{type.label}}
-        </mat-option>
-      </mat-select>
+      <mat-form-field>
+        <mat-select placeholder="证件类型" (change)="onIdTypeChange($event.value)" [(ngModel)]="identity.identityType">
+          <mat-option *ngFor="let type of identityTypes" [value]="type.value" >
+            {{type.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     <div class="id-input">
       <mat-form-field class="full-width">

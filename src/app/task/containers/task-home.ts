@@ -118,7 +118,7 @@ export class TaskHomeComponent {
   handleMoveList(listId: string) {
     const list$ = this.store$
       .select(fromRoot.getProjectTaskList)
-      .map(lists => lists.filter(list => list.id !== listId));
+      .map(lists => lists.filter((list: TaskList) => list.id !== listId));
     const dialogRef = this.dialog.open(CopyTaskComponent, {data: { srcListId: listId, lists: list$ }});
     dialogRef.afterClosed().take(1).filter(n => n).subscribe(val => {
       this.store$.dispatch(new taskActions.MoveAllAction(val));

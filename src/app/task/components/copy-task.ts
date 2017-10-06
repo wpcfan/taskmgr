@@ -10,11 +10,13 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
     <form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
       <span matDialogTitle>{{dialogTitle}}</span>
       <div matDialogContent>
-        <mat-select placeholder="选择目标列表" formControlName="targetList" class="full-width">
-          <mat-option *ngFor="let list of lists$ | async" [value]="list.id">
-            {{list.name}}
-          </mat-option>
-        </mat-select>
+        <mat-form-field>
+          <mat-select placeholder="选择目标列表" formControlName="targetList" class="full-width">
+            <mat-option *ngFor="let list of lists$ | async" [value]="list.id">
+              {{list.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
         <div matDialogActions>
           <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">确定</button>
           <button matDialogClose mat-raised-button type="button">关闭</button>
