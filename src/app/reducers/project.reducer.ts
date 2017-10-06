@@ -34,7 +34,7 @@ export function reducer (state = initialState, action: actions.Actions): State {
     case actions.LOADS_SUCCESS:
       return {...adapter.addMany(action.payload, state), selectedId: null};
     case actions.SELECT:
-      return {...state, selectedId: <string>action.payload.id};
+      return { ...state, selectedId: <string>action.payload.id };
     default:
       return state;
   }

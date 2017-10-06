@@ -33,7 +33,7 @@ const swapOrder = (state: State, action: actions.SwapOrderSuccessAction) => {
   return adapter.updateMany(taskLists.map((tl: TaskList) => ({id: <string>tl.id, changes: tl})), state);
 };
 
-export function reducer (state: State = initialState, action: actions.Actions | prjActions.Actions): State {
+export function reducer(state: State = initialState, action: actions.Actions | prjActions.Actions): State {
   switch (action.type) {
     case actions.ADD_SUCCESS:
       return {...adapter.addOne(action.payload, state)};

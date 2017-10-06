@@ -1,9 +1,12 @@
-import {Action} from '@ngrx/store';
-import {Task, TaskList} from '../domain';
+import { Action } from '@ngrx/store';
+import { Task, TaskList } from '../domain';
+import { TaskVM } from '../vm';
 
+export const SELECT = '[Task] Select';
 export const ADD = '[Task] Add';
 export const ADD_SUCCESS = '[Task] Add Success';
 export const ADD_FAIL = '[Task] Add Fail';
+export const UPDATING = '[Task] Updating';
 export const UPDATE = '[Task] Update';
 export const UPDATE_SUCCESS = '[Task] Update Success';
 export const UPDATE_FAIL = '[Task] Update Fail';
@@ -23,6 +26,13 @@ export const COMPLETE = '[Task] Complete';
 export const COMPLETE_SUCCESS = '[Task] Complete Success';
 export const COMPLETE_FAIL = '[Task] Complete Fail';
 
+export class SelectTaskAction implements Action {
+  readonly type = SELECT;
+
+  constructor(public payload: TaskVM) {
+  }
+}
+
 export class AddTaskAction implements Action {
   readonly type = ADD;
 
@@ -41,6 +51,13 @@ export class AddTaskFailAction implements Action {
   readonly type = ADD_FAIL;
 
   constructor(public payload: string) {
+  }
+}
+
+export class UpdatingTaskAction implements Action {
+  readonly type = UPDATING;
+
+  constructor(public payload: TaskVM) {
   }
 }
 
@@ -171,9 +188,11 @@ export class MoveAllFailAction implements Action {
 }
 
 export type Actions
-  = AddTaskAction
+  = SelectTaskAction
+  | AddTaskAction
   | AddTaskSuccessAction
   | AddTaskFailAction
+  | UpdatingTaskAction
   | UpdateTaskAction
   | UpdateTaskSuccessAction
   | UpdateTaskFailAction

@@ -1,5 +1,5 @@
-import {Task, Project} from '../domain';
-import {createSelector} from '@ngrx/store';
+import { Task, Project } from '../domain';
+import { createSelector } from '@ngrx/store';
 import {
   covertArrToObj,
   buildObjFromArr,
@@ -12,7 +12,7 @@ import * as actions from '../actions/task.action';
 import * as prjActions from '../actions/project.action';
 import * as _ from 'lodash';
 
-type combinedAction = actions.CompleteTaskSuccessAction| actions.MoveTaskSuccessAction | actions.UpdateTaskSuccessAction;
+type combinedAction = actions.CompleteTaskSuccessAction | actions.MoveTaskSuccessAction | actions.UpdateTaskSuccessAction;
 export interface State {
   ids: string[];
   entities: { [id: string]: Task };
@@ -48,7 +48,7 @@ const moveAllTasks = (state: State, action: actions.MoveAllSuccessAction) => {
     return state;
   }
   const updatedEntities = covertArrToObj(tasks);
-  return {...state, entities: {...state.entities, ...updatedEntities}};
+  return { ...state, entities: { ...state.entities, ...updatedEntities } };
 };
 
 const delTasksByPrj = (state: State, action: prjActions.DeleteProjectSuccessAction) => {
@@ -56,14 +56,14 @@ const delTasksByPrj = (state: State, action: prjActions.DeleteProjectSuccessActi
   const listIds = project.taskLists;
   const remainingIds = state.ids.filter(id => _.indexOf(listIds, state.entities[id].taskListId) === -1);
   const remainingEntities = buildObjFromArr(remainingIds, state.entities);
-  return {ids: remainingIds, entities: remainingEntities};
+  return { ids: remainingIds, entities: remainingEntities };
 };
 
 const updateTask = (state: State, action: combinedAction) => {
   return updateOne(state, action.payload);
 };
 
-export function reducer (state = initialState, action: actions.Actions | prjActions.Actions): State {
+export function reducer(state = initialState, action: actions.Actions | prjActions.Actions): State {
   switch (action.type) {
     case actions.ADD_SUCCESS:
       return addTask(state, <actions.AddTaskSuccessAction>action);
@@ -84,8 +84,8 @@ export function reducer (state = initialState, action: actions.Actions | prjActi
   }
 }
 
-export const getEntities = (state: State) => state.entities;
-export const getIds = (state: State) => state.ids;
-export const getTasks = createSelector(getEntities, getIds, (entities, ids) => {
+export const getEntities = (state: State): { [id: string]: Task } => state.entities;
+export const getIds = (state: State): string[] => state.ids;
+export const getTasks = createSelector<State, { [id: string]: Task }, string[], Task[]>(getEntities, getIds, (entities, ids) => {
   return ids.map((id: string) => entities[id]);
 });

@@ -23,7 +23,7 @@ const register = (state: State, action: authActions.LoginSuccessAction | authAct
     {...adapter.addOne(<User>auth.user, state)} : state;
 };
 
-export function reducer (state: State = initialState, action: actions.Actions | authActions.Actions): State {
+export function reducer(state: State = initialState, action: actions.Actions | authActions.Actions): State {
   switch (action.type) {
     case authActions.LOGIN_SUCCESS:
     case authActions.REGISTER_SUCCESS:
