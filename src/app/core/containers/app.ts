@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {OverlayContainer} from '@angular/material';
+import {OverlayContainer} from '@angular/cdk/overlay';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
