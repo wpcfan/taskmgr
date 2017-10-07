@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {OverlayContainer} from '@angular/material';
+import {OverlayContainer} from '@angular/cdk/overlay';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
@@ -27,7 +27,7 @@ import {Auth, Project} from '../../domain';
           [auth]="(auth$ | async)?.token">
         </app-header>
       </header>
-      <main fxFlex="1" fxLayout="column" fxLayoutAlign="center center">
+      <main fxFlex="1" fxLayout="column" fxLayoutAlign="center">
         <router-outlet></router-outlet>
       </main>
       <footer>
@@ -65,7 +65,11 @@ export class AppComponent {
 
   switchDarkTheme(dark: boolean) {
     this._dark = dark;
-    this.oc.getContainerElement().classList.add(dark ? 'myapp-dark-theme' : '');
+    if(dark) {
+      this.oc.getContainerElement().classList.add('myapp-dark-theme');
+    } else {
+      this.oc.getContainerElement().classList.remove('myapp-dark-theme');
+    }
   }
 
   onLogout() {
