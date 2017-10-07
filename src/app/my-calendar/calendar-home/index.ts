@@ -11,7 +11,7 @@ import {defaultRouteAnim} from '../../anim';
 @Component({
   selector: 'app-cal-home',
   template: `
-    <mat-card>
+    <mat-card fxLayout="column" fxLayoutAlign="start stretch">
     <div fxLayout="row">
       <button
         mat-icon-button
@@ -64,7 +64,7 @@ import {defaultRouteAnim} from '../../anim';
      </mat-card>
   `,
   styles: [`
-    :host{
+    mat-card {
       width: 100%;
     }
   `
