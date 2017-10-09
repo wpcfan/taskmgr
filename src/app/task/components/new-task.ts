@@ -1,8 +1,16 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {parse} from 'date-fns';
-import {User} from '../../domain';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { Store } from '@ngrx/store';
+import { parse } from 'date-fns';
+import { User, TaskHistory } from '../../domain';
+import { TaskHistoryVM } from '../../vm';
+import { getTaskHistoryVMs } from '../../utils/history.util';
+import * as fromRoot from '../../reducers';
+import * as TaskHistoryActions from '../../actions/task-history.action';
+import * as TaskActions from '../../actions/task.action';
 
 @Component({
   selector: 'app-new-task',
@@ -37,6 +45,12 @@ import {User} from '../../domain';
         <mat-form-field class="full-width">
           <textarea matInput placeholder="备注" formControlName="remark"></textarea>
         </mat-form-field>
+        <mat-list dense>
+        <app-task-history-item
+          *ngFor="let history of taskHistories"
+          [item]="history">
+        </app-task-history-item>
+        </mat-list>
       </div>
       <div matDialogActions class="full-width">
         <div fxLayout="row" *ngIf="notConfirm else confirm">
@@ -61,7 +75,11 @@ import {User} from '../../domain';
   styles: [``],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewTaskComponent implements OnInit {
+export class NewTaskComponent implements OnInit, OnDestroy {
+
+  private taskHistories$: Observable<TaskHistory[]>;
+  private _sub: Subscription;
+  taskHistories: TaskHistoryVM[] = [];
 
   form: FormGroup;
   dialogTitle: string;
@@ -83,8 +101,11 @@ export class NewTaskComponent implements OnInit {
   ];
 
   constructor(private fb: FormBuilder,
-              @Inject(MAT_DIALOG_DATA) private data: any,
-              private dialogRef: MatDialogRef<NewTaskComponent>) {}
+    @Inject(MAT_DIALOG_DATA) private data: any,
+    private dialogRef: MatDialogRef<NewTaskComponent>,
+    private store$: Store<fromRoot.State>) {
+    this.taskHistories$ = this.store$.select(fromRoot.getTaskHistories);
+  }
 
   ngOnInit() {
     if (!this.data.task) {
@@ -95,7 +116,7 @@ export class NewTaskComponent implements OnInit {
         reminder: [],
         owner: [[this.data.owner]],
         followers: [[]],
-        remark: ['',  Validators.maxLength(40)]
+        remark: ['', Validators.maxLength(40)]
       });
       this.dialogTitle = '创建任务：';
       this.delInvisible = true;
@@ -103,31 +124,62 @@ export class NewTaskComponent implements OnInit {
       this.form = this.fb.group({
         desc: [this.data.task.desc, Validators.compose([Validators.required, Validators.maxLength(20)])],
         priority: [this.data.task.priority],
-        dueDate: [parse(this.data.task.dueDate)],
-        reminder: [parse(this.data.task.reminder)],
-        owner: [this.data.task.owner ? [{name: this.data.task.owner.name, value: this.data.task.owner.id}] : []],
+        dueDate: [this.data.task.dueDate ? parse(this.data.task.dueDate) : null],
+        reminder: [this.data.task.reminder ? parse(this.data.task.reminder) : null],
+        owner: [this.data.task.owner ? [this.data.task.owner] : []],
         followers: [this.data.task.participants ? [...this.data.task.participants] : []],
         remark: [this.data.task.remark, Validators.maxLength(40)]
       });
       this.dialogTitle = '修改任务：';
       this.delInvisible = false;
+
+      this.loadTaskHistories();
     }
   }
 
-  onSubmit({value, valid}: FormGroup, ev: Event) {
+  ngOnDestroy() {
+    if (this._sub) {
+      this._sub.unsubscribe();
+    }
+  }
+
+  loadTaskHistories() {
+    this.store$.dispatch(new TaskHistoryActions.LoadTaskHistoryAction(this.data.task.id));
+
+    this._sub = this.taskHistories$.subscribe(histories => {
+      this.taskHistories = getTaskHistoryVMs(histories);
+      console.log('<loadTaskHistories>', JSON.stringify(this.taskHistories));
+    });
+  }
+
+  onSubmit({ value, valid }: FormGroup, ev: Event) {
     ev.preventDefault();
     if (!valid) {
       return;
     }
-    this.dialogRef.close({type: 'addOrUpdate', task: {
+
+    this.store$.dispatch(new TaskActions.UpdatingTaskAction({
+      ...this.data.task,
       desc: value.desc,
-      participantIds: value.followers.map((u: User) => u.id),
-      ownerId: value.owner.length > 0 ? value.owner[0].id : null,
+      owner: value.owner.length > 0 ? value.owner[0] : null,
+      participants: value.followers,
       dueDate: value.dueDate,
-      reminder: value.reminder,
       priority: value.priority,
-      remark: value.remark
-    }});
+      remark: value.remark,
+      reminder: value.reminder,
+    }));
+
+    this.dialogRef.close({
+      type: 'addOrUpdate', task: {
+        desc: value.desc,
+        participantIds: value.followers.map((u: User) => u.id),
+        ownerId: value.owner.length > 0 ? value.owner[0].id : null,
+        dueDate: value.dueDate,
+        reminder: value.reminder,
+        priority: value.priority,
+        remark: value.remark
+      }
+    });
   }
 
   onDelClick(confirm: boolean) {
@@ -135,6 +187,6 @@ export class NewTaskComponent implements OnInit {
   }
 
   reallyDel() {
-    this.dialogRef.close({type: 'delete', task: this.data.task})
+    this.dialogRef.close({ type: 'delete', task: this.data.task })
   }
 }
