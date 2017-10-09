@@ -3,9 +3,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import * as _ from 'lodash';
 
 /**
- * a utility to load all needed svg resources to the app for md-icon to use
+ * a utility to load all needed svg resources to the app for mat-icon to use
  *
- * @param ir a MdIconRegistry instance to use external svg resources for md-icon use
+ * @param ir a MatIconRegistry instance to use external svg resources for mat-icon use
  * @param ds a DomSanitizer instance to bypass security and return a url
  */
 export const loadSvgResources = (ir: MatIconRegistry, ds: DomSanitizer) => {

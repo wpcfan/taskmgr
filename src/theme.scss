@@ -5,7 +5,7 @@
 // 所以请确保只在此处包含一次即可，其他地方不要再包含了。
 @include mat-core();
 
-$md-tcpalette: (
+$mat-tcpalette: (
   50 : #eee4e9,
   100 : #d5bbc8,
   200 : #ba8da3,
@@ -38,7 +38,7 @@ $md-tcpalette: (
   )
 );
 
-$md-tcspalette: (
+$mat-tcspalette: (
   50 : #e9f0f1,
   100 : #c7d9dd,
   200 : #a2c0c7,
@@ -71,8 +71,8 @@ $md-tcspalette: (
   )
 );
 
-$tc-primary: mat-palette($md-tcpalette);
-$tc-accent:  mat-palette($md-tcspalette, A200, A100, A400);
+$tc-primary: mat-palette($mat-tcpalette);
+$tc-accent:  mat-palette($mat-tcspalette, A200, A100, A400);
 
 // 使用在 palette.scss 中定义的 Material Design 调色板来定义我们自有主题的调色板
 // 对于每个调色板，你可以指定默认、轻柔或更重的色调
