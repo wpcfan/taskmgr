@@ -1,0 +1,27 @@
+.drag-start {
+  opacity: 0.5;
+  border: #ff525b dashed 2px;
+}
+.drag-enter {
+  background-color: dimgray;
+}
+.list-container {
+  min-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.task-lists {
+  min-width: 100%;
+  min-height: 100%;
+  overflow-x: scroll;
+}
+.fab-button {
+  position: fixed;
+  right: 32px;
+  bottom: 96px;
+  z-index: 998;
+}
+:host {
+  display: flex;
+  flex: 1
+}

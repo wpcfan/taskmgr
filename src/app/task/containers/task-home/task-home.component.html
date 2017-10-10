@@ -1,0 +1,15 @@
+<div class="task-lists" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
+  <app-task-list class="list-container" fxFlex="0 0 360px" *ngFor="let taskList of lists$ | async" [ngStyle]="{'order': taskList.order}"
+    appDroppable [dropTags]="['task-item', 'task-list']" [dragEnterClass]="'drag-enter'" [appDraggable]="true" [dragTag]="'task-list'"
+    [draggedClass]="'drag-start'" [dragData]="taskList" (dropped)="handleMove($event, taskList)">
+    <app-task-list-header [header]="taskList.name" (newTask)="handleAddTask(taskList.id)" (changeListName)="handleRenameList(taskList)"
+      (deleteList)="handleDelList(taskList)" (moveAllTasks)="handleMoveList(taskList.id)">
+    </app-task-list-header>
+    <app-quick-task (quickTask)="handleQuickTask($event, taskList.id)"></app-quick-task>
+    <app-task-item *ngFor="let task of taskList.tasks" [item]="task" (taskComplete)="handleCompleteTask(task)" (taskClick)="handleUpdateTask(task)">
+    </app-task-item>
+  </app-task-list>
+</div>
+<button mat-fab (click)="handleNewTaskList($event)" type="button" class="fab-button">
+  <mat-icon>add</mat-icon>
+</button>

@@ -3,84 +3,22 @@ import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import * as fromRoot from '../../reducers';
-import * as listActions from '../../actions/task-list.action';
-import * as taskActions from '../../actions/task.action';
-import * as TaskHistoryActions from '../../actions/task-history.action';
-import { Task, TaskList } from '../../domain';
-import { NewTaskListComponent } from '../components/new-task-list';
-import { NewTaskComponent } from '../components/new-task';
-import { CopyTaskComponent } from '../components/copy-task';
-import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog';
-import { defaultRouteAnim, listAnimation } from '../../anim';
-import { TaskListVM, TaskVM } from '../../vm';
+import * as fromRoot from '../../../reducers';
+import * as listActions from '../../../actions/task-list.action';
+import * as taskActions from '../../../actions/task.action';
+import * as TaskHistoryActions from '../../../actions/task-history.action';
+import { Task, TaskList } from '../../../domain';
+import { NewTaskListComponent } from '../../components/new-task-list';
+import { NewTaskComponent } from '../../components/new-task';
+import { CopyTaskComponent } from '../../components/copy-task';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog';
+import { defaultRouteAnim, listAnimation } from '../../../anim';
+import { TaskListVM, TaskVM } from '../../../vm';
 
 @Component({
   selector: 'app-task-home',
-  template: `
-    <div class="task-lists" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
-      <app-task-list
-        class="list-container"
-        fxFlex="0 0 360px"
-        *ngFor="let taskList of lists$ | async"
-        [ngStyle]="{'order': taskList.order}"
-        appDroppable
-        [dropTags]="['task-item', 'task-list']"
-        [dragEnterClass]="'drag-enter'"
-        [appDraggable]="true"
-        [dragTag]="'task-list'"
-        [draggedClass]="'drag-start'"
-        [dragData]="taskList"
-        (dropped)="handleMove($event, taskList)">
-        <app-task-list-header
-          [header]="taskList.name"
-          (newTask)="handleAddTask(taskList.id)"
-          (changeListName)="handleRenameList(taskList)"
-          (deleteList)="handleDelList(taskList)"
-          (moveAllTasks)="handleMoveList(taskList.id)">
-        </app-task-list-header>
-        <app-quick-task (quickTask)="handleQuickTask($event, taskList.id)"></app-quick-task>
-        <app-task-item
-          *ngFor="let task of taskList.tasks"
-          [item]="task"
-          (taskComplete)="handleCompleteTask(task)"
-          (taskClick)="handleUpdateTask(task)">
-        </app-task-item>
-      </app-task-list>
-    </div>
-    <button mat-fab (click)="handleNewTaskList($event)" type="button" class="fab-button">
-      <mat-icon>add</mat-icon>
-    </button>
-  `,
-  styles: [`
-    .drag-start {
-      opacity: 0.5;
-      border: #ff525b dashed 2px;
-    }
-    .drag-enter {
-      background-color: dimgray;
-    }
-    .list-container {
-      min-height: 100%;
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
-    .task-lists {
-      min-width: 100%;
-      min-height: 100%;
-      overflow-x: scroll;
-    }
-    .fab-button {
-      position: fixed;
-      right: 32px;
-      bottom: 96px;
-      z-index: 998;
-    }
-    :host {
-      display: flex;
-      flex: 1
-    }
-  `],
+  templateUrl: './task-home.component.html',
+  styleUrls: ['./task-home.component.scss'],
   animations: [defaultRouteAnim, listAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
