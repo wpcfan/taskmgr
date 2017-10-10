@@ -1,4 +1,10 @@
-<div class="task-lists" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
+<div class="task-lists-navigation">
+  <div class="task-lists-navigation-menu-container">
+    <mat-icon class="task-lists-navigation-menu-icon">menu</mat-icon>
+    <span class="task-lists-navigation-menu-text">视图</span>
+  </div>
+</div>
+<div class="task-lists" fxLayout="row" fxLayoutGap="20px">
   <app-task-list class="list-container" fxFlex="0 0 360px" *ngFor="let taskList of lists$ | async" [ngStyle]="{'order': taskList.order}"
     appDroppable [dropTags]="['task-item', 'task-list']" [dragEnterClass]="'drag-enter'" [appDraggable]="true" [dragTag]="'task-list'"
     [draggedClass]="'drag-start'" [dragData]="taskList" (dropped)="handleMove($event, taskList)">
