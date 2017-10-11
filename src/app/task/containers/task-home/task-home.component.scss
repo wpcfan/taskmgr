@@ -39,6 +39,15 @@
   font-size: 14px;
 }
 
+.task-lists-content-container {
+  flex: 1;
+  position: relative;
+}
+
+mat-sidenav-container {
+  position: absolute;
+}
+
 .list-container {
   min-height: 100%;
   overflow-y: auto;
@@ -46,7 +55,7 @@
 }
 
 .task-lists {
-  flex: 1;
+  height: 100%;
   overflow-x: auto;
 }
 
