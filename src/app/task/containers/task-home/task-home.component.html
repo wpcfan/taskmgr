@@ -7,7 +7,9 @@
 <div class="task-lists-content-container">
   <mat-sidenav-container>
     <mat-sidenav #filternav mode="side" position="end">
-      <app-task-filter-nav></app-task-filter-nav>
+      <app-task-filter-nav
+      (closeClicked)="filternav.close()">
+      </app-task-filter-nav>
     </mat-sidenav>
     <div class="task-lists" fxLayout="row" fxLayoutGap="20px">
       <app-task-list class="list-container" fxFlex="0 0 360px" *ngFor="let taskList of lists$ | async" [ngStyle]="{'order': taskList.order}"

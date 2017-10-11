@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-task-filter-nav',
@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TaskFilterNavComponent implements OnInit {
 
+  @Output() closeClicked = new EventEmitter<void>();
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onCloseClicked(ev: Event) {
+    ev.preventDefault();
+    this.closeClicked.emit();
   }
 
 }
