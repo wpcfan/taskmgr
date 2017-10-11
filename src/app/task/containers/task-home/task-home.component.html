@@ -1,14 +1,13 @@
 <div class="task-lists-navigation">
-  <div class="task-lists-navigation-menu-container" (click)="filternav.toggle()">
-    <mat-icon class="task-lists-navigation-menu-icon">menu</mat-icon>
+  <div class="task-lists-navigation-menu-container" (click)="filternav.toggle()" [ngClass]="{'task-lists-navigation-opened': filternav.opened}">
+    <mat-icon class="task-lists-navigation-menu-icon">visibility</mat-icon>
     <span class="task-lists-navigation-menu-text">视图</span>
   </div>
 </div>
 <div class="task-lists-content-container">
   <mat-sidenav-container>
     <mat-sidenav #filternav mode="side" position="end">
-      <app-task-filter-nav
-      (closeClicked)="filternav.close()">
+      <app-task-filter-nav (closeClicked)="filternav.close()">
       </app-task-filter-nav>
     </mat-sidenav>
     <div class="task-lists" fxLayout="row" fxLayoutGap="20px">
