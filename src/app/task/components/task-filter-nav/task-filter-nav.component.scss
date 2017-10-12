@@ -34,3 +34,50 @@
 .task-filter-nav-close:hover {
   color: #3da8f5;
 }
+
+.task-filter-nav-body {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.task-filter-nav-category-container {
+  padding: 6px 0 4px;
+}
+
+.task-filter-nav-category-header {
+  height: 40px;
+  line-height: 40px;
+  position: relative;
+  color: #383838;
+  font-size: 14px;
+  padding: 0 15px;
+}
+
+.task-filter-nav-category-divider {
+  margin: 0 15px;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.task-filter-nav-category-item {
+  height: 40px;
+  line-height: 40px;
+  position: relative;
+  color: #808080;
+  font-size: 14px;
+  padding-left:  15px;
+}
+
+.task-filter-nav-category-item:hover {
+  background: #EEEEEE;
+}
+
+.task-filter-nav-category-item-selected {
+  position: absolute;
+  top: 0;
+  right: 15px;
+  line-height: 40px;
+  color: #A6A6A6;
+  font-size: 18px;
+}

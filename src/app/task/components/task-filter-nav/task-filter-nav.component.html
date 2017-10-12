@@ -3,4 +3,14 @@
     <div class="task-filter-nav-title">视图</div>
     <mat-icon class="task-filter-nav-close" (click)="onCloseClicked($event)">clear</mat-icon>
   </div>
+  <div class="task-filter-nav-body">
+    <div class="task-filter-nav-category-container">
+      <div class="task-filter-nav-category-header">优先级</div>
+      <div class="task-filter-nav-category-item" *ngFor="let priority of priorities">
+        <span>{{priority.label}}</span>
+        <mat-icon class="task-filter-nav-category-item-selected">check</mat-icon>
+      </div>
+      <div class="task-filter-nav-category-divider"></div>
+    </div>
+  </div>
 </div>

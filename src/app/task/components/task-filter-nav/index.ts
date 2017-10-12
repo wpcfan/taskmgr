@@ -9,6 +9,21 @@ export class TaskFilterNavComponent implements OnInit {
 
   @Output() closeClicked = new EventEmitter<void>();
 
+  priorities: { label: string; value: number }[] = [
+    {
+      label: '普通',
+      value: 3
+    },
+    {
+      label: '重要',
+      value: 2
+    },
+    {
+      label: '紧急',
+      value: 1
+    },
+  ];
+
   constructor() { }
 
   ngOnInit() {
