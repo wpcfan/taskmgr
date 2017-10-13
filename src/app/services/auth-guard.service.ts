@@ -33,6 +33,7 @@ export class AuthGuardService implements CanActivate {
         if (!result) {
           this.store$.dispatch(new routerActions.Go({path: ['/login']}));
         }
+        localStorage.setItem('access_token', <string>auth.token);
         return result;
       })
       .defaultIfEmpty(false);
