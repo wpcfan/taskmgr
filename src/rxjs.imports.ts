@@ -1,5 +1,6 @@
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/observable/concat';
 import 'rxjs/add/observable/zip';
 import 'rxjs/add/observable/range';
