@@ -11,6 +11,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppEffectsModule} from '../effects';
 import {ServicesModule} from '../services';
 import {AppStoreModule} from '../reducers';
+import {InterceptorsModule} from '../interceptors';
 
 import {HeaderComponent} from './components/header';
 import {FooterComponent} from './components/footer';
@@ -24,11 +25,21 @@ import {DatepickerI18n} from '../shared/adapters/datepicker-i18n';
 import {MD_FNS_DATE_FORMATS} from '../shared/adapters/date-formats';
 import {CustomRouterStateSerializer} from '../utils/router.util';
 import '../utils/debug.util';
+
+export function tokenGetter () {
+  return localStorage.getItem('access_token');
+}
 @NgModule({
   imports: [
     HttpModule,
     SharedModule,
     HttpClientModule,
+    InterceptorsModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:8090']
+      }
+    }),
     AppEffectsModule,
     ServicesModule.forRoot(),
     AppStoreModule,
@@ -40,18 +51,18 @@ import '../utils/debug.util';
     AppRoutingModule,
   ],
   providers: [
-    {provide: 'BASE_CONFIG', useValue: { uri: 'http://localhost:3002'}},
+    {provide: 'BASE_CONFIG', useValue: { uri: 'http://localhost:8090'}},
     {provide: LOCALE_ID, useValue: 'zh-CN'},
     {provide: DateAdapter, useClass: DateFnsAdapter},
     {provide: MAT_DATE_FORMATS, useValue: MD_FNS_DATE_FORMATS},
     {provide: MatDatepickerIntl, useClass: DatepickerI18n},
+
     /**
      * The `RouterStateSnapshot` provided by the `Router` is a large complex structure.
      * A custom RouterStateSerializer is used to parse the `RouterStateSnapshot` provided
      * by `@ngrx/router-store` to include only the desired pieces of the snapshot.
      */
     { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer },
-    { provide: MATERIAL_COMPATIBILITY_MODE, useValue: true }
   ],
   declarations: [
     HeaderComponent,
