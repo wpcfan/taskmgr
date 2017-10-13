@@ -20,9 +20,8 @@ export class ProjectEffects {
   @Effect()
   loadProjects$: Observable<Action> = this.actions$
     .ofType<actions.LoadProjectsAction>(actions.LOADS)
-    .withLatestFrom(this.store$.select(fromRoot.getAuth))
-    .switchMap(([_, auth]) => this.service
-      .get(<string>auth.user.id)
+    .switchMap(_ => this.service
+      .get()
       .map(projects => new actions.LoadProjectsSuccessAction(projects))
       .catch(err => of(new actions.LoadProjectsFailAction(JSON.stringify(err))))
     );

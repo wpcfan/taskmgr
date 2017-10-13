@@ -3,6 +3,7 @@ import {HttpHeaders, HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import * as _ from 'lodash';
 import {Project, User} from '../domain';
+import { Pageable } from '../domain/pageable';
 
 @Injectable()
 export class ProjectService {
@@ -37,23 +38,16 @@ export class ProjectService {
 
   // DELETE /projects instead of deleting the records
   del(project: Project): Observable<Project> {
-    const deltask$ = Observable.from(project.taskLists ? project.taskLists : [])
-      .mergeMap(listId => this.http
-        .delete(`${this.config.uri}/taskLists/${listId}`))
-        .count();
     const uri = `${this.config.uri}/${this.domain}/${project.id}`;
-    return deltask$.switchMap(p => this.http
-      .delete(uri)
-      .map(_ => project));
+    return this.http.delete(uri).map(_ => project);
   }
 
   // GET /projects
-  get(userId: string): Observable<Project[]> {
+  get(): Observable<Project[]> {
     const uri = `${this.config.uri}/${this.domain}`;
-    const params = new HttpParams()
-      .set('members_like', userId);
     return this.http
-      .get<Project[]>(uri, {params: params, headers: this.headers});
+      .get<Pageable<Project>>(uri, {headers: this.headers})
+      .map(page => page.content);
   }
 
   updateTaskLists(project: Project): Observable<Project> {
