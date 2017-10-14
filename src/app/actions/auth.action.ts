@@ -1,6 +1,7 @@
 import {Action} from '@ngrx/store';
 import {Auth, Err, User} from '../domain';
 
+export const LOAD_TOKEN = '[Auth] Load Token';
 export const LOGIN = '[Auth] Login';
 export const LOGIN_SUCCESS = '[Auth] Login Success';
 export const LOGIN_FAIL = '[Auth] Login Fail';
@@ -58,6 +59,13 @@ export class LogoutAction implements Action {
   }
 }
 
+export class LoadTokenAction implements Action {
+  readonly type = LOAD_TOKEN;
+
+  constructor() {
+  }
+}
+
 export type Actions
   = LoginAction
   | LoginSuccessAction
@@ -65,4 +73,5 @@ export type Actions
   | RegisterAction
   | RegisterSuccessAction
   | RegisterFailAction
-  | LogoutAction;
+  | LogoutAction
+  | LoadTokenAction;

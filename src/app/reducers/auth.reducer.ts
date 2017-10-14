@@ -13,6 +13,12 @@ export function reducer(state: Auth = initialState, action: actions.Actions): Au
         userId: auth.user!.id
       };
     }
+    case actions.LOAD_TOKEN: {
+      const token = localStorage.getItem('access_token');
+      return {
+        token: <string>token,
+      }
+    }
     case actions.LOGIN_FAIL:
     case actions.REGISTER_FAIL: {
       return {err: <string>action.payload};

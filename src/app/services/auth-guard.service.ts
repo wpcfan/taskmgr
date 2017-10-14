@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
+
+import {getAuth} from '../utils/auth.util';
 import * as routerActions from '../actions/router.action';
 import * as fromRoot from '../reducers';
 
@@ -21,21 +23,25 @@ export class AuthGuardService implements CanActivate {
    *
    * @param route
    */
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     return this.checkAuth();
   }
 
-  checkAuth(): Observable<boolean> {
-    return this.store$
-      .select(s => s.auth)
-      .map(auth => {
-        const result = auth.token !== undefined && auth.token !== null;
-        if (!result) {
-          this.store$.dispatch(new routerActions.Go({path: ['/login']}));
-        }
-        localStorage.setItem('access_token', <string>auth.token);
-        return result;
-      })
-      .defaultIfEmpty(false);
+  checkAuth(): boolean {
+    const result = getAuth();
+    if (!result) {
+      this.store$.dispatch(new routerActions.Go({path: ['/login']}));
+    }
+    return result;
+    // return this.store$
+    //   .select(s => s.auth)
+    //   .map(auth => {
+    //     const result = auth.token !== undefined && auth.token !== null;
+    //     if (!result) {
+    //       this.store$.dispatch(new routerActions.Go({path: ['/login']}));
+    //     }
+    //     return result;
+    //   })
+    //   .defaultIfEmpty(false);
   }
 }

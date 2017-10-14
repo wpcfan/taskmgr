@@ -6,15 +6,22 @@ import * as routerActions from '../actions/router.action';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
 
+import {getAuth} from '../utils/auth.util';
 import {AuthService} from '../services';
 import * as actions from '../actions/auth.action';
 
 @Injectable()
 export class AuthEffects {
 
-  /**
-   *
-   */
+  @Effect()
+  init$: Observable<Action> = Observable.defer(() => {
+    const loggedIn = getAuth();
+    if(loggedIn) {
+
+    }
+    return
+  });
+
   @Effect()
   login$: Observable<Action> = this.actions$
     .ofType<actions.LoginAction>(actions.LOGIN)
@@ -58,13 +65,27 @@ export class AuthEffects {
   @Effect()
   logout$: Observable<Action> = this.actions$
     .ofType<actions.LogoutAction>(actions.LOGOUT)
-    .map(() => new routerActions.Go({path: ['/']}));
+    .map(() => new routerActions.Go({path: ['/']}))
+    .do(_ => localStorage.clear());
 
   @Effect({ dispatch: false })
   navigate$ = this.actions$.ofType(routerActions.GO)
     .map((action: routerActions.Go) => action.payload)
     .do(({ path, query: queryParams, extras}) =>
       this.router.navigate(path, { queryParams, ...extras }));
+
+
+  @Effect({ dispatch: false })
+  loginAndStoreToken$ = this.actions$
+    .ofType<actions.LoginSuccessAction>(actions.LOGIN_SUCCESS)
+    .map(action => action.payload)
+    .do(auth => localStorage.setItem('access_token', <string>auth.token))
+
+  @Effect({ dispatch: false })
+  registerAndStoreToken$ = this.actions$
+    .ofType<actions.RegisterSuccessAction>(actions.REGISTER_SUCCESS)
+    .map(action => action.payload)
+    .do(auth => localStorage.setItem('access_token', <string>auth.token))
 
   /**
    *
