@@ -51,10 +51,10 @@ describe('测试 AuthEffects', () => {
         user: {
           id: '123abc',
           name: 'wang',
-          email: 'wang@163.com'
+          username: 'wang@163.com'
         }
       };
-      actions$ = hot('--a-', { a: new actions.LoginAction({email: 'wang@dev.local', password: '123abc'}) });
+      actions$ = hot('--a-', { a: new actions.LoginAction({username: 'wang@dev.local', password: '123abc'}) });
       const {authEffects} = setup('login', {returnedAuth: Observable.of(auth)});
 
       const expectedResult = cold('--b', { b: new actions.LoginSuccessAction(auth)});

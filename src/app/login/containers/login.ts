@@ -17,7 +17,7 @@ import * as actions from '../../actions/quote.action';
       </mat-card-header>
       <mat-card-content>
         <mat-form-field class="full-width">
-          <input matInput type="text" placeholder="您的Email" formControlName="email">
+          <input matInput type="text" placeholder="您的Email" formControlName="username">
           <mat-error>用户名是必填项哦</mat-error>
         </mat-form-field>
         <mat-form-field class="full-width">
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      email: ['wpcfan@163.com', Validators.compose([Validators.required, Validators.email])],
+      username: ['wpcfan@163.com', Validators.compose([Validators.required, Validators.email])],
       password: ['wp123456', Validators.required]
     });
     this.store$.dispatch({type: actions.QUOTE});

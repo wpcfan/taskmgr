@@ -137,11 +137,12 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       .distinctUntilChanged();
     const age$ = Observable
       .combineLatest(ageNum$, ageUnit$, (_num, _unit) => this.toDate({age: _num, unit: _unit}))
+      .debounceTime(300)
       .map(d => ({date: d, from: 'age'}))
       .filter(_ => this.form.get('age')!.valid);
     const merged$ = Observable
       .merge(birthday$, age$)
-      .filter(_ => this.form.valid)
+      .filter(date => this.form.valid && date !== null)
       .debug('[Age-Input][Merged]:');
     this.subBirth = merged$.subscribe(date => {
       const age = this.toAge(date.date);

@@ -21,7 +21,7 @@ export interface Identity {
 
 export interface User {
   id: string | undefined;
-  email: string;
+  username: string;
   name?: string;
   password?: string;
   avatar?: string;

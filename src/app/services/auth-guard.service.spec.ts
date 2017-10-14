@@ -56,7 +56,7 @@ describe('测试路由守卫服务：AuthGuardService', () => {
           type: authActions.LOGIN_SUCCESS,
           payload: {
             token: 'xxxx',
-            user: {id: 'xxxx', email: 'abc@dev.local', name: 'xxxx', password: 'sssss'}
+            user: {id: 'xxxx', username: 'abc@dev.local', name: 'xxxx', password: 'sssss'}
           }
         });
       })));

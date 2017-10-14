@@ -15,7 +15,7 @@ import * as fromRoot from '../../reducers';
       </mat-card-header>
       <mat-card-content>
         <mat-form-field class="full-width">
-          <input matInput placeholder="注册时使用的电子邮箱" formControlName="email">
+          <input matInput placeholder="注册时使用的电子邮箱" formControlName="username">
         </mat-form-field>
         <button mat-raised-button type="submit" [disabled]="!form.valid">找回密码</button>
       </mat-card-content>
@@ -42,7 +42,7 @@ export class ForgotComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      email: ['', Validators.required]
+      username: ['', Validators.required]
     });
   }
 

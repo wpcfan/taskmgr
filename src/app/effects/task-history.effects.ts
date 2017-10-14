@@ -37,7 +37,7 @@ export class TaskHistoryEffects {
     .mergeMap(([data, user]: [{ taskId: string; operation: History.TaskOperations }, User]) => {
       const operator: User = {
         id: user.id,
-        email: user.email,
+        username: user.username,
         name: user.name,
         avatar: user.avatar,
       };

@@ -7,7 +7,7 @@ import {User, Auth} from '../domain';
 export interface State extends EntityState<User> {}
 
 export function sortByOrder(a: User, b: User): number {
-  return a.email.localeCompare(b.email);
+  return a.username.localeCompare(b.username);
 }
 
 export const adapter: EntityAdapter<User> = createEntityAdapter<User>({

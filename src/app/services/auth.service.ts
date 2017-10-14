@@ -35,12 +35,15 @@ export class AuthService {
   /**
    * 使用用户名和密码登录
    *
-   * @param email 用户名
+   * @param username 用户名
    * @param password 密码（明文），服务器会进行加密处理
    */
-  login(email: string, password: string): Observable<Auth> {
+  login(username: string, password: string): Observable<Auth> {
     const uri = `${this.config.uri}/auth`;
     return this.http
-      .post<Auth>(uri, JSON.stringify({'username': email, 'password': password}), {headers: this.headers});
+      .post<Auth>(
+        uri,
+        JSON.stringify({'username': username, 'password': password}),
+        {headers: this.headers});
   }
 }

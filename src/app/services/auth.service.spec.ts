@@ -39,12 +39,12 @@ describe('测试鉴权服务：AuthService', () => {
           id: undefined,
           name: 'someuser@dev.local',
           password: '123abc',
-          email: 'someuser@dev.local'
+          username: 'someuser@dev.local'
         };
         const mockResponse = {
           id: 'obj123abc',
           name: 'someuser@dev.local',
-          email: 'someuser@dev.local',
+          username: 'someuser@dev.local',
           password: '123abc'
         };
         mockBackend.connections.subscribe(conn => {

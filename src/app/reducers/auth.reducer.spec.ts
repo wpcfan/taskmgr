@@ -18,7 +18,7 @@ describe('测试 AuthReducer', () => {
         token: '',
         user: {
           id: '1',
-          email: '123@123.com',
+          username: '123@123.com',
           password: '123456'
         }
       });
@@ -47,7 +47,7 @@ describe('测试 AuthReducer', () => {
         user: {
           id: '123abc',
           name: 'wang',
-          email: 'wang@163.com'
+          username: 'wang@163.com'
         }
       });
       const result = reducer(undefined, action);

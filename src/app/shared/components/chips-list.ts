@@ -52,7 +52,7 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   @ViewChild('autoMember') autoMember: MatAutocomplete;
   @Input() multiple = true;
   @Input() label = '添加/修改成员';
-  @Input() placeholderText = '请输入成员 email';
+  @Input() placeholderText = '请输入成员 username';
   items: User[];
   chips: FormGroup;
   memberResults$: Observable<User[]>;

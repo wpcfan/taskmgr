@@ -53,7 +53,6 @@ export function tokenGetter () {
   providers: [
     {provide: 'BASE_CONFIG', useValue: { uri: 'http://localhost:8090'}},
     {provide: LOCALE_ID, useValue: 'zh-CN'},
-    {provide: DateAdapter, useClass: DateFnsAdapter},
     {provide: MAT_DATE_FORMATS, useValue: MD_FNS_DATE_FORMATS},
     {provide: MatDatepickerIntl, useClass: DatepickerI18n},
 

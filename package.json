@@ -5,7 +5,7 @@
   "scripts": {
     "api": "json-server --watch mock/data.json --port 3002",
     "ng": "ng",
-    "start": "concurrently \"ng serve --hmr -e=hmr --port=8000\" \"npm run api\"",
+    "start": "concurrently \"ng serve --port=8000\" \"npm run api\"",
     "prod": "concurrently \"ng serve --prod --port=8000\" \"npm run api\"",
     "build:dynamic": "npm run build:client-and-server-bundles && npm run webpack:server",
     "serve:dynamic": "node dist/server.js",

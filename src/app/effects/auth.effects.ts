@@ -19,8 +19,8 @@ export class AuthEffects {
   login$: Observable<Action> = this.actions$
     .ofType<actions.LoginAction>(actions.LOGIN)
     .map((action: actions.LoginAction) => action.payload)
-    .switchMap((val: { email: string, password: string }) => this.authService
-      .login(val.email, val.password)
+    .switchMap((val: { username: string, password: string }) => this.authService
+      .login(val.username, val.password)
       .map(auth => new actions.LoginSuccessAction(auth))
       .catch(err => of(new actions.LoginFailAction({
         status: 501,

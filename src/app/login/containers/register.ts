@@ -16,7 +16,7 @@ import {isValidDate} from '../../utils/date.util';
       <mat-tab-group [dynamicHeight]="true" [selectedIndex]="selectedTab" (selectChange)="onTabChange($event.index)">
         <mat-tab label="帐号信息">
           <mat-form-field class="full-width">
-            <input matInput placeholder="电子邮件" formControlName="email">
+            <input matInput placeholder="电子邮件" formControlName="username">
           </mat-form-field>
           <mat-form-field class="full-width">
             <input matInput type="text" placeholder="您的名字" formControlName="name">
@@ -100,7 +100,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     const img = `${this.avatarName}:svg-${(Math.random() * 16).toFixed()}`;
     this.form = this.fb.group({
       name: ['', Validators.compose([Validators.required, Validators.maxLength(20)])],
-      email: ['', Validators.compose([Validators.required, Validators.email])],
+      username: ['', Validators.compose([Validators.required, Validators.email])],
       password: ['', Validators.compose([Validators.required, Validators.maxLength(20)])],
       repeat: ['', Validators.required],
       avatar: [img],
@@ -144,7 +144,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         id: undefined,
         password: value.password,
         name: value.name,
-        email: value.email,
+        username: value.username,
         avatar: value.avatar,
         identity: value.identity,
         address: value.address,
