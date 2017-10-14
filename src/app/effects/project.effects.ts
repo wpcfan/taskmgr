@@ -30,14 +30,11 @@ export class ProjectEffects {
   addProject$: Observable<Action> = this.actions$
     .ofType<actions.AddProjectAction>(actions.ADD)
     .map(action => action.payload)
-    .withLatestFrom(this.store$.select(fromRoot.getAuth))
-    .switchMap(([project, auth]) => {
-      const added = {...project, members: [`${auth.user.id}`]};
-      return this.service
-        .add(added)
-        .map(returned => new actions.AddProjectSuccessAction(returned))
-        .catch(err => of(new actions.AddProjectFailAction(JSON.stringify(err))));
-      }
+    .debug('Adding Project:')
+    .switchMap((project) => this.service
+      .add(project)
+      .map(returned => new actions.AddProjectSuccessAction(returned))
+      .catch(err => of(new actions.AddProjectFailAction(JSON.stringify(err))))
     );
 
   @Effect()
@@ -89,21 +86,6 @@ export class ProjectEffects {
     .map(project => new userActions.LoadUsersByPrjAction(<string>project.id));
 
   @Effect()
-  startInitTaskLists$: Observable<Action> = this.actions$
-    .ofType<actions.AddProjectSuccessAction>(actions.ADD_SUCCESS)
-    .map(action => action.payload)
-    .map(project => new tasklistActions.InitTaskListsAction(project));
-
-  @Effect()
-  addUserPrjRef$: Observable<Action> = this.actions$
-    .ofType<actions.AddProjectSuccessAction>(actions.ADD_SUCCESS)
-    .map(action => action.payload)
-    .map((prj: Project) => prj.id)
-    .withLatestFrom(this.store$.select(fromRoot.getAuth).map(auth => auth.user), (projectId: string, user: User) => {
-      return new userActions.AddUserProjectAction({user: user, projectId: projectId});
-    });
-
-  @Effect()
   delUserPrjRef$: Observable<Action> = this.actions$
     .ofType<actions.DeleteProjectSuccessAction>(actions.DELETE_SUCCESS)
     .map(action => action.payload)
@@ -116,8 +98,8 @@ export class ProjectEffects {
   inviteMembersRef$: Observable<Action> = this.actions$
     .ofType<actions.InviteMembersAction>(actions.INVITE)
     .map(action => action.payload)
-    .switchMap(({projectId, members}) =>
-      this.service.inviteMembers(projectId, members)
+    .switchMap(({projectId, memberIds}) =>
+      this.service.inviteMembers(projectId, memberIds)
         .map((project: Project) => new actions.InviteMembersSuccessAction(project))
         .catch(err => of(new actions.InviteMembersFailAction(err)))
     );

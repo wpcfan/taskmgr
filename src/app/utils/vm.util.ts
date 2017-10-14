@@ -34,7 +34,7 @@ export const convertToProject = (projectVM: ProjectVM): Project => {
     coverImg: projectVM.coverImg,
     desc: projectVM.desc,
     enabled: projectVM.enabled,
-    members: <string[]>projectVM!.members!.map((user: User) => <string>user.id),
-    taskLists: <string[]>projectVM!.taskLists!.map((tl: TaskListVM) => <string>tl.id)
+    memberIds: <string[]>projectVM!.members!.map((user: User) => <string>user.id),
+    taskListIds: <string[]>projectVM!.taskLists!.map((tl: TaskListVM) => <string>tl.id)
   }
 }

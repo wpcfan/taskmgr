@@ -45,7 +45,7 @@ export class UserService {
 
   batchUpdateProjectRef(project: Project): Observable<User[]> {
     const projectId = <string>project.id;
-    const memberIds = project.members ? project.members : [];
+    const memberIds = project.memberIds ? project.memberIds : [];
     return Observable.from(memberIds)
       .switchMap(id => {
         const uri = `${this.config.uri}/${this.domain}/${id}`;

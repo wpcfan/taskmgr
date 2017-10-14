@@ -133,7 +133,7 @@ export class SelectProjectAction implements Action {
 export class InviteMembersAction implements Action {
   readonly type = INVITE;
 
-  constructor(public payload: {projectId: string; members: User[]}) {
+  constructor(public payload: {projectId: string; memberIds: String[]}) {
   }
 }
 

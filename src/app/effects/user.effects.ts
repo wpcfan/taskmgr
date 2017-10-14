@@ -49,23 +49,6 @@ export class UserEffects {
     );
 
   @Effect()
-  toLoadUser$: Observable<Action> = this.actions$
-    .ofType<prjActions.LoadProjectsSuccessAction>(prjActions.LOADS_SUCCESS)
-    .map(action => action.payload)
-    .switchMap((prjs: Project[]) => Observable.from(prjs.map(prj => prj.id)))
-    .map((projectId: string) => new actions.LoadUsersByPrjAction(projectId));
-
-  @Effect()
-  loadProjectUsers$: Observable<Action> = this.actions$
-    .ofType<actions.LoadUsersByPrjAction>(actions.LOAD_USERS_BY_PRJ)
-    .map(action => action.payload)
-    .switchMap(projectId =>
-      this.service$.getUsersByProject(projectId)
-        .map(users => new actions.LoadUsersByPrjSuccessAction(users))
-        .catch(err => of(new actions.LoadUsersByPrjFailAction(JSON.stringify(err))))
-    );
-
-  @Effect()
   batchUpdateProjectUsers$: Observable<Action> = this.actions$
     .ofType<actions.BatchUpdateUserProjectAction>(actions.BATCH_UPDATE_USER_PROJECT)
     .map(action => action.payload)

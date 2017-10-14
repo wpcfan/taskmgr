@@ -88,10 +88,10 @@ export class ProjectListComponent {
   openInviteDialog(project: Project) {
     this.store$.select(fromRoot.getProjectMembers(<string>project.id))
       .take(1)
-      .map(members => this.dialog.open(InviteComponent, {data: { members: members}}))
+      .map(memberIds => this.dialog.open(InviteComponent, {data: { memberIds: memberIds}}))
       .switchMap(dialogRef => dialogRef.afterClosed().take(1).filter(n => n))
       .subscribe(val => {
-        this.store$.dispatch(new actions.InviteMembersAction({projectId: <string>project.id, members: <User[]>val}));
+        this.store$.dispatch(new actions.InviteMembersAction({projectId: <string>project.id, memberIds: <String[]>val}));
       });
   }
 

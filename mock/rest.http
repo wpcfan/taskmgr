@@ -20,7 +20,7 @@ POST http://localhost:8090/auth
 Content-Type: application/json;charset: utf-8
 
 {
-	"username":"wpcfan1@163.com",
+	"username":"wpcfan@local.dev",
 	"password":"Wp770521"
 }
 
@@ -39,7 +39,7 @@ Content-Type: application/json;charset: utf-8
 ###
 GET http://localhost:8090/projects
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3cGNmYW4xQDE2My5jb20iLCJjcmVhdGVkIjoxNTA3OTA3MjMwMzM4LCJleHAiOjE1MDg1MTIwMzB9.SO0J-9MnYEFgXcyJr2mbvZ1utbREeTL3AHrge5Vyy6k1Eew2J8x_7478pEWq_XMXcG3g_UdTHDh3t-9pMzaVfw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3cGNmYW5AbG9jYWwuZGV2IiwiY3JlYXRlZCI6MTUwNzk5MjkzMTQzNSwiZXhwIjoxNTA4NTk3NzMxfQ.IyoBHtqlT18uIAJr7GMLoNP7BNPXCeUakLWTkPpQtnyyHIJC9WLs3HQaHdlyGWXlygNBbk4cOlJQupI4NbhQSA
 
 ###
 DELETE http://localhost:8090/projects/59e0d74b0976869fdd18b5b7
@@ -57,12 +57,12 @@ userId: 59549fbfa065ca43ae48e658
 ###
 POST http://localhost:8090/projects
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3cGNmYW4xQDE2My5jb20iLCJjcmVhdGVkIjoxNTA3OTA3MjMwMzM4LCJleHAiOjE1MDg1MTIwMzB9.SO0J-9MnYEFgXcyJr2mbvZ1utbREeTL3AHrge5Vyy6k1Eew2J8x_7478pEWq_XMXcG3g_UdTHDh3t-9pMzaVfw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3cGNmYW5AbG9jYWwuZGV2IiwiY3JlYXRlZCI6MTUwNzk5MjkzMTQzNSwiZXhwIjoxNTA4NTk3NzMxfQ.IyoBHtqlT18uIAJr7GMLoNP7BNPXCeUakLWTkPpQtnyyHIJC9WLs3HQaHdlyGWXlygNBbk4cOlJQupI4NbhQSA
 
 {
-  "name": "test2",
-  "desc": null,
-  "coverImg": "/assets/1.jpg"
+  "name": "test3",
+  "desc": "some1",
+  "coverImg": "/assets/2.jpg"
 }
 
 ###

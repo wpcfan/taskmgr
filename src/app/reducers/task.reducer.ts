@@ -53,7 +53,7 @@ const moveAllTasks = (state: State, action: actions.MoveAllSuccessAction) => {
 
 const delTasksByPrj = (state: State, action: prjActions.DeleteProjectSuccessAction) => {
   const project = <Project>action.payload;
-  const listIds = project.taskLists;
+  const listIds = project.taskListIds;
   const remainingIds = state.ids.filter(id => _.indexOf(listIds, state.entities[id].taskListId) === -1);
   const remainingEntities = buildObjFromArr(remainingIds, state.entities);
   return { ids: remainingIds, entities: remainingEntities };

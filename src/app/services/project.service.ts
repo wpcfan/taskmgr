@@ -53,22 +53,21 @@ export class ProjectService {
   updateTaskLists(project: Project): Observable<Project> {
     const uri = `${this.config.uri}/${this.domain}/${project.id}`;
     const toUpdate = {
-      taskLists: project.taskLists
+      taskListIds: project.taskListIds
     };
     return this.http
       .patch<Project>(uri, JSON.stringify(toUpdate), {headers: this.headers});
   }
 
-  inviteMembers(projectId: string, users: User[]) {
+  inviteMembers(projectId: string, userIds: String[]) {
     const uri = `${this.config.uri}/${this.domain}/${projectId}`;
 
     return this.http
       .get(uri)
       .switchMap((project: Project) => {
-        const existingMemberIds = project.members;
-        const invitedIds = users.map(user => user.id);
-        const newIds = _.union(existingMemberIds, invitedIds);
-        return this.http.patch(uri, JSON.stringify({ members: newIds }), {headers: this.headers});
+        const existingMemberIds = project.memberIds;
+        const newIds = _.union(existingMemberIds, userIds);
+        return this.http.patch(uri, JSON.stringify({ memberIds: newIds }), {headers: this.headers});
       });
   }
 }

@@ -8,7 +8,7 @@ import {User} from '../../domain';
   template: `
     <h2 matDialogTitle>{{dialogTitle}}</h2>
     <form class="full-width" #f="ngForm" (ngSubmit)="onSubmit($event, f)">
-      <app-chips-list [label]="'邀请成员'" name="members" [(ngModel)]="members">
+      <app-chips-list [label]="'邀请成员'" name="memberIds" [(ngModel)]="memberIds">
       </app-chips-list>
       <div mat-dialog-actions>
         <button mat-raised-button color="primary" type="submit" [disabled]="!f.valid">
@@ -22,7 +22,7 @@ import {User} from '../../domain';
 })
 export class InviteComponent implements OnInit {
 
-  members: User[] = [];
+  memberIds: String[] = [];
   dialogTitle: string;
 
   constructor(
@@ -30,7 +30,7 @@ export class InviteComponent implements OnInit {
     private dialogRef: MatDialogRef<InviteComponent>) { }
 
   ngOnInit() {
-    this.members = [...this.data.members];
+    this.memberIds = [...this.data.memberIds];
     this.dialogTitle = this.data.dialogTitle ? this.data.dialogTitle : '邀请成员';
   }
 
@@ -39,6 +39,6 @@ export class InviteComponent implements OnInit {
     if (!valid) {
       return;
     }
-    this.dialogRef.close(this.members);
+    this.dialogRef.close(this.memberIds);
   }
 }

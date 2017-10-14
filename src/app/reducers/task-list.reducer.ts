@@ -21,7 +21,7 @@ export const initialState: State = adapter.getInitialState();
 
 const delListByPrj = (state: State, action: prjActions.DeleteProjectSuccessAction) => {
   const project = <Project>action.payload;
-  const taskListIds = <string[]>project.taskLists;
+  const taskListIds = <string[]>project.taskListIds;
   return adapter.removeMany(taskListIds, state);
 };
 
