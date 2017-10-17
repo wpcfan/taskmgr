@@ -1,5 +1,12 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { getTaskFilterVM } from '../../../utils/task-filter.util';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { Store } from '@ngrx/store';
+import { TaskFilter } from '../../../domain';
+import { TaskFilterVM, TaskFilterPriorityVM } from '../../../vm';
+import { getTaskFilterVM, getTaskFilterByPriority } from '../../../utils/task-filter.util';
+import * as fromRoot from '../../../reducers';
+import * as TaskFilterActions from '../../../actions/task-filter.action';
 
 @Component({
   selector: 'app-task-filter-nav',
@@ -10,28 +17,27 @@ export class TaskFilterNavComponent implements OnInit {
 
   @Output() closeClicked = new EventEmitter<void>();
 
-  priorities: { label: string; value: number; checked: boolean }[] = [
-    {
-      label: '普通',
-      value: 3,
-      checked: true,
-    },
-    {
-      label: '重要',
-      value: 2,
-      checked: false,
-    },
-    {
-      label: '紧急',
-      value: 1,
-      checked: true,
-    },
-  ];
+  private taskFilter$: Observable<TaskFilter>;
+  private _sub: Subscription;
+  private taskFilter: TaskFilter;
+  taskFilterVM: TaskFilterVM;
 
-  constructor() { }
+  constructor(private store$: Store<fromRoot.State>) {
+    this.taskFilter$ = this.store$.select(fromRoot.getTaskFilter);
+  }
 
   ngOnInit() {
-    console.log('<<Filter>>', JSON.stringify(getTaskFilterVM({ title: '', priorities: [1] })));
+    this._sub = this.taskFilter$.subscribe((filter: TaskFilter) => {
+      this.taskFilter = filter;
+      this.taskFilterVM = getTaskFilterVM(filter);
+      console.log('<<Filter>>', JSON.stringify(this.taskFilterVM));
+    });
+  }
+
+  ngOnDestroy() {
+    if (this._sub) {
+      this._sub.unsubscribe();
+    }
   }
 
   onCloseClicked(ev: Event) {
@@ -39,7 +45,10 @@ export class TaskFilterNavComponent implements OnInit {
     this.closeClicked.emit();
   }
 
-  onPriorityItemClicked(ev: Event, priority: { label: string; value: number; checked: boolean }) {
+  onPriorityItemClicked(ev: Event, priority: TaskFilterPriorityVM) {
     priority.checked = !priority.checked;
+
+    const updatedTaskFilter = getTaskFilterByPriority(this.taskFilter, this.taskFilterVM.priorityVMs);
+    this.store$.dispatch(new TaskFilterActions.UpdateTaskFilterAction(updatedTaskFilter));
   }
 }

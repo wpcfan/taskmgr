@@ -5,6 +5,19 @@ export const getTaskFilterVM = (taskFilter: TaskFilter): TaskFilterVM => {
   return { title: taskFilter.title, priorityVMs: getPrioritiesVMs(taskFilter.priorities) };
 }
 
+export const getTaskFilterByPriority = (taskFilter: TaskFilter, taskFilterPriorityVMs: TaskFilterPriorityVM[]): TaskFilter => {
+
+  const priorities: number[] = taskFilterPriorityVMs.reduce((priorities: number[], priorityVM: TaskFilterPriorityVM) => {
+    if (priorityVM.checked)
+      return [...priorities, priorityVM.value];
+    else
+      return [...priorities];
+  }, []);
+  console.log('<<getTaskFilterByPriority>>', JSON.stringify(priorities));
+
+  return { ...taskFilter, priorities: priorities };
+}
+
 const getPrioritiesVMs = (priorities: number[]): TaskFilterPriorityVM[] => {
   let priorityVMs: TaskFilterPriorityVM[] = [
     {
