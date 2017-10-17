@@ -1,5 +1,20 @@
 import { TaskFilter } from '../domain';
-import { TaskFilterVM, TaskFilterPriorityVM } from '../vm';
+import { TaskFilterVM, TaskFilterPriorityVM, TaskVM } from '../vm';
+
+export const getTasksByFilter = (tasks: TaskVM[], filter: TaskFilter): TaskVM[] => {
+
+  const newTasks: TaskVM[] = tasks.filter((task: TaskVM) => {
+    /** Priority */
+    if (filter.priorities.length > 0) {
+      if (filter.priorities.indexOf(task.priority) === -1)
+        return false;
+    }
+
+    return true;
+  });
+
+  return newTasks;
+}
 
 export const getTaskFilterVM = (taskFilter: TaskFilter): TaskFilterVM => {
   return { title: taskFilter.title, priorityVMs: getPrioritiesVMs(taskFilter.priorities) };
@@ -13,7 +28,6 @@ export const getTaskFilterByPriority = (taskFilter: TaskFilter, taskFilterPriori
     else
       return [...priorities];
   }, []);
-  console.log('<<getTaskFilterByPriority>>', JSON.stringify(priorities));
 
   return { ...taskFilter, priorities: priorities };
 }

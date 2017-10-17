@@ -31,7 +31,7 @@ export class TaskHomeComponent {
     private dialog: MatDialog,
     private store$: Store<fromRoot.State>) {
     this.projectId$ = this.route.paramMap.map(p => <string>p.get('id'));
-    this.lists$ = this.store$.select(fromRoot.getTasksByList);
+    this.lists$ = this.store$.select(fromRoot.getTaskByFilter);
   }
 
   handleRenameList(list: TaskList) {

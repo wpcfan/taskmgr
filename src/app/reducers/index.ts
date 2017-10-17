@@ -23,6 +23,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../../environments/environment';
 import { Auth, User, Project, TaskList, Task, TaskHistory, TaskFilter } from '../domain';
 import { TaskListVM, TaskVM } from '../vm';
+import { getTasksByFilter } from '../utils/task-filter.util';
 import * as authActions from '../actions/auth.action';
 
 /**
@@ -167,6 +168,13 @@ export const getTasksByList = createSelector<State, TaskList[], TaskVM[], TaskLi
     }
   ));
 });
+
+export const getTaskByFilter = createSelector<State, TaskListVM[], TaskFilter, TaskListVM[]>(getTasksByList, getTaskFilter, (taskLists, filter) => {
+  return taskLists.map(taskList => {
+    return { ...taskList, tasks: getTasksByFilter(taskList.tasks, filter) };
+  });
+})
+
 export const getProjectMembers = (projectId: string) => createSelector(getProjectsState, getUserEntities, (state, entities) => {
   return state!.entities[projectId]!.members!.map(id => entities[id]);
 });
