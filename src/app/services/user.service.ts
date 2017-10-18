@@ -1,3 +1,4 @@
+import { Pageable } from '../domain/pageable';
 import {Inject, Injectable} from '@angular/core';
 import {HttpHeaders, HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
@@ -17,6 +18,7 @@ export class UserService {
     const uri = `${this.config.uri}/${this.domain}/search`;
     const params = new HttpParams()
       .set('filter', filter);
-    return this.http.get<User[]>(uri, {params});
+    return this.http.get<Pageable<User>>(uri, {params})
+      .map(p => p.content);
   }
 }

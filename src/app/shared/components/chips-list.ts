@@ -4,6 +4,7 @@ import {MatAutocomplete} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import {UserService} from '../../services';
 import {User} from '../../domain';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-chips-list',
@@ -75,14 +76,11 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
 
   // 设置初始值
   public writeValue(obj: User[]) {
+    console.log('obj' + JSON.stringify(obj));
+    console.log('this.items:' + JSON.stringify(this.items));
     if (obj && this.multiple) {
-      const userEntities: {[id: string]: User} = obj.reduce((entities, user) => {
-        return {...entities, [<string>user.id]: user};
-      }, {});
-      if (this.items) {
-        const remaining = this.items.filter(item => !userEntities[<string>item.id]);
-        this.items = [...remaining, ...obj];
-      }
+      this.items = _.union(this.items, obj);
+      console.log('new items:' + JSON.stringify(this.items));
     } else if (obj && !this.multiple) {
       this.items = [...obj];
     }

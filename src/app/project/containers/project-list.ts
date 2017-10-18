@@ -88,6 +88,8 @@ export class ProjectListComponent {
   openInviteDialog(project: Project) {
     this.store$.select(fromRoot.getProjectMembers(<string>project.id))
       .take(1)
+      .map(member => member.map(m => ({id: m.username, name: m.name})))
+      .debug('memberIds')
       .map(memberIds => this.dialog.open(InviteComponent, {data: { memberIds: memberIds}}))
       .switchMap(dialogRef => dialogRef.afterClosed().take(1).filter(n => n))
       .subscribe(val => {
