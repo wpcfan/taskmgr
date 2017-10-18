@@ -172,3 +172,13 @@ Charset: utf-8
   "srcListId": "59e467e99b0db53d18f31fcc",
   "targetListId": "59e5fff9b42a021fb6c17c53"
 }
+
+###
+POST http://localhost:8090/projects/59e229010abd130a781d4d88
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3cGNmYW5AbG9jYWwuZGV2IiwiY3JlYXRlZCI6MTUwNzk5MjkzMTQzNSwiZXhwIjoxNTA4NTk3NzMxfQ.IyoBHtqlT18uIAJr7GMLoNP7BNPXCeUakLWTkPpQtnyyHIJC9WLs3HQaHdlyGWXlygNBbk4cOlJQupI4NbhQSA
+Content-Type: application/json
+Charset: utf-8
+
+{
+  "memberIds": ["wpcfan@local.dev"]
+}

@@ -85,7 +85,7 @@ export class CalendarHomeComponent {
     this.viewDate = new Date();
     this.view$ = this.route.paramMap.map(p => <string>p.get('view'));
     this.events$ = this.store$.select(fromRoot.getAuthUser)
-      .switchMap(user => this.service$.getUserTasks(<string>user.id));
+      .switchMap(user => this.service$.getUserTasks(<string>user.username));
   }
 
   handleEvent(action: string, event: CalendarEvent): void {

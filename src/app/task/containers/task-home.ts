@@ -200,7 +200,7 @@ export class TaskHomeComponent {
         id: undefined,
         desc: desc,
         priority: 3,
-        ownerId: <string>user.id,
+        ownerId: <string>user.username,
         participantIds: [],
         taskListId: listId,
         completed: false,

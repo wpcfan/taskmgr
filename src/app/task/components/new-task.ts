@@ -172,7 +172,7 @@ export class NewTaskComponent implements OnInit, OnDestroy {
     this.dialogRef.close({
       type: 'addOrUpdate', task: {
         desc: value.desc,
-        participantIds: value.followers.map((u: User) => u.id),
+        participantIds: value.followers.map((u: User) => u.username),
         ownerId: value.owner.length > 0 ? value.owner[0].id : null,
         dueDate: value.dueDate,
         reminder: value.reminder,

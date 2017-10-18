@@ -20,7 +20,6 @@ export interface Identity {
 }
 
 export interface User {
-  id: string | undefined;
   username: string;
   name?: string;
   password?: string;

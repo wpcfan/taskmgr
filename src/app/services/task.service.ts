@@ -1,4 +1,4 @@
-import { Pageable } from '../domain/pageable';
+import {Pageable} from '../domain/pageable';
 import {Inject, Injectable} from '@angular/core';
 import {HttpHeaders, HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
@@ -73,23 +73,23 @@ export class TaskService {
   }
 
   moveAll(srcListId: string, targetListId: string): Observable<Task[]> {
-    return this.get(srcListId)
-      .mergeMap((tasks: Task[]) => Observable.from(tasks))
-      .mergeMap((task: Task) => this.move(<string>task.id, targetListId))
-      .reduce((arrTasks: Task[], t: Task) => {
-        return [...arrTasks, t];
-      }, []);
+    const uri = `${this.config.uri}/${this.domain}/moveAll`;
+    const params = new HttpParams()
+      .append('srcListId', srcListId)
+      .append('targetListId', targetListId);
+    return this.http
+      .patch<Task[]>(uri, null, {headers: this.headers, params: params});
   }
 
   move(taskId: string, taskListId: string): Observable<Task> {
-    const uri = `${this.config.uri}/${this.domain}/${taskId}`;
+    const uri = `${this.config.uri}/${this.domain}/${taskId}/move/${taskListId}`;
     return this.http
-      .patch<Task>(uri, JSON.stringify({taskListId: taskListId}), {headers: this.headers});
+      .patch<Task>(uri, null, {headers: this.headers});
   }
 
   complete(task: Task): Observable<Task> {
-    const uri = `${this.config.uri}/${this.domain}/${task.id}`;
+    const uri = `${this.config.uri}/${this.domain}/${task.id}/toggle`;
     return this.http
-      .patch<Task>(uri, JSON.stringify({completed: !task.completed}), {headers: this.headers});
+      .patch<Task>(uri, undefined, {headers: this.headers});
   }
 }

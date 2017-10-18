@@ -173,7 +173,7 @@ export const getAuthUser = createSelector(getAuthState, getUserEntities, (_auth,
 });
 
 export const getUserTasks = createSelector(getAuthUser, getTasks, (user, tasks) => {
-  return tasks.filter(task => task.ownerId === user.id)
+  return tasks.filter(task => task.ownerId === user.username)
 });
 
 @NgModule({

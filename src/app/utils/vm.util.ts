@@ -12,8 +12,8 @@ export const covertToTask = (taskVM: TaskVM): Task => {
     createDate: taskVM.createDate,
     reminder: taskVM.reminder,
     remark: taskVM.remark,
-    ownerId: <string>taskVM!.owner!.id,
-    participantIds: <string[]>taskVM!.participants!.map(user => <string>user.id)
+    ownerId: <string>taskVM!.owner!.username,
+    participantIds: <string[]>taskVM!.participants!.map(user => <string>user.username)
   }
 };
 

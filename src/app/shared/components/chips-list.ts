@@ -102,8 +102,8 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   public registerOnTouched() { }
 
   removeMember(member: User) {
-    const ids = this.items.map(u => u.id);
-    const i = ids.indexOf(member.id);
+    const ids = this.items.map(u => u.username);
+    const i = ids.indexOf(member.username);
     if (this.multiple) {
       this.items = [...this.items.slice(0, i), ...this.items.slice(i + 1)];
     } else {
@@ -114,7 +114,7 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   }
 
   handleMemberSelection(user: User) {
-    if (this.items.map(u => u.id).indexOf(user.id) !== -1) {
+    if (this.items.map(u => u.username).indexOf(user.username) !== -1) {
       return;
     }
     if (this.multiple) {

@@ -19,6 +19,12 @@ export class UserService {
     const params = new HttpParams()
       .set('filter', filter);
     return this.http.get<Pageable<User>>(uri, {params})
-      .map(p => p.content);
+      .map(p => {
+        const users = <User[]>p.content;
+        return users.map(user => ({
+          username: user.username,
+          name: user.name
+        }))
+      });
   }
 }

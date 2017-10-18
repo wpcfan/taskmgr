@@ -61,13 +61,9 @@ export class ProjectService {
 
   inviteMembers(projectId: string, userIds: String[]) {
     const uri = `${this.config.uri}/${this.domain}/${projectId}`;
+    console.log('userIds: ' + JSON.stringify(userIds));
 
     return this.http
-      .get(uri)
-      .switchMap((project: Project) => {
-        const existingMemberIds = project.memberIds;
-        const newIds = _.union(existingMemberIds, userIds);
-        return this.http.patch(uri, JSON.stringify({ memberIds: newIds }), {headers: this.headers});
-      });
+      .post<Project>(uri, JSON.stringify({memberIds: userIds}), {headers: this.headers});
   }
 }

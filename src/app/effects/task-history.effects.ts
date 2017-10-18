@@ -36,7 +36,6 @@ export class TaskHistoryEffects {
     .withLatestFrom(this.store$.select(fromRoot.getAuthUser))
     .mergeMap(([data, user]: [{ taskId: string; operation: History.TaskOperations }, User]) => {
       const operator: User = {
-        id: user.id,
         username: user.username,
         name: user.name,
         avatar: user.avatar,
@@ -128,9 +127,9 @@ export class TaskHistoryEffects {
         }
       }
 
-      const authUserId = data.user.id;
-      const selectedOwnerUserId = selectedTaskVM.owner ? selectedTaskVM.owner.id : null;
-      const updatedOwnerUserId = updatedTaskVM.owner ? updatedTaskVM.owner.id : null;
+      const authUserId = data.user.username;
+      const selectedOwnerUserId = selectedTaskVM.owner ? selectedTaskVM.owner.username : null;
+      const updatedOwnerUserId = updatedTaskVM.owner ? updatedTaskVM.owner.username : null;
 
       if (selectedOwnerUserId !== updatedOwnerUserId) {
         if (updatedOwnerUserId) {
