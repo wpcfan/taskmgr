@@ -1,5 +1,5 @@
 export interface TaskFilter {
-  title?: string;
+  desc?: string;
   priorities: number[];
 }
 

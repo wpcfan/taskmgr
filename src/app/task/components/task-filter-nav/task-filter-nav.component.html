@@ -1,9 +1,17 @@
-<div class="task-filter-nav-container">
+<form class="task-filter-nav-container" [formGroup]="form">
   <div class="task-filter-nav-header">
     <div class="task-filter-nav-title">视图</div>
     <mat-icon class="task-filter-nav-close" (click)="onCloseClicked($event)">clear</mat-icon>
   </div>
   <div class="task-filter-nav-body">
+    <div class="task-filter-nav-category-container">
+      <div class="task-filter-nav-category-header">任务筛选</div>
+      <div class="task-filter-nav-category-input-container">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="查找相关任务" formControlName="descFilter"/>
+        </mat-form-field>
+      </div>
+    </div>
     <div class="task-filter-nav-category-container">
       <div class="task-filter-nav-category-header">优先级</div>
       <div class="task-filter-nav-category-item" *ngFor="let priority of taskFilterVM.priorityVMs" (click)="onPriorityItemClicked($event, priority)">
@@ -13,4 +21,4 @@
       <div class="task-filter-nav-category-divider"></div>
     </div>
   </div>
-</div>
+</form>

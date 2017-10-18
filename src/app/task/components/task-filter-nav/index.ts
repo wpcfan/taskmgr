@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { TaskFilter } from '../../../domain';
 import { TaskFilterVM, TaskFilterPriorityVM } from '../../../vm';
-import { getTaskFilterVM, getTaskFilterByPriority } from '../../../utils/task-filter.util';
+import { getTaskFilterVM, getTaskFilterByDesc, getTaskFilterByPriority } from '../../../utils/task-filter.util';
 import * as fromRoot from '../../../reducers';
 import * as TaskFilterActions from '../../../actions/task-filter.action';
 
@@ -17,26 +18,47 @@ export class TaskFilterNavComponent implements OnInit {
 
   @Output() closeClicked = new EventEmitter<void>();
 
-  private taskFilter$: Observable<TaskFilter>;
-  private _sub: Subscription;
-  private taskFilter: TaskFilter;
   taskFilterVM: TaskFilterVM;
+  form: FormGroup;
 
-  constructor(private store$: Store<fromRoot.State>) {
+  private taskFilter$: Observable<TaskFilter>;
+  private descFilter$: Observable<string>;
+  private _taskFilterSub: Subscription;
+  private _descFilterSub: Subscription;
+  private taskFilter: TaskFilter;
+
+  constructor(private fb: FormBuilder, private store$: Store<fromRoot.State>) {
+    this.form = this.fb.group({
+      descFilter: ['']
+    });
+
     this.taskFilter$ = this.store$.select(fromRoot.getTaskFilter);
+    this.descFilter$ = this.form.controls['descFilter'].valueChanges;
   }
 
   ngOnInit() {
-    this._sub = this.taskFilter$.subscribe((filter: TaskFilter) => {
+
+    this._taskFilterSub = this.taskFilter$.subscribe((filter: TaskFilter) => {
       this.taskFilter = filter;
       this.taskFilterVM = getTaskFilterVM(filter);
       console.log('<<Filter>>', JSON.stringify(this.taskFilterVM));
     });
+
+    this._descFilterSub = this.descFilter$.debounceTime(300)
+      .distinctUntilChanged()
+      .subscribe((desc: string) => {
+        const updatedTaskFilter = getTaskFilterByDesc(this.taskFilter, desc.trim());
+        this.store$.dispatch(new TaskFilterActions.UpdateTaskFilterAction(updatedTaskFilter));
+      });
   }
 
   ngOnDestroy() {
-    if (this._sub) {
-      this._sub.unsubscribe();
+    if (this._taskFilterSub) {
+      this._taskFilterSub.unsubscribe();
+    }
+
+    if (this._descFilterSub) {
+      this._descFilterSub.unsubscribe();
     }
   }
 

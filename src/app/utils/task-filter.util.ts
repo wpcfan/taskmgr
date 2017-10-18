@@ -4,6 +4,13 @@ import { TaskFilterVM, TaskFilterPriorityVM, TaskVM } from '../vm';
 export const getTasksByFilter = (tasks: TaskVM[], filter: TaskFilter): TaskVM[] => {
 
   const newTasks: TaskVM[] = tasks.filter((task: TaskVM) => {
+    /** Desc */
+    if (filter.desc) {
+      if (task.desc.indexOf(filter.desc) === -1) {
+        return false;
+      }
+    }
+
     /** Priority */
     if (filter.priorities.length > 0) {
       if (filter.priorities.indexOf(task.priority) === -1)
@@ -17,7 +24,11 @@ export const getTasksByFilter = (tasks: TaskVM[], filter: TaskFilter): TaskVM[] 
 }
 
 export const getTaskFilterVM = (taskFilter: TaskFilter): TaskFilterVM => {
-  return { title: taskFilter.title, priorityVMs: getPrioritiesVMs(taskFilter.priorities) };
+  return { desc: taskFilter.desc, priorityVMs: getPrioritiesVMs(taskFilter.priorities) };
+}
+
+export const getTaskFilterByDesc = (taskFilter: TaskFilter, desc: string): TaskFilter => {
+  return { ...taskFilter, desc: desc };
 }
 
 export const getTaskFilterByPriority = (taskFilter: TaskFilter, taskFilterPriorityVMs: TaskFilterPriorityVM[]): TaskFilter => {

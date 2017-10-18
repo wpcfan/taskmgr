@@ -5,6 +5,7 @@ import * as projectActions from '../actions/project.action';
 
 const getDefaultFilter = (): TaskFilter => {
   return {
+    desc: '',
     priorities: [],
   }
 }

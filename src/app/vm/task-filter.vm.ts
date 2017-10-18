@@ -1,5 +1,5 @@
 export interface TaskFilterVM {
-  title?: string;
+  desc?: string;
   priorityVMs: TaskFilterPriorityVM[];
 }
 
