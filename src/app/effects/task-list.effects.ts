@@ -69,22 +69,6 @@ export class TaskListEffects {
     });
 
   @Effect()
-  initializeTaskLists$: Observable<Action> = this.actions$
-    .ofType<actions.InitTaskListsAction>(actions.INITIALIZE)
-    .map(action => action.payload)
-    .switchMap(prj => {
-      return this.service$.initializeTaskLists(prj)
-        .map(project => new actions.InitTaskListsSuccessAction(project))
-        .catch(err => of(new actions.InitTaskListsFailAction(JSON.stringify(err))));
-    });
-
-  @Effect()
-  updateProjectRef$: Observable<Action> = this.actions$
-    .ofType<actions.InitTaskListsSuccessAction>(actions.INITIALIZE_SUCCESS)
-    .map(action => action.payload)
-    .map(prj => new prjActions.UpdateListsAction(prj));
-
-  @Effect()
   swapOrder$: Observable<Action> = this.actions$
     .ofType<actions.SwapOrderAction>(actions.SWAP_ORDER)
     .map(action => action.payload)

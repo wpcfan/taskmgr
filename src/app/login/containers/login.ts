@@ -64,8 +64,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      username: ['wpcfan@163.com', Validators.compose([Validators.required, Validators.email])],
-      password: ['wp123456', Validators.required]
+      username: ['wpcfan@local.dev', Validators.compose([Validators.required, Validators.email])],
+      password: ['Wp770521', Validators.required]
     });
     this.store$.dispatch({type: actions.QUOTE});
   }

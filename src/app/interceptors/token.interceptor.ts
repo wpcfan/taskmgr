@@ -33,7 +33,6 @@ export class TokenInterceptor implements HttpInterceptor {
     let requestUrl: URL;
     try {
       requestUrl = new URL(request.url);
-      console.log(requestUrl);
       return (
         this.whitelistedDomains.findIndex(
           domain =>

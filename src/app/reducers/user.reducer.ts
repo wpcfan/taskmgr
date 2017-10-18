@@ -2,7 +2,9 @@ import {createSelector} from '@ngrx/store';
 import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity';
 import * as actions from '../actions/user.action';
 import * as authActions from '../actions/auth.action';
+import * as prjActions from '../actions/project.action';
 import {User, Auth} from '../domain';
+import { Project } from '../domain/project';
 
 export interface State extends EntityState<User> {}
 
@@ -11,7 +13,7 @@ export function sortByOrder(a: User, b: User): number {
 }
 
 export const adapter: EntityAdapter<User> = createEntityAdapter<User>({
-  selectId: (user: User) => <string>user.id,
+  selectId: (user: User) => <string>user.username,
   sortComparer: sortByOrder,
 });
 
@@ -23,19 +25,20 @@ const register = (state: State, action: authActions.LoginSuccessAction | authAct
     {...adapter.addOne(<User>auth.user, state)} : state;
 };
 
-export function reducer(state: State = initialState, action: actions.Actions | authActions.Actions): State {
+export function reducer(state: State = initialState, action: actions.Actions | authActions.Actions | prjActions.Actions): State {
   switch (action.type) {
     case authActions.LOGIN_SUCCESS:
     case authActions.REGISTER_SUCCESS:
       return register(state, <authActions.LoginSuccessAction | authActions.RegisterSuccessAction>action);
-    case actions.ADD_USER_PROJECT_SUCCESS:
-      return {...adapter.addOne(<User>action.payload, state)};
-    case actions.REMOVE_USER_PROJECT_SUCCESS:
-      return {...adapter.removeOne(<string>action.payload.id, state)};
-    case actions.SEARCH_USERS_SUCCESS:
-    case actions.LOAD_USERS_BY_PRJ_SUCCESS:
-    case actions.BATCH_UPDATE_USER_PROJECT_SUCCESS:
+    case actions.SEARCH_USERS_SUCCESS: {
       return {...adapter.addMany(<User[]>action.payload, state)};
+    }
+    case prjActions.LOADS_SUCCESS: {
+      const projects = action.payload;
+      const members = projects.map((p: Project) => p.members);
+      const arrMembers = members.reduce((a: User[], b: User[]) => a.concat(b), []);
+      return {...adapter.addMany(<User[]>arrMembers, state)};
+    }
     default: {
       return state;
     }

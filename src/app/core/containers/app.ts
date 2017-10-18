@@ -55,7 +55,7 @@ export class AppComponent {
   constructor(
     private oc: OverlayContainer,
     private store$: Store<fromRoot.State>) {
-      this.store$.dispatch(new actions.LoadTokenAction())
+      this.store$.dispatch(new actions.LoadTokenAction());
       this.auth$ = this.store$.select(fromRoot.getAuth);
       this.projects$ = this.store$.select(fromRoot.getProjects);
   }

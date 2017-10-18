@@ -8,7 +8,7 @@ export interface State extends EntityState<Project> {
 }
 
 export function sortByName(a: Project, b: Project): number {
-  return a.name.localeCompare(b.name);
+  return (<string>a.id).localeCompare(<string>b.id);
 }
 
 export const adapter: EntityAdapter<Project> = createEntityAdapter<Project>({

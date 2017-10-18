@@ -1,3 +1,4 @@
+import { Pageable } from '../domain/pageable';
 import {Inject, Injectable} from '@angular/core';
 import {HttpHeaders, HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
@@ -59,9 +60,10 @@ export class TaskService {
   get(taskListId: string): Observable<Task[]> {
     const uri = `${this.config.uri}/${this.domain}`;
     const params = new HttpParams()
-      .set('taskListId', taskListId);
+      .set('taskListId', taskListId)
     return this.http
-      .get<Task[]>(uri, {params});
+      .get<Pageable<Task>>(uri, {params: params})
+      .map(p => p.content);
   }
 
   getByLists(lists: TaskList[]): Observable<Task[]> {
@@ -89,20 +91,5 @@ export class TaskService {
     const uri = `${this.config.uri}/${this.domain}/${task.id}`;
     return this.http
       .patch<Task>(uri, JSON.stringify({completed: !task.completed}), {headers: this.headers});
-  }
-
-  addTaskRef(user: User, taskId: string): Observable<User> {
-    const uri = `${this.config.uri}/users/${user.id}`;
-    const taskIds = (user.taskIds) ? user.taskIds : [];
-    return this.http
-      .patch<User>(uri, JSON.stringify({taskIds: [...taskIds, taskId]}), {headers: this.headers});
-  }
-
-  removeTaskRef(user: User, taskId: string): Observable<User> {
-    const uri = `${this.config.uri}/users/${user.id}`;
-    const taskIds = (user.taskIds) ? user.taskIds : [];
-    const index = taskIds.indexOf(taskId);
-    return this.http
-      .patch<User>(uri, JSON.stringify({taskIds: [...taskIds.slice(0, index), taskIds.slice(index + 1)]}), {headers: this.headers});
   }
 }

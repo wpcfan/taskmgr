@@ -10,13 +10,15 @@ export function reducer(state: Auth = initialState, action: actions.Actions): Au
       const auth = <Auth>action.payload;
       return {
         token: auth.token,
-        userId: auth.user!.id
+        userId: auth.user!.username
       };
     }
     case actions.LOAD_TOKEN: {
       const token = localStorage.getItem('access_token');
+      const userId = localStorage.getItem('userId');
       return {
         token: <string>token,
+        userId: <string>userId,
       }
     }
     case actions.LOGIN_FAIL:

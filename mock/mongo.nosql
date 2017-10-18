@@ -1,0 +1,9 @@
+db.project.aggregate([
+    {$unwind: "$memberIds"},
+    {$match: {_id: ObjectID("59e2259f0abd130a781d4d84")}},
+    {$lookup: {
+       from: "profile",
+       localField: "memberIds",
+       foreignField: "username",
+       as: "members"
+     }}])

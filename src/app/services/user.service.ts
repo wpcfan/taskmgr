@@ -14,45 +14,9 @@ export class UserService {
   }
 
   searchUsers(filter: string): Observable<User[]> {
-    const uri = `${this.config.uri}/${this.domain}`;
+    const uri = `${this.config.uri}/${this.domain}/search`;
     const params = new HttpParams()
-      .set('email_like', filter);
+      .set('filter', filter);
     return this.http.get<User[]>(uri, {params});
-  }
-
-  getUsersByProject(projectId: string): Observable<User[]> {
-    const uri = `${this.config.uri}/users`;
-    const params = new HttpParams()
-      .set('projectId', projectId);
-    return this.http.get<User[]>(uri, {params});
-  }
-
-  addProjectRef(user: User, projectId: string): Observable<User> {
-    const uri = `${this.config.uri}/${this.domain}/${user.id}`;
-    const projectIds = (user.projectIds) ? user.projectIds : [];
-    return this.http
-      .patch<User>(uri, JSON.stringify({projectIds: [...projectIds, projectId]}), {headers: this.headers});
-  }
-
-  removeProjectRef(user: User, projectId: string): Observable<User> {
-    const uri = `${this.config.uri}/${this.domain}/${user.id}`;
-    const projectIds = (user.projectIds) ? user.projectIds : [];
-    const index = projectIds.indexOf(projectId);
-    const toUpdate = [...projectIds.slice(0, index), ...projectIds.slice(index + 1)];
-    return this.http
-      .patch<User>(uri, JSON.stringify({projectIds: toUpdate}), {headers: this.headers});
-  }
-
-  batchUpdateProjectRef(project: Project): Observable<User[]> {
-    const projectId = <string>project.id;
-    const memberIds = project.memberIds ? project.memberIds : [];
-    return Observable.from(memberIds)
-      .switchMap(id => {
-        const uri = `${this.config.uri}/${this.domain}/${id}`;
-        return this.http.get(uri);
-      })
-      .filter((user: User) => user.projectIds!.indexOf(projectId) < 0)
-      .switchMap((u: User) => this.addProjectRef(u, projectId))
-      .reduce((users: User[], curr) => [...users, curr], []);
   }
 }

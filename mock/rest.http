@@ -46,9 +46,6 @@ DELETE http://localhost:8090/projects/59e0d74b0976869fdd18b5b7
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3cGNmYW4xQDE2My5jb20iLCJjcmVhdGVkIjoxNTA3OTA3MjMwMzM4LCJleHAiOjE1MDg1MTIwMzB9.SO0J-9MnYEFgXcyJr2mbvZ1utbREeTL3AHrge5Vyy6k1Eew2J8x_7478pEWq_XMXcG3g_UdTHDh3t-9pMzaVfw
 
 ###
-GET http://localhost:3000/users/37489e0c-df34-c261-71c4-ce75357e3035/
-
-###
 //Projects
 GET http://localhost:8090/projects/?enabled=true&archived=false
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwZW5nMSIsImNyZWF0ZWQiOjE1MDc3NjcwMzEwMzAsImV4cCI6MTUwODM3MTgzMX0.Q_J7-h0qHeElM1HQZ4_tgN4K2nXclJC_5yAAayxT0sOgLNySYjqIkDuObhxb6I9cnkRDZQCwDCBSlDQ4_FOlBQ
@@ -73,7 +70,15 @@ userId: 58f5a904edc76ab0e033cfc3
 
 ###
 //Tasks
-GET http://localhost:3000/taskLists?_embed=tasks&projectId=p0001
+GET http://localhost:8090/taskLists?projectId=59e2259f0abd130a781d4d84
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3cGNmYW5AbG9jYWwuZGV2IiwiY3JlYXRlZCI6MTUwNzk5MjkzMTQzNSwiZXhwIjoxNTA4NTk3NzMxfQ.IyoBHtqlT18uIAJr7GMLoNP7BNPXCeUakLWTkPpQtnyyHIJC9WLs3HQaHdlyGWXlygNBbk4cOlJQupI4NbhQSA
+
+
+###
+
+GET http://localhost:8090/tasks
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3cGNmYW5AbG9jYWwuZGV2IiwiY3JlYXRlZCI6MTUwNzk5MjkzMTQzNSwiZXhwIjoxNTA4NTk3NzMxfQ.IyoBHtqlT18uIAJr7GMLoNP7BNPXCeUakLWTkPpQtnyyHIJC9WLs3HQaHdlyGWXlygNBbk4cOlJQupI4NbhQSA
+taskListId: 59e2259f0abd130a781d4d85
 
 ###
 GET https://taskmgr.wilddogio.com/projects.json?auth=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2IjoxLCJpYXQiOjE0OTMzNzczMzksInVzZXJfaWQiOiI0N2RhYTQyYzczNmQ4MTZiY2IzZGMyMmFhYmRiIiwiaXNzIjoiaHR0cHM6Ly90YXNrbWdyLndpbGRkb2dpby5jb20iLCJuYW1lIjoiIiwicGljdHVyZSI6IiIsImVtYWlsIjoid2FuZ0AxNjMuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwaG9uZV9udW1iZXIiOiIiLCJwaG9uZV9udW1iZXJfdmVyaWZpZWQiOmZhbHNlLCJ3aWxkZG9nIjp7ImlkZW50aXRpZXMiOnsicGFzc3dvcmQiOlsid2FuZ0AxNjMuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifSwiZXhwIjoxNDk4MjE1NzM5fQ.gXnf90cq_KSqQ75XfpmUBq_jpksLi4pUvcV4LPIikx4
@@ -87,6 +92,19 @@ Charset: utf-8
 	"name": "CMRead",
 	"desc": "The android app for reading books"
 }
+
+###
+POST http://localhost:8090/taskLists
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3cGNmYW5AbG9jYWwuZGV2IiwiY3JlYXRlZCI6MTUwNzk5MjkzMTQzNSwiZXhwIjoxNTA4NTk3NzMxfQ.IyoBHtqlT18uIAJr7GMLoNP7BNPXCeUakLWTkPpQtnyyHIJC9WLs3HQaHdlyGWXlygNBbk4cOlJQupI4NbhQSA
+Content-Type: application/json
+Charset: utf-8
+
+{
+  "name": "计划",
+  "projectId": "59e2259f0abd130a781d4d84",
+  "order": "1"
+}
+
 
 ###
 OPTIONS https://taskmgr.wilddogio.com/projects.json?auth=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2IjoxLCJpYXQiOjE0OTM3MDI4ODIsInVzZXJfaWQiOiI0N2RhYTQyYzczNmQ4MTZiY2IzZGMyMmFhYmRiIiwiaXNzIjoiaHR0cHM6Ly90YXNrbWdyLndpbGRkb2dpby5jb20iLCJuYW1lIjoiIiwicGljdHVyZSI6IiIsImVtYWlsIjoid2FuZ0AxNjMuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwaG9uZV9udW1iZXIiOiIiLCJwaG9uZV9udW1iZXJfdmVyaWZpZWQiOmZhbHNlLCJ3aWxkZG9nIjp7ImlkZW50aXRpZXMiOnsicGFzc3dvcmQiOlsid2FuZ0AxNjMuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifSwiZXhwIjoxNDk4NTQxMjgyfQ.Rwf2WuFLaOzg13QMbXJlYefH0rxeRFh7TjOQxgBjajs HTTP/1.1
@@ -138,3 +156,19 @@ Content-Type: application/json
 https://leancloud.cn/1.1/classes/projects?where=%7B%22members%22%3A%22590acda82f301e00582a352a%22%7D
 X-LC-Id: ABTVy9loYSaIMc3EkaFRupTL-gzGzoHsz
 X-LC-Key: mwywiweRadXf6CztkUNyUsPS
+
+###
+GET http://localhost:8090/users/search?filter=wp
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3cGNmYW5AbG9jYWwuZGV2IiwiY3JlYXRlZCI6MTUwNzk5MjkzMTQzNSwiZXhwIjoxNTA4NTk3NzMxfQ.IyoBHtqlT18uIAJr7GMLoNP7BNPXCeUakLWTkPpQtnyyHIJC9WLs3HQaHdlyGWXlygNBbk4cOlJQupI4NbhQSA
+
+
+###
+POST http://localhost:8090/taskLists/swapOrder
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3cGNmYW5AbG9jYWwuZGV2IiwiY3JlYXRlZCI6MTUwNzk5MjkzMTQzNSwiZXhwIjoxNTA4NTk3NzMxfQ.IyoBHtqlT18uIAJr7GMLoNP7BNPXCeUakLWTkPpQtnyyHIJC9WLs3HQaHdlyGWXlygNBbk4cOlJQupI4NbhQSA
+Content-Type: application/json
+Charset: utf-8
+
+{
+  "srcListId": "59e467e99b0db53d18f31fcc",
+  "targetListId": "59e5fff9b42a021fb6c17c53"
+}

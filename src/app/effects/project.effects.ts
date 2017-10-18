@@ -30,7 +30,6 @@ export class ProjectEffects {
   addProject$: Observable<Action> = this.actions$
     .ofType<actions.AddProjectAction>(actions.ADD)
     .map(action => action.payload)
-    .debug('Adding Project:')
     .switchMap((project) => this.service
       .add(project)
       .map(returned => new actions.AddProjectSuccessAction(returned))
@@ -80,21 +79,6 @@ export class ProjectEffects {
     .map(project => new tasklistActions.LoadTaskListsAction(<string>project.id));
 
   @Effect()
-  toLoadUsersByPrj$: Observable<Action> = this.actions$
-    .ofType<actions.SelectProjectAction>(actions.SELECT)
-    .map(action => action.payload)
-    .map(project => new userActions.LoadUsersByPrjAction(<string>project.id));
-
-  @Effect()
-  delUserPrjRef$: Observable<Action> = this.actions$
-    .ofType<actions.DeleteProjectSuccessAction>(actions.DELETE_SUCCESS)
-    .map(action => action.payload)
-    .map((prj: Project) => prj.id)
-    .withLatestFrom(this.store$.select(fromRoot.getAuth).map(auth => auth.user), (projectId: string, user: User) => {
-      return new userActions.RemoveUserProjectAction({user: user, projectId: projectId});
-    });
-
-  @Effect()
   inviteMembersRef$: Observable<Action> = this.actions$
     .ofType<actions.InviteMembersAction>(actions.INVITE)
     .map(action => action.payload)
@@ -103,12 +87,6 @@ export class ProjectEffects {
         .map((project: Project) => new actions.InviteMembersSuccessAction(project))
         .catch(err => of(new actions.InviteMembersFailAction(err)))
     );
-
-  @Effect()
-  updateUserPrjRef$: Observable<Action> = this.actions$
-    .ofType<actions.InviteMembersSuccessAction>(actions.INVITE_SUCCESS)
-    .map(action => action.payload)
-    .map((project: Project) => new userActions.BatchUpdateUserProjectAction(project));
 
   @Effect({ dispatch: false })
   navigate$ = this.actions$.ofType(routerActions.GO)

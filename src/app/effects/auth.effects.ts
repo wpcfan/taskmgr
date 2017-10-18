@@ -14,28 +14,13 @@ import * as actions from '../actions/auth.action';
 export class AuthEffects {
 
   @Effect()
-  init$: Observable<Action> = Observable.defer(() => {
-    const loggedIn = getAuth();
-    if(loggedIn) {
-
-    }
-    return
-  });
-
-  @Effect()
   login$: Observable<Action> = this.actions$
     .ofType<actions.LoginAction>(actions.LOGIN)
     .map((action: actions.LoginAction) => action.payload)
     .switchMap((val: { username: string, password: string }) => this.authService
       .login(val.username, val.password)
       .map(auth => new actions.LoginSuccessAction(auth))
-      .catch(err => of(new actions.LoginFailAction({
-        status: 501,
-        message: err.message,
-        exception: err.stack,
-        path: '/login',
-        timestamp: new Date()
-      })))
+      .catch(err => of(new actions.LoginFailAction(err)))
     );
 
   /**
@@ -65,8 +50,8 @@ export class AuthEffects {
   @Effect()
   logout$: Observable<Action> = this.actions$
     .ofType<actions.LogoutAction>(actions.LOGOUT)
-    .map(() => new routerActions.Go({path: ['/']}))
-    .do(_ => localStorage.clear());
+    .do(_ => localStorage.clear())
+    .map(() => new routerActions.Go({path: ['/']}));
 
   @Effect({ dispatch: false })
   navigate$ = this.actions$.ofType(routerActions.GO)
@@ -74,18 +59,23 @@ export class AuthEffects {
     .do(({ path, query: queryParams, extras}) =>
       this.router.navigate(path, { queryParams, ...extras }));
 
-
   @Effect({ dispatch: false })
   loginAndStoreToken$ = this.actions$
     .ofType<actions.LoginSuccessAction>(actions.LOGIN_SUCCESS)
     .map(action => action.payload)
-    .do(auth => localStorage.setItem('access_token', <string>auth.token))
+    .do(auth => {
+      localStorage.setItem('access_token', <string>auth.token);
+      localStorage.setItem('userId', <string>auth.user!.username);
+    })
 
   @Effect({ dispatch: false })
   registerAndStoreToken$ = this.actions$
     .ofType<actions.RegisterSuccessAction>(actions.REGISTER_SUCCESS)
     .map(action => action.payload)
-    .do(auth => localStorage.setItem('access_token', <string>auth.token))
+    .do(auth => {
+      localStorage.setItem('access_token', <string>auth.token);
+      localStorage.setItem('userId', <string>auth.user!.username);
+    })
 
   /**
    *
