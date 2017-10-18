@@ -5,10 +5,14 @@
   </div>
   <div class="task-filter-nav-body">
     <div class="task-filter-nav-category-container">
-      <div class="task-filter-nav-category-header">任务筛选</div>
+      <div class="task-filter-nav-category-header">
+        <mat-icon class="task-filter-nav-category-header-icon">input</mat-icon>
+        <span class="task-filter-nav-category-header-title">任务筛选</span>
+        <span *ngIf="taskDesc" class="task-filter-nav-category-header-clear" (click)="onClearDesc($event)">清除筛选</span>
+      </div>
       <div class="task-filter-nav-category-input-container">
         <mat-form-field class="full-width">
-          <input matInput placeholder="查找相关任务" formControlName="descFilter"/>
+          <input matInput placeholder="查找相关任务" formControlName="descFilter" autocomplete="off" />
         </mat-form-field>
       </div>
     </div>

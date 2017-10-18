@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -18,8 +18,9 @@ export class TaskFilterNavComponent implements OnInit {
 
   @Output() closeClicked = new EventEmitter<void>();
 
-  taskFilterVM: TaskFilterVM;
   form: FormGroup;
+  taskFilterVM: TaskFilterVM;
+  taskDesc: string;
 
   private taskFilter$: Observable<TaskFilter>;
   private descFilter$: Observable<string>;
@@ -37,7 +38,6 @@ export class TaskFilterNavComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this._taskFilterSub = this.taskFilter$.subscribe((filter: TaskFilter) => {
       this.taskFilter = filter;
       this.taskFilterVM = getTaskFilterVM(filter);
@@ -47,7 +47,8 @@ export class TaskFilterNavComponent implements OnInit {
     this._descFilterSub = this.descFilter$.debounceTime(300)
       .distinctUntilChanged()
       .subscribe((desc: string) => {
-        const updatedTaskFilter = getTaskFilterByDesc(this.taskFilter, desc.trim());
+        this.taskDesc = desc.trim();
+        const updatedTaskFilter = getTaskFilterByDesc(this.taskFilter, this.taskDesc);
         this.store$.dispatch(new TaskFilterActions.UpdateTaskFilterAction(updatedTaskFilter));
       });
   }
@@ -67,7 +68,14 @@ export class TaskFilterNavComponent implements OnInit {
     this.closeClicked.emit();
   }
 
+  onClearDesc(ev: Event) {
+    ev.preventDefault();
+    this.form.controls['descFilter'].setValue('');
+  }
+
   onPriorityItemClicked(ev: Event, priority: TaskFilterPriorityVM) {
+    ev.preventDefault();
+
     priority.checked = !priority.checked;
 
     const updatedTaskFilter = getTaskFilterByPriority(this.taskFilter, this.taskFilterVM.priorityVMs);

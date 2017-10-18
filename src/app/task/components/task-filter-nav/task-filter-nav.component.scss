@@ -29,6 +29,7 @@
   right: 15px;
   line-height: 50px;
   color: #A6A6A6;
+  cursor: pointer;
 }
 
 .task-filter-nav-close:hover {
@@ -53,6 +54,25 @@
   color: #383838;
   font-size: 14px;
   padding: 0 15px;
+  display: flex;
+  flex-direction: row;
+}
+
+.task-filter-nav-category-header-icon {
+  font-size: 18px;
+  line-height: 40px;
+  color: #808080;
+}
+
+.task-filter-nav-category-header-title {
+  margin-left: 8px;
+}
+
+.task-filter-nav-category-header-clear {
+  flex: 1;
+  text-align: end;
+  color: #3da8f5;
+  cursor: pointer;
 }
 
 .task-filter-nav-category-divider {
