@@ -182,3 +182,7 @@ Charset: utf-8
 {
   "memberIds": ["wpcfan@local.dev"]
 }
+
+###
+GET http://localhost:8090/users/59e1ceed097686a821a32084/tasks
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ3cGNmYW5AbG9jYWwuZGV2IiwiY3JlYXRlZCI6MTUwNzk5MjkzMTQzNSwiZXhwIjoxNTA4NTk3NzMxfQ.IyoBHtqlT18uIAJr7GMLoNP7BNPXCeUakLWTkPpQtnyyHIJC9WLs3HQaHdlyGWXlygNBbk4cOlJQupI4NbhQSA

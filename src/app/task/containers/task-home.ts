@@ -201,7 +201,7 @@ export class TaskHomeComponent {
         desc: desc,
         priority: 3,
         ownerId: <string>user.username,
-        participantIds: [],
+        participantIds: [<string>user.username],
         taskListId: listId,
         completed: false,
         createDate: new Date()
