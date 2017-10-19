@@ -7,7 +7,8 @@ import { TaskService } from './task.service';
 import { AuthGuardService } from './auth-guard.service';
 import { UserService } from './user.service';
 import { MyCalService } from './my-cal.service';
-import { TaskHistoryService } from './task-history.service'
+import { TaskHistoryService } from './task-history.service';
+import { TaskFilterService } from './task-filter.service';
 
 export {
   AuthGuardService,
@@ -16,6 +17,7 @@ export {
   QuoteService,
   TaskListService,
   TaskService,
+  TaskFilterService,
   TaskHistoryService,
   UserService,
   MyCalService,
@@ -33,6 +35,7 @@ export class ServicesModule {
         QuoteService,
         TaskListService,
         TaskService,
+        TaskFilterService,
         TaskHistoryService,
         UserService,
         MyCalService,

@@ -175,8 +175,8 @@ export const getTaskByFilter = createSelector<State, TaskListVM[], TaskFilter, T
   });
 })
 
-export const getProjectMembers = (projectId: string) => createSelector(getProjectsState, getUserEntities, (state, entities) => {
-  return state!.entities[projectId]!.members!.map(id => entities[id]);
+export const getProjectMembers = (projectId: string) => createSelector<State, fromProjects.State, { [id: string]: User }, User[]>(getProjectsState, getUserEntities, (state, entities) => {
+  return state!.entities[projectId]!.members!.map((id: string) => entities[id]);
 });
 export const getAuth = createSelector(getAuthState, getUserEntities, (_auth, _entities) => {
   return { ..._auth, user: _entities[<string>_auth.userId] };

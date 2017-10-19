@@ -22,8 +22,11 @@ export const initialState: State = {
 
 export function reducer(state = initialState, action: actions.Actions | projectActions.Actions): State {
   switch (action.type) {
-    case projectActions.SELECT:
-      return { id: <string>action.payload.id, filter: getDefaultFilter() };
+    // case projectActions.SELECT:
+    // return { id: <string>action.payload.id, filter: getDefaultFilter() };
+    case actions.LOAD_SUCCESS:
+      console.log('<<Reducer>>', JSON.stringify(action.payload), action.payload ? 'true' : 'false');
+      return state;
     case actions.UPDATE:
       return { ...state, filter: action.payload };
     default:

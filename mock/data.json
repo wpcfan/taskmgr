@@ -240,6 +240,20 @@
       "id": "9"
     }
   ],
+  "taskFilter": [
+    {
+      "id": "1",
+      "projectId": "Hya1moGb-",
+      "hasOwner": true,
+      "hasPriority": true
+    },
+    {
+      "id": "2",
+      "projectId": "Sk2HaTagb",
+      "hasOwner": true,
+      "hasPriority": true
+    }
+  ],
   "taskHistory": [
     {
       "taskId": "5",
