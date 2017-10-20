@@ -1,17 +1,6 @@
 import { User } from '../domain';
 
 export interface TaskFilterVM {
-  desc?: string;
-  priorityVMs: TaskFilterPriorityVM[];
-}
-
-export interface TaskFilterPriorityVM {
-  label: string;
-  value: number;
-  checked: boolean;
-}
-
-export interface TaskFilterVM1 {
   id: string | undefined;
   projectId: string;
   desc?: string;
@@ -19,5 +8,10 @@ export interface TaskFilterVM1 {
   hasPriority: boolean;
   owners?: User[];
   priorityVMs: TaskFilterPriorityVM[];
+}
 
+export interface TaskFilterPriorityVM {
+  label: string;
+  value: number;
+  checked: boolean;
 }

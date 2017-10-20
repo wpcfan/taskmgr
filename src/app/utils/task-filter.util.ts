@@ -1,21 +1,27 @@
 import { TaskFilter } from '../domain';
 import { TaskFilterVM, TaskFilterPriorityVM, TaskVM } from '../vm';
 
-export const getTasksByFilter = (tasks: TaskVM[], filter: TaskFilter): TaskVM[] => {
+export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): TaskVM[] => {
 
   const newTasks: TaskVM[] = tasks.filter((task: TaskVM) => {
     /** Desc */
-    if (filter.desc) {
-      if (task.desc.indexOf(filter.desc) === -1) {
+    if (filterVM.desc) {
+      if (task.desc.indexOf(filterVM.desc) === -1) {
         return false;
       }
     }
 
     /** Priority */
-    if (filter.priorities.length > 0) {
-      if (filter.priorities.indexOf(task.priority) === -1)
+    const priorityVMCheckeds: TaskFilterPriorityVM[] = filterVM.priorityVMs.filter((priorityVM: TaskFilterPriorityVM) => priorityVM.checked);
+    if (priorityVMCheckeds.length > 0) {
+      if (priorityVMCheckeds.filter((priorityVM: TaskFilterPriorityVM) => priorityVM.value === task.priority).length === 0)
         return false;
     }
+
+    // if (filterVM.priorities.length > 0) {
+    //   if (filterVM.priorities.indexOf(task.priority) === -1)
+    //     return false;
+    // }
 
     return true;
   });
@@ -23,24 +29,44 @@ export const getTasksByFilter = (tasks: TaskVM[], filter: TaskFilter): TaskVM[] 
   return newTasks;
 }
 
-export const getTaskFilterVM = (taskFilter: TaskFilter): TaskFilterVM => {
-  return { desc: taskFilter.desc, priorityVMs: getPrioritiesVMs(taskFilter.priorities) };
-}
+// export const getTaskFilterVM = (taskFilter: TaskFilter): TaskFilterVM => {
+//   return { desc: taskFilter.desc, priorityVMs: getPrioritiesVMs(taskFilter.priorities) };
+// }
 
-export const getTaskFilterByDesc = (taskFilter: TaskFilter, desc: string): TaskFilter => {
-  return { ...taskFilter, desc: desc };
-}
+// export const getTaskFilterByDesc = (taskFilter: TaskFilter, desc: string): TaskFilter => {
+//   return { ...taskFilter, desc: desc };
+// }
 
-export const getTaskFilterByPriority = (taskFilter: TaskFilter, taskFilterPriorityVMs: TaskFilterPriorityVM[]): TaskFilter => {
+// export const getTaskFilterByPriority = (taskFilter: TaskFilter, taskFilterPriorityVMs: TaskFilterPriorityVM[]): TaskFilter => {
 
-  const priorities: number[] = taskFilterPriorityVMs.reduce((priorities: number[], priorityVM: TaskFilterPriorityVM) => {
-    if (priorityVM.checked)
-      return [...priorities, priorityVM.value];
-    else
-      return [...priorities];
-  }, []);
+//   const priorities: number[] = taskFilterPriorityVMs.reduce((priorities: number[], priorityVM: TaskFilterPriorityVM) => {
+//     if (priorityVM.checked)
+//       return [...priorities, priorityVM.value];
+//     else
+//       return [...priorities];
+//   }, []);
 
-  return { ...taskFilter, priorities: priorities };
+//   return { ...taskFilter, priorities: priorities };
+// }
+
+export const getDefaultPrioritiesVMs = (): TaskFilterPriorityVM[] => {
+  return [
+    {
+      label: '普通',
+      value: 3,
+      checked: false,
+    },
+    {
+      label: '重要',
+      value: 2,
+      checked: false,
+    },
+    {
+      label: '紧急',
+      value: 1,
+      checked: false,
+    },
+  ];
 }
 
 const getPrioritiesVMs = (priorities: number[]): TaskFilterPriorityVM[] => {

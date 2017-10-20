@@ -3,35 +3,21 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import * as actions from '../actions/task-filter.action';
 import * as projectActions from '../actions/project.action';
 
-const getDefaultFilter = (): TaskFilter => {
-  return {
-    desc: '',
-    priorities: [],
-  }
-}
-
-export interface State {
-  id: string | null;
-  filter: TaskFilter;
-}
-
-export const initialState: State = {
-  id: null,
-  filter: getDefaultFilter(),
+export const initialState: TaskFilter = {
+  id: undefined,
+  projectId: '',
+  hasOwner: true,
+  hasPriority: true,
 };
 
-export function reducer(state = initialState, action: actions.Actions | projectActions.Actions): State {
+export function reducer(state = initialState, action: actions.Actions | projectActions.Actions): TaskFilter {
   switch (action.type) {
-    // case projectActions.SELECT:
-    // return { id: <string>action.payload.id, filter: getDefaultFilter() };
     case actions.LOAD_SUCCESS:
-      console.log('<<Reducer>>', JSON.stringify(action.payload), action.payload ? 'true' : 'false');
-      return state;
-    case actions.UPDATE:
-      return { ...state, filter: action.payload };
+      console.log('<<TaskFilter Reducer>>', JSON.stringify(action.payload), action.payload ? 'true' : 'false');
+      return { ...action.payload };
+    case actions.UPDATE_SUCCESS:
+      return { ...action.payload };
     default:
       return state;
   }
 }
-
-export const getTaskFilter = (state: State): TaskFilter => state.filter;
