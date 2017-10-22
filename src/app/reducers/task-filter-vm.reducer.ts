@@ -9,14 +9,14 @@ export const initialState: TaskFilterVM = {
   hasOwner: true,
   hasPriority: true,
   // desc: '',
-  owners: [],
+  ownerVMs: [],
   priorityVMs: getDefaultPrioritiesVMs(),
 }
 
 export function reducer(state = initialState, action: actions.Actions | taskFilterActions.Actions): TaskFilterVM {
   switch (action.type) {
     case taskFilterActions.LOAD_SUCCESS:
-      return { ...action.payload, owners: [], priorityVMs: getDefaultPrioritiesVMs() }
+      return { ...action.payload, ownerVMs: [], priorityVMs: getDefaultPrioritiesVMs() }
     case actions.UPDATE:
       return { ...action.payload };
     default:

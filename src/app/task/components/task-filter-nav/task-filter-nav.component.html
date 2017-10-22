@@ -16,7 +16,7 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="task-filter-nav-category-container">
+    <div *ngIf="taskFilterVM.hasPriority" class="task-filter-nav-category-container">
       <div class="task-filter-nav-category-header">优先级</div>
       <div class="task-filter-nav-category-item" *ngFor="let priority of taskFilterVM.priorityVMs" (click)="onPriorityItemClicked($event, priority)">
         <span>{{priority.label}}</span>
