@@ -1,5 +1,5 @@
-import {Action} from '@ngrx/store';
-import {Project, User} from '../domain';
+import { Action } from '@ngrx/store';
+import { Project, User } from '../domain';
 
 export const ADD = '[Project] Add';
 export const ADD_SUCCESS = '[Project] Add Success';
@@ -20,6 +20,9 @@ export const SELECT = '[Project] Select Project';
 export const INVITE = '[Project] Invite Members';
 export const INVITE_SUCCESS = '[Project] Invite Members Success';
 export const INVITE_FAIL = '[Project] Invite Members Fail';
+export const INSERT_FILTER = '[Project] Insert Filter';
+export const INSERT_FILTER_SUCCESS = '[Project] Insert Filter Success';
+export const INSERT_FILTER_FAIL = '[Project] Insert Filter Fail';
 
 export class AddProjectAction implements Action {
   readonly type = ADD;
@@ -133,7 +136,7 @@ export class SelectProjectAction implements Action {
 export class InviteMembersAction implements Action {
   readonly type = INVITE;
 
-  constructor(public payload: {projectId: string; members: User[]}) {
+  constructor(public payload: { projectId: string; members: User[] }) {
   }
 }
 
@@ -146,6 +149,27 @@ export class InviteMembersSuccessAction implements Action {
 
 export class InviteMembersFailAction implements Action {
   readonly type = INVITE_FAIL;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class InsertFilterAction implements Action {
+  readonly type = INSERT_FILTER;
+
+  constructor(public payload: Project) {
+  }
+}
+
+export class InsertFilterSuccessAction implements Action {
+  readonly type = INSERT_FILTER_SUCCESS;
+
+  constructor(public payload: Project) {
+  }
+}
+
+export class InsertFilterFailAction implements Action {
+  readonly type = INSERT_FILTER_FAIL;
 
   constructor(public payload: string) {
   }
@@ -171,4 +195,7 @@ export type Actions
   | InviteMembersAction
   | InviteMembersSuccessAction
   | InviteMembersFailAction
+  | InsertFilterAction
+  | InsertFilterSuccessAction
+  | InsertFilterFailAction
   ;

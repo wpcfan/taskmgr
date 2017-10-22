@@ -13,7 +13,6 @@ export const initialState: TaskFilter = {
 export function reducer(state = initialState, action: actions.Actions | projectActions.Actions): TaskFilter {
   switch (action.type) {
     case actions.LOAD_SUCCESS:
-      console.log('<<TaskFilter Reducer>>', JSON.stringify(action.payload), action.payload ? 'true' : 'false');
       return { ...action.payload };
     case actions.UPDATE_SUCCESS:
       return { ...action.payload };

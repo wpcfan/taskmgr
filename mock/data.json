@@ -60,7 +60,8 @@
       "members": [
         "37489e0c-df34-c261-71c4-ce75357e3035",
         "BkkDvwee-"
-      ]
+      ],
+      "taskFilterId": "rkxe1-9KpW"
     },
     {
       "name": "某某公司 ERP 系统",
@@ -75,7 +76,8 @@
         "BylTyXiM-b",
         "BkWpk7jGZb",
         "H1fTyXjMWW"
-      ]
+      ],
+      "taskFilterId": "Bkm8XZcta-"
     }
   ],
   "taskLists": [
@@ -242,15 +244,15 @@
   ],
   "taskFilter": [
     {
-      "id": "1",
+      "id": "rkxe1-9KpW",
       "projectId": "Hya1moGb-",
       "hasOwner": true,
       "hasPriority": true
     },
     {
-      "id": "2",
+      "id": "Bkm8XZcta-",
       "projectId": "Sk2HaTagb",
-      "hasOwner": true,
+      "hasOwner": false,
       "hasPriority": true
     }
   ],

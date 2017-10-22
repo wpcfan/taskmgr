@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { TaskFilter } from '../domain';
+import { TaskFilter, Project } from '../domain';
 
 export const LOAD = '[TaskFilter] Load';
 export const LOAD_SUCCESS = '[TaskFilter] Success';
@@ -37,18 +37,18 @@ export class LoadTaskFilterFailAction implements Action {
 export class AddTaskFilterAction implements Action {
   readonly type = ADD;
 
-  constructor(public payload: TaskFilter) {
+  constructor(public payload: Project) {
   }
 }
 
-export class AddTaskSuccessFilterAction implements Action {
+export class AddTaskFilterSuccessAction implements Action {
   readonly type = ADD_SUCCESS;
 
-  constructor(public payload: TaskFilter) {
+  constructor(public payload: Project) {
   }
 }
 
-export class AddTaskFailFilterAction implements Action {
+export class AddTaskFilterFailAction implements Action {
   readonly type = ADD_FAIL;
 
   constructor(public payload: string) {
@@ -81,8 +81,8 @@ export type Actions
   | LoadTaskFilterSuccessAction
   | LoadTaskFilterFailAction
   | AddTaskFilterAction
-  | AddTaskSuccessFilterAction
-  | AddTaskFailFilterAction
+  | AddTaskFilterSuccessAction
+  | AddTaskFilterFailAction
   | UpdateTaskFilterAction
   | UpdateTaskFilterSuccessAction
   | UpdateTaskFilterFailAction

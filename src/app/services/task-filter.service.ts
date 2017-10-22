@@ -16,12 +16,8 @@ export class TaskFilterService {
     return this.http.post<TaskFilter>(uri, JSON.stringify(filter), { headers: this.headers });
   }
 
-  getTaskFilter(projectId: string): Observable<TaskFilter> {
-    const uri = `${this.config.uri}/${this.domain}`;
-    const params = new HttpParams()
-      .set('projectId', projectId);
-
-    return this.http.get<TaskFilter[]>(uri, { params })
-      .map((res: TaskFilter[]) => res[0]);
+  getTaskFilter(id: string): Observable<TaskFilter> {
+    const uri = `${this.config.uri}/${this.domain}/${id}`;
+    return this.http.get<TaskFilter>(uri);
   }
 }
