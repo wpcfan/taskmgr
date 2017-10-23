@@ -82,11 +82,14 @@
 
 .task-filter-nav-category-item {
   height: 40px;
-  line-height: 40px;
+  // line-height: 40px;
   position: relative;
   color: #808080;
   font-size: 14px;
   padding-left:  15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .task-filter-nav-category-item:hover {
@@ -107,4 +110,12 @@
   height: 40px;
   font-size: 14px;
   color: #383838;
+}
+
+.task-filter-nav-category-item-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
 }

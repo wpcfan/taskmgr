@@ -16,6 +16,15 @@
         </mat-form-field>
       </div>
     </div>
+    <div *ngIf="taskFilterVM.hasOwner" class="task-filter-nav-category-container">
+      <div class="task-filter-nav-category-header">执行者</div>
+      <div class="task-filter-nav-category-item" *ngFor="let ownerVM of taskFilterVM.ownerVMs">
+        <mat-icon  class="task-filter-nav-category-item-avatar" [svgIcon]="getOwnerAvatar(ownerVM)"></mat-icon>
+        <span>{{getOwnerName(ownerVM)}}</span>
+        <mat-icon *ngIf="ownerVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
+      </div>
+      <div class="task-filter-nav-category-divider"></div>
+    </div>
     <div *ngIf="taskFilterVM.hasPriority" class="task-filter-nav-category-container">
       <div class="task-filter-nav-category-header">优先级</div>
       <div class="task-filter-nav-category-item" *ngFor="let priority of taskFilterVM.priorityVMs" (click)="onPriorityItemClicked($event, priority)">

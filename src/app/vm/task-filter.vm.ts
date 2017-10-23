@@ -11,7 +11,7 @@ export interface TaskFilterVM {
 }
 
 export interface TaskFilterOwnerVM {
-  owner: User;
+  owner?: User;
   checked: boolean;
 }
 

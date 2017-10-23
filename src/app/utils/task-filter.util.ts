@@ -52,8 +52,15 @@ export const getDefaultPrioritiesVMs = (): TaskFilterPriorityVM[] => {
   ];
 }
 
+export const getDefaultOwnerVMs = (): TaskFilterOwnerVM[] => {
+  return [{ checked: false }];
+}
+
 export const getOwnerVMs = (owners: User[]): TaskFilterOwnerVM[] => {
-  return owners.map((owner: User) => {
+  const defaultOwnerVMs: TaskFilterOwnerVM[] = getDefaultOwnerVMs();
+  const ownerVMs: TaskFilterOwnerVM[] = owners.map((owner: User) => {
     return { owner: owner, checked: false };
   });
+
+  return [...defaultOwnerVMs, ...ownerVMs];
 }

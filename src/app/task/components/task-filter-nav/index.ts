@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { TaskFilter } from '../../../domain';
-import { TaskFilterVM, TaskFilterPriorityVM } from '../../../vm';
+import { TaskFilterVM, TaskFilterPriorityVM, TaskFilterOwnerVM } from '../../../vm';
 import { getUpdateTaskFilterVMByPriority } from '../../../utils/task-filter.util';
 import * as fromRoot from '../../../reducers';
 import * as TaskFilterVMActions from '../../../actions/task-filter-vm.action';
@@ -73,5 +73,13 @@ export class TaskFilterNavComponent implements OnInit {
     ev.preventDefault();
 
     this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByPriority(this.taskFilterVM, priority)));
+  }
+
+  getOwnerName(ownerVM: TaskFilterOwnerVM): string {
+    return ownerVM.owner ? <string>ownerVM.owner.name : '待认领';
+  }
+
+  getOwnerAvatar(ownerVM: TaskFilterOwnerVM): string {
+    return ownerVM.owner ? <string>ownerVM.owner.avatar : 'unassigned';
   }
 }

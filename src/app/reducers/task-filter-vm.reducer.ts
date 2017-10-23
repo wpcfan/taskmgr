@@ -1,5 +1,5 @@
 import { TaskFilterVM } from '../vm';
-import { getDefaultPrioritiesVMs, getOwnerVMs } from '../utils/task-filter.util';
+import { getDefaultPrioritiesVMs, getDefaultOwnerVMs, getOwnerVMs } from '../utils/task-filter.util';
 import * as actions from '../actions/task-filter-vm.action';
 import * as taskFilterActions from '../actions/task-filter.action';
 
@@ -8,8 +8,7 @@ export const initialState: TaskFilterVM = {
   projectId: '',
   hasOwner: true,
   hasPriority: true,
-  // desc: '',
-  ownerVMs: [],
+  ownerVMs: getDefaultOwnerVMs(),
   priorityVMs: getDefaultPrioritiesVMs(),
 }
 
