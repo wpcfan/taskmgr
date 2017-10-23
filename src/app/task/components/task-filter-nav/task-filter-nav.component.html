@@ -18,7 +18,7 @@
     </div>
     <div *ngIf="taskFilterVM.hasOwner" class="task-filter-nav-category-container">
       <div class="task-filter-nav-category-header">执行者</div>
-      <div class="task-filter-nav-category-item" *ngFor="let ownerVM of taskFilterVM.ownerVMs">
+      <div class="task-filter-nav-category-item" *ngFor="let ownerVM of taskFilterVM.ownerVMs" (click)="onOwnerItemClicked($event, ownerVM)">
         <mat-icon  class="task-filter-nav-category-item-avatar" [svgIcon]="getOwnerAvatar(ownerVM)"></mat-icon>
         <span>{{getOwnerName(ownerVM)}}</span>
         <mat-icon *ngIf="ownerVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>

@@ -11,16 +11,57 @@ export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): Tas
       }
     }
 
-    /** Priority */
-    const priorityVMCheckeds: TaskFilterPriorityVM[] = filterVM.priorityVMs.filter((priorityVM: TaskFilterPriorityVM) => priorityVM.checked);
-    if (priorityVMCheckeds.length > 0) {
-      if (priorityVMCheckeds.filter((priorityVM: TaskFilterPriorityVM) => priorityVM.value === task.priority).length === 0)
-        return false;
+    /** Owner */
+    if (filterVM.hasOwner) {
+      const ownerVMCheckeds: TaskFilterOwnerVM[] = filterVM.ownerVMs.filter((ownerVM: TaskFilterOwnerVM) => ownerVM.checked);
+      if (ownerVMCheckeds.length > 0) {
+        const matchedOwnerVMs: TaskFilterOwnerVM[] = ownerVMCheckeds.filter((ownerVM: TaskFilterOwnerVM) => {
+          if (ownerVM.owner && task.owner) {
+            if (ownerVM.owner.id === task.owner.id)
+              return true;
+          }
+
+          if (!ownerVM.owner && !task.owner)
+            return true;
+
+          return false;
+        });
+
+        if (matchedOwnerVMs.length === 0)
+          return false;
+      }
     }
+
+    /** Priority */
+    if (filterVM.hasPriority) {
+      const priorityVMCheckeds: TaskFilterPriorityVM[] = filterVM.priorityVMs.filter((priorityVM: TaskFilterPriorityVM) => priorityVM.checked);
+      if (priorityVMCheckeds.length > 0) {
+        if (priorityVMCheckeds.filter((priorityVM: TaskFilterPriorityVM) => priorityVM.value === task.priority).length === 0)
+          return false;
+      }
+    }
+
     return true;
   });
 
   return newTasks;
+}
+
+export const getUpdateTaskFilterVMByOwner = (taskFilterVM: TaskFilterVM, checkedOwnerVM: TaskFilterOwnerVM): TaskFilterVM => {
+  let ownerVMs: TaskFilterOwnerVM[] = taskFilterVM.ownerVMs;
+  ownerVMs = ownerVMs.map((ownerVM: TaskFilterOwnerVM) => {
+    if (ownerVM.owner && checkedOwnerVM.owner) {
+      if (ownerVM.owner.id === checkedOwnerVM.owner.id)
+        return { ...ownerVM, checked: !ownerVM.checked };
+    }
+
+    if (!ownerVM.owner && !checkedOwnerVM.owner)
+      return { ...ownerVM, checked: !ownerVM.checked };
+
+    return ownerVM;
+  });
+
+  return { ...taskFilterVM, ownerVMs: ownerVMs };
 }
 
 export const getUpdateTaskFilterVMByPriority = (taskFilterVM: TaskFilterVM, checkedPriorityVM: TaskFilterPriorityVM): TaskFilterVM => {

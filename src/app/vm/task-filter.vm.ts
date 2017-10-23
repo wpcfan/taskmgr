@@ -6,7 +6,7 @@ export interface TaskFilterVM {
   desc?: string;
   hasOwner: boolean;
   hasPriority: boolean;
-  ownerVMs?: TaskFilterOwnerVM[];
+  ownerVMs: TaskFilterOwnerVM[];
   priorityVMs: TaskFilterPriorityVM[];
 }
 

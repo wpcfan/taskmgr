@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { TaskFilter } from '../../../domain';
 import { TaskFilterVM, TaskFilterPriorityVM, TaskFilterOwnerVM } from '../../../vm';
-import { getUpdateTaskFilterVMByPriority } from '../../../utils/task-filter.util';
+import { getUpdateTaskFilterVMByOwner, getUpdateTaskFilterVMByPriority } from '../../../utils/task-filter.util';
 import * as fromRoot from '../../../reducers';
 import * as TaskFilterVMActions from '../../../actions/task-filter-vm.action';
 
@@ -59,6 +59,14 @@ export class TaskFilterNavComponent implements OnInit {
     }
   }
 
+  getOwnerName(ownerVM: TaskFilterOwnerVM): string {
+    return ownerVM.owner ? <string>ownerVM.owner.name : '待认领';
+  }
+
+  getOwnerAvatar(ownerVM: TaskFilterOwnerVM): string {
+    return ownerVM.owner ? <string>ownerVM.owner.avatar : 'unassigned';
+  }
+
   onCloseClicked(ev: Event) {
     ev.preventDefault();
     this.closeClicked.emit();
@@ -69,17 +77,13 @@ export class TaskFilterNavComponent implements OnInit {
     this.form.controls['descFilter'].setValue('');
   }
 
+  onOwnerItemClicked(ev: Event, ownerVM: TaskFilterOwnerVM) {
+    ev.preventDefault();
+    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByOwner(this.taskFilterVM, ownerVM)));
+  }
+
   onPriorityItemClicked(ev: Event, priority: TaskFilterPriorityVM) {
     ev.preventDefault();
-
     this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByPriority(this.taskFilterVM, priority)));
-  }
-
-  getOwnerName(ownerVM: TaskFilterOwnerVM): string {
-    return ownerVM.owner ? <string>ownerVM.owner.name : '待认领';
-  }
-
-  getOwnerAvatar(ownerVM: TaskFilterOwnerVM): string {
-    return ownerVM.owner ? <string>ownerVM.owner.avatar : 'unassigned';
   }
 }
