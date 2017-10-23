@@ -72,7 +72,6 @@ export class TaskFilterNavComponent implements OnInit {
   onPriorityItemClicked(ev: Event, priority: TaskFilterPriorityVM) {
     ev.preventDefault();
 
-    console.log('<<Filter Item Checked>>', JSON.stringify(priority));
     this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByPriority(this.taskFilterVM, priority)));
   }
 }

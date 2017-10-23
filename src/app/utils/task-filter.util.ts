@@ -1,4 +1,5 @@
-import { TaskFilterVM, TaskFilterPriorityVM, TaskVM } from '../vm';
+import { TaskFilterVM, TaskFilterPriorityVM, TaskFilterOwnerVM, TaskVM } from '../vm';
+import { User } from '../domain';
 
 export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): TaskVM[] => {
 
@@ -49,4 +50,10 @@ export const getDefaultPrioritiesVMs = (): TaskFilterPriorityVM[] => {
       checked: false,
     },
   ];
+}
+
+export const getOwnerVMs = (owners: User[]): TaskFilterOwnerVM[] => {
+  return owners.map((owner: User) => {
+    return { owner: owner, checked: false };
+  });
 }

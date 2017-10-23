@@ -2,8 +2,8 @@ import { Action } from '@ngrx/store';
 import { TaskFilter, Project } from '../domain';
 
 export const LOAD = '[TaskFilter] Load';
-export const LOAD_SUCCESS = '[TaskFilter] Success';
-export const LOAD_FAIL = '[TaskFilter] Fail';
+export const LOAD_SUCCESS = '[TaskFilter] Load Success';
+export const LOAD_FAIL = '[TaskFilter] Load Fail';
 
 export const ADD = '[TaskFilter] Add';
 export const ADD_SUCCESS = '[TaskFilter] Add Success';

@@ -4,10 +4,11 @@ import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { TaskFilterService } from '../services';
+import { TaskFilter, Project } from '../domain';
 import * as actions from '../actions/task-filter.action';
+import * as taskFilterVMActions from '../actions/task-filter-vm.action';
 import * as projectActions from '../actions/project.action';
 import * as fromRoot from '../reducers';
-import { TaskFilter, Project } from '../domain';
 
 @Injectable()
 export class TaskFilterEffects {
@@ -28,11 +29,17 @@ export class TaskFilterEffects {
     );
 
   @Effect()
+  loadTaskFilterOwners$: Observable<Action> = this.actions$
+    .ofType<actions.LoadTaskFilterSuccessAction>(actions.LOAD_SUCCESS)
+    .map(action => action.payload)
+    .map(taskFilter => new taskFilterVMActions.LoadTaskFilterOwnersAction(taskFilter));
+
+  @Effect()
   addTaskFilter$: Observable<Action> = this.actions$
     .ofType<actions.AddTaskFilterAction>(actions.ADD)
     .map(action => action.payload)
     .switchMap((project: Project) => this.service$
-      .addTaskFilter({ id: undefined, projectId: <string>project.id, hasOwner: false, hasPriority: true })
+      .addTaskFilter({ id: undefined, projectId: <string>project.id, hasOwner: true, hasPriority: true })
       .map((taskFilter: TaskFilter) => new actions.AddTaskFilterSuccessAction({ ...project, taskFilterId: taskFilter.id }))
       .catch(err => of(new actions.AddTaskFilterFailAction(JSON.stringify(err))))
     );
