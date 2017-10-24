@@ -1,5 +1,11 @@
-import { TaskFilterVM, TaskFilterPriorityVM, TaskFilterOwnerVM, TaskVM } from '../vm';
-import { User } from '../domain';
+import {
+  TaskFilterVM,
+  TaskFilterCategoryVM,
+  TaskFilterPriorityVM,
+  TaskFilterOwnerVM,
+  TaskVM
+} from '../vm';
+import { User, TaskFilter } from '../domain';
 
 export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): TaskVM[] => {
 
@@ -72,6 +78,51 @@ export const getUpdateTaskFilterVMByPriority = (taskFilterVM: TaskFilterVM, chec
 
   return { ...taskFilterVM, priorityVMs: priorityVMs };
 }
+
+export const getDefaultTaskFilter = (): TaskFilter => {
+  return {
+    id: undefined,
+    projectId: '',
+    hasOwner: true,
+    hasPriority: true,
+  }
+}
+
+export const getToAddTaskFilter = (projectId: string): TaskFilter => {
+  return {
+    id: undefined,
+    projectId: projectId,
+    hasOwner: true,
+    hasPriority: true,
+  }
+}
+
+export const getDefaultFilterCategoryVMs = (): TaskFilterCategoryVM[] => {
+  return [
+    {
+      label: '执行者',
+      value: 'hasOwner',
+      checked: false,
+    },
+    {
+      label: '优先级',
+      value: 'hasPriority',
+      checked: false,
+    }
+  ];
+}
+
+export const getFilterCategoryVMs = (taskFilter: TaskFilter): TaskFilterCategoryVM[] => {
+  let categoryVMs: TaskFilterCategoryVM[] = getDefaultFilterCategoryVMs();
+  categoryVMs = categoryVMs.map((categoryVM: TaskFilterCategoryVM) => {
+    if ((<any>taskFilter)[categoryVM.value])
+      return { ...categoryVM, checked: true };
+    return categoryVM;
+  });
+
+  return [...categoryVMs];
+}
+
 
 export const getDefaultPrioritiesVMs = (): TaskFilterPriorityVM[] => {
   return [

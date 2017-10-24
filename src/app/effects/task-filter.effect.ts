@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { TaskFilterService } from '../services';
 import { TaskFilter, Project } from '../domain';
+import { getToAddTaskFilter } from '../utils/task-filter.util';
 import * as actions from '../actions/task-filter.action';
 import * as taskFilterVMActions from '../actions/task-filter-vm.action';
 import * as projectActions from '../actions/project.action';
@@ -39,7 +40,7 @@ export class TaskFilterEffects {
     .ofType<actions.AddTaskFilterAction>(actions.ADD)
     .map(action => action.payload)
     .switchMap((project: Project) => this.service$
-      .addTaskFilter({ id: undefined, projectId: <string>project.id, hasOwner: true, hasPriority: true })
+      .addTaskFilter(getToAddTaskFilter(<string>project.id))
       .map((taskFilter: TaskFilter) => new actions.AddTaskFilterSuccessAction({ ...project, taskFilterId: taskFilter.id }))
       .catch(err => of(new actions.AddTaskFilterFailAction(JSON.stringify(err))))
     );

@@ -4,8 +4,18 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { TaskFilter } from '../../../domain';
-import { TaskFilterVM, TaskFilterPriorityVM, TaskFilterOwnerVM } from '../../../vm';
-import { getUpdateTaskFilterVMByOwner, getUpdateTaskFilterVMByPriority } from '../../../utils/task-filter.util';
+import {
+  TaskFilterVM,
+  TaskFilterCategoryVM,
+  TaskFilterPriorityVM,
+  TaskFilterOwnerVM
+} from '../../../vm';
+import {
+  getFilterCategoryVMs,
+  getUpdateTaskFilterVMByOwner,
+  getUpdateTaskFilterVMByPriority
+}
+  from '../../../utils/task-filter.util';
 import * as fromRoot from '../../../reducers';
 import * as TaskFilterVMActions from '../../../actions/task-filter-vm.action';
 

@@ -64,8 +64,13 @@
   color: #808080;
 }
 
+.task-filter-nav-category-add-filter-header-icon {
+  font-size: 18px;
+  line-height: 40px;
+}
+
 .task-filter-nav-category-header-title {
-  margin-left: 8px;
+  margin-left: 0px;
 }
 
 .task-filter-nav-category-header-clear {
@@ -90,6 +95,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  cursor: pointer;
 }
 
 .task-filter-nav-category-item:hover {
@@ -118,4 +124,13 @@
   border-radius: 50%;
   overflow: hidden;
   margin-right: 10px;
+}
+
+.task-filter-nav-highlight {
+  color: #3da8f5;
+  cursor: pointer;
+}
+
+.task-filter-nav-highlight:hover {
+  color: #0C92F3;
 }

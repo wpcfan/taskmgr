@@ -8,6 +8,13 @@ export interface TaskFilterVM {
   hasPriority: boolean;
   ownerVMs: TaskFilterOwnerVM[];
   priorityVMs: TaskFilterPriorityVM[];
+  categoryVMs: TaskFilterCategoryVM[];
+}
+
+export interface TaskFilterCategoryVM {
+  label: string;
+  value: string;
+  checked: boolean;
 }
 
 export interface TaskFilterOwnerVM {
