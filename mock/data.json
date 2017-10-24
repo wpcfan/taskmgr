@@ -61,7 +61,7 @@
         "37489e0c-df34-c261-71c4-ce75357e3035",
         "BkkDvwee-"
       ],
-      "taskFilterId": "rkxe1-9KpW"
+      "taskFilterId": "Bkm8XZcta-"
     },
     {
       "name": "某某公司 ERP 系统",
@@ -77,7 +77,7 @@
         "BkWpk7jGZb",
         "H1fTyXjMWW"
       ],
-      "taskFilterId": "Bkm8XZcta-"
+      "taskFilterId": "rkxe1-9KpW"
     }
   ],
   "taskLists": [
@@ -252,7 +252,7 @@
     {
       "id": "Bkm8XZcta-",
       "projectId": "Sk2HaTagb",
-      "hasOwner": true,
+      "hasOwner": false,
       "hasPriority": true
     }
   ],

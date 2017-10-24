@@ -5,7 +5,6 @@
   font-size: 12px;
   color: #A6A6A6;
   margin-bottom: 10px;
-  // border: 2px solid black;
 }
 
 .task-history-item-title {
@@ -13,6 +12,11 @@
   flex-direction: row;
   align-items: center;
 // width: 100%; //task-history-item default align-items is stretch
+}
+
+.task-history-item-title-icon {
+  font-size: 18px;
+  line-height: 24px;
 }
 
 .task-history-item-title-desc {
