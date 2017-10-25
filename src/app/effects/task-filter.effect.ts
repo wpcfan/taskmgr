@@ -5,7 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { TaskFilterService } from '../services';
 import { TaskFilter, Project } from '../domain';
-import { getToAddTaskFilter } from '../utils/task-filter.util';
+import { TaskFilterVM } from '../vm';
+import { getToAddTaskFilter, getToUpdateTaskFilter } from '../utils/task-filter.util';
 import * as actions from '../actions/task-filter.action';
 import * as taskFilterVMActions from '../actions/task-filter-vm.action';
 import * as projectActions from '../actions/project.action';
@@ -50,6 +51,17 @@ export class TaskFilterEffects {
     .ofType<actions.AddTaskFilterSuccessAction>(actions.ADD_SUCCESS)
     .map(action => action.payload)
     .map(project => new projectActions.InsertFilterAction(project));
+
+  @Effect()
+  updateTaskFilter$: Observable<Action> = this.actions$
+    .ofType<actions.UpdateTaskFilterAction>(actions.UPDATE)
+    .map(action => action.payload)
+    .withLatestFrom(this.store$.select(fromRoot.getTaskFilterState))
+    .mergeMap(([taskFilterVM, taskFilter]: [TaskFilterVM, TaskFilter]) => {
+      return this.service$.updateTaskFilter(getToUpdateTaskFilter(taskFilter, taskFilterVM))
+        .map((taskFilter: TaskFilter) => new actions.UpdateTaskFilterSuccessAction(taskFilter))
+        .catch(err => of(new actions.UpdateTaskFilterFailAction(JSON.stringify(err))))
+    });
 }
 
 

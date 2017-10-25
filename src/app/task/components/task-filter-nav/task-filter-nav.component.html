@@ -43,7 +43,7 @@
 </form>
 
 <mat-menu #menu="matMenu" xPosition="before" yPosition="above">
-  <div class="task-filter-nav-category-item task-filter-nav-edit-item" *ngFor="let categoryVM of taskFilterVM.categoryVMs">
+  <div class="task-filter-nav-category-item task-filter-nav-edit-item" *ngFor="let categoryVM of taskFilterVM.categoryVMs" (click)="onEditFilterItemClicked($event, categoryVM)">
     <span>{{categoryVM.label}}</span>
     <mat-icon *ngIf="categoryVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
   </div>

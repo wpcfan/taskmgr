@@ -20,4 +20,10 @@ export class TaskFilterService {
     const uri = `${this.config.uri}/${this.domain}/${id}`;
     return this.http.get<TaskFilter>(uri);
   }
+
+  updateTaskFilter(filter: TaskFilter): Observable<TaskFilter> {
+    const uri = `${this.config.uri}/${this.domain}/${filter.id}`;
+    return this.http
+    .patch<TaskFilter>(uri, JSON.stringify(filter), {headers: this.headers});
+  }
 }

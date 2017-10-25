@@ -79,6 +79,27 @@ export const getUpdateTaskFilterVMByPriority = (taskFilterVM: TaskFilterVM, chec
   return { ...taskFilterVM, priorityVMs: priorityVMs };
 }
 
+export const getUpdateTaskFilterVMByCategory = (taskFilterVM: TaskFilterVM, checkedCategoryVM: TaskFilterCategoryVM): TaskFilterVM => {
+  let categoryVMs: TaskFilterCategoryVM[] = taskFilterVM.categoryVMs;
+  categoryVMs = categoryVMs.map((categoryVM: TaskFilterCategoryVM) => {
+    return categoryVM.value === checkedCategoryVM.value ? { ...categoryVM, checked: !categoryVM.checked } : categoryVM;
+  });
+
+  switch (checkedCategoryVM.value) {
+    case 'hasOwner':
+      const ownerVMs: TaskFilterOwnerVM[] = taskFilterVM.ownerVMs.map((ownerVM: TaskFilterOwnerVM) => {
+        return { ...ownerVM, checked: false };
+      });
+
+      return { ...taskFilterVM, hasOwner: !checkedCategoryVM.checked, ownerVMs: ownerVMs, categoryVMs: categoryVMs }
+
+    case 'hasPriority':
+      return { ...taskFilterVM, hasPriority: !checkedCategoryVM.checked, priorityVMs: getDefaultPrioritiesVMs(), categoryVMs: categoryVMs };
+    default:
+      return { ...taskFilterVM, categoryVMs: categoryVMs };
+  }
+}
+
 export const getDefaultTaskFilter = (): TaskFilter => {
   return {
     id: undefined,
@@ -95,6 +116,10 @@ export const getToAddTaskFilter = (projectId: string): TaskFilter => {
     hasOwner: true,
     hasPriority: true,
   }
+}
+
+export const getToUpdateTaskFilter = (currentTaskFilter: TaskFilter, updatedTaskFilterVM: TaskFilterVM): TaskFilter => {
+  return { ...currentTaskFilter, hasOwner: updatedTaskFilterVM.hasOwner, hasPriority: updatedTaskFilterVM.hasPriority };
 }
 
 export const getDefaultFilterCategoryVMs = (): TaskFilterCategoryVM[] => {
@@ -122,7 +147,6 @@ export const getFilterCategoryVMs = (taskFilter: TaskFilter): TaskFilterCategory
 
   return [...categoryVMs];
 }
-
 
 export const getDefaultPrioritiesVMs = (): TaskFilterPriorityVM[] => {
   return [

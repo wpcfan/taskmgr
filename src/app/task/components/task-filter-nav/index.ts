@@ -11,12 +11,13 @@ import {
   TaskFilterOwnerVM
 } from '../../../vm';
 import {
-  getFilterCategoryVMs,
   getUpdateTaskFilterVMByOwner,
-  getUpdateTaskFilterVMByPriority
+  getUpdateTaskFilterVMByPriority,
+  getUpdateTaskFilterVMByCategory
 }
   from '../../../utils/task-filter.util';
 import * as fromRoot from '../../../reducers';
+import * as TaskFilterActions from '../../../actions/task-filter.action';
 import * as TaskFilterVMActions from '../../../actions/task-filter-vm.action';
 
 @Component({
@@ -95,5 +96,12 @@ export class TaskFilterNavComponent implements OnInit {
   onPriorityItemClicked(ev: Event, priority: TaskFilterPriorityVM) {
     ev.preventDefault();
     this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByPriority(this.taskFilterVM, priority)));
+  }
+
+  onEditFilterItemClicked(ev: Event, category: TaskFilterCategoryVM) {
+    ev.preventDefault();
+    const updatedTaskFilterVM: TaskFilterVM = getUpdateTaskFilterVMByCategory(this.taskFilterVM, category);
+    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(updatedTaskFilterVM));
+    this.store$.dispatch(new TaskFilterActions.UpdateTaskFilterAction(updatedTaskFilterVM));
   }
 }

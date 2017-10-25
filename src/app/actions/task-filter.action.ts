@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { TaskFilter, Project } from '../domain';
+import { TaskFilterVM } from '../vm';
 
 export const LOAD = '[TaskFilter] Load';
 export const LOAD_SUCCESS = '[TaskFilter] Load Success';
@@ -58,7 +59,7 @@ export class AddTaskFilterFailAction implements Action {
 export class UpdateTaskFilterAction implements Action {
   readonly type = UPDATE;
 
-  constructor(public payload: TaskFilter) {
+  constructor(public payload: TaskFilterVM) {
   }
 }
 
