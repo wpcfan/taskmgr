@@ -6,6 +6,7 @@ import {
   TaskVM
 } from '../vm';
 import { User, TaskFilter } from '../domain';
+import * as DateFns from 'date-fns';
 
 export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): TaskVM[] => {
 
@@ -34,6 +35,43 @@ export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): Tas
         });
 
         if (matchedOwnerVMs.length === 0)
+          return false;
+      }
+    }
+
+    /** DueDate */
+    if (filterVM.hasDueDate) {
+      const dueDateVMCheckeds: TaskFilterItemVM[] = filterVM.dueDateVMs.filter((dueDateVM: TaskFilterItemVM) => dueDateVM.checked);
+      if (dueDateVMCheckeds.length > 0) {
+        const matchedDueDateVMs: TaskFilterItemVM[] = dueDateVMCheckeds.filter((dueDateVM: TaskFilterItemVM) => {
+          switch (dueDateVM.value) {
+            case 'today':
+              if (!task.dueDate)
+                return false;
+
+              return DateFns.format(new Date(), 'YYYY-MM-DD') === DateFns.format(task.dueDate, 'YYYY-MM-DD') ? true : false;
+            case 'overdue': {
+              if (!task.dueDate)
+                return false;
+
+              const nowDate: Date = new Date();
+              const todayDate: Date = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
+
+              if (todayDate.getTime() > new Date(task.dueDate).getTime())
+                return true;
+
+              return false;
+            }
+            case 'undone':
+              return !task.completed;
+            case 'done':
+              return task.completed;
+            default:
+              return true;
+          }
+        });
+
+        if (matchedDueDateVMs.length === 0)
           return false;
       }
     }
