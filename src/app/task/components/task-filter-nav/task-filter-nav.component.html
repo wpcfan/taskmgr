@@ -25,14 +25,19 @@
       </div>
       <div class="task-filter-nav-category-divider"></div>
     </div>
-    <div class="task-filter-nav-category-container">
+    <div *ngIf="taskFilterVM.hasDueDate" class="task-filter-nav-category-container">
       <div class="task-filter-nav-category-header">截止时间</div>
+      <div class="task-filter-nav-category-item" *ngFor="let dueDateVM of taskFilterVM.dueDateVMs" (click)="onDueDateItemClicked($event, dueDateVM)">
+        <span>{{dueDateVM.label}}</span>
+        <mat-icon *ngIf="dueDateVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
+      </div>
+      <div class="task-filter-nav-category-divider"></div>
     </div>
     <div *ngIf="taskFilterVM.hasPriority" class="task-filter-nav-category-container">
       <div class="task-filter-nav-category-header">优先级</div>
-      <div class="task-filter-nav-category-item" *ngFor="let priority of taskFilterVM.priorityVMs" (click)="onPriorityItemClicked($event, priority)">
-        <span>{{priority.label}}</span>
-        <mat-icon *ngIf="priority.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
+      <div class="task-filter-nav-category-item" *ngFor="let priorityVM of taskFilterVM.priorityVMs" (click)="onPriorityItemClicked($event, priorityVM)">
+        <span>{{priorityVM.label}}</span>
+        <mat-icon *ngIf="priorityVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
       </div>
       <div class="task-filter-nav-category-divider"></div>
     </div>

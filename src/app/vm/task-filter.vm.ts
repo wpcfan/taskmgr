@@ -8,6 +8,7 @@ export interface TaskFilterVM {
   hasDueDate: boolean;
   hasPriority: boolean;
   ownerVMs: TaskFilterOwnerVM[];
+  dueDateVMs: TaskFilterItemVM[],
   priorityVMs: TaskFilterPriorityVM[];
   categoryVMs: TaskFilterItemVM[];
 }

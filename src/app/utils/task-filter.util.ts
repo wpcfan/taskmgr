@@ -70,6 +70,14 @@ export const getUpdateTaskFilterVMByOwner = (taskFilterVM: TaskFilterVM, checked
   return { ...taskFilterVM, ownerVMs: ownerVMs };
 }
 
+export const getUpdateTaskFilterVMByDueDate = (taskFilterVM: TaskFilterVM, checkedDueDateVM: TaskFilterItemVM): TaskFilterVM => {
+  let dueDateVMs: TaskFilterItemVM[] = taskFilterVM.dueDateVMs;
+  dueDateVMs = dueDateVMs.map((dueDateVM: TaskFilterItemVM) => {
+    return dueDateVM.value === checkedDueDateVM.value ? { ...dueDateVM, checked: !dueDateVM.checked } : dueDateVM;
+  });
+  return { ...taskFilterVM, dueDateVMs: dueDateVMs };
+}
+
 export const getUpdateTaskFilterVMByPriority = (taskFilterVM: TaskFilterVM, checkedPriorityVM: TaskFilterPriorityVM): TaskFilterVM => {
   let priorityVMs: TaskFilterPriorityVM[] = taskFilterVM.priorityVMs;
   priorityVMs = priorityVMs.map((priorityVM: TaskFilterPriorityVM) => {
@@ -91,10 +99,26 @@ export const getUpdateTaskFilterVMByCategory = (taskFilterVM: TaskFilterVM, chec
         return { ...ownerVM, checked: false };
       });
 
-      return { ...taskFilterVM, hasOwner: !checkedCategoryVM.checked, ownerVMs: ownerVMs, categoryVMs: categoryVMs }
-
+      return {
+        ...taskFilterVM,
+        hasOwner: !checkedCategoryVM.checked,
+        ownerVMs: ownerVMs,
+        categoryVMs: categoryVMs
+      };
+    case 'hasDueDate':
+      return {
+        ...taskFilterVM,
+        hasDueDate: !checkedCategoryVM.checked,
+        dueDateVMs: getDefaultDueDateVMs(),
+        categoryVMs: categoryVMs
+      }
     case 'hasPriority':
-      return { ...taskFilterVM, hasPriority: !checkedCategoryVM.checked, priorityVMs: getDefaultPrioritiesVMs(), categoryVMs: categoryVMs };
+      return {
+        ...taskFilterVM,
+        hasPriority: !checkedCategoryVM.checked,
+        priorityVMs: getDefaultPrioritiesVMs(),
+        categoryVMs: categoryVMs
+      };
     default:
       return { ...taskFilterVM, categoryVMs: categoryVMs };
   }
@@ -121,7 +145,12 @@ export const getToAddTaskFilter = (projectId: string): TaskFilter => {
 }
 
 export const getToUpdateTaskFilter = (currentTaskFilter: TaskFilter, updatedTaskFilterVM: TaskFilterVM): TaskFilter => {
-  return { ...currentTaskFilter, hasOwner: updatedTaskFilterVM.hasOwner, hasPriority: updatedTaskFilterVM.hasPriority };
+  return {
+    ...currentTaskFilter,
+    hasOwner: updatedTaskFilterVM.hasOwner,
+    hasDueDate: updatedTaskFilterVM.hasDueDate,
+    hasPriority: updatedTaskFilterVM.hasPriority
+  };
 }
 
 export const getDefaultTaskFilterVM = (): TaskFilterVM => {
@@ -132,9 +161,20 @@ export const getDefaultTaskFilterVM = (): TaskFilterVM => {
     hasDueDate: true,
     hasPriority: false,
     ownerVMs: getDefaultOwnerVMs(),
+    dueDateVMs: getDefaultDueDateVMs(),
     priorityVMs: getDefaultPrioritiesVMs(),
     categoryVMs: getDefaultFilterCategoryVMs(),
   }
+}
+
+export const getTaskFilterVM = (taskFilter: TaskFilter): TaskFilterVM => {
+  return {
+    ...taskFilter,
+    ownerVMs: getDefaultOwnerVMs(),
+    dueDateVMs: getDefaultDueDateVMs(),
+    priorityVMs: getDefaultPrioritiesVMs(),
+    categoryVMs: getFilterCategoryVMs(taskFilter)
+  };
 }
 
 export const getDefaultFilterCategoryVMs = (): TaskFilterItemVM[] => {
@@ -142,6 +182,11 @@ export const getDefaultFilterCategoryVMs = (): TaskFilterItemVM[] => {
     {
       label: '执行者',
       value: 'hasOwner',
+      checked: false,
+    },
+    {
+      label: '截止时间',
+      value: 'hasDueDate',
       checked: false,
     },
     {
@@ -163,6 +208,44 @@ export const getFilterCategoryVMs = (taskFilter: TaskFilter): TaskFilterItemVM[]
   return [...categoryVMs];
 }
 
+export const getDefaultOwnerVMs = (): TaskFilterOwnerVM[] => {
+  return [{ checked: false }];
+}
+
+export const getOwnerVMs = (owners: User[]): TaskFilterOwnerVM[] => {
+  const defaultOwnerVMs: TaskFilterOwnerVM[] = getDefaultOwnerVMs();
+  const ownerVMs: TaskFilterOwnerVM[] = owners.map((owner: User) => {
+    return { owner: owner, checked: false };
+  });
+
+  return [...defaultOwnerVMs, ...ownerVMs];
+}
+
+export const getDefaultDueDateVMs = (): TaskFilterItemVM[] => {
+  return [
+    {
+      label: '今天截止',
+      value: 'today',
+      checked: false,
+    },
+    {
+      label: '已逾期',
+      value: 'overdue',
+      checked: false,
+    },
+    {
+      label: '未完成',
+      value: 'undone',
+      checked: false,
+    },
+    {
+      label: '已完成',
+      value: 'done',
+      checked: false,
+    }
+  ];
+}
+
 export const getDefaultPrioritiesVMs = (): TaskFilterPriorityVM[] => {
   return [
     {
@@ -181,17 +264,4 @@ export const getDefaultPrioritiesVMs = (): TaskFilterPriorityVM[] => {
       checked: false,
     },
   ];
-}
-
-export const getDefaultOwnerVMs = (): TaskFilterOwnerVM[] => {
-  return [{ checked: false }];
-}
-
-export const getOwnerVMs = (owners: User[]): TaskFilterOwnerVM[] => {
-  const defaultOwnerVMs: TaskFilterOwnerVM[] = getDefaultOwnerVMs();
-  const ownerVMs: TaskFilterOwnerVM[] = owners.map((owner: User) => {
-    return { owner: owner, checked: false };
-  });
-
-  return [...defaultOwnerVMs, ...ownerVMs];
 }

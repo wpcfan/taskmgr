@@ -1,9 +1,7 @@
 import { TaskFilterVM } from '../vm';
 import {
   getDefaultTaskFilterVM,
-  getDefaultPrioritiesVMs,
-  getDefaultOwnerVMs,
-  getFilterCategoryVMs,
+  getTaskFilterVM,
   getOwnerVMs
 } from '../utils/task-filter.util';
 import * as actions from '../actions/task-filter-vm.action';
@@ -14,7 +12,7 @@ export const initialState: TaskFilterVM = getDefaultTaskFilterVM();
 export function reducer(state = initialState, action: actions.Actions | taskFilterActions.Actions): TaskFilterVM {
   switch (action.type) {
     case taskFilterActions.LOAD_SUCCESS:
-      return { ...action.payload, ownerVMs: [], priorityVMs: getDefaultPrioritiesVMs(), categoryVMs: getFilterCategoryVMs(action.payload) }
+      return getTaskFilterVM(action.payload);
     case actions.LOAD_OWNERS_SUCCESS:
       return { ...state, ownerVMs: getOwnerVMs(action.payload) };
     case actions.UPDATE:

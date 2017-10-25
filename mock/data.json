@@ -247,12 +247,14 @@
       "id": "rkxe1-9KpW",
       "projectId": "Hya1moGb-",
       "hasOwner": true,
+      "hasDueDate": true,
       "hasPriority": true
     },
     {
       "id": "Bkm8XZcta-",
       "projectId": "Sk2HaTagb",
       "hasOwner": false,
+      "hasDueDate": false,
       "hasPriority": true
     }
   ],

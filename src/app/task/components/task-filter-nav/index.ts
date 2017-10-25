@@ -12,6 +12,7 @@ import {
 } from '../../../vm';
 import {
   getUpdateTaskFilterVMByOwner,
+  getUpdateTaskFilterVMByDueDate,
   getUpdateTaskFilterVMByPriority,
   getUpdateTaskFilterVMByCategory
 }
@@ -91,6 +92,11 @@ export class TaskFilterNavComponent implements OnInit {
   onOwnerItemClicked(ev: Event, ownerVM: TaskFilterOwnerVM) {
     ev.preventDefault();
     this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByOwner(this.taskFilterVM, ownerVM)));
+  }
+
+  onDueDateItemClicked(ev: Event, dueDate: TaskFilterItemVM) {
+    ev.preventDefault();
+    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByDueDate(this.taskFilterVM, dueDate)));
   }
 
   onPriorityItemClicked(ev: Event, priority: TaskFilterPriorityVM) {
