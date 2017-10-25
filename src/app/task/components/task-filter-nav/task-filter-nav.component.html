@@ -25,6 +25,9 @@
       </div>
       <div class="task-filter-nav-category-divider"></div>
     </div>
+    <div class="task-filter-nav-category-container">
+      <div class="task-filter-nav-category-header">截止时间</div>
+    </div>
     <div *ngIf="taskFilterVM.hasPriority" class="task-filter-nav-category-container">
       <div class="task-filter-nav-category-header">优先级</div>
       <div class="task-filter-nav-category-item" *ngFor="let priority of taskFilterVM.priorityVMs" (click)="onPriorityItemClicked($event, priority)">
@@ -43,7 +46,8 @@
 </form>
 
 <mat-menu #menu="matMenu" xPosition="before" yPosition="above">
-  <div class="task-filter-nav-category-item task-filter-nav-edit-item" *ngFor="let categoryVM of taskFilterVM.categoryVMs" (click)="onEditFilterItemClicked($event, categoryVM)">
+  <div class="task-filter-nav-category-item task-filter-nav-edit-item" *ngFor="let categoryVM of taskFilterVM.categoryVMs"
+    (click)="onEditFilterItemClicked($event, categoryVM)">
     <span>{{categoryVM.label}}</span>
     <mat-icon *ngIf="categoryVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
   </div>

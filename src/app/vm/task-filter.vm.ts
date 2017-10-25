@@ -5,13 +5,14 @@ export interface TaskFilterVM {
   projectId: string;
   desc?: string;
   hasOwner: boolean;
+  hasDueDate: boolean;
   hasPriority: boolean;
   ownerVMs: TaskFilterOwnerVM[];
   priorityVMs: TaskFilterPriorityVM[];
-  categoryVMs: TaskFilterCategoryVM[];
+  categoryVMs: TaskFilterItemVM[];
 }
 
-export interface TaskFilterCategoryVM {
+export interface TaskFilterItemVM {
   label: string;
   value: string;
   checked: boolean;

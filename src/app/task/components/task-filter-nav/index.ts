@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { TaskFilter } from '../../../domain';
 import {
   TaskFilterVM,
-  TaskFilterCategoryVM,
+  TaskFilterItemVM,
   TaskFilterPriorityVM,
   TaskFilterOwnerVM
 } from '../../../vm';
@@ -98,7 +98,7 @@ export class TaskFilterNavComponent implements OnInit {
     this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByPriority(this.taskFilterVM, priority)));
   }
 
-  onEditFilterItemClicked(ev: Event, category: TaskFilterCategoryVM) {
+  onEditFilterItemClicked(ev: Event, category: TaskFilterItemVM) {
     ev.preventDefault();
     const updatedTaskFilterVM: TaskFilterVM = getUpdateTaskFilterVMByCategory(this.taskFilterVM, category);
     this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(updatedTaskFilterVM));

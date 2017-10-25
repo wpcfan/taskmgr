@@ -1,6 +1,6 @@
 import {
   TaskFilterVM,
-  TaskFilterCategoryVM,
+  TaskFilterItemVM,
   TaskFilterPriorityVM,
   TaskFilterOwnerVM,
   TaskVM
@@ -79,9 +79,9 @@ export const getUpdateTaskFilterVMByPriority = (taskFilterVM: TaskFilterVM, chec
   return { ...taskFilterVM, priorityVMs: priorityVMs };
 }
 
-export const getUpdateTaskFilterVMByCategory = (taskFilterVM: TaskFilterVM, checkedCategoryVM: TaskFilterCategoryVM): TaskFilterVM => {
-  let categoryVMs: TaskFilterCategoryVM[] = taskFilterVM.categoryVMs;
-  categoryVMs = categoryVMs.map((categoryVM: TaskFilterCategoryVM) => {
+export const getUpdateTaskFilterVMByCategory = (taskFilterVM: TaskFilterVM, checkedCategoryVM: TaskFilterItemVM): TaskFilterVM => {
+  let categoryVMs: TaskFilterItemVM[] = taskFilterVM.categoryVMs;
+  categoryVMs = categoryVMs.map((categoryVM: TaskFilterItemVM) => {
     return categoryVM.value === checkedCategoryVM.value ? { ...categoryVM, checked: !categoryVM.checked } : categoryVM;
   });
 
@@ -105,7 +105,8 @@ export const getDefaultTaskFilter = (): TaskFilter => {
     id: undefined,
     projectId: '',
     hasOwner: true,
-    hasPriority: true,
+    hasDueDate: true,
+    hasPriority: false,
   }
 }
 
@@ -114,7 +115,8 @@ export const getToAddTaskFilter = (projectId: string): TaskFilter => {
     id: undefined,
     projectId: projectId,
     hasOwner: true,
-    hasPriority: true,
+    hasDueDate: true,
+    hasPriority: false,
   }
 }
 
@@ -122,7 +124,20 @@ export const getToUpdateTaskFilter = (currentTaskFilter: TaskFilter, updatedTask
   return { ...currentTaskFilter, hasOwner: updatedTaskFilterVM.hasOwner, hasPriority: updatedTaskFilterVM.hasPriority };
 }
 
-export const getDefaultFilterCategoryVMs = (): TaskFilterCategoryVM[] => {
+export const getDefaultTaskFilterVM = (): TaskFilterVM => {
+  return {
+    id: undefined,
+    projectId: '',
+    hasOwner: true,
+    hasDueDate: true,
+    hasPriority: false,
+    ownerVMs: getDefaultOwnerVMs(),
+    priorityVMs: getDefaultPrioritiesVMs(),
+    categoryVMs: getDefaultFilterCategoryVMs(),
+  }
+}
+
+export const getDefaultFilterCategoryVMs = (): TaskFilterItemVM[] => {
   return [
     {
       label: '执行者',
@@ -137,9 +152,9 @@ export const getDefaultFilterCategoryVMs = (): TaskFilterCategoryVM[] => {
   ];
 }
 
-export const getFilterCategoryVMs = (taskFilter: TaskFilter): TaskFilterCategoryVM[] => {
-  let categoryVMs: TaskFilterCategoryVM[] = getDefaultFilterCategoryVMs();
-  categoryVMs = categoryVMs.map((categoryVM: TaskFilterCategoryVM) => {
+export const getFilterCategoryVMs = (taskFilter: TaskFilter): TaskFilterItemVM[] => {
+  let categoryVMs: TaskFilterItemVM[] = getDefaultFilterCategoryVMs();
+  categoryVMs = categoryVMs.map((categoryVM: TaskFilterItemVM) => {
     if ((<any>taskFilter)[categoryVM.value])
       return { ...categoryVM, checked: true };
     return categoryVM;
