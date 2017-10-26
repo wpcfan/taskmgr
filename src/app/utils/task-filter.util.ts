@@ -87,16 +87,36 @@ export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): Tas
 
     return true;
   });
+
   /** Sort */
   switch (filterVM.sort) {
     case 'priority':
       return newTasks.sort((currentTask: TaskVM, nextTask: TaskVM) => currentTask.priority - nextTask.priority);
     case 'dueDate':
+      return newTasks.sort((currentTask: TaskVM, nextTask: TaskVM) => {
+        if (currentTask.dueDate && nextTask.dueDate) {
+          const currentTimestamp: number = new Date(<Date>currentTask.dueDate).getTime();
+          const nextTimestamp: number = new Date(<Date>nextTask.dueDate).getTime();
+          return nextTimestamp - currentTimestamp;
+        }
+
+        if (currentTask.dueDate && !nextTask.dueDate)
+          return -1;
+
+        if (!currentTask.dueDate && nextTask.dueDate)
+          return 1;
+
+        return 0;
+      });
     case 'createDate':
+      return newTasks.sort((currentTask: TaskVM, nextTask: TaskVM) => {
+        const currentTimestamp: number = new Date(<Date>currentTask.createDate).getTime();
+        const nextTimestamp: number = new Date(<Date>nextTask.createDate).getTime();
+        return nextTimestamp - currentTimestamp;
+      });
     default:
       return newTasks;
   }
-
 }
 
 export const getUpdateTaskFilterVMBySort = (taskFilterVM: TaskFilterVM, checkedSortVM: TaskFilterItemVM): TaskFilterVM => {
@@ -112,7 +132,6 @@ export const getUpdateTaskFilterVMBySort = (taskFilterVM: TaskFilterVM, checkedS
 
   return { ...taskFilterVM, sort: sort, sortVMs: sortVMs };
 }
-
 
 export const getUpdateTaskFilterVMByOwner = (taskFilterVM: TaskFilterVM, checkedOwnerVM: TaskFilterOwnerVM): TaskFilterVM => {
   let ownerVMs: TaskFilterOwnerVM[] = taskFilterVM.ownerVMs;
