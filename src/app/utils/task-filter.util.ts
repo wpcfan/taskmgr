@@ -10,7 +10,7 @@ import * as DateFns from 'date-fns';
 
 export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): TaskVM[] => {
 
-  const newTasks: TaskVM[] = tasks.filter((task: TaskVM) => {
+  let newTasks: TaskVM[] = tasks.filter((task: TaskVM) => {
     /** Desc */
     if (filterVM.desc) {
       if (task.desc.indexOf(filterVM.desc) === -1) {
@@ -87,8 +87,16 @@ export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): Tas
 
     return true;
   });
+  /** Sort */
+  switch (filterVM.sort) {
+    case 'priority':
+      return newTasks.sort((currentTask: TaskVM, nextTask: TaskVM) => currentTask.priority - nextTask.priority);
+    case 'dueDate':
+    case 'createDate':
+    default:
+      return newTasks;
+  }
 
-  return newTasks;
 }
 
 export const getUpdateTaskFilterVMBySort = (taskFilterVM: TaskFilterVM, checkedSortVM: TaskFilterItemVM): TaskFilterVM => {
@@ -221,7 +229,7 @@ export const getDefaultTaskFilterVM = (): TaskFilterVM => {
     ownerVMs: getDefaultOwnerVMs(),
     dueDateVMs: getDefaultDueDateVMs(),
     priorityVMs: getDefaultPrioritiesVMs(),
-    categoryVMs: getDefaultFilterCategoryVMs(),
+    categoryVMs: getDefaultCategoryVMs(),
   }
 }
 
@@ -229,11 +237,11 @@ export const getTaskFilterVM = (taskFilter: TaskFilter): TaskFilterVM => {
   return {
     ...taskFilter,
     sort: taskFilter.sort ? taskFilter.sort : 'default',
-    sortVMs: getFilterSortVMs(taskFilter),
+    sortVMs: getSortVMs(taskFilter),
     ownerVMs: getDefaultOwnerVMs(),
     dueDateVMs: getDefaultDueDateVMs(),
     priorityVMs: getDefaultPrioritiesVMs(),
-    categoryVMs: getFilterCategoryVMs(taskFilter)
+    categoryVMs: getCategoryVMs(taskFilter)
   };
 }
 
@@ -262,7 +270,7 @@ export const getDefaultFilterSortVMs = (): TaskFilterItemVM[] => {
   ];
 }
 
-export const getFilterSortVMs = (taskFilter: TaskFilter): TaskFilterItemVM[] => {
+export const getSortVMs = (taskFilter: TaskFilter): TaskFilterItemVM[] => {
   let sortVMs: TaskFilterItemVM[] = getDefaultFilterSortVMs();
   if (taskFilter.sort) {
     sortVMs = sortVMs.map((sortVM: TaskFilterItemVM) => {
@@ -278,8 +286,17 @@ export const getFilterSortVMs = (taskFilter: TaskFilter): TaskFilterItemVM[] => 
   return [...sortVMs];
 }
 
+export const getSortVMLabel = (taskFilterVM: TaskFilterVM): string => {
+  let label: string = '项目默认排序';
+  taskFilterVM.sortVMs.forEach((sortVM: TaskFilterItemVM) => {
+    if (sortVM.value === taskFilterVM.sort)
+      label = sortVM.label;
+  });
 
-export const getDefaultFilterCategoryVMs = (): TaskFilterItemVM[] => {
+  return label;
+}
+
+export const getDefaultCategoryVMs = (): TaskFilterItemVM[] => {
   return [
     {
       label: '执行者',
@@ -299,8 +316,8 @@ export const getDefaultFilterCategoryVMs = (): TaskFilterItemVM[] => {
   ];
 }
 
-export const getFilterCategoryVMs = (taskFilter: TaskFilter): TaskFilterItemVM[] => {
-  let categoryVMs: TaskFilterItemVM[] = getDefaultFilterCategoryVMs();
+export const getCategoryVMs = (taskFilter: TaskFilter): TaskFilterItemVM[] => {
+  let categoryVMs: TaskFilterItemVM[] = getDefaultCategoryVMs();
   categoryVMs = categoryVMs.map((categoryVM: TaskFilterItemVM) => {
     if ((<any>taskFilter)[categoryVM.value])
       return { ...categoryVM, checked: true };
@@ -321,6 +338,14 @@ export const getOwnerVMs = (owners: User[]): TaskFilterOwnerVM[] => {
   });
 
   return [...defaultOwnerVMs, ...ownerVMs];
+}
+
+export const getOwnerVMName = (ownerVM: TaskFilterOwnerVM): string => {
+  return ownerVM.owner ? <string>ownerVM.owner.name : '待认领';
+}
+
+export const getOwnerVMAvatar = (ownerVM: TaskFilterOwnerVM): string => {
+  return ownerVM.owner ? <string>ownerVM.owner.avatar : 'unassigned';
 }
 
 export const getDefaultDueDateVMs = (): TaskFilterItemVM[] => {

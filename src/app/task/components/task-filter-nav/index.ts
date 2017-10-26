@@ -11,6 +11,9 @@ import {
   TaskFilterOwnerVM
 } from '../../../vm';
 import {
+  getSortVMLabel,
+  getOwnerVMName,
+  getOwnerVMAvatar,
   getUpdateTaskFilterVMBySort,
   getUpdateTaskFilterVMByOwner,
   getUpdateTaskFilterVMByDueDate,
@@ -72,12 +75,16 @@ export class TaskFilterNavComponent implements OnInit {
     }
   }
 
+  getSortLabel(): string {
+    return getSortVMLabel(this.taskFilterVM);
+  }
+
   getOwnerName(ownerVM: TaskFilterOwnerVM): string {
-    return ownerVM.owner ? <string>ownerVM.owner.name : '待认领';
+    return getOwnerVMName(ownerVM);
   }
 
   getOwnerAvatar(ownerVM: TaskFilterOwnerVM): string {
-    return ownerVM.owner ? <string>ownerVM.owner.avatar : 'unassigned';
+    return getOwnerVMAvatar(ownerVM);
   }
 
   onCloseClicked(ev: Event) {
@@ -92,7 +99,9 @@ export class TaskFilterNavComponent implements OnInit {
 
   onSortItemClicked(ev: Event, sortVM: TaskFilterItemVM) {
     ev.preventDefault();
-    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMBySort(this.taskFilterVM, sortVM)));
+    const updatedTaskFilterVM: TaskFilterVM = getUpdateTaskFilterVMBySort(this.taskFilterVM, sortVM);
+    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(updatedTaskFilterVM));
+    this.store$.dispatch(new TaskFilterActions.UpdateTaskFilterAction(updatedTaskFilterVM));
   }
 
   onOwnerItemClicked(ev: Event, ownerVM: TaskFilterOwnerVM) {
