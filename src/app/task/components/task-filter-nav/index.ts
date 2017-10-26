@@ -11,6 +11,7 @@ import {
   TaskFilterOwnerVM
 } from '../../../vm';
 import {
+  getUpdateTaskFilterVMBySort,
   getUpdateTaskFilterVMByOwner,
   getUpdateTaskFilterVMByDueDate,
   getUpdateTaskFilterVMByPriority,
@@ -87,6 +88,11 @@ export class TaskFilterNavComponent implements OnInit {
   onClearDesc(ev: Event) {
     ev.preventDefault();
     this.form.controls['descFilter'].setValue('');
+  }
+
+  onSortItemClicked(ev: Event, sortVM: TaskFilterItemVM) {
+    ev.preventDefault();
+    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMBySort(this.taskFilterVM, sortVM)));
   }
 
   onOwnerItemClicked(ev: Event, ownerVM: TaskFilterOwnerVM) {

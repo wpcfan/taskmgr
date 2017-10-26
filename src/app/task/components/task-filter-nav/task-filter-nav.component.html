@@ -5,7 +5,7 @@
   </div>
   <div class="task-filter-nav-body">
     <div class="task-filter-nav-category-container">
-      <div class="task-filter-nav-category-header task-filter-nav-category-header-highlight">
+      <div class="task-filter-nav-category-header task-filter-nav-category-header-highlight" [matMenuTriggerFor]="sortMenu">
         <mat-icon class="task-filter-nav-category-header-icon">sort</mat-icon>
         <span class="task-filter-nav-category-header-title">项目自定义排序</span>
         <mat-icon class="task-filter-nav-category-header-end-icon">keyboard_arrow_down</mat-icon>
@@ -62,5 +62,12 @@
     (click)="onEditFilterItemClicked($event, categoryVM)">
     <span>{{categoryVM.label}}</span>
     <mat-icon *ngIf="categoryVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
+  </div>
+</mat-menu>
+
+<mat-menu #sortMenu="matMenu" xPosition="before" yPosition="below">
+  <div class="task-filter-nav-category-item task-filter-nav-edit-item" *ngFor="let sortVM of taskFilterVM.sortVMs" (click)="onSortItemClicked($event, sortVM)">
+    <span>{{sortVM.label}}</span>
+    <mat-icon *ngIf="sortVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
   </div>
 </mat-menu>

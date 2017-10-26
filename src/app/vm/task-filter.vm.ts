@@ -4,9 +4,11 @@ export interface TaskFilterVM {
   id: string | undefined;
   projectId: string;
   desc?: string;
+  sort: string;
   hasOwner: boolean;
   hasDueDate: boolean;
   hasPriority: boolean;
+  sortVMs: TaskFilterItemVM[],
   ownerVMs: TaskFilterOwnerVM[];
   dueDateVMs: TaskFilterItemVM[],
   priorityVMs: TaskFilterPriorityVM[];

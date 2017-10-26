@@ -246,6 +246,7 @@
     {
       "id": "rkxe1-9KpW",
       "projectId": "Hya1moGb-",
+      "sort": "default",
       "hasOwner": true,
       "hasDueDate": true,
       "hasPriority": true
@@ -253,6 +254,7 @@
     {
       "id": "Bkm8XZcta-",
       "projectId": "Sk2HaTagb",
+      "sort": "priority",
       "hasOwner": false,
       "hasDueDate": false,
       "hasPriority": true

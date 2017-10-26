@@ -91,6 +91,21 @@ export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): Tas
   return newTasks;
 }
 
+export const getUpdateTaskFilterVMBySort = (taskFilterVM: TaskFilterVM, checkedSortVM: TaskFilterItemVM): TaskFilterVM => {
+  let sortVMs: TaskFilterItemVM[] = getDefaultFilterSortVMs();
+  let sort = taskFilterVM.sort;
+  sortVMs = sortVMs.map((sortVM: TaskFilterItemVM) => {
+    if (sortVM.value === checkedSortVM.value) {
+      sort = sortVM.value;
+      return { ...sortVM, checked: true };
+    }
+    return sortVM;
+  });
+
+  return { ...taskFilterVM, sort: sort, sortVMs: sortVMs };
+}
+
+
 export const getUpdateTaskFilterVMByOwner = (taskFilterVM: TaskFilterVM, checkedOwnerVM: TaskFilterOwnerVM): TaskFilterVM => {
   let ownerVMs: TaskFilterOwnerVM[] = taskFilterVM.ownerVMs;
   ownerVMs = ownerVMs.map((ownerVM: TaskFilterOwnerVM) => {
@@ -166,6 +181,7 @@ export const getDefaultTaskFilter = (): TaskFilter => {
   return {
     id: undefined,
     projectId: '',
+    sort: 'default',
     hasOwner: true,
     hasDueDate: true,
     hasPriority: false,
@@ -176,6 +192,7 @@ export const getToAddTaskFilter = (projectId: string): TaskFilter => {
   return {
     id: undefined,
     projectId: projectId,
+    sort: 'default',
     hasOwner: true,
     hasDueDate: true,
     hasPriority: false,
@@ -185,6 +202,7 @@ export const getToAddTaskFilter = (projectId: string): TaskFilter => {
 export const getToUpdateTaskFilter = (currentTaskFilter: TaskFilter, updatedTaskFilterVM: TaskFilterVM): TaskFilter => {
   return {
     ...currentTaskFilter,
+    sort: updatedTaskFilterVM.sort,
     hasOwner: updatedTaskFilterVM.hasOwner,
     hasDueDate: updatedTaskFilterVM.hasDueDate,
     hasPriority: updatedTaskFilterVM.hasPriority
@@ -195,9 +213,11 @@ export const getDefaultTaskFilterVM = (): TaskFilterVM => {
   return {
     id: undefined,
     projectId: '',
+    sort: 'default',
     hasOwner: true,
     hasDueDate: true,
     hasPriority: false,
+    sortVMs: getDefaultFilterSortVMs(),
     ownerVMs: getDefaultOwnerVMs(),
     dueDateVMs: getDefaultDueDateVMs(),
     priorityVMs: getDefaultPrioritiesVMs(),
@@ -208,12 +228,56 @@ export const getDefaultTaskFilterVM = (): TaskFilterVM => {
 export const getTaskFilterVM = (taskFilter: TaskFilter): TaskFilterVM => {
   return {
     ...taskFilter,
+    sort: taskFilter.sort ? taskFilter.sort : 'default',
+    sortVMs: getFilterSortVMs(taskFilter),
     ownerVMs: getDefaultOwnerVMs(),
     dueDateVMs: getDefaultDueDateVMs(),
     priorityVMs: getDefaultPrioritiesVMs(),
     categoryVMs: getFilterCategoryVMs(taskFilter)
   };
 }
+
+export const getDefaultFilterSortVMs = (): TaskFilterItemVM[] => {
+  return [
+    {
+      label: '项目默认排序',
+      value: 'default',
+      checked: false,
+    },
+    {
+      label: '按照优先级最高',
+      value: 'priority',
+      checked: false,
+    },
+    {
+      label: '按照截止时间最近',
+      value: 'dueDate',
+      checked: false,
+    },
+    {
+      label: '按照创建时间最近',
+      value: 'createDate',
+      checked: false,
+    }
+  ];
+}
+
+export const getFilterSortVMs = (taskFilter: TaskFilter): TaskFilterItemVM[] => {
+  let sortVMs: TaskFilterItemVM[] = getDefaultFilterSortVMs();
+  if (taskFilter.sort) {
+    sortVMs = sortVMs.map((sortVM: TaskFilterItemVM) => {
+      return sortVM.value === taskFilter.sort ? { ...sortVM, checked: true } : sortVM;
+    });
+  }
+  else {
+    sortVMs = sortVMs.map((sortVM: TaskFilterItemVM) => {
+      return sortVM.value === 'default' ? { ...sortVM, checked: true } : sortVM;
+    });
+  }
+
+  return [...sortVMs];
+}
+
 
 export const getDefaultFilterCategoryVMs = (): TaskFilterItemVM[] => {
   return [
