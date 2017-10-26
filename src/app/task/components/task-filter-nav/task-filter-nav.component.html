@@ -5,6 +5,13 @@
   </div>
   <div class="task-filter-nav-body">
     <div class="task-filter-nav-category-container">
+      <div class="task-filter-nav-category-header task-filter-nav-category-header-highlight">
+        <mat-icon class="task-filter-nav-category-header-icon">sort</mat-icon>
+        <span class="task-filter-nav-category-header-title">项目自定义排序</span>
+        <mat-icon class="task-filter-nav-category-header-end-icon">keyboard_arrow_down</mat-icon>
+      </div>
+    </div>
+    <div class="task-filter-nav-category-container">
       <div class="task-filter-nav-category-header">
         <mat-icon class="task-filter-nav-category-header-icon">input</mat-icon>
         <span class="task-filter-nav-category-header-title">任务筛选</span>
@@ -42,8 +49,8 @@
       <div class="task-filter-nav-category-divider"></div>
     </div>
     <div class="task-filter-nav-category-container">
-      <div class="task-filter-nav-category-header task-filter-nav-highlight" [matMenuTriggerFor]="menu">
-        <mat-icon class="task-filter-nav-category-add-filter-header-icon">add_circle</mat-icon>
+      <div class="task-filter-nav-category-header task-filter-nav-category-header-colored-highlight" [matMenuTriggerFor]="menu">
+        <mat-icon class="task-filter-nav-category-header-icon">add_circle</mat-icon>
         <span class="task-filter-nav-category-header-title">添加筛选</span>
       </div>
     </div>
