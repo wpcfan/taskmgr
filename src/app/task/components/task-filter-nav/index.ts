@@ -99,9 +99,12 @@ export class TaskFilterNavComponent implements OnInit {
 
   onSortItemClicked(ev: Event, sortVM: TaskFilterItemVM) {
     ev.preventDefault();
-    const updatedTaskFilterVM: TaskFilterVM = getUpdateTaskFilterVMBySort(this.taskFilterVM, sortVM);
-    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(updatedTaskFilterVM));
-    this.store$.dispatch(new TaskFilterActions.UpdateTaskFilterAction(updatedTaskFilterVM));
+    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMBySort(this.taskFilterVM, sortVM)));
+  }
+
+  onSaveSortItemClicked(ev: Event) {
+    ev.preventDefault();
+    this.store$.dispatch(new TaskFilterActions.UpdateTaskFilterAction(this.taskFilterVM));
   }
 
   onOwnerItemClicked(ev: Event, ownerVM: TaskFilterOwnerVM) {

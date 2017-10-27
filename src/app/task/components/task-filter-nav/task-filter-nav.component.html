@@ -70,4 +70,7 @@
     <span>{{sortVM.label}}</span>
     <mat-icon *ngIf="sortVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
   </div>
+  <div class="task-filter-nav-category-item task-filter-nav-edit-item task-filter-nav-category-colored-item" (click)="onSaveSortItemClicked($event)">
+    <span>保存为项目默认排序</span>
+  </div>
 </mat-menu>
