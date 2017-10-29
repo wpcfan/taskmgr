@@ -57,20 +57,26 @@
   </div>
 </form>
 
-<mat-menu #menu="matMenu" xPosition="before" yPosition="above">
-  <div class="task-filter-nav-category-item task-filter-nav-edit-item" *ngFor="let categoryVM of taskFilterVM.categoryVMs"
+<mat-menu #menu="matMenu" xPosition="after" yPosition="above" [overlapTrigger]="false">
+  <div class="task-filter-nav-menu-header">
+    <span class="task-filter-nav-menu-header-title" (click)="onEditFilterHeaderClicked($event)">添加筛选</span>
+    <mat-icon class="task-filter-nav-menu-close" (click)="onEditFilterCloseClicked($event)">clear</mat-icon>
+  </div>
+  <div class="task-filter-nav-category-divider"></div>
+  <div class="task-filter-nav-menu-item task-filter-nav-edit-menu-width" *ngFor="let categoryVM of taskFilterVM.categoryVMs"
     (click)="onEditFilterItemClicked($event, categoryVM)">
-    <span>{{categoryVM.label}}</span>
+    <span class="task-filter-nav-menu-item-desc">{{categoryVM.label}}</span>
     <mat-icon *ngIf="categoryVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
   </div>
 </mat-menu>
 
-<mat-menu #sortMenu="matMenu" xPosition="before" yPosition="below">
-  <div class="task-filter-nav-category-item task-filter-nav-edit-item" *ngFor="let sortVM of taskFilterVM.sortVMs" (click)="onSortItemClicked($event, sortVM)">
-    <span>{{sortVM.label}}</span>
+<mat-menu #sortMenu="matMenu" xPosition="after" yPosition="below" [overlapTrigger]="false">
+  <div class="task-filter-nav-menu-item task-filter-nav-sort-menu-width" *ngFor="let sortVM of taskFilterVM.sortVMs" (click)="onSortItemClicked($event, sortVM)">
+    <span class="task-filter-nav-menu-item-desc">{{sortVM.label}}</span>
     <mat-icon *ngIf="sortVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
   </div>
-  <div class="task-filter-nav-category-item task-filter-nav-edit-item task-filter-nav-category-colored-item" (click)="onSaveSortItemClicked($event)">
-    <span>保存为项目默认排序</span>
+  <div class="task-filter-nav-category-divider"></div>
+  <div class="task-filter-nav-menu-item task-filter-nav-sort-menu-width" (click)="onSaveSortItemClicked($event)">
+    <span class="task-filter-nav-menu-item-colored-desc">保存为项目默认排序</span>
   </div>
 </mat-menu>

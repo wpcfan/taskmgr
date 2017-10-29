@@ -99,6 +99,7 @@ export class TaskFilterNavComponent implements OnInit {
 
   onSortItemClicked(ev: Event, sortVM: TaskFilterItemVM) {
     ev.preventDefault();
+    ev.stopPropagation();
     this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMBySort(this.taskFilterVM, sortVM)));
   }
 
@@ -122,8 +123,18 @@ export class TaskFilterNavComponent implements OnInit {
     this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByPriority(this.taskFilterVM, priority)));
   }
 
+  onEditFilterHeaderClicked(ev: Event) {
+    ev.preventDefault();
+    ev.stopPropagation();
+  }
+
+  onEditFilterCloseClicked(ev: Event) {
+    ev.preventDefault();
+  }
+
   onEditFilterItemClicked(ev: Event, category: TaskFilterItemVM) {
     ev.preventDefault();
+    ev.stopPropagation();
     const updatedTaskFilterVM: TaskFilterVM = getUpdateTaskFilterVMByCategory(this.taskFilterVM, category);
     this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(updatedTaskFilterVM));
     this.store$.dispatch(new TaskFilterActions.UpdateTaskFilterAction(updatedTaskFilterVM));
