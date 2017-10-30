@@ -17,6 +17,7 @@ import {
   getUpdateTaskFilterVMBySort,
   getUpdateTaskFilterVMByOwner,
   getUpdateTaskFilterVMByDueDate,
+  getUpdateTaskFilterVMByCreateDate,
   getUpdateTaskFilterVMByPriority,
   getUpdateTaskFilterVMByCategory
 }
@@ -116,6 +117,11 @@ export class TaskFilterNavComponent implements OnInit {
   onDueDateItemClicked(ev: Event, dueDate: TaskFilterItemVM) {
     ev.preventDefault();
     this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByDueDate(this.taskFilterVM, dueDate)));
+  }
+
+  onCreateDateItemClicked(ev: Event, createDate: TaskFilterItemVM) {
+    ev.preventDefault();
+    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByCreateDate(this.taskFilterVM, createDate)));
   }
 
   onPriorityItemClicked(ev: Event, priority: TaskFilterPriorityVM) {

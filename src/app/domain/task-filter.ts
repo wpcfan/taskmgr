@@ -4,5 +4,6 @@ export interface TaskFilter {
   sort: string;
   hasOwner: boolean;
   hasDueDate: boolean;
+  hasCreateDate: boolean;
   hasPriority: boolean;
 }

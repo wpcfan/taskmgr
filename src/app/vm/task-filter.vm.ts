@@ -7,10 +7,12 @@ export interface TaskFilterVM {
   sort: string;
   hasOwner: boolean;
   hasDueDate: boolean;
+  hasCreateDate: boolean;
   hasPriority: boolean;
-  sortVMs: TaskFilterItemVM[],
+  sortVMs: TaskFilterItemVM[];
   ownerVMs: TaskFilterOwnerVM[];
-  dueDateVMs: TaskFilterItemVM[],
+  dueDateVMs: TaskFilterItemVM[];
+  createDateVMs: TaskFilterItemVM[];
   priorityVMs: TaskFilterPriorityVM[];
   categoryVMs: TaskFilterItemVM[];
 }

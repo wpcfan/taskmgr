@@ -249,6 +249,7 @@
       "sort": "default",
       "hasOwner": true,
       "hasDueDate": true,
+      "hasCreateDate": true,
       "hasPriority": true
     },
     {
@@ -257,6 +258,7 @@
       "sort": "priority",
       "hasOwner": false,
       "hasDueDate": false,
+      "hasCreateDate": true,
       "hasPriority": true
     }
   ],

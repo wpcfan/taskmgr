@@ -40,6 +40,14 @@
       </div>
       <div class="task-filter-nav-category-divider"></div>
     </div>
+    <div *ngIf="taskFilterVM.hasCreateDate" class="task-filter-nav-category-container">
+      <div class="task-filter-nav-category-header">创建时间</div>
+      <div class="task-filter-nav-category-item" *ngFor="let createDateVM of taskFilterVM.createDateVMs" (click)="onCreateDateItemClicked($event, createDateVM)">
+        <span>{{createDateVM.label}}</span>
+        <mat-icon *ngIf="createDateVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
+      </div>
+      <div class="task-filter-nav-category-divider"></div>
+    </div>
     <div *ngIf="taskFilterVM.hasPriority" class="task-filter-nav-category-container">
       <div class="task-filter-nav-category-header">优先级</div>
       <div class="task-filter-nav-category-item" *ngFor="let priorityVM of taskFilterVM.priorityVMs" (click)="onPriorityItemClicked($event, priorityVM)">
