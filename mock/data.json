@@ -255,7 +255,7 @@
     {
       "id": "Bkm8XZcta-",
       "projectId": "Sk2HaTagb",
-      "sort": "priority",
+      "sort": "priorityDesc",
       "hasOwner": false,
       "hasDueDate": false,
       "hasCreateDate": true,

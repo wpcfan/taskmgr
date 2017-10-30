@@ -120,9 +120,9 @@ export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): Tas
 
   /** Sort */
   switch (filterVM.sort) {
-    case 'priority':
+    case 'priorityDesc':
       return newTasks.sort((currentTask: TaskVM, nextTask: TaskVM) => currentTask.priority - nextTask.priority);
-    case 'dueDate':
+    case 'dueDateDesc':
       return newTasks.sort((currentTask: TaskVM, nextTask: TaskVM) => {
         if (currentTask.dueDate && nextTask.dueDate) {
           const currentTimestamp: number = new Date(<Date>currentTask.dueDate).getTime();
@@ -138,7 +138,13 @@ export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): Tas
 
         return 0;
       });
-    case 'createDate':
+    case 'createDateAsc':
+      return newTasks.sort((currentTask: TaskVM, nextTask: TaskVM) => {
+        const currentTimestamp: number = new Date(<Date>currentTask.createDate).getTime();
+        const nextTimestamp: number = new Date(<Date>nextTask.createDate).getTime();
+        return currentTimestamp - nextTimestamp;
+      });
+    case 'createDateDesc':
       return newTasks.sort((currentTask: TaskVM, nextTask: TaskVM) => {
         const currentTimestamp: number = new Date(<Date>currentTask.createDate).getTime();
         const nextTimestamp: number = new Date(<Date>nextTask.createDate).getTime();
@@ -318,23 +324,28 @@ export const getTaskFilterVM = (taskFilter: TaskFilter): TaskFilterVM => {
 export const getDefaultFilterSortVMs = (): TaskFilterItemVM[] => {
   return [
     {
-      label: '项目默认排序',
+      label: '项目自定义排序',
       value: 'default',
       checked: false,
     },
     {
       label: '按照优先级最高',
-      value: 'priority',
+      value: 'priorityDesc',
       checked: false,
     },
     {
-      label: '按照截止时间最近',
-      value: 'dueDate',
+      label: '按截止时间最近',
+      value: 'dueDateDesc',
       checked: false,
     },
     {
-      label: '按照创建时间最近',
-      value: 'createDate',
+      label: '按创建时间最早',
+      value: 'createDateAsc',
+      checked: false,
+    },
+    {
+      label: '按创建时间最晚',
+      value: 'createDateDesc',
       checked: false,
     }
   ];
