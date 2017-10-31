@@ -9,6 +9,7 @@ export interface TaskFilterVM {
   hasDueDate: boolean;
   hasCreateDate: boolean;
   hasPriority: boolean;
+  customCreateDate: TaskFilterCustomDate;
   sortVMs: TaskFilterItemVM[];
   ownerVMs: TaskFilterOwnerVM[];
   dueDateVMs: TaskFilterItemVM[];
@@ -33,4 +34,9 @@ export interface TaskFilterPriorityVM {
   label: string;
   value: number;
   checked: boolean;
+}
+
+export interface TaskFilterCustomDate {
+  startDate: Date;
+  endDate: Date;
 }

@@ -15,10 +15,14 @@ import {
   getSortVMLabel,
   getOwnerVMName,
   getOwnerVMAvatar,
+  getCustomDateDesc,
+  getDefaultCustomStartDate,
+  getDefaultCustomEndDate,
   getUpdateTaskFilterVMBySort,
   getUpdateTaskFilterVMByOwner,
   getUpdateTaskFilterVMByDueDate,
   getUpdateTaskFilterVMByCreateDate,
+  getUpdateTaskFilterVMByCustomCreateDate,
   getUpdateTaskFilterVMByPriority,
   getUpdateTaskFilterVMByCategory
 }
@@ -34,7 +38,8 @@ import * as TaskFilterVMActions from '../../../actions/task-filter-vm.action';
 })
 export class TaskFilterNavComponent implements OnInit {
 
-  // @ViewChild('picker') picker: MatDatepicker<Date>;
+  @ViewChild('startDatePicker') startDatePicker: MatDatepicker<Date>;
+  @ViewChild('endDatePicker') endDatePicker: MatDatepicker<Date>;
 
   @Output() closeClicked = new EventEmitter<void>();
 
@@ -49,7 +54,9 @@ export class TaskFilterNavComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private store$: Store<fromRoot.State>) {
     this.form = this.fb.group({
-      descFilter: ['']
+      descFilter: [''],
+      startCreateDate: [getDefaultCustomStartDate()],
+      endCreateDate: [getDefaultCustomEndDate()]
     });
 
     this.taskFilterVM$ = this.store$.select(fromRoot.getTaskFilterVMState);
@@ -91,6 +98,14 @@ export class TaskFilterNavComponent implements OnInit {
     return getOwnerVMAvatar(ownerVM);
   }
 
+  getStartCreateDateDesc(): string {
+    return getCustomDateDesc(this.taskFilterVM.customCreateDate.startDate);
+  }
+
+  getEndCreateDateDesc(): string {
+    return getCustomDateDesc(this.taskFilterVM.customCreateDate.endDate);
+  }
+
   onCloseClicked(ev: Event) {
     ev.preventDefault();
     this.closeClicked.emit();
@@ -127,16 +142,26 @@ export class TaskFilterNavComponent implements OnInit {
     this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByCreateDate(this.taskFilterVM, createDate)));
   }
 
-  onCreateDateItemStartDateClicked(ev: Event) {
+  onStartCreateDateClicked(ev: Event) {
     ev.preventDefault();
     ev.stopPropagation();
 
-    // this.picker.open();
+    this.startDatePicker.open();
   }
 
-  onCreateDateItemEndDateClicked(ev: Event) {
+  onEndCreateDateClicked(ev: Event) {
     ev.preventDefault();
     ev.stopPropagation();
+
+    this.endDatePicker.open();
+  }
+
+  onStartCreateDateChanged(date: Date) {
+    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByCustomCreateDate(this.taskFilterVM, date, true)));
+  }
+
+  onEndCreateDateChanged(date: Date) {
+    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByCustomCreateDate(this.taskFilterVM, date, false)));
   }
 
   onPriorityItemClicked(ev: Event, priority: TaskFilterPriorityVM) {

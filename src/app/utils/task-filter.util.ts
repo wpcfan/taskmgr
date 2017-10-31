@@ -3,6 +3,7 @@ import {
   TaskFilterItemVM,
   TaskFilterPriorityVM,
   TaskFilterOwnerVM,
+  TaskFilterCustomDate,
   TaskVM
 } from '../vm';
 import { User, TaskFilter } from '../domain';
@@ -78,14 +79,18 @@ export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): Tas
       const createDateVMCheckeds: TaskFilterItemVM[] = filterVM.createDateVMs.filter((createDateVM: TaskFilterItemVM) => createDateVM.checked);
       if (createDateVMCheckeds.length > 0) {
         const matchedCreateDateVMs: TaskFilterItemVM[] = createDateVMCheckeds.filter((createDateVM: TaskFilterItemVM) => {
-          const createDate: Date = <Date>task.createDate;
-          const createTimestamp: number = new Date(createDate).getTime();
+          const createDate: Date = new Date(<Date>task.createDate);
+          const createTimestamp: number = createDate.getTime();
 
           const nowDate: Date = new Date();
           const todayDate: Date = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
           const yesterdayDate: Date = new Date(todayDate.getTime() - 24 * 60 * 60 * 1000);
           const pastWeekDate: Date = new Date(todayDate.getTime() - 7 * 24 * 60 * 60 * 1000);
           const pastMonthDate: Date = new Date(nowDate.getFullYear(), nowDate.getMonth() - 1, nowDate.getDate());
+
+          const createZeroTimestamp: number = new Date(createDate.getFullYear(), createDate.getMonth(), createDate.getDate()).getTime();
+          const customStartTimestamp: number = filterVM.customCreateDate.startDate.getTime();
+          const customEndTimestamp: number = filterVM.customCreateDate.endDate.getTime();
 
           switch (createDateVM.value) {
             case 'today':
@@ -96,6 +101,8 @@ export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): Tas
               return createTimestamp >= pastWeekDate.getTime();
             case 'pastMonth':
               return createTimestamp >= pastMonthDate.getTime();
+            case 'custom':
+              return createZeroTimestamp >= customStartTimestamp && createZeroTimestamp <= customEndTimestamp;
             default:
               return true;
           }
@@ -202,6 +209,12 @@ export const getUpdateTaskFilterVMByCreateDate = (taskFilterVM: TaskFilterVM, ch
   return { ...taskFilterVM, createDateVMs: createDateVMs };
 }
 
+export const getUpdateTaskFilterVMByCustomCreateDate = (taskFilterVM: TaskFilterVM, date: Date, start: boolean): TaskFilterVM => {
+  let customCreateDate: TaskFilterCustomDate = taskFilterVM.customCreateDate;
+  customCreateDate = start ? { ...customCreateDate, startDate: date } : { ...customCreateDate, endDate: date };
+  return { ...taskFilterVM, customCreateDate: customCreateDate };
+}
+
 export const getUpdateTaskFilterVMByPriority = (taskFilterVM: TaskFilterVM, checkedPriorityVM: TaskFilterPriorityVM): TaskFilterVM => {
   let priorityVMs: TaskFilterPriorityVM[] = taskFilterVM.priorityVMs;
   priorityVMs = priorityVMs.map((priorityVM: TaskFilterPriorityVM) => {
@@ -240,6 +253,7 @@ export const getUpdateTaskFilterVMByCategory = (taskFilterVM: TaskFilterVM, chec
       return {
         ...taskFilterVM,
         hasCreateDate: !checkedCategoryVM.checked,
+        customCreateDate: getDefaultCustomCreateDate(),
         createDateVMs: getDefaultCreateDateVMs(),
         categoryVMs: categoryVMs
       }
@@ -299,6 +313,7 @@ export const getDefaultTaskFilterVM = (): TaskFilterVM => {
     hasDueDate: true,
     hasCreateDate: false,
     hasPriority: false,
+    customCreateDate: getDefaultCustomCreateDate(),
     sortVMs: getDefaultFilterSortVMs(),
     ownerVMs: getDefaultOwnerVMs(),
     dueDateVMs: getDefaultDueDateVMs(),
@@ -312,6 +327,7 @@ export const getTaskFilterVM = (taskFilter: TaskFilter): TaskFilterVM => {
   return {
     ...taskFilter,
     sort: taskFilter.sort ? taskFilter.sort : 'default',
+    customCreateDate: getDefaultCustomCreateDate(),
     sortVMs: getSortVMs(taskFilter),
     ownerVMs: getDefaultOwnerVMs(),
     dueDateVMs: getDefaultDueDateVMs(),
@@ -488,6 +504,32 @@ export const getDefaultCreateDateVMs = (): TaskFilterItemVM[] => {
       hasExtra: true,
     }
   ];
+}
+
+export const getDefaultCustomStartDate = (): Date => {
+  const nowDate: Date = new Date();
+  const todayDate: Date = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
+  const pastWeekDate: Date = new Date(todayDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+  return pastWeekDate;
+}
+
+export const getDefaultCustomEndDate = (): Date => {
+  const nowDate: Date = new Date();
+  const todayDate: Date = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
+
+  return todayDate;
+}
+
+export const getDefaultCustomCreateDate = (): TaskFilterCustomDate => {
+  return {
+    startDate: getDefaultCustomStartDate(),
+    endDate: getDefaultCustomEndDate()
+  };
+}
+
+export const getCustomDateDesc = (date: Date): string => {
+  return DateFns.format(date, 'MM.DD');
 }
 
 export const getDefaultPrioritiesVMs = (): TaskFilterPriorityVM[] => {
