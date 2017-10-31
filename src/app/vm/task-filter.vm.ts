@@ -21,6 +21,7 @@ export interface TaskFilterItemVM {
   label: string;
   value: string;
   checked: boolean;
+  hasExtra?: boolean;
 }
 
 export interface TaskFilterOwnerVM {

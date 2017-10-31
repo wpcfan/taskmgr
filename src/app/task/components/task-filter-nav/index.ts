@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDatepicker } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
@@ -32,6 +33,8 @@ import * as TaskFilterVMActions from '../../../actions/task-filter-vm.action';
   styleUrls: ['./task-filter-nav.component.scss']
 })
 export class TaskFilterNavComponent implements OnInit {
+
+  // @ViewChild('picker') picker: MatDatepicker<Date>;
 
   @Output() closeClicked = new EventEmitter<void>();
 
@@ -122,6 +125,18 @@ export class TaskFilterNavComponent implements OnInit {
   onCreateDateItemClicked(ev: Event, createDate: TaskFilterItemVM) {
     ev.preventDefault();
     this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByCreateDate(this.taskFilterVM, createDate)));
+  }
+
+  onCreateDateItemStartDateClicked(ev: Event) {
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    // this.picker.open();
+  }
+
+  onCreateDateItemEndDateClicked(ev: Event) {
+    ev.preventDefault();
+    ev.stopPropagation();
   }
 
   onPriorityItemClicked(ev: Event, priority: TaskFilterPriorityVM) {

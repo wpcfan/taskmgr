@@ -480,6 +480,12 @@ export const getDefaultCreateDateVMs = (): TaskFilterItemVM[] => {
       label: '过去一月',
       value: 'pastMonth',
       checked: false,
+    },
+    {
+      label: '自定义',
+      value: 'custom',
+      checked: false,
+      hasExtra: true,
     }
   ];
 }

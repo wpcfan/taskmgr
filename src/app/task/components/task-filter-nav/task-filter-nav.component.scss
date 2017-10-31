@@ -105,6 +105,16 @@
   border-bottom: 1px solid #EEEEEE;
 }
 
+.task-filter-nav-category-item-container {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.task-filter-nav-category-item-container:hover {
+  background: #EEEEEE;
+}
+
 .task-filter-nav-category-item {
   height: 40px;
   // line-height: 40px;
@@ -120,6 +130,13 @@
 
 .task-filter-nav-category-item:hover {
   background: #EEEEEE;
+}
+
+.task-filter-nav-category-extra-item {
+  height: 24px;
+  color: #808080;
+  font-size: 14px;
+  padding-left:  15px;
 }
 
 .task-filter-nav-category-item-selected {

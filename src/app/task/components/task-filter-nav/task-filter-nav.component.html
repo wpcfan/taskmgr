@@ -42,9 +42,16 @@
     </div>
     <div *ngIf="taskFilterVM.hasCreateDate" class="task-filter-nav-category-container">
       <div class="task-filter-nav-category-header">创建时间</div>
-      <div class="task-filter-nav-category-item" *ngFor="let createDateVM of taskFilterVM.createDateVMs" (click)="onCreateDateItemClicked($event, createDateVM)">
-        <span>{{createDateVM.label}}</span>
-        <mat-icon *ngIf="createDateVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
+      <div class="task-filter-nav-category-item-container" *ngFor="let createDateVM of taskFilterVM.createDateVMs" (click)="onCreateDateItemClicked($event, createDateVM)">
+        <div class="task-filter-nav-category-item">
+          <span>{{createDateVM.label}}</span>
+          <mat-icon *ngIf="createDateVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
+        </div>
+        <div *ngIf="createDateVM.hasExtra && createDateVM.checked" class="task-filter-nav-category-extra-item">
+          <span (click)="onCreateDateItemStartDateClicked($event)">10.23</span>
+          <span>-</span>
+          <span (click)="onCreateDateItemEndDateClicked($event)">10.30</span>
+        </div>
       </div>
       <div class="task-filter-nav-category-divider"></div>
     </div>
