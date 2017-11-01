@@ -4,7 +4,6 @@ import { MatDatepicker } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
-import { TaskFilter } from '../../../domain';
 import {
   TaskFilterVM,
   TaskFilterItemVM,
@@ -25,8 +24,7 @@ import {
   getUpdateTaskFilterVMByCustomCreateDate,
   getUpdateTaskFilterVMByPriority,
   getUpdateTaskFilterVMByCategory
-}
-  from '../../../utils/task-filter.util';
+} from '../../../utils/task-filter.util';
 import * as fromRoot from '../../../reducers';
 import * as TaskFilterActions from '../../../actions/task-filter.action';
 import * as TaskFilterVMActions from '../../../actions/task-filter-vm.action';
@@ -36,7 +34,7 @@ import * as TaskFilterVMActions from '../../../actions/task-filter-vm.action';
   templateUrl: './task-filter-nav.component.html',
   styleUrls: ['./task-filter-nav.component.scss']
 })
-export class TaskFilterNavComponent implements OnInit {
+export class TaskFilterNavComponent implements OnInit, OnDestroy {
 
   @ViewChild('startDatePicker') startDatePicker: MatDatepicker<Date>;
   @ViewChild('endDatePicker') endDatePicker: MatDatepicker<Date>;
@@ -66,7 +64,7 @@ export class TaskFilterNavComponent implements OnInit {
   ngOnInit() {
     this._taskFilterVMSub = this.taskFilterVM$.subscribe((filterVM: TaskFilterVM) => {
       this.taskFilterVM = filterVM;
-    })
+    });
 
     this._descFilterSub = this.descFilter$.debounceTime(300)
       .distinctUntilChanged()
