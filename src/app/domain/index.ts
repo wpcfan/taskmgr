@@ -6,3 +6,4 @@ export * from './task-list';
 export * from './task';
 export * from './user';
 export * from './history';
+export * from './task-filter';

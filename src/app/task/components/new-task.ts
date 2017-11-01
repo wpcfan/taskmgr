@@ -124,8 +124,8 @@ export class NewTaskComponent implements OnInit, OnDestroy {
       this.form = this.fb.group({
         desc: [this.data.task.desc, Validators.compose([Validators.required, Validators.maxLength(20)])],
         priority: [this.data.task.priority],
-        dueDate: [parse(this.data.task.dueDate)],
-        reminder: [parse(this.data.task.reminder)],
+        dueDate: [this.data.task.dueDate ? parse(this.data.task.dueDate) : null],
+        reminder: [this.data.task.reminder ? parse(this.data.task.reminder) : null],
         owner: [this.data.task.owner ? [this.data.task.owner] : []],
         followers: [this.data.task.participants ? [...this.data.task.participants] : []],
         remark: [this.data.task.remark, Validators.maxLength(40)]

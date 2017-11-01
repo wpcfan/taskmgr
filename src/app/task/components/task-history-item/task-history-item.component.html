@@ -1,5 +1,10 @@
-<mat-list-item>
-  <mat-icon matListIcon>{{item.icon}}</mat-icon>
-  {{item.title}}
-  <span style="flex-grow: 2; text-align: end;">{{item.dateDesc}}</span>
-</mat-list-item>
+<div class="task-history-item">
+  <div class="task-history-item-title">
+    <mat-icon mdListIcon class="task-history-item-title-icon">{{item.icon}}</mat-icon>
+    <span class="task-history-item-title-desc">{{item.title}}</span>
+    <span class="task-history-item-title-date">{{item.dateDesc}}</span>
+  </div>
+  <div *ngIf="item.content">
+    <span class="task-history-item-desc">{{item.content}}</span>
+  </div>
+</div>

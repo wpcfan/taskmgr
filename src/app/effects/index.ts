@@ -5,6 +5,8 @@ import { QuoteEffects } from './quote.effects';
 import { ProjectEffects } from './project.effects';
 import { TaskListEffects } from './task-list.effects';
 import { TaskEffects } from './task.effects';
+import { TaskFilterEffects } from './task-filter.effect';
+import { TaskFilterVMEffects } from './task-filter-vm.effect';
 import { TaskHistoryEffects } from './task-history.effects';
 import { UserEffects } from './user.effects';
 
@@ -16,6 +18,8 @@ import { UserEffects } from './user.effects';
       ProjectEffects,
       TaskListEffects,
       TaskEffects,
+      TaskFilterEffects,
+      TaskFilterVMEffects,
       TaskHistoryEffects,
       UserEffects
     ])

@@ -60,7 +60,8 @@
       "members": [
         "37489e0c-df34-c261-71c4-ce75357e3035",
         "BkkDvwee-"
-      ]
+      ],
+      "taskFilterId": "Bkm8XZcta-"
     },
     {
       "name": "某某公司 ERP 系统",
@@ -75,7 +76,8 @@
         "BylTyXiM-b",
         "BkWpk7jGZb",
         "H1fTyXjMWW"
-      ]
+      ],
+      "taskFilterId": "rkxe1-9KpW"
     }
   ],
   "taskLists": [
@@ -238,6 +240,26 @@
       "reminder": null,
       "createDate": "2017-06-15T12:03:36.290Z",
       "id": "9"
+    }
+  ],
+  "taskFilter": [
+    {
+      "id": "rkxe1-9KpW",
+      "projectId": "Hya1moGb-",
+      "sort": "default",
+      "hasOwner": true,
+      "hasDueDate": true,
+      "hasCreateDate": true,
+      "hasPriority": true
+    },
+    {
+      "id": "Bkm8XZcta-",
+      "projectId": "Sk2HaTagb",
+      "sort": "priorityDesc",
+      "hasOwner": false,
+      "hasDueDate": false,
+      "hasCreateDate": true,
+      "hasPriority": true
     }
   ],
   "taskHistory": [
