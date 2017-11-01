@@ -27,7 +27,6 @@
         "Sk2HaTagb",
         "Sk2HaTagb",
         "Hya1moGb-",
-        "rJUUmY5Yb",
         "Hy3L7K5FW",
         "S1XDmtcF-"
       ],
@@ -61,7 +60,8 @@
       "members": [
         "37489e0c-df34-c261-71c4-ce75357e3035",
         "BkkDvwee-"
-      ]
+      ],
+      "taskFilterId": "Bkm8XZcta-"
     },
     {
       "name": "某某公司 ERP 系统",
@@ -76,67 +76,8 @@
         "BylTyXiM-b",
         "BkWpk7jGZb",
         "H1fTyXjMWW"
-      ]
-    },
-    {
-      "name": "test1",
-      "desc": null,
-      "coverImg": "/assets/img/covers/34.jpg",
-      "members": [
-        "37489e0c-df34-c261-71c4-ce75357e3035"
       ],
-      "id": "H1cBXFctW"
-    },
-    {
-      "name": "test2",
-      "desc": null,
-      "coverImg": "/assets/img/covers/19.jpg",
-      "members": [
-        "37489e0c-df34-c261-71c4-ce75357e3035"
-      ],
-      "id": "rJyUXt5YW"
-    },
-    {
-      "name": "test3",
-      "desc": null,
-      "coverImg": "/assets/img/covers/12.jpg",
-      "members": [
-        "37489e0c-df34-c261-71c4-ce75357e3035"
-      ],
-      "id": "rJUUmY5Yb",
-      "taskLists": [
-        "SyeIU7t9KW",
-        "Sk-8I7Y9YZ",
-        "H1MLUmKcYb"
-      ]
-    },
-    {
-      "name": "test4",
-      "desc": null,
-      "coverImg": "/assets/img/covers/7.jpg",
-      "members": [
-        "37489e0c-df34-c261-71c4-ce75357e3035"
-      ],
-      "id": "Hy3L7K5FW",
-      "taskLists": [
-        "HJxhIQF9Y-",
-        "r1ZnUmK9Yb",
-        "SJf38mYqKb"
-      ]
-    },
-    {
-      "name": "test5",
-      "desc": null,
-      "coverImg": "/assets/img/covers/5.jpg",
-      "members": [
-        "37489e0c-df34-c261-71c4-ce75357e3035"
-      ],
-      "id": "S1XDmtcF-",
-      "taskLists": [
-        "ryeXwmY9Kb",
-        "B1-7vmF5FZ",
-        "SyGQPmtqFW"
-      ]
+      "taskFilterId": "rkxe1-9KpW"
     }
   ],
   "taskLists": [
@@ -169,78 +110,6 @@
       "projectId": "Hya1moGb-",
       "order": 3,
       "id": "H1fTyXjMWW"
-    },
-    {
-      "name": "待办",
-      "projectId": "H1cBXFctW",
-      "order": 1,
-      "id": "r1l9BQt9Fb"
-    },
-    {
-      "name": "进行中",
-      "projectId": "H1cBXFctW",
-      "order": 2,
-      "id": "r1-qrXF5t-"
-    },
-    {
-      "name": "待办",
-      "projectId": "rJyUXt5YW",
-      "order": 1,
-      "id": "S1xkUXK5YW"
-    },
-    {
-      "name": "待办",
-      "projectId": "rJUUmY5Yb",
-      "order": 1,
-      "id": "SyeIU7t9KW"
-    },
-    {
-      "name": "进行中",
-      "projectId": "rJUUmY5Yb",
-      "order": 2,
-      "id": "Sk-8I7Y9YZ"
-    },
-    {
-      "name": "已完成",
-      "projectId": "rJUUmY5Yb",
-      "order": 3,
-      "id": "H1MLUmKcYb"
-    },
-    {
-      "name": "待办",
-      "projectId": "Hy3L7K5FW",
-      "order": 1,
-      "id": "HJxhIQF9Y-"
-    },
-    {
-      "name": "进行中",
-      "projectId": "Hy3L7K5FW",
-      "order": 2,
-      "id": "r1ZnUmK9Yb"
-    },
-    {
-      "name": "已完成",
-      "projectId": "Hy3L7K5FW",
-      "order": 3,
-      "id": "SJf38mYqKb"
-    },
-    {
-      "name": "待办",
-      "projectId": "S1XDmtcF-",
-      "order": 1,
-      "id": "ryeXwmY9Kb"
-    },
-    {
-      "name": "进行中",
-      "projectId": "S1XDmtcF-",
-      "order": 2,
-      "id": "B1-7vmF5FZ"
-    },
-    {
-      "name": "已完成",
-      "projectId": "S1XDmtcF-",
-      "order": 3,
-      "id": "SyGQPmtqFW"
     }
   ],
   "tasks": [
@@ -371,6 +240,26 @@
       "reminder": null,
       "createDate": "2017-06-15T12:03:36.290Z",
       "id": "9"
+    }
+  ],
+  "taskFilter": [
+    {
+      "id": "rkxe1-9KpW",
+      "projectId": "Hya1moGb-",
+      "sort": "default",
+      "hasOwner": true,
+      "hasDueDate": true,
+      "hasCreateDate": true,
+      "hasPriority": true
+    },
+    {
+      "id": "Bkm8XZcta-",
+      "projectId": "Sk2HaTagb",
+      "sort": "priorityDesc",
+      "hasOwner": false,
+      "hasDueDate": false,
+      "hasCreateDate": true,
+      "hasPriority": true
     }
   ],
   "taskHistory": [

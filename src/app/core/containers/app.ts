@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {OverlayContainer} from '@angular/material';
+import {OverlayContainer} from '@angular/cdk/overlay';
 import {Observable} from 'rxjs/Observable';
 import {Store} from '@ngrx/store';
 import * as fromRoot from '../../reducers';
@@ -67,6 +67,8 @@ export class AppComponent {
     this._dark = dark;
     if(dark) {
       this.oc.getContainerElement().classList.add('myapp-dark-theme');
+    } else {
+      this.oc.getContainerElement().classList.remove('myapp-dark-theme');
     }
   }
 

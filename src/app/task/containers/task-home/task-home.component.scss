@@ -1,0 +1,78 @@
+.drag-start {
+  opacity: 0.5;
+  border: #ff525b dashed 2px;
+}
+
+.drag-enter {
+  background-color: dimgray;
+}
+
+.task-lists-navigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  height: 50px;
+  color: #808080;
+  background: #F5F5F5;
+  border-bottom: 1px solid #D9D9D9;
+}
+
+.task-lists-navigation-menu-container {
+  display: flex;
+  flex-direction: row;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-left: 1px solid #808080;
+  cursor: pointer;
+}
+
+.task-lists-navigation-menu-container:hover {
+  color: #3da8f5;
+}
+
+.task-lists-navigation-opened {
+  color: #3da8f5;
+}
+
+.task-lists-navigation-menu-icon {
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.task-lists-navigation-menu-text {
+  font-size: 14px;
+}
+
+.task-lists-content-container {
+  flex: 1;
+  position: relative;
+}
+
+mat-sidenav-container {
+  position: absolute;
+}
+
+.list-container {
+  min-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.task-lists {
+  height: 100%;
+  overflow-x: auto;
+}
+
+.fab-button {
+  position: fixed;
+  right: 32px;
+  bottom: 96px;
+  z-index: 998;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1
+}

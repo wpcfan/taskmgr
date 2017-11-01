@@ -17,9 +17,9 @@ export const adapter: EntityAdapter<User> = createEntityAdapter<User>({
 
 export const initialState: State = adapter.getInitialState();
 
-const register = (state: State, action: authActions.LoginSuccessAction | authActions.RegisterSuccessAction) => {
+const register = (state: State, action: authActions.LoginSuccessAction | authActions.RegisterSuccessAction): State => {
   const auth = <Auth>action.payload;
-  return state.ids.indexOf(<string>auth.userId) === -1 ?
+  return (<string[]>state.ids).indexOf(<string>auth.userId) === -1 ?
     {...adapter.addOne(<User>auth.user, state)} : state;
 };
 

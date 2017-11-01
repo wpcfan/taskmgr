@@ -11,34 +11,40 @@ import {Address} from '../../domain';
   template: `
     <div class="address-group">
       <div>
-        <mat-select
-          placeholder="请选择省份"
-          [(ngModel)]="_address.province"
-          (change)="onProvinceChange()">
-          <mat-option *ngFor="let p of provinces" [value]="p">
-            {{ p }}
-          </mat-option>
-        </mat-select>
+        <mat-form-field>
+          <mat-select
+            placeholder="请选择省份"
+            [(ngModel)]="_address.province"
+            (change)="onProvinceChange()">
+            <mat-option *ngFor="let p of provinces" [value]="p">
+              {{ p }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
       <div>
-        <mat-select
-          placeholder="请选择城市"
-          [(ngModel)]="_address.city"
-          (change)="onCityChange()">
-          <mat-option *ngFor="let c of cities$ | async" [value]="c">
-            {{ c }}
-          </mat-option>
-        </mat-select>
+        <mat-form-field>
+          <mat-select
+            placeholder="请选择城市"
+            [(ngModel)]="_address.city"
+            (change)="onCityChange()">
+            <mat-option *ngFor="let c of cities$ | async" [value]="c">
+              {{ c }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
       <div>
-        <mat-select
-          placeholder="请选择区县"
-          [(ngModel)]="_address.district"
-          (change)="onDistrictChange()">
-          <mat-option *ngFor="let d of districts$ | async" [value]="d">
-            {{ d }}
-          </mat-option>
-        </mat-select>
+        <mat-form-field>
+          <mat-select
+            placeholder="请选择区县"
+            [(ngModel)]="_address.district"
+            (change)="onDistrictChange()">
+            <mat-option *ngFor="let d of districts$ | async" [value]="d">
+              {{ d }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
       <div class="street">
         <mat-form-field class="full-width">

@@ -21,8 +21,9 @@ import * as fromRouter from '@ngrx/router-store';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../../environments/environment';
-import { Auth, User, Project, TaskList, Task, TaskHistory } from '../domain';
-import { TaskListVM, TaskVM } from '../vm';
+import { Auth, User, Project, TaskList, Task, TaskHistory, TaskFilter } from '../domain';
+import { TaskListVM, TaskVM, TaskFilterVM } from '../vm';
+import { getTasksByFilterVM } from '../utils/task-filter.util';
 import * as authActions from '../actions/auth.action';
 
 /**
@@ -39,6 +40,8 @@ import * as fromQuote from './quote.reducer';
 import * as fromProjects from './project.reducer';
 import * as fromTaskLists from './task-list.reducer';
 import * as fromTasks from './task.reducer';
+import * as fromTaskFilter from './task-filter.reducer';
+import * as fromTaskFilterVM from './task-filter-vm.reducer';
 import * as fromTaskHistory from './task-history.reducer';
 import * as fromUsers from './user.reducer';
 import { initialState } from './user.reducer';
@@ -53,6 +56,8 @@ export interface State {
   auth: Auth;
   quote: Quote;
   projects: fromProjects.State;
+  taskFilter: TaskFilter;
+  taskFilterVM: TaskFilterVM;
   taskLists: fromTaskLists.State;
   tasks: fromTasks.State;
   taskHistories: fromTaskHistory.State;
@@ -64,6 +69,8 @@ export const reducers: ActionReducerMap<State> = {
   auth: fromAuth.reducer,
   quote: fromQuote.reducer,
   projects: fromProjects.reducer,
+  taskFilter: fromTaskFilter.reducer,
+  taskFilterVM: fromTaskFilterVM.reducer,
   taskLists: fromTaskLists.reducer,
   taskHistories: fromTaskHistory.reducer,
   tasks: fromTasks.reducer,
@@ -102,6 +109,8 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
 export const getAuthState = createFeatureSelector<Auth>('auth');
 export const getQuoteState = createFeatureSelector<Quote>('quote');
 export const getProjectsState = createFeatureSelector<fromProjects.State>('projects');
+export const getTaskFilterState = createFeatureSelector<TaskFilter>('taskFilter');
+export const getTaskFilterVMState = createFeatureSelector<TaskFilterVM>('taskFilterVM');
 export const getTaskListsState = createFeatureSelector<fromTaskLists.State>('taskLists');
 export const getUsersState = createFeatureSelector<fromUsers.State>('users');
 export const getTasksState = createFeatureSelector<fromTasks.State>('tasks');
@@ -162,8 +171,15 @@ export const getTasksByList = createSelector<State, TaskList[], TaskVM[], TaskLi
     }
   ));
 });
-export const getProjectMembers = (projectId: string) => createSelector(getProjectsState, getUserEntities, (state, entities) => {
-  return state!.entities[projectId]!.members!.map(id => entities[id]);
+
+export const getTaskByFilter = createSelector<State, TaskListVM[], TaskFilterVM, TaskListVM[]>(getTasksByList, getTaskFilterVMState, (taskLists, filterVM) => {
+  return taskLists.map(taskList => {
+    return { ...taskList, tasks: getTasksByFilterVM(taskList.tasks, filterVM) };
+  });
+})
+
+export const getProjectMembers = (projectId: string) => createSelector<State, fromProjects.State, { [id: string]: User }, User[]>(getProjectsState, getUserEntities, (state, entities) => {
+  return state!.entities[projectId]!.members!.map((id: string) => entities[id]);
 });
 export const getAuth = createSelector(getAuthState, getUserEntities, (_auth, _entities) => {
   return { ..._auth, user: _entities[<string>_auth.userId] };

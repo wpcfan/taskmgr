@@ -10,6 +10,7 @@ import { NewTaskListComponent } from './components/new-task-list';
 import { CopyTaskComponent } from './components/copy-task';
 import { QuickTaskComponent } from './components/quick-task';
 import { TaskHistoryItemComponent } from './components/task-history-item';
+import { TaskFilterNavComponent } from './components/task-filter-nav';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { TaskHistoryItemComponent } from './components/task-history-item';
     CopyTaskComponent,
     QuickTaskComponent,
     TaskHistoryItemComponent,
+    TaskFilterNavComponent,
   ],
   entryComponents: [
     NewTaskComponent,
