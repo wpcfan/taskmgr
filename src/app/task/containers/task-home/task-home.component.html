@@ -1,14 +1,20 @@
 <div class="task-lists-navigation">
-  <div class="task-lists-navigation-menu-container" (click)="filternav.toggle()" [ngClass]="{'task-lists-navigation-opened': filternav.opened}">
+  <div class="task-lists-navigation-menu-container" (click)="sidenav.toggle()" [ngClass]="{'task-lists-navigation-opened': sidenav.opened}">
     <mat-icon class="task-lists-navigation-menu-icon">visibility</mat-icon>
     <span class="task-lists-navigation-menu-text">视图</span>
+  </div>
+  <div class="task-lists-navigation-menu-container" (click)="sidenav.toggle()" [ngClass]="{'task-lists-navigation-opened': sidenav.opened}">
+    <mat-icon class="task-lists-navigation-menu-icon">menu</mat-icon>
+    <span class="task-lists-navigation-menu-text">菜单</span>
   </div>
 </div>
 <div class="task-lists-content-container">
   <mat-sidenav-container>
-    <mat-sidenav #filternav mode="side" position="end">
-      <app-task-filter-nav (closeClicked)="filternav.close()">
+    <mat-sidenav #sidenav mode="side" position="end">
+      <app-task-filter-nav (closeClicked)="sidenav.close()">
       </app-task-filter-nav>
+      <app-project-menu-nav *ngIf="false">
+      </app-project-menu-nav>
     </mat-sidenav>
     <div class="task-lists" fxLayout="row" fxLayoutGap="20px">
       <app-task-list class="list-container" fxFlex="0 0 360px" *ngFor="let taskList of lists$ | async" [ngStyle]="{'order': taskList.order}"

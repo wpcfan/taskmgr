@@ -11,6 +11,7 @@ import { CopyTaskComponent } from './components/copy-task';
 import { QuickTaskComponent } from './components/quick-task';
 import { TaskHistoryItemComponent } from './components/task-history-item';
 import { TaskFilterNavComponent } from './components/task-filter-nav';
+import { ProjectMenuNavComponent } from './components/project-menu-nav';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { TaskFilterNavComponent } from './components/task-filter-nav';
     QuickTaskComponent,
     TaskHistoryItemComponent,
     TaskFilterNavComponent,
+    ProjectMenuNavComponent,
   ],
   entryComponents: [
     NewTaskComponent,
