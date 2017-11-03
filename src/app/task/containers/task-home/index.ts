@@ -1,5 +1,5 @@
-import { Component, HostBinding, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component, HostBinding, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { MatDialog, MatSidenav } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -25,8 +25,13 @@ import { TaskListVM, TaskVM } from '../../../vm';
 export class TaskHomeComponent {
 
   @HostBinding('@routeAnim') state: string;
+  @ViewChild('sidenav') sideNav: MatSidenav;
+
   lists$: Observable<TaskListVM[]>;
   private projectId$: Observable<string>;
+
+  currentNavIndex: number = -1;
+
   constructor(private route: ActivatedRoute,
     private dialog: MatDialog,
     private store$: Store<fromRoot.State>) {
@@ -145,5 +150,27 @@ export class TaskHomeComponent {
         createDate: new Date()
       }));
     })
+  }
+
+  handleSideNav(index: number) {
+    if (this.sideNav.opened) {
+      if (this.currentNavIndex === index) {
+        this.closeSideNav();
+      }
+      else {
+        this.currentNavIndex = index;
+      }
+    }
+    else {
+      this.currentNavIndex = index;
+      this.sideNav.open();
+    }
+  }
+
+  closeSideNav() {
+    this.sideNav.close();
+    setTimeout(() => {
+      this.currentNavIndex = -1
+    }, 300);
   }
 }

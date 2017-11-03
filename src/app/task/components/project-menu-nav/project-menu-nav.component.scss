@@ -6,3 +6,27 @@
   background: #F7F7F7;
   border-left: 1px solid #D9D9D9;
 }
+
+.project-menu-nav-header {
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  position: relative;
+}
+
+.project-menu-nav-title {
+  margin: 0 15px;
+  font-size: 15px;
+  font-weight: bold;
+  border-bottom: 1px solid #D1D1D1;
+  color: #383838;
+}
+
+.project-menu-nav-close {
+  position: absolute;
+  top: 0;
+  right: 15px;
+  line-height: 50px;
+  color: #A6A6A6;
+  cursor: pointer;
+}

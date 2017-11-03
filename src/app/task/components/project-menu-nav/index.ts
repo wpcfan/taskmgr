@@ -9,11 +9,19 @@ import * as fromRoot from '../../../reducers';
   styleUrls: ['./project-menu-nav.component.scss']
 })
 export class ProjectMenuNavComponent implements OnInit {
+
+  @Output() closeClicked = new EventEmitter<void>()
+
   constructor(private store$: Store<fromRoot.State>) {
 
   }
 
   ngOnInit() {
 
+  }
+
+  onCloseClicked(ev: Event) {
+    ev.preventDefault();
+    this.closeClicked.emit();
   }
 }

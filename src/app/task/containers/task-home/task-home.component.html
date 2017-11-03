@@ -1,9 +1,9 @@
 <div class="task-lists-navigation">
-  <div class="task-lists-navigation-menu-container" (click)="sidenav.toggle()" [ngClass]="{'task-lists-navigation-opened': sidenav.opened}">
+  <div class="task-lists-navigation-menu-container" (click)="handleSideNav(0)" [ngClass]="{'task-lists-navigation-opened': currentNavIndex === 0}">
     <mat-icon class="task-lists-navigation-menu-icon">visibility</mat-icon>
     <span class="task-lists-navigation-menu-text">视图</span>
   </div>
-  <div class="task-lists-navigation-menu-container" (click)="sidenav.toggle()" [ngClass]="{'task-lists-navigation-opened': sidenav.opened}">
+  <div class="task-lists-navigation-menu-container" (click)="handleSideNav(1)" [ngClass]="{'task-lists-navigation-opened': currentNavIndex === 1}">
     <mat-icon class="task-lists-navigation-menu-icon">menu</mat-icon>
     <span class="task-lists-navigation-menu-text">菜单</span>
   </div>
@@ -11,9 +11,9 @@
 <div class="task-lists-content-container">
   <mat-sidenav-container>
     <mat-sidenav #sidenav mode="side" position="end">
-      <app-task-filter-nav (closeClicked)="sidenav.close()">
+      <app-task-filter-nav *ngIf="currentNavIndex === 0" (closeClicked)="closeSideNav()">
       </app-task-filter-nav>
-      <app-project-menu-nav *ngIf="false">
+      <app-project-menu-nav *ngIf="currentNavIndex === 1" (closeClicked)="closeSideNav()">
       </app-project-menu-nav>
     </mat-sidenav>
     <div class="task-lists" fxLayout="row" fxLayoutGap="20px">
