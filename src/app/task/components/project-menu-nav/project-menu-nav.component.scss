@@ -30,3 +30,44 @@
   color: #A6A6A6;
   cursor: pointer;
 }
+
+.project-menu-nav-body {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-menu-nav-category-container {
+  padding: 6px 0 4px;
+}
+
+.project-menu-nav-category-header, .project-menu-nav-category-clicked-header{
+  height: 40px;
+  line-height: 40px;
+  position: relative;
+  color: #383838;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: row;
+}
+
+.project-menu-nav-category-clicked-header {
+  cursor: pointer;
+}
+
+.project-menu-nav-category-clicked-header:hover {
+  background: #EEEEEE;
+}
+
+.project-menu-nav-category-header-icon {
+  font-size: 18px;
+  line-height: 40px;
+  color: #808080;
+}
+
+.project-menu-nav-category-header-title {
+  margin-left: 5px;
+}
