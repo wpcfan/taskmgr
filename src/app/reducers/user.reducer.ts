@@ -35,7 +35,7 @@ export function reducer(state: State = initialState, action: actions.Actions | a
     }
     case prjActions.LOADS_SUCCESS: {
       const projects = action.payload;
-      const members = projects.map((p: Project) => p.members);
+      const members = projects.map((p: Project) => p.members ? p.members : []);
       const arrMembers = members.reduce((a: User[], b: User[]) => a.concat(b), []);
       return {...adapter.addMany(<User[]>arrMembers, state)};
     }
