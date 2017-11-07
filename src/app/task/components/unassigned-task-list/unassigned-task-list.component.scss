@@ -1,0 +1,17 @@
+.task-list-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.task-list-header {
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  position: relative;
+}
+
+.task-list-body {
+  flex: 1;
+  overflow: auto;
+}

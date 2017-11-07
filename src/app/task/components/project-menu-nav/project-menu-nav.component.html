@@ -16,7 +16,7 @@
         <span class="project-menu-nav-category-header-title">任务统计</span>
       </div>
       <div class="project-menu-nav-statistics-container">
-        <div class="project-menu-nav-statistics-item">
+        <div class="project-menu-nav-statistics-item" (click)="openUnassignedTaskDialog()">
           <span>待认领的任务</span>
           <span class="project-menu-nav-statistics-unassigned-number">{{unassignedNumber}}</span>
         </div>

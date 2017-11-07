@@ -8,7 +8,7 @@ export const getUnassignedTasks = (taskListVMs: TaskListVM[]): TaskVM[] => {
     return [...acc, ...value.tasks];
   }, []);
 
-  taskVMs = taskVMs.filter((taskVM: TaskVM) => !taskVM.owner);
+  taskVMs = taskVMs.filter((taskVM: TaskVM) => !taskVM.owner && !taskVM.completed);
 
   taskVMs = taskVMs.sort((currentTask: TaskVM, nextTask: TaskVM) => {
     const currentTimestamp: number = new Date(<Date>currentTask.createDate).getTime();

@@ -1,12 +1,14 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
+import { UnassignedTaskListComponent } from '../../components/unassigned-task-list';
 import { TaskListVM } from '../../../vm';
 import {
   getUnassignedTasks,
   getTodayTasks
- } from '../../../utils/project-menu.util';
+} from '../../../utils/project-menu.util';
 import * as fromRoot from '../../../reducers';
 
 @Component({
@@ -21,17 +23,17 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
   unassignedNumber: number = 0;
   todayNumber: number = 0;
 
-
   private taskListVMs$: Observable<TaskListVM[]>;
   private _taskListVMsSub: Subscription;
 
-  constructor(private store$: Store<fromRoot.State>) {
+  constructor(
+    private unassignedTaskDialog: MatDialog,
+    private store$: Store<fromRoot.State>) {
     this.taskListVMs$ = this.store$.select(fromRoot.getTasksByList);
   }
 
   ngOnInit() {
     this._taskListVMsSub = this.taskListVMs$.subscribe((taskListVMs: TaskListVM[]) => {
-
       this.unassignedNumber = getUnassignedTasks(taskListVMs).length;
       this.todayNumber = getTodayTasks(taskListVMs).length;
     });
@@ -46,5 +48,12 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
   onCloseClicked(ev: Event) {
     ev.preventDefault();
     this.closeClicked.emit();
+  }
+
+  openUnassignedTaskDialog() {
+    const dialogRef: MatDialogRef<UnassignedTaskListComponent> = this.unassignedTaskDialog.open(UnassignedTaskListComponent, {
+      height: `${document.body.clientHeight - 100}px`,
+      width: `600px`,
+    });
   }
 }
