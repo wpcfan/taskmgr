@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
@@ -18,7 +19,9 @@ export class UnassignedTaskListComponent implements OnInit, OnDestroy {
   private taskListVMs$: Observable<TaskListVM[]>;
   private _taskListVMsSub: Subscription;
 
-  constructor(private store$: Store<fromRoot.State>) {
+  constructor(
+    private dialogRef: MatDialogRef<UnassignedTaskListComponent>,
+    private store$: Store<fromRoot.State>) {
     this.taskListVMs$ = this.store$.select(fromRoot.getTasksByList);
   }
 
@@ -32,5 +35,9 @@ export class UnassignedTaskListComponent implements OnInit, OnDestroy {
     if (this._taskListVMsSub) {
       this._taskListVMsSub.unsubscribe();
     }
+  }
+
+  closeUnassignedTaskDialog() {
+    this.dialogRef.close();
   }
 }

@@ -1,33 +1,23 @@
 <div class="task-list-container">
   <div class="task-list-header">
-    <div>带认领的任务</div>
+    <div class="task-list-header-title">带认领的任务</div>
+    <mat-icon class="task-list-close" (click)="closeUnassignedTaskDialog()">clear</mat-icon>
+    <mat-divider></mat-divider>
   </div>
   <div class="task-list-body">
-    DEVELOP ACROSS ALL PLATFORMS Learn one way to build applications with Angular and reuse your code and abilities to build
-    apps for any deployment target. For web, mobile web, native mobile and native desktop. SPEED & PERFORMANCE Achieve the
-    maximum speed possible on the Web Platform today, and take it further, via Web Workers and server-side rendering. Angular
-    puts you in control over scalability. Meet huge data requirements by building data models on RxJS, Immutable.js or another
-    push-model. INCREDIBLE TOOLING Build features quickly with simple, declarative templates. Extend the template language
-    with your own components and use a wide array of existing components. Get immediate Angular-specific help and feedback
-    with nearly every IDE and editor. All this comes together so you can focus on building amazing apps rather than trying
-    to make the code work. LOVED BY MILLIONS From prototype through global deployment, Angular delivers the productivity
-    and scalable infrastructure that supports Google's largest applications. DEVELOP ACROSS ALL PLATFORMS Learn one way to
-    build applications with Angular and reuse your code and abilities to build apps for any deployment target. For web, mobile
-    web, native mobile and native desktop. SPEED & PERFORMANCE Achieve the maximum speed possible on the Web Platform today,
-    and take it further, via Web Workers and server-side rendering. Angular puts you in control over scalability. Meet huge
-    data requirements by building data models on RxJS, Immutable.js or another push-model. INCREDIBLE TOOLING Build features
-    quickly with simple, declarative templates. Extend the template language with your own components and use a wide array
-    of existing components. Get immediate Angular-specific help and feedback with nearly every IDE and editor. All this comes
-    together so you can focus on building amazing apps rather than trying to make the code work. LOVED BY MILLIONS From prototype
-    through global deployment, Angular delivers the productivity and scalable infrastructure that supports Google's largest
-    applications. Learn one way to build applications with Angular and reuse your code and abilities to build apps for any
-    deployment target. For web, mobile web, native mobile and native desktop. SPEED & PERFORMANCE Achieve the maximum speed
-    possible on the Web Platform today, and take it further, via Web Workers and server-side rendering. Angular puts you
-    in control over scalability. Meet huge data requirements by building data models on RxJS, Immutable.js or another push-model.
-    INCREDIBLE TOOLING Build features quickly with simple, declarative templates. Extend the template language with your
-    own components and use a wide array of existing components. Get immediate Angular-specific help and feedback with nearly
-    every IDE and editor. All this comes together so you can focus on building amazing apps rather than trying to make the
-    code work. LOVED BY MILLIONS From prototype through global deployment, Angular delivers the productivity and scalable
-    infrastructure that supports Google's largest applications.
+    <div *ngFor="let taskVM of taskVMs" class="task-list-item" [ngClass]="{
+      'task-list-item-priority-normal': taskVM.priority === 3,
+      'task-list-item-priority-important': taskVM.priority === 2,
+      'task-list-item-priority-emergency': taskVM.priority === 1}">
+      <mat-checkbox></mat-checkbox>
+      <mat-icon class="task-list-item-avatar" svgIcon="unassigned"></mat-icon>
+      <span>{{taskVM.desc}}</span>
+      <span class="fill-remaining-space"></span>
+      <div class="task-list-item-date-container">
+        <mat-icon class="task-list-item-icon">date_range</mat-icon>
+        <span>9月5日 截止</span>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
   </div>
 </div>
