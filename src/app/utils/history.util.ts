@@ -1,7 +1,7 @@
 import * as History from '../domain/history';
 import { TaskHistoryVM } from '../vm';
 import { User } from '../domain';
-import * as DateFns from 'date-fns'
+import * as DateFns from 'date-fns';
 
 export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistoryVM[] => {
   return histories.map((history: History.TaskHistory) => {
@@ -150,11 +150,13 @@ const getDateDesc = (date: Date): string => {
   const historyDate: Date = new Date(date);
   const todayDate: Date = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
   const yesterdayDate: Date = new Date(todayDate.getTime() - 24 * 60 * 60 * 1000);
-  const thisWeekDate: Date = new Date(todayDate.getTime() - (nowDate.getDay() - 1) * 24 * 60 * 60 * 1000);
+  const thisWeekDate: Date = new Date(todayDate.getTime() - (nowDate.getDay() === 0 ? 6 : nowDate.getDay() - 1) * 24 * 60 * 60 * 1000);
   const lastWeekDate: Date = new Date(thisWeekDate.getTime() - 7 * 24 * 60 * 60 * 1000);
 
   const nowTimestamp: number = nowDate.getTime();
   const historyTimestamp: number = historyDate.getTime();
+  const thisWeekTimestamp: number = thisWeekDate.getTime();
+  const lastWeekTimestamp: number = lastWeekDate.getTime();
   const deltaTimestamp: number = nowTimestamp - historyTimestamp;
   // const deltaTimestamp: number = 45 * 60 * 1000 + 500;
 
@@ -185,11 +187,11 @@ const getDateDesc = (date: Date): string => {
     return `昨天 ${DateFns.format(historyDate, 'HH:mm')}`;
   }
 
-  if (DateFns.format(thisWeekDate, 'YYYY-MM W') === DateFns.format(historyDate, 'YYYY-MM W')) {
+  if (historyTimestamp >= thisWeekTimestamp) {
     return `本周${getDayName(historyDate.getDay())} ${DateFns.format(historyDate, 'HH:mm')}`;
   }
 
-  if (DateFns.format(lastWeekDate, 'YYYY-MM W') === DateFns.format(historyDate, 'YYYY-MM W')) {
+  if (historyTimestamp >= lastWeekTimestamp && historyTimestamp < thisWeekTimestamp) {
     return `上周${getDayName(historyDate.getDay())} ${DateFns.format(historyDate, 'HH:mm')}`;
   }
 
@@ -197,8 +199,8 @@ const getDateDesc = (date: Date): string => {
 }
 
 const getDayName = (day: number): string => {
-  const dayNames: string[] = ['一', '二', '三', '四', '五', '六', '日'];
-  return dayNames[day - 1];
+  const dayNames: string[] = ['日', '一', '二', '三', '四', '五', '六'];
+  return dayNames[day];
 }
 
 const joinUserNames = (users: User[]): string => {

@@ -4,7 +4,10 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { TaskListVM, TaskVM } from '../../../vm';
-import { getUnassignedTasks } from '../../../utils/project-menu.util';
+import {
+  getUnassignedTasks,
+  getDueDateDesc
+} from '../../../utils/project-menu.util';
 import * as fromRoot from '../../../reducers';
 
 @Component({
@@ -39,5 +42,9 @@ export class UnassignedTaskListComponent implements OnInit, OnDestroy {
 
   closeUnassignedTaskDialog() {
     this.dialogRef.close();
+  }
+
+  getDateDesc(date: Date): string {
+    return getDueDateDesc(date);
   }
 }

@@ -14,9 +14,9 @@
         <mat-icon class="task-list-item-avatar" svgIcon="unassigned"></mat-icon>
         <span>{{taskVM.desc}}</span>
         <span class="fill-remaining-space"></span>
-        <div class="task-list-item-date-container">
+        <div *ngIf="taskVM.dueDate" class="task-list-item-date-container">
           <mat-icon class="task-list-item-icon">today</mat-icon>
-          <span>9月5日 截止</span>
+          <span>{{getDateDesc(taskVM.dueDate)}}</span>
         </div>
       </div>
       <mat-divider></mat-divider>
