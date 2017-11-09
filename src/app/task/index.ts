@@ -12,7 +12,7 @@ import { QuickTaskComponent } from './components/quick-task';
 import { TaskHistoryItemComponent } from './components/task-history-item';
 import { TaskFilterNavComponent } from './components/task-filter-nav';
 import { ProjectMenuNavComponent } from './components/project-menu-nav';
-import { UnassignedTaskListComponent } from './components/unassigned-task-list';
+import { UnassignedTaskListComponent } from './components/task-list-dialog/unassigned-task-list.component';
 
 @NgModule({
   imports: [

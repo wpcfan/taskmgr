@@ -12,8 +12,8 @@ import * as fromRoot from '../../../reducers';
 
 @Component({
   selector: 'app-unassigned-task-list',
-  templateUrl: './unassigned-task-list.component.html',
-  styleUrls: ['./unassigned-task-list.component.scss']
+  templateUrl: './task-list-dialog.component.html',
+  styleUrls: ['./task-list-dialog.component.scss']
 })
 export class UnassignedTaskListComponent implements OnInit, OnDestroy {
 

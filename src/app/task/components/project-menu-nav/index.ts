@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
-import { UnassignedTaskListComponent } from '../../components/unassigned-task-list';
+import { UnassignedTaskListComponent } from '../../components/task-list-dialog/unassigned-task-list.component';
 import { TaskListVM } from '../../../vm';
 import {
   getUnassignedTasks,
