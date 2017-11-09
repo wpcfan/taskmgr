@@ -1,23 +1,31 @@
 <div class="task-list-container">
   <div class="task-list-header">
-    <div class="task-list-header-title">带认领的任务</div>
+    <div class="task-list-header-title">待认领的任务</div>
     <mat-icon class="task-list-close" (click)="closeUnassignedTaskDialog()">clear</mat-icon>
     <mat-divider></mat-divider>
   </div>
   <div class="task-list-body">
-    <div *ngFor="let taskVM of taskVMs" class="task-list-item" [ngClass]="{
-      'task-list-item-priority-normal': taskVM.priority === 3,
-      'task-list-item-priority-important': taskVM.priority === 2,
-      'task-list-item-priority-emergency': taskVM.priority === 1}">
-      <mat-checkbox></mat-checkbox>
-      <mat-icon class="task-list-item-avatar" svgIcon="unassigned"></mat-icon>
-      <span>{{taskVM.desc}}</span>
-      <span class="fill-remaining-space"></span>
-      <div class="task-list-item-date-container">
-        <mat-icon class="task-list-item-icon">date_range</mat-icon>
-        <span>9月5日 截止</span>
+    <div *ngIf="taskVMs.length > 0 else empty" class="task-list-data-container">
+      <div *ngFor="let taskVM of taskVMs" class="task-list-item" [ngClass]="{
+          'task-list-item-priority-normal': taskVM.priority === 3,
+          'task-list-item-priority-important': taskVM.priority === 2,
+          'task-list-item-priority-emergency': taskVM.priority === 1}">
+        <mat-checkbox></mat-checkbox>
+        <mat-icon class="task-list-item-avatar" svgIcon="unassigned"></mat-icon>
+        <span>{{taskVM.desc}}</span>
+        <span class="fill-remaining-space"></span>
+        <div class="task-list-item-date-container">
+          <mat-icon class="task-list-item-icon">today</mat-icon>
+          <span>9月5日 截止</span>
+        </div>
       </div>
+      <mat-divider></mat-divider>
     </div>
-    <mat-divider></mat-divider>
+    <ng-template #empty>
+      <div class="task-list-empty-container">
+        <mat-icon class="task-list-empty-icon">launch</mat-icon>
+        <span class="task-list-empty-desc ">目前还没有任务</span>
+      </div>
+    </ng-template>
   </div>
 </div>

@@ -64,12 +64,6 @@ mat-checkbox {
   font-size: 16px;
 }
 
-.task-list-body {
-  flex: 1;
-  overflow: auto;
-  margin: 0 -24px -24px -24px; //refer to mat-dialog-actions:last-child
-}
-
 .task-list-close {
   position: absolute;
   top: 0;
@@ -77,6 +71,37 @@ mat-checkbox {
   line-height: 50px;
   color: #A6A6A6;
   cursor: pointer;
+}
+
+.task-list-body {
+  flex: 1;
+  overflow: auto;
+  margin: 0 -24px -24px -24px; //refer to mat-dialog-actions:last-child
+}
+
+.task-list-empty-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #A6A6A6;
+}
+
+.task-list-empty-icon {
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+}
+
+.task-list-empty-desc {
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.task-list-data-container {
+  display: flex;
+  flex-direction: column;
 }
 
 .task-list-item {
