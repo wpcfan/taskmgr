@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { UnassignedTaskListComponent } from '../../components/task-list-dialog/unassigned-task-list.component';
+import { TodayTaskListComponent } from '../../components/task-list-dialog/today-task-list.component';
 import { TaskListVM } from '../../../vm';
 import {
   getUnassignedTasks,
@@ -28,6 +29,7 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
 
   constructor(
     private unassignedTaskDialog: MatDialog,
+    private todayTaskDialog: MatDialog,
     private store$: Store<fromRoot.State>) {
     this.taskListVMs$ = this.store$.select(fromRoot.getTasksByList);
   }
@@ -54,6 +56,15 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
     const dialogRef: MatDialogRef<UnassignedTaskListComponent> = this.unassignedTaskDialog.open(UnassignedTaskListComponent, {
       height: `${document.body.clientHeight - 100}px`,
       width: `600px`,
+      data: '待认领的任务',
+    });
+  }
+
+  openTodayTaskDialog() {
+    const dialogRef: MatDialogRef<TodayTaskListComponent> = this.todayTaskDialog.open(TodayTaskListComponent, {
+      height: `${document.body.clientHeight - 100}px`,
+      width: `600px`,
+      data: '今天的任务',
     });
   }
 }

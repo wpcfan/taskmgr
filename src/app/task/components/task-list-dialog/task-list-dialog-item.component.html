@@ -1,0 +1,13 @@
+<div class="task-list-item" [ngClass]="{
+  'task-list-item-priority-normal': taskVM.priority === 3,
+  'task-list-item-priority-important': taskVM.priority === 2,
+  'task-list-item-priority-emergency': taskVM.priority === 1}">
+  <mat-checkbox></mat-checkbox>
+  <mat-icon class="task-list-item-avatar" svgIcon="unassigned"></mat-icon>
+  <span>{{taskVM.desc}}</span>
+  <span class="fill-remaining-space"></span>
+  <div *ngIf="taskVM.dueDate" class="task-list-item-date-container">
+    <mat-icon class="task-list-item-icon">today</mat-icon>
+    <span>{{getDateDesc(taskVM.dueDate)}}</span>
+  </div>
+</div>

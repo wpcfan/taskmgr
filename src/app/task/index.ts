@@ -13,6 +13,8 @@ import { TaskHistoryItemComponent } from './components/task-history-item';
 import { TaskFilterNavComponent } from './components/task-filter-nav';
 import { ProjectMenuNavComponent } from './components/project-menu-nav';
 import { UnassignedTaskListComponent } from './components/task-list-dialog/unassigned-task-list.component';
+import { TodayTaskListComponent } from './components/task-list-dialog/today-task-list.component';
+import { TaskListDialogItemComponent } from './components/task-list-dialog/task-list-dialog-item.component';
 
 @NgModule({
   imports: [
@@ -32,12 +34,15 @@ import { UnassignedTaskListComponent } from './components/task-list-dialog/unass
     TaskFilterNavComponent,
     ProjectMenuNavComponent,
     UnassignedTaskListComponent,
+    TodayTaskListComponent,
+    TaskListDialogItemComponent,
   ],
   entryComponents: [
     NewTaskComponent,
     NewTaskListComponent,
     CopyTaskComponent,
     UnassignedTaskListComponent,
+    TodayTaskListComponent,
   ]
 })
 export class TaskModule {
