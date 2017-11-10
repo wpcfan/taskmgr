@@ -120,16 +120,24 @@ mat-checkbox {
   background: #EEEEEE;
 }
 
+.task-list-item-priority {
+  width: 3px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .task-list-item-priority-normal {
-  border-left: 3px solid #A6A6A6;
+  background: #A6A6A6;
 }
 
 .task-list-item-priority-important {
-  border-left: 3px solid #FFAF38;
+  background: #FFAF38;
 }
 
 .task-list-item-priority-emergency {
-  border-left: 3px solid red;
+  background: red;
 }
 
 .task-list-item-avatar {

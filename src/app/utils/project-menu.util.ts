@@ -50,6 +50,10 @@ export const getTodayTasks = (taskListVMs: TaskListVM[]): TaskVM[] => {
   return taskVMs;
 }
 
+export const getOwnerAvatar = (taskVM: TaskVM): string => {
+  return taskVM.owner ? <string>taskVM.owner.avatar : 'unassigned';
+}
+
 export const getDueDateDesc = (date: Date): string => {
   const nowDate: Date = new Date();
   const dueDate: Date = new Date(date);

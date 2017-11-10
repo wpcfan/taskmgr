@@ -16,7 +16,7 @@ export class TaskItemComponent implements OnInit {
   @Output() taskClick = new EventEmitter();
   @Input() item: TaskVM;
   avatar: string;
-  widerPriority = 'in';
+  widerPriority = 'out';
 
   constructor() {
   }
@@ -40,12 +40,12 @@ export class TaskItemComponent implements OnInit {
 
   @HostListener('mouseenter')
   handleMouseEnter() {
-    this.widerPriority = 'out';
+    this.widerPriority = 'in';
   }
 
   @HostListener('mouseleave')
   handleMouseLeave() {
-    this.widerPriority = 'in';
+    this.widerPriority = 'out';
   }
 
 }
