@@ -6,8 +6,11 @@
   <mat-icon class="task-list-item-avatar" svgIcon="unassigned"></mat-icon>
   <span>{{taskVM.desc}}</span>
   <span class="fill-remaining-space"></span>
-  <div *ngIf="taskVM.dueDate" class="task-list-item-date-container">
-    <mat-icon class="task-list-item-icon">today</mat-icon>
+  <div *ngIf="taskVM.dueDate" class="task-list-item-date-container" [ngClass]="{
+    'task-list-item-date-past-background': isPastDate(taskVM.dueDate),
+    'task-list-item-date-today-background': isTodayDate(taskVM.dueDate),
+    'task-list-item-date-future-background': isFutureDate(taskVM.dueDate)}">
+    <mat-icon class="task-list-item-date-icon">today</mat-icon>
     <span>{{getDateDesc(taskVM.dueDate)}}</span>
   </div>
 </div>

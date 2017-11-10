@@ -1,6 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TaskVM } from '../../../vm';
-import { getDueDateDesc } from '../../../utils/project-menu.util';
+import {
+  getDueDateDesc,
+  isPastDate,
+  isTodayDate,
+  isFutureDate
+} from '../../../utils/project-menu.util';
 
 @Component({
   selector: 'app-task-list-dialog-item',
@@ -20,5 +25,17 @@ export class TaskListDialogItemComponent implements OnInit {
 
   getDateDesc(date: Date): string {
     return getDueDateDesc(date);
+  }
+
+  isPastDate(date: Date): boolean {
+    return isPastDate(date);
+  }
+
+  isTodayDate(date: Date): boolean {
+    return isTodayDate(date);
+  }
+
+  isFutureDate(date: Date): boolean {
+    return isFutureDate(date);
   }
 }

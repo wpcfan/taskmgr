@@ -12,8 +12,8 @@ import { QuickTaskComponent } from './components/quick-task';
 import { TaskHistoryItemComponent } from './components/task-history-item';
 import { TaskFilterNavComponent } from './components/task-filter-nav';
 import { ProjectMenuNavComponent } from './components/project-menu-nav';
-import { UnassignedTaskListComponent } from './components/task-list-dialog/unassigned-task-list.component';
-import { TodayTaskListComponent } from './components/task-list-dialog/today-task-list.component';
+import { UnassignedTaskListDialogComponent } from './components/task-list-dialog/unassigned-task-list-dialog.component';
+import { TodayTaskListDialogComponent } from './components/task-list-dialog/today-task-list-dialog.component';
 import { TaskListDialogItemComponent } from './components/task-list-dialog/task-list-dialog-item.component';
 
 @NgModule({
@@ -33,16 +33,16 @@ import { TaskListDialogItemComponent } from './components/task-list-dialog/task-
     TaskHistoryItemComponent,
     TaskFilterNavComponent,
     ProjectMenuNavComponent,
-    UnassignedTaskListComponent,
-    TodayTaskListComponent,
+    UnassignedTaskListDialogComponent,
+    TodayTaskListDialogComponent,
     TaskListDialogItemComponent,
   ],
   entryComponents: [
     NewTaskComponent,
     NewTaskListComponent,
     CopyTaskComponent,
-    UnassignedTaskListComponent,
-    TodayTaskListComponent,
+    UnassignedTaskListDialogComponent,
+    TodayTaskListDialogComponent,
   ]
 })
 export class TaskModule {

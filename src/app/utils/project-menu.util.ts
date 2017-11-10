@@ -5,12 +5,15 @@ import {
 import * as DateFns from 'date-fns';
 
 export const getUnassignedTasks = (taskListVMs: TaskListVM[]): TaskVM[] => {
+  //Get All Tasks
   let taskVMs: TaskVM[] = taskListVMs.reduce((acc: TaskVM[], value: TaskListVM) => {
     return [...acc, ...value.tasks];
   }, []);
 
+  //Filter Unassigned Tasks (No Owner & Not Completed)
   taskVMs = taskVMs.filter((taskVM: TaskVM) => !taskVM.owner && !taskVM.completed);
 
+  //Sort By Create Date
   taskVMs = taskVMs.sort((currentTask: TaskVM, nextTask: TaskVM) => {
     const currentTimestamp: number = new Date(<Date>currentTask.createDate).getTime();
     const nextTimestamp: number = new Date(<Date>nextTask.createDate).getTime();
@@ -21,10 +24,12 @@ export const getUnassignedTasks = (taskListVMs: TaskListVM[]): TaskVM[] => {
 }
 
 export const getTodayTasks = (taskListVMs: TaskListVM[]): TaskVM[] => {
+  //Get All Tasks
   let taskVMs: TaskVM[] = taskListVMs.reduce((acc: TaskVM[], value: TaskListVM) => {
     return [...acc, ...value.tasks];
   }, []);
 
+  //Filter Today Tasks (DueDate <= TodayDate & Not Completed)
   taskVMs = taskVMs.filter((taskVM: TaskVM) => {
     if (taskVM.dueDate && !taskVM.completed) {
       const nowDate: Date = new Date();
@@ -33,6 +38,13 @@ export const getTodayTasks = (taskListVMs: TaskListVM[]): TaskVM[] => {
       return todayDate.getTime() >= new Date(taskVM.dueDate).getTime();
     }
     return false;
+  });
+
+  //Sort By Create Date
+  taskVMs = taskVMs.sort((currentTask: TaskVM, nextTask: TaskVM) => {
+    const currentTimestamp: number = new Date(<Date>currentTask.createDate).getTime();
+    const nextTimestamp: number = new Date(<Date>nextTask.createDate).getTime();
+    return currentTimestamp - nextTimestamp;
   });
 
   return taskVMs;
@@ -72,4 +84,31 @@ export const getDueDateDesc = (date: Date): string => {
 const getDayName = (day: number): string => {
   const dayNames: string[] = ['日', '一', '二', '三', '四', '五', '六'];
   return dayNames[day];
+}
+
+export const isPastDate = (date: Date): boolean => {
+  const nowDate: Date = new Date();
+  const todayDate: Date = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
+
+  let dueDate: Date = new Date(date);
+  dueDate = new Date(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
+
+  return todayDate.getTime() > dueDate.getTime();
+}
+
+export const isTodayDate = (date: Date): boolean => {
+  const nowDate: Date = new Date();
+  const todayDate: Date = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
+
+  return DateFns.format(nowDate, 'YYYY-MM-DD') === DateFns.format(new Date(date), 'YYYY-MM-DD');
+}
+
+export const isFutureDate = (date: Date): boolean => {
+  const nowDate: Date = new Date();
+  const todayDate: Date = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
+
+  let dueDate: Date = new Date(date);
+  dueDate = new Date(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
+
+  return todayDate.getTime() < dueDate.getTime();
 }

@@ -3,8 +3,8 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
-import { UnassignedTaskListComponent } from '../../components/task-list-dialog/unassigned-task-list.component';
-import { TodayTaskListComponent } from '../../components/task-list-dialog/today-task-list.component';
+import { UnassignedTaskListDialogComponent } from '../../components/task-list-dialog/unassigned-task-list-dialog.component';
+import { TodayTaskListDialogComponent } from '../../components/task-list-dialog/today-task-list-dialog.component';
 import { TaskListVM } from '../../../vm';
 import {
   getUnassignedTasks,
@@ -53,7 +53,7 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
   }
 
   openUnassignedTaskDialog() {
-    const dialogRef: MatDialogRef<UnassignedTaskListComponent> = this.unassignedTaskDialog.open(UnassignedTaskListComponent, {
+    const dialogRef: MatDialogRef<UnassignedTaskListDialogComponent> = this.unassignedTaskDialog.open(UnassignedTaskListDialogComponent, {
       height: `${document.body.clientHeight - 100}px`,
       width: `600px`,
       data: '待认领的任务',
@@ -61,7 +61,7 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
   }
 
   openTodayTaskDialog() {
-    const dialogRef: MatDialogRef<TodayTaskListComponent> = this.todayTaskDialog.open(TodayTaskListComponent, {
+    const dialogRef: MatDialogRef<TodayTaskListDialogComponent> = this.todayTaskDialog.open(TodayTaskListDialogComponent, {
       height: `${document.body.clientHeight - 100}px`,
       width: `600px`,
       data: '今天的任务',
