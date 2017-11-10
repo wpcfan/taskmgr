@@ -1,4 +1,4 @@
-<div class="task-list-item">
+<div class="task-list-item" (click)="onItemClicked($event)">
   <div class="task-list-item-priority" [@priority]="animState" [ngClass]="{
       'task-list-item-priority-normal': taskVM.priority === 3,
       'task-list-item-priority-important': taskVM.priority === 2,

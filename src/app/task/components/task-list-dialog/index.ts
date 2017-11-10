@@ -4,15 +4,15 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { TaskListVM, TaskVM } from '../../../vm';
-import { getUnassignedTasks } from '../../../utils/project-menu.util';
+import { getUnassignedTasks, getTodayTasks } from '../../../utils/project-menu.util';
 import * as fromRoot from '../../../reducers';
 
 @Component({
-  selector: 'app-unassigned-task-list',
+  selector: 'app-today-task-list',
   templateUrl: './task-list-dialog.component.html',
   styleUrls: ['./task-list-dialog.component.scss']
 })
-export class UnassignedTaskListDialogComponent implements OnInit, OnDestroy {
+export class TaskListDialogComponent implements OnInit, OnDestroy {
 
   title: string;
   taskVMs: TaskVM[];
@@ -21,16 +21,16 @@ export class UnassignedTaskListDialogComponent implements OnInit, OnDestroy {
   private _taskListVMsSub: Subscription;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: string,
-    private dialogRef: MatDialogRef<UnassignedTaskListDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: { title: string; showUnassignedTaskList: boolean },
+    private dialogRef: MatDialogRef<TaskListDialogComponent>,
     private store$: Store<fromRoot.State>) {
     this.taskListVMs$ = this.store$.select(fromRoot.getTasksByList);
   }
 
   ngOnInit() {
-    this.title = this.data;
+    this.title = this.data.title;
     this._taskListVMsSub = this.taskListVMs$.subscribe((taskListVMs: TaskListVM[]) => {
-      this.taskVMs = getUnassignedTasks(taskListVMs);
+      this.taskVMs = this.data.showUnassignedTaskList ? getUnassignedTasks(taskListVMs) : getTodayTasks(taskListVMs);
     });
   }
 
@@ -42,5 +42,8 @@ export class UnassignedTaskListDialogComponent implements OnInit, OnDestroy {
 
   closeUnassignedTaskDialog() {
     this.dialogRef.close();
+  }
+
+  handleUpdateTask(taskVM: TaskVM) {
   }
 }

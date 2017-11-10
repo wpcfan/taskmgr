@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  HostListener
+} from '@angular/core';
 import { priorityAnim } from '../../../anim';
 import { TaskVM } from '../../../vm';
 import {
@@ -12,12 +19,13 @@ import {
 @Component({
   selector: 'app-task-list-dialog-item',
   templateUrl: './task-list-dialog-item.component.html',
-  styleUrls: ['./task-list-dialog.component.scss'],
+  styleUrls: ['./task-list-dialog-item.component.scss'],
   animations: [priorityAnim]
 })
 export class TaskListDialogItemComponent implements OnInit {
 
   @Input() taskVM: TaskVM;
+  @Output() itemClicked = new EventEmitter<void>();
 
   animState = 'out';
 
@@ -46,6 +54,15 @@ export class TaskListDialogItemComponent implements OnInit {
 
   isFutureDate(date: Date): boolean {
     return isFutureDate(date);
+  }
+
+  onCheckboxClicked(ev: Event) {
+    ev.stopPropagation();
+  }
+
+  onItemClicked(ev: Event) {
+    ev.preventDefault();
+    this.itemClicked.emit();
   }
 
   @HostListener('mouseenter')

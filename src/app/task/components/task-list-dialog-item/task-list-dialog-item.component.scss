@@ -1,0 +1,72 @@
+.task-list-item {
+  height: 48px;
+  position: relative;
+  color: #383838;
+  font-size: 14px;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+}
+
+.task-list-item:hover {
+  background: #EEEEEE;
+}
+
+.task-list-item-priority {
+  width: 3px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.task-list-item-priority-normal {
+  background: #A6A6A6;
+}
+
+.task-list-item-priority-important {
+  background: #FFAF38;
+}
+
+.task-list-item-priority-emergency {
+  background: red;
+}
+
+.task-list-item-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  overflow: hidden;
+  color: #808080;
+  margin-right: 12px;
+}
+
+.task-list-item-date-container {
+  height: 22px;
+  font-size: 12px;
+  color: white;
+  padding: 0 5px;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.task-list-item-date-past-background {
+  background: #FF4F3E;
+}
+
+.task-list-item-date-today-background {
+  background: #FFAF38;
+}
+
+.task-list-item-date-future-background {
+  background: #3da8f5;
+}
+
+.task-list-item-date-icon {
+  font-size: 16px;
+  line-height: 24px;
+}
