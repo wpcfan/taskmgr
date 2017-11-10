@@ -27,8 +27,7 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
   private _taskListVMsSub: Subscription;
 
   constructor(
-    private unassignedTaskDialog: MatDialog,
-    private todayTaskDialog: MatDialog,
+    private dialog: MatDialog,
     private store$: Store<fromRoot.State>) {
     this.taskListVMs$ = this.store$.select(fromRoot.getTasksByList);
   }
@@ -52,7 +51,7 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
   }
 
   openUnassignedTaskDialog() {
-    const dialogRef: MatDialogRef<TaskListDialogComponent> = this.todayTaskDialog.open(TaskListDialogComponent, {
+    const dialogRef: MatDialogRef<TaskListDialogComponent> = this.dialog.open(TaskListDialogComponent, {
       height: `${document.body.clientHeight - 100}px`,
       width: `600px`,
       data: { title: '待认领的任务', showUnassignedTaskList: true },
@@ -60,7 +59,7 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
   }
 
   openTodayTaskDialog() {
-    const dialogRef: MatDialogRef<TaskListDialogComponent> = this.todayTaskDialog.open(TaskListDialogComponent, {
+    const dialogRef: MatDialogRef<TaskListDialogComponent> = this.dialog.open(TaskListDialogComponent, {
       height: `${document.body.clientHeight - 100}px`,
       width: `600px`,
       data: { title: '今天的任务', showUnassignedTaskList: false },
