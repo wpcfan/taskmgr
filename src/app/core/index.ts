@@ -2,7 +2,7 @@ import {NgModule, Optional, SkipSelf, LOCALE_ID} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatIconRegistry, DateAdapter, MAT_DATE_FORMATS, MatDatepickerIntl, MATERIAL_COMPATIBILITY_MODE} from '@angular/material';
+import {MatIconRegistry, DateAdapter, MAT_DATE_FORMATS, MatDatepickerIntl} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {RouterStateSerializer} from '@ngrx/router-store';
 
@@ -20,7 +20,6 @@ import {PageNotFoundComponent} from './containers/page-not-found';
 import {AppComponent} from './containers/app';
 
 import {loadSvgResources} from '../utils/svg.util';
-import {DateFnsAdapter} from '../shared/adapters/date-fns-adapter';
 import {DatepickerI18n} from '../shared/adapters/datepicker-i18n';
 import {MD_FNS_DATE_FORMATS} from '../shared/adapters/date-formats';
 import {CustomRouterStateSerializer} from '../utils/router.util';

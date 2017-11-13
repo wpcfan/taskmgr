@@ -54,8 +54,8 @@ export class AuthEffects {
     .map(() => new routerActions.Go({path: ['/']}));
 
   @Effect({ dispatch: false })
-  navigate$ = this.actions$.ofType(routerActions.GO)
-    .map((action: routerActions.Go) => action.payload)
+  navigate$ = this.actions$.ofType<routerActions.Go>(routerActions.GO)
+    .map(action => (action as any).payload)
     .do(({ path, query: queryParams, extras}) =>
       this.router.navigate(path, { queryParams, ...extras }));
 

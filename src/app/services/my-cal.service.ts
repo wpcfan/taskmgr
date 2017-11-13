@@ -42,14 +42,14 @@ export class MyCalService {
     const params = new HttpParams()
       .set('ownerId', userId);
     return this.http
-      .get(uri, {params})
-      .map((tasks: Task[]) => tasks.map(
+      .get<Task[]>(uri, {params})
+      .map(tasks => tasks.map(
         (task: Task) => ({
           start: startOfDay(<Date>task.createDate),
           end: task.dueDate ? endOfDay(<Date>task.dueDate) : endOfDay(<Date>task.createDate),
           title: task.desc,
           color: getPriorityColor(task.priority)
-        })
+        } as CalendarEvent)
       ));
   }
 }

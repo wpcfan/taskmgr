@@ -71,14 +71,14 @@ export const reducers: ActionReducerMap<State> = {
   router: fromRouter.routerReducer,
 };
 
-export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
-  return function (state: State, action: any): State {
-    console.log('state', state);
-    console.log('action', action);
+// export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
+//   return function (state: State, action: any): State {
+//     console.log('state', state);
+//     console.log('action', action);
 
-    return reducer(state, action);
-  };
-}
+//     return reducer(state, action);
+//   };
+// }
 
 export function storeStateGuard(reducer: ActionReducer<State>): ActionReducer<State> {
   return function (state, action) {
@@ -92,7 +92,7 @@ export function storeStateGuard(reducer: ActionReducer<State>): ActionReducer<St
 
 export const metaReducers: MetaReducer<State>[] = !environment.production
   ? [
-    logger,
+    // logger,
     storeFreeze,
     storeStateGuard
   ]
