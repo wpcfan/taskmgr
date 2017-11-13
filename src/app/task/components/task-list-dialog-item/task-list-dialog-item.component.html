@@ -3,7 +3,7 @@
       'task-list-item-priority-normal': taskVM.priority === 3,
       'task-list-item-priority-important': taskVM.priority === 2,
       'task-list-item-priority-emergency': taskVM.priority === 1}"></div>
-  <mat-checkbox></mat-checkbox>
+  <mat-checkbox (click)="onCheckboxClicked($event)"></mat-checkbox>
   <mat-icon class="task-list-item-avatar" [svgIcon]="getOwnerAvatar(taskVM)"></mat-icon>
   <span>{{taskVM.desc}}</span>
   <span class="fill-remaining-space"></span>

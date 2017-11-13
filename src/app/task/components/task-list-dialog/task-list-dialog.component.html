@@ -7,7 +7,7 @@
   <div class="task-list-body">
     <div *ngIf="taskVMs.length > 0 else empty" class="task-list-data-container">
       <div *ngFor="let taskVM of taskVMs">
-        <app-task-list-dialog-item [taskVM]="taskVM" (itemClicked)="handleUpdateTask(taskVM)">
+        <app-task-list-dialog-item [taskVM]="taskVM" (taskComplete)="handleCompleteTask(taskVM)" (itemClicked)="handleUpdateTask(taskVM)">
         </app-task-list-dialog-item>
         <div class="task-list-item-divider"></div>
       </div>

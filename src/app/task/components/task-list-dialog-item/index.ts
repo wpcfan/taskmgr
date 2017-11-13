@@ -25,6 +25,7 @@ import {
 export class TaskListDialogItemComponent implements OnInit {
 
   @Input() taskVM: TaskVM;
+  @Output() taskComplete = new EventEmitter<void>();
   @Output() itemClicked = new EventEmitter<void>();
 
   animState = 'out';
@@ -58,6 +59,7 @@ export class TaskListDialogItemComponent implements OnInit {
 
   onCheckboxClicked(ev: Event) {
     ev.stopPropagation();
+    this.taskComplete.emit();
   }
 
   onItemClicked(ev: Event) {

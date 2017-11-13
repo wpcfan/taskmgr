@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { TaskListVM, TaskVM } from '../../../vm';
+import { Task } from '../../../domain';
 import { getUnassignedTasks, getTodayTasks } from '../../../utils/project-menu.util';
 import { NewTaskComponent } from '../../components/new-task';
 import * as taskActions from '../../../actions/task.action';
@@ -45,6 +46,10 @@ export class TaskListDialogComponent implements OnInit, OnDestroy {
 
   closeUnassignedTaskDialog() {
     this.dialogRef.close();
+  }
+
+  handleCompleteTask(task: Task) {
+    this.store$.dispatch(new taskActions.CompleteTaskAction(task));
   }
 
   handleUpdateTask(taskVM: TaskVM) {
