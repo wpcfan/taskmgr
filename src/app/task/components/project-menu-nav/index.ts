@@ -4,12 +4,15 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { TaskListDialogComponent } from '../../components/task-list-dialog';
+import { NewProjectComponent } from '../../../project/components/new-project';
+import { Project } from '../../../domain';
 import { TaskListVM } from '../../../vm';
 import {
   getUnassignedTasks,
   getTodayTasks
 } from '../../../utils/project-menu.util';
 import * as fromRoot from '../../../reducers';
+import * as projectActions from '../../../actions/project.action';
 
 @Component({
   selector: 'app-project-menu-nav',
@@ -50,6 +53,21 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
     this.closeClicked.emit();
   }
 
+  openProjectDialog() {
+    const thumbnails$ = this.getThumbnailsObs();
+    let selectedProject: Project;
+
+    this.store$.select(fromRoot.getSelectedProject)
+      .take(1)
+      .do((project: Project) => selectedProject = project)
+      .map((project: Project) => this.dialog.open(NewProjectComponent, { data: { project: project, thumbnails: thumbnails$ } }))
+      .switchMap((dialogRef: MatDialogRef<NewProjectComponent>) => dialogRef.afterClosed().take(1).filter(n => n))
+      .subscribe(val => {
+        const coverImg = this.buildImgSrc(val.coverImg);
+        this.store$.dispatch(new projectActions.UpdateProjectAction({ ...val, id: selectedProject.id, coverImg: coverImg }));
+      })
+  }
+
   openUnassignedTaskDialog() {
     const dialogRef: MatDialogRef<TaskListDialogComponent> = this.dialog.open(TaskListDialogComponent, {
       height: `${document.body.clientHeight - 100}px`,
@@ -64,5 +82,18 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
       width: `600px`,
       data: { title: '今天的任务', showUnassignedTaskList: false },
     });
+  }
+
+  private getThumbnailsObs(): Observable<string[]> {
+    return Observable
+      .range(0, 40)
+      .map(i => `/assets/img/covers/${i}_tn.jpg`)
+      .reduce((r, x) => {
+        return [...r, x];
+      }, []);
+  }
+
+  private buildImgSrc(img: string): string {
+    return img.indexOf('_') > -1 ? img.split('_', 1)[0] + '.jpg' : img;
   }
 }

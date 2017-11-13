@@ -31,7 +31,7 @@ export function reducer(state = initialState, action: actions.Actions): State {
     case actions.UPDATE_LISTS_SUCCESS:
     case actions.UPDATE_SUCCESS:
     case actions.INSERT_FILTER_SUCCESS:
-      return { ...adapter.updateOne({ id: <string>action.payload.id, changes: action.payload }, state), selectedId: null };
+      return { ...adapter.updateOne({ id: <string>action.payload.id, changes: action.payload }, state) };
     case actions.LOADS_SUCCESS:
       return { ...adapter.addMany(action.payload, state), selectedId: null };
     case actions.SELECT:

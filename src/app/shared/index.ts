@@ -32,6 +32,7 @@ import {ChipsListComponent} from './components/chips-list';
 import {IdentityInputComponent} from './components/identity-input';
 import {AreaListComponent} from './components/area-list';
 import {AgeInputComponent} from './components/age-input';
+import {NewProjectComponent} from '../project/components/new-project';
 import {DirectivesModule} from '../directives';
 
 const MATERIAL_MODULES = [
@@ -59,6 +60,7 @@ const DECLARATIONS = [
   IdentityInputComponent,
   AreaListComponent,
   AgeInputComponent,
+  NewProjectComponent,
 ];
 
 const EXPORT_COMPONENTS = [
@@ -68,6 +70,7 @@ const EXPORT_COMPONENTS = [
   IdentityInputComponent,
   AreaListComponent,
   AgeInputComponent,
+  NewProjectComponent,
 ];
 
 @NgModule({
@@ -78,7 +81,8 @@ const EXPORT_COMPONENTS = [
   ],
   declarations: DECLARATIONS,
   entryComponents: [
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    NewProjectComponent
   ]
 })
 export class SharedModule {
