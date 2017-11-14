@@ -3,6 +3,8 @@ import {
   TaskListVM
 } from '../vm';
 import * as DateFns from 'date-fns';
+import * as History from '../domain/history';
+import { TaskHistory } from '../domain';
 
 export const getUnassignedTasks = (taskListVMs: TaskListVM[]): TaskVM[] => {
   //Get All Tasks
@@ -115,4 +117,25 @@ export const isFutureDate = (date: Date): boolean => {
   dueDate = new Date(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
 
   return todayDate.getTime() < dueDate.getTime();
+}
+
+export const getProjectHistories = (taskHistories: TaskHistory[]): TaskHistory[] => {
+  let histories: TaskHistory[] = taskHistories.filter((taskHistory: TaskHistory) => {
+    switch (taskHistory.operation.type) {
+      case History.CREATE_TASK:
+      case History.COMPLETE_TASK:
+      case History.RECREATE_TASK:
+        return true;
+      default:
+        return false;
+    }
+  });
+
+  histories = histories.sort((currentHistory: TaskHistory, nextHistory: TaskHistory) => {
+    const currentTimestamp: number = new Date(<Date>currentHistory.date).getTime();
+    const nextTimestamp: number = new Date(<Date>nextHistory.date).getTime();
+    return nextTimestamp - currentTimestamp;
+  })
+
+  return histories;
 }

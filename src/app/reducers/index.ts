@@ -43,6 +43,7 @@ import * as fromTasks from './task.reducer';
 import * as fromTaskFilter from './task-filter.reducer';
 import * as fromTaskFilterVM from './task-filter-vm.reducer';
 import * as fromTaskHistory from './task-history.reducer';
+import * as fromProjectHistory from './project-history.reducer';
 import * as fromUsers from './user.reducer';
 import { initialState } from './user.reducer';
 
@@ -61,6 +62,7 @@ export interface State {
   taskLists: fromTaskLists.State;
   tasks: fromTasks.State;
   taskHistories: fromTaskHistory.State;
+  projectHistories: fromProjectHistory.State;
   users: fromUsers.State;
   router: fromRouter.RouterReducerState<RouterStateUrl>;
 }
@@ -73,6 +75,7 @@ export const reducers: ActionReducerMap<State> = {
   taskFilterVM: fromTaskFilterVM.reducer,
   taskLists: fromTaskLists.reducer,
   taskHistories: fromTaskHistory.reducer,
+  projectHistories: fromProjectHistory.reducer,
   tasks: fromTasks.reducer,
   users: fromUsers.reducer,
   router: fromRouter.routerReducer,
@@ -115,6 +118,7 @@ export const getTaskListsState = createFeatureSelector<fromTaskLists.State>('tas
 export const getUsersState = createFeatureSelector<fromUsers.State>('users');
 export const getTasksState = createFeatureSelector<fromTasks.State>('tasks');
 export const getTaskHistoriesState = createFeatureSelector<fromTaskHistory.State>('taskHistories');
+export const getProjectHistoriesState = createFeatureSelector<fromProjectHistory.State>('projectHistories');
 
 export const getTasks = createSelector(getTasksState, fromTasks.getTasks);
 export const getSelectedTask = createSelector<State, fromTaskHistory.State, TaskVM | null>(getTaskHistoriesState, fromTaskHistory.getSelectedTask);
@@ -140,6 +144,13 @@ export const {
   selectAll: getTaskHistories,
   selectTotal: getTaskHistoryTotal
 } = fromTaskHistory.adapter.getSelectors(getTaskHistoriesState);
+
+export const {
+  selectIds: getProjectHistoryIds,
+  selectEntities: getProjectHistoryEntities,
+  selectAll: getProjectHistories,
+  selectTotal: getProjectHistoryTotal
+} = fromProjectHistory.adapter.getSelectors(getProjectHistoriesState);
 
 export const {
   selectIds: getUserIds,

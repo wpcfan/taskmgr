@@ -1,6 +1,5 @@
-import { Task, TaskHistory } from '../domain';
+import { TaskHistory } from '../domain';
 import { TaskVM } from '../vm';
-import { createSelector } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import * as actions from '../actions/task-history.action';
 import * as taskActions from '../actions/task.action';

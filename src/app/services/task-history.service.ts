@@ -24,7 +24,7 @@ export class TaskHistoryService {
     return this.http.get<TaskHistory[]>(uri, { params });
   }
 
-  getProjectTaskHistory(projectId: string): Observable<TaskHistory[]> {
+  getProjectHistory(projectId: string): Observable<TaskHistory[]> {
     const uri = `${this.config.uri}/${this.domain}`;
     const params = new HttpParams()
       .set('projectId', projectId);

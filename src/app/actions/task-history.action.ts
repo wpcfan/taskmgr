@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Task, TaskHistory, TaskOperations } from '../domain';
+import { TaskHistory, TaskOperations } from '../domain';
 
 export const LOAD = '[TaskHistory] Load';
 export const LOAD_SUCCESS = '[TaskHistory] Load Success';
