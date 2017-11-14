@@ -42,10 +42,16 @@ export class CreateTaskOperation implements Operation {
 
 export class CompleteTaskOperation implements Operation {
   readonly type = COMPLETE_TASK;
+
+  constructor(public payload: string) {
+  }
 }
 
 export class RecreateTaskOperation implements Operation {
   readonly type = RECREATE_TASK;
+
+  constructor(public payload: string) {
+  }
 }
 
 export class UpdateTaskContentOperation implements Operation {

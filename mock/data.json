@@ -161,13 +161,13 @@
     },
     {
       "taskListId": "BylTyXiM-b",
-      "desc": "登录鉴权过程中需携带 token 访问 API",
+      "desc": "登录鉴权需携带 token 访问 API",
       "completed": false,
       "ownerId": "BkkDvwee-",
       "participantIds": [],
       "dueDate": "2017-07-03T16:00:00.000Z",
       "priority": 2,
-      "remark": "",
+      "remark": "token的加密方式需要讨论",
       "reminder": "2017-06-27T16:00:00.000Z",
       "createDate": "2017-05-24T06:11:05.625Z",
       "id": "4"
@@ -187,7 +187,7 @@
     },
     {
       "taskListId": "BylTyXiM-b",
-      "desc": "首页 banner 增加 2px 的 margin",
+      "desc": "首页banner增加2px的margin",
       "completed": false,
       "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
       "participantIds": [
@@ -210,7 +210,7 @@
       ],
       "dueDate": "2017-07-24T16:00:00.000Z",
       "priority": 2,
-      "remark": "",
+      "remark": "API提供时间需要再次明确",
       "reminder": "2017-07-17T16:00:00.000Z",
       "createDate": "2017-05-24T06:14:47.575Z",
       "id": "7"
@@ -287,6 +287,7 @@
         "avatar": "avatars:svg-1"
       },
       "operation": {
+        "payload": "增加统计报表功能",
         "type": "completeTask"
       },
       "date": "2017-09-18T06:53:25.306Z",
@@ -301,10 +302,176 @@
         "avatar": "avatars:svg-1"
       },
       "operation": {
+        "payload": "增加统计报表功能",
         "type": "recreateTask"
       },
       "date": "2017-09-18T06:53:26.420Z",
       "id": "BJAwpkacb"
+    },
+    {
+      "taskId": "4",
+      "operator": {
+        "id": "37489e0c-df34-c261-71c4-ce75357e3035",
+        "email": "wpcfan@163.com",
+        "name": "王芃",
+        "avatar": "avatars:svg-1"
+      },
+      "operation": {
+        "payload": "登录鉴权需携带 token 访问 API",
+        "type": "createTask"
+      },
+      "date": "2017-05-24T06:11:05.625Z",
+      "id": "SJd8gpwJf"
+    },
+    {
+      "taskId": "4",
+      "operator": {
+        "id": "37489e0c-df34-c261-71c4-ce75357e3035",
+        "email": "wpcfan@163.com",
+        "name": "王芃",
+        "avatar": "avatars:svg-1"
+      },
+      "operation": {
+        "payload": "token的加密方式需要讨论",
+        "type": "updateTaskRemark"
+      },
+      "date": "2017-11-14T00:55:41.997Z",
+      "id": "ByUfJ6vJG"
+    },
+    {
+      "taskId": "4",
+      "operator": {
+        "id": "37489e0c-df34-c261-71c4-ce75357e3035",
+        "email": "wpcfan@163.com",
+        "name": "王芃",
+        "avatar": "avatars:svg-1"
+      },
+      "operation": {
+        "payload": "登录鉴权需携带 token 访问 API",
+        "type": "completeTask"
+      },
+      "date": "2017-11-14T00:55:58.219Z",
+      "id": "rk8mJawyz"
+    },
+    {
+      "taskId": "4",
+      "operator": {
+        "id": "37489e0c-df34-c261-71c4-ce75357e3035",
+        "email": "wpcfan@163.com",
+        "name": "王芃",
+        "avatar": "avatars:svg-1"
+      },
+      "operation": {
+        "payload": "登录鉴权需携带 token 访问 API",
+        "type": "recreateTask"
+      },
+      "date": "2017-11-14T00:56:34.760Z",
+      "id": "HyoBJTP1M"
+    },
+    {
+      "taskId": "6",
+      "operator": {
+        "id": "37489e0c-df34-c261-71c4-ce75357e3035",
+        "email": "wpcfan@163.com",
+        "name": "王芃",
+        "avatar": "avatars:svg-1"
+      },
+      "operation": {
+        "payload": "首页banner增加2px的margin",
+        "type": "createTask"
+      },
+      "date": "2017-05-24T06:12:59.718Z",
+      "id": "HJNp8Twyz"
+    },
+    {
+      "taskId": "7",
+      "operator": {
+        "id": "37489e0c-df34-c261-71c4-ce75357e3035",
+        "email": "wpcfan@163.com",
+        "name": "王芃",
+        "avatar": "avatars:svg-1"
+      },
+      "operation": {
+        "payload": "库存管理 -- 出库操作 API",
+        "type": "createTask"
+      },
+      "date": "2017-05-24T06:14:47.575Z",
+      "id": "BJQt1avJM"
+    },
+    {
+      "taskId": "7",
+      "operator": {
+        "id": "37489e0c-df34-c261-71c4-ce75357e3035",
+        "email": "wpcfan@163.com",
+        "name": "王芃",
+        "avatar": "avatars:svg-1"
+      },
+      "operation": {
+        "payload": "API提供时间需要再次明确",
+        "type": "updateTaskRemark"
+      },
+      "date": "2017-11-14T01:00:12.295Z",
+      "id": "B1NQgpP1G"
+    },
+    {
+      "taskId": "9",
+      "operator": {
+        "id": "37489e0c-df34-c261-71c4-ce75357e3035",
+        "email": "wpcfan@163.com",
+        "name": "王芃",
+        "avatar": "avatars:svg-1"
+      },
+      "operation": {
+        "payload": "什么情况啊？",
+        "type": "createTask"
+      },
+      "date": "2017-06-15T12:03:36.290Z",
+      "id": "BkiNvaw1f"
+    },
+    {
+      "taskId": "8",
+      "operator": {
+        "id": "37489e0c-df34-c261-71c4-ce75357e3035",
+        "email": "wpcfan@163.com",
+        "name": "王芃",
+        "avatar": "avatars:svg-1"
+      },
+      "operation": {
+        "payload": "用户可以签入签出设备",
+        "type": "createTask"
+      },
+      "date": "2017-05-24T06:16:24.575Z",
+      "id": "HyS0uTvJM"
+    },
+    {
+      "taskId": "8",
+      "operator": {
+        "id": "37489e0c-df34-c261-71c4-ce75357e3035",
+        "email": "wpcfan@163.com",
+        "name": "王芃",
+        "avatar": "avatars:svg-1"
+      },
+      "operation": {
+        "payload": 1,
+        "type": "updateTaskPriority"
+      },
+      "date": "2017-08-14T01:37:21.197Z",
+      "id": "SkFCO6vyz"
+    },
+    {
+      "taskId": "8",
+      "operator": {
+        "id": "37489e0c-df34-c261-71c4-ce75357e3035",
+        "email": "wpcfan@163.com",
+        "name": "王芃",
+        "avatar": "avatars:svg-1"
+      },
+      "operation": {
+        "payload": "用户可以签入签出设备",
+        "type": "completeTask"
+      },
+      "date": "2017-10-14T01:38:58.924Z",
+      "id": "rysEFTDyG"
     }
   ],
   "quotes": [

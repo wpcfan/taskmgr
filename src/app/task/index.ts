@@ -14,6 +14,7 @@ import { TaskFilterNavComponent } from './components/task-filter-nav';
 import { ProjectMenuNavComponent } from './components/project-menu-nav';
 import { TaskListDialogComponent } from './components/task-list-dialog';
 import { TaskListDialogItemComponent } from './components/task-list-dialog-item';
+import { TaskHistoryDialogItemComponent } from './components/task-history-dialog-item';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { TaskListDialogItemComponent } from './components/task-list-dialog-item'
     ProjectMenuNavComponent,
     TaskListDialogComponent,
     TaskListDialogItemComponent,
+    TaskHistoryDialogItemComponent,
   ],
   entryComponents: [
     NewTaskComponent,

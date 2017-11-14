@@ -72,7 +72,7 @@ export class TaskHistoryEffects {
     .ofType<taskActions.CompleteTaskSuccessAction>(taskActions.COMPLETE_SUCCESS)
     .map(action => action.payload)
     .map((task: Task) => {
-      const operation: History.TaskOperations = task.completed ? new History.CompleteTaskOperation() : new History.RecreateTaskOperation();
+      const operation: History.TaskOperations = task.completed ? new History.CompleteTaskOperation(task.desc) : new History.RecreateTaskOperation(task.desc);
 
       return new actions.AddTaskHistoryAction({ taskId: <string>task.id, operation: operation });
     });
