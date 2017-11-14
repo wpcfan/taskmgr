@@ -42,8 +42,8 @@ import * as fromTaskLists from './task-list.reducer';
 import * as fromTasks from './task.reducer';
 import * as fromTaskFilter from './task-filter.reducer';
 import * as fromTaskFilterVM from './task-filter-vm.reducer';
-import * as fromTaskHistory from './task-history.reducer';
-import * as fromProjectHistory from './project-history.reducer';
+import * as fromTaskHistories from './task-history.reducer';
+import * as fromProjectTaskHistories from './project-task-history.reducer';
 import * as fromUsers from './user.reducer';
 import { initialState } from './user.reducer';
 
@@ -61,8 +61,8 @@ export interface State {
   taskFilterVM: TaskFilterVM;
   taskLists: fromTaskLists.State;
   tasks: fromTasks.State;
-  taskHistories: fromTaskHistory.State;
-  projectHistories: fromProjectHistory.State;
+  taskHistories: fromTaskHistories.State;
+  projectTaskHistories: fromProjectTaskHistories.State;
   users: fromUsers.State;
   router: fromRouter.RouterReducerState<RouterStateUrl>;
 }
@@ -74,8 +74,8 @@ export const reducers: ActionReducerMap<State> = {
   taskFilter: fromTaskFilter.reducer,
   taskFilterVM: fromTaskFilterVM.reducer,
   taskLists: fromTaskLists.reducer,
-  taskHistories: fromTaskHistory.reducer,
-  projectHistories: fromProjectHistory.reducer,
+  taskHistories: fromTaskHistories.reducer,
+  projectTaskHistories: fromProjectTaskHistories.reducer,
   tasks: fromTasks.reducer,
   users: fromUsers.reducer,
   router: fromRouter.routerReducer,
@@ -117,12 +117,12 @@ export const getTaskFilterVMState = createFeatureSelector<TaskFilterVM>('taskFil
 export const getTaskListsState = createFeatureSelector<fromTaskLists.State>('taskLists');
 export const getUsersState = createFeatureSelector<fromUsers.State>('users');
 export const getTasksState = createFeatureSelector<fromTasks.State>('tasks');
-export const getTaskHistoriesState = createFeatureSelector<fromTaskHistory.State>('taskHistories');
-export const getProjectHistoriesState = createFeatureSelector<fromProjectHistory.State>('projectHistories');
+export const getTaskHistoriesState = createFeatureSelector<fromTaskHistories.State>('taskHistories');
+export const getProjectTaskHistoriesState = createFeatureSelector<fromProjectTaskHistories.State>('projectTaskHistories');
 
 export const getTasks = createSelector(getTasksState, fromTasks.getTasks);
-export const getSelectedTask = createSelector<State, fromTaskHistory.State, TaskVM | null>(getTaskHistoriesState, fromTaskHistory.getSelectedTask);
-export const getUpdatedTask = createSelector<State, fromTaskHistory.State, TaskVM | null>(getTaskHistoriesState, fromTaskHistory.getUpdatedTask);
+export const getSelectedTask = createSelector<State, fromTaskHistories.State, TaskVM | null>(getTaskHistoriesState, fromTaskHistories.getSelectedTask);
+export const getUpdatedTask = createSelector<State, fromTaskHistories.State, TaskVM | null>(getTaskHistoriesState, fromTaskHistories.getUpdatedTask);
 
 export const {
   selectIds: getProjectIds,
@@ -143,14 +143,14 @@ export const {
   selectEntities: getTaskHistoryEntities,
   selectAll: getTaskHistories,
   selectTotal: getTaskHistoryTotal
-} = fromTaskHistory.adapter.getSelectors(getTaskHistoriesState);
+} = fromTaskHistories.adapter.getSelectors(getTaskHistoriesState);
 
 export const {
-  selectIds: getProjectHistoryIds,
-  selectEntities: getProjectHistoryEntities,
-  selectAll: getProjectHistories,
-  selectTotal: getProjectHistoryTotal
-} = fromProjectHistory.adapter.getSelectors(getProjectHistoriesState);
+  selectIds: getProjectTaskHistoryIds,
+  selectEntities: getProjectTaskHistoryEntities,
+  selectAll: getProjectTaskHistories,
+  selectTotal: getProjectTaskHistoryTotal
+} = fromProjectTaskHistories.adapter.getSelectors(getProjectTaskHistoriesState);
 
 export const {
   selectIds: getUserIds,

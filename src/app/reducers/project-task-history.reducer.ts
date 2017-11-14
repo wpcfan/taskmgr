@@ -1,7 +1,6 @@
 import { TaskHistory } from '../domain';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import * as actions from '../actions/project-history.action';
-import * as projectActions from '../actions/project.action';
+import * as actions from '../actions/project-task-history.action';
 import * as taskHistoryActions from '../actions/task-history.action';
 
 export interface State extends EntityState<TaskHistory> {
@@ -13,12 +12,10 @@ export const adapter: EntityAdapter<TaskHistory> = createEntityAdapter<TaskHisto
 export const initialState: State = adapter.getInitialState({
 });
 
-export function reducer(state = initialState, action: actions.Actions | projectActions.Actions | taskHistoryActions.Actions): State {
+export function reducer(state = initialState, action: actions.Actions | taskHistoryActions.Actions): State {
   switch (action.type) {
     case actions.LOAD_SUCCESS:
       return { ...adapter.addAll(action.payload, state) };
-    // case projectActions.SELECT:
-    // return { ...adapter.removeAll(state) };
     case taskHistoryActions.ADD_SUCCESS:
       return { ...adapter.addOne(action.payload, state) };
     default:

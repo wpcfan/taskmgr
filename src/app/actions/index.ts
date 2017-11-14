@@ -1,6 +1,6 @@
 import * as authActions from './auth.action';
 import * as projectActions from './project.action';
-import * as projectHistoryActions from './project-history.action';
+import * as projectTaskHistoryActions from './project-task-history.action';
 import * as quoteActions from './quote.action';
 import * as taskListActions from './task-list.action';
 import * as taskActions from './task.action';

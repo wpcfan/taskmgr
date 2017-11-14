@@ -25,7 +25,7 @@ export class TaskHistoryEffects {
     .ofType<actions.LoadTaskHistoryAction>(actions.LOAD)
     .map(action => action.payload)
     .switchMap((taskId: string) => this.services$
-      .getTaskHistory(taskId)
+      .getTaskHistories(taskId)
       .map((taskHistories: TaskHistory[]) => new actions.LoadHistorySuccessAction(taskHistories))
       .catch(err => of(new actions.LoadHistoryFailAction(JSON.stringify(err))))
     );

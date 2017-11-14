@@ -5,11 +5,11 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { TaskHistoryService } from '../services';
 import { TaskHistory } from '../domain';
-import * as actions from '../actions/project-history.action';
+import * as actions from '../actions/project-task-history.action';
 import * as fromRoot from '../reducers';
 
 @Injectable()
-export class ProjectHistoryEffects {
+export class ProjectTaskHistoryEffects {
   constructor(private actions$: Actions,
     private service$: TaskHistoryService,
     private store$: Store<fromRoot.State>) {
@@ -20,7 +20,7 @@ export class ProjectHistoryEffects {
     .ofType<actions.LoadProjectHistoryAction>(actions.LOAD)
     .map(action => action.payload)
     .switchMap((projectId: string) => this.service$
-      .getProjectHistory(projectId)
+      .getProjectTaskHistories(projectId)
       .map((projectHistories: TaskHistory[]) => new actions.LoadProjectHistorySuccessAction(projectHistories))
       .catch(err => of(new actions.LoadProjectHistoryFailAction(JSON.stringify(err))))
     );

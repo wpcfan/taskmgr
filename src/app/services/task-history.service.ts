@@ -16,7 +16,7 @@ export class TaskHistoryService {
     return this.http.post<TaskHistory>(uri, JSON.stringify(history), { headers: this.headers });
   }
 
-  getTaskHistory(taskId: string): Observable<TaskHistory[]> {
+  getTaskHistories(taskId: string): Observable<TaskHistory[]> {
     const uri = `${this.config.uri}/${this.domain}`;
     const params = new HttpParams()
       .set('taskId', taskId);
@@ -24,7 +24,7 @@ export class TaskHistoryService {
     return this.http.get<TaskHistory[]>(uri, { params });
   }
 
-  getProjectHistory(projectId: string): Observable<TaskHistory[]> {
+  getProjectTaskHistories(projectId: string): Observable<TaskHistory[]> {
     const uri = `${this.config.uri}/${this.domain}`;
     const params = new HttpParams()
       .set('projectId', projectId);

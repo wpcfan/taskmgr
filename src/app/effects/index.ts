@@ -8,7 +8,7 @@ import { TaskEffects } from './task.effects';
 import { TaskFilterEffects } from './task-filter.effect';
 import { TaskFilterVMEffects } from './task-filter-vm.effect';
 import { TaskHistoryEffects } from './task-history.effects';
-import { ProjectHistoryEffects } from './project-history.effect';
+import { ProjectTaskHistoryEffects } from './project-task-history.effect';
 import { UserEffects } from './user.effects';
 
 @NgModule({
@@ -22,7 +22,7 @@ import { UserEffects } from './user.effects';
       TaskFilterEffects,
       TaskFilterVMEffects,
       TaskHistoryEffects,
-      ProjectHistoryEffects,
+      ProjectTaskHistoryEffects,
       UserEffects
     ])
   ],
