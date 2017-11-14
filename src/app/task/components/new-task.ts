@@ -148,7 +148,6 @@ export class NewTaskComponent implements OnInit, OnDestroy {
 
     this._sub = this.taskHistories$.subscribe(histories => {
       this.taskHistories = getTaskHistoryVMs(histories);
-      console.log('<loadTaskHistories>', JSON.stringify(this.taskHistories));
     });
   }
 

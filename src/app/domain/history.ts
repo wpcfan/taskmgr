@@ -25,6 +25,7 @@ export interface OperationHistory {
 }
 
 export interface TaskHistory extends OperationHistory {
+  projectId: string;
   taskId: string;
   operation: TaskOperations;
 }

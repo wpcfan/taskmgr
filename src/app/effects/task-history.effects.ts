@@ -34,23 +34,23 @@ export class TaskHistoryEffects {
   addTaskHistory$: Observable<Action> = this.actions$
     .ofType<actions.AddTaskHistoryAction>(actions.ADD)
     .map(action => action.payload)
-    .withLatestFrom(this.store$.select(fromRoot.getAuthUser))
-    .mergeMap(([data, user]: [{ taskId: string; operation: History.TaskOperations }, User]) => {
+    .withLatestFrom(this.store$.select(fromRoot.getSelectedProjectId), (data, projectId) => ({ projectId: projectId, taskId: data.taskId, operation: data.operation }))
+    .withLatestFrom(this.store$.select(fromRoot.getAuthUser), (data, user) => ({ ...data, user: user }))
+    .mergeMap((data: { projectId: string, taskId: string; operation: History.TaskOperations, user: User }) => {
       const operator: User = {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        avatar: user.avatar,
+        id: data.user.id,
+        email: data.user.email,
+        name: data.user.name,
+        avatar: data.user.avatar,
       };
 
       const taskHistory: TaskHistory = {
+        projectId: data.projectId,
         taskId: data.taskId,
         operator: operator,
         operation: data.operation,
         date: new Date(),
       }
-
-      console.log('<<Add Task History>>', JSON.stringify(taskHistory));
 
       return this.services$.addTaskHistory(taskHistory)
         .map((history: TaskHistory) => new actions.AddTaskHistorySuccessAction(history))
