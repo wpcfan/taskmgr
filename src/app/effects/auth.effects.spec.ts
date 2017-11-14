@@ -48,6 +48,8 @@ describe('测试 AuthEffects', () => {
 
       const auth = {
         token: '',
+        userId: null,
+        err: null,
         user: {
           id: '123abc',
           name: 'wang',

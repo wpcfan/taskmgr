@@ -36,7 +36,6 @@ describe('测试鉴权服务：AuthService', () => {
     async(inject([AuthService, MockBackend],
       (service: AuthService, mockBackend: MockBackend) => {
         const mockUser: User = {
-          id: undefined,
           name: 'someuser@dev.local',
           password: '123abc',
           username: 'someuser@dev.local'
@@ -54,7 +53,7 @@ describe('测试鉴权服务：AuthService', () => {
         });
         service.register(mockUser).subscribe(auth => {
           expect(auth.token).toBeDefined();
-          expect(auth.userId).toEqual(mockUser.id);
+          expect(auth.userId).toEqual(mockUser.username);
         });
       })));
 

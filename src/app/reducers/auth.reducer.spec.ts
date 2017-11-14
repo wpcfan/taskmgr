@@ -16,8 +16,9 @@ describe('测试 AuthReducer', () => {
     it('应该返回一个 Err 为 undefined 而 userId 不为空的 Auth 对象', async(() => {
       const action = new actions.LoginSuccessAction({
         token: '',
+        err: null,
+        userId: null,
         user: {
-          id: '1',
           username: '123@123.com',
           password: '123456'
         }
@@ -44,8 +45,9 @@ describe('测试 AuthReducer', () => {
     it('应该返回一个 Err 为 undefined 而 User 不为空的 Auth 对象', async(() => {
       const action = new actions.RegisterSuccessAction({
         token: '',
+        userId: null,
+        err: null,
         user: {
-          id: '123abc',
           name: 'wang',
           username: 'wang@163.com'
         }
