@@ -1,10 +1,13 @@
 import {
   TaskVM,
-  TaskListVM
+  TaskListVM,
+  TaskHistoryVM
 } from '../vm';
+import { TaskHistory } from '../domain';
+import { getDateDesc } from './history.util';
 import * as DateFns from 'date-fns';
 import * as History from '../domain/history';
-import { TaskHistory } from '../domain';
+
 
 export const getUnassignedTasks = (taskListVMs: TaskListVM[]): TaskVM[] => {
   //Get All Tasks
@@ -138,4 +141,39 @@ export const getProjectHistories = (taskHistories: TaskHistory[]): TaskHistory[]
   })
 
   return histories;
+}
+
+export const getProjectHistoryVMs = (histories: TaskHistory[]): TaskHistoryVM[] => {
+  return histories.map((history: TaskHistory) => {
+    switch (history.operation.type) {
+      case History.CREATE_TASK:
+        return {
+          ...history,
+          name: `${history.operator.name}`,
+          title: `创建了任务 ${history.operation.payload}`,
+          dateDesc: getDateDesc(history.date),
+        };
+      case History.COMPLETE_TASK:
+        return {
+          ...history,
+          name: `${history.operator.name}`,
+          title: `完成了任务 ${history.operation.payload}`,
+          dateDesc: getDateDesc(history.date),
+        };
+      case History.RECREATE_TASK:
+        return {
+          ...history,
+          name: `${history.operator.name}`,
+          title: `重做了任务 ${history.operation.payload}`,
+          dateDesc: getDateDesc(history.date),
+        };
+      default:
+        return {
+          ...history,
+          name: `${history.operator.name}`,
+          title: `未知操作`,
+          dateDesc: getDateDesc(history.date),
+        };
+    }
+  });
 }

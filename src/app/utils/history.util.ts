@@ -138,14 +138,14 @@ export const getTaskHistoryVMs = (histories: History.TaskHistory[]): TaskHistory
       default:
         return {
           ...history,
-          title: '未知类型',
+          title: '未知操作',
           dateDesc: getDateDesc(history.date),
         }
     }
   });
 };
 
-const getDateDesc = (date: Date): string => {
+export const getDateDesc = (date: Date): string => {
   const nowDate: Date = new Date();
   const historyDate: Date = new Date(date);
   const todayDate: Date = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());

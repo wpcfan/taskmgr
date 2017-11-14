@@ -8,6 +8,7 @@ import { ProjectService } from '../services';
 import * as actions from '../actions/project.action';
 import * as tasklistActions from '../actions/task-list.action';
 import * as taskFilterActions from '../actions/task-filter.action';
+import * as projectHistoryActions from '../actions/project-history.action';
 import * as userActions from '../actions/user.action';
 import * as fromRoot from '../reducers';
 import { Project, User } from '../domain';
@@ -99,6 +100,13 @@ export class ProjectEffects {
     .ofType<actions.SelectProjectAction>(actions.SELECT)
     .map(action => action.payload)
     .map(project => new taskFilterActions.LoadTaskFilterAction(<string>project.taskFilterId));
+
+  @Effect()
+  loadProjectHistory$: Observable<Action> = this.actions$
+    .ofType<actions.SelectProjectAction>(actions.SELECT)
+    .map(action => action.payload)
+    .map(project => new projectHistoryActions.LoadProjectHistoryAction(<string>project.id));
+
 
   @Effect()
   toLoadUsersByPrj$: Observable<Action> = this.actions$

@@ -5,11 +5,13 @@ import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { TaskListDialogComponent } from '../../components/task-list-dialog';
 import { NewProjectComponent } from '../../../project/components/new-project';
-import { Project } from '../../../domain';
-import { TaskListVM } from '../../../vm';
+import { Project, TaskHistory } from '../../../domain';
+import { TaskListVM, TaskHistoryVM } from '../../../vm';
 import {
   getUnassignedTasks,
-  getTodayTasks
+  getTodayTasks,
+  getProjectHistories,
+  getProjectHistoryVMs
 } from '../../../utils/project-menu.util';
 import * as fromRoot from '../../../reducers';
 import * as projectActions from '../../../actions/project.action';
@@ -25,14 +27,19 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
 
   unassignedNumber: number = 0;
   todayNumber: number = 0;
+  projectHistories: TaskHistoryVM[] = [];
 
   private taskListVMs$: Observable<TaskListVM[]>;
   private _taskListVMsSub: Subscription;
+
+  private projectHistories$: Observable<TaskHistory[]>;
+  private _projectHistoriesSub: Subscription;
 
   constructor(
     private dialog: MatDialog,
     private store$: Store<fromRoot.State>) {
     this.taskListVMs$ = this.store$.select(fromRoot.getTasksByList);
+    this.projectHistories$ = this.store$.select(fromRoot.getProjectHistories);
   }
 
   ngOnInit() {
@@ -40,11 +47,19 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
       this.unassignedNumber = getUnassignedTasks(taskListVMs).length;
       this.todayNumber = getTodayTasks(taskListVMs).length;
     });
+
+    this._projectHistoriesSub = this.projectHistories$.subscribe((histories: TaskHistory[]) => {
+      this.projectHistories = getProjectHistoryVMs(getProjectHistories(histories));
+    });
   }
 
   ngOnDestroy() {
     if (this._taskListVMsSub) {
       this._taskListVMsSub.unsubscribe();
+    }
+
+    if (this._projectHistoriesSub) {
+      this._projectHistoriesSub.unsubscribe();
     }
   }
 
