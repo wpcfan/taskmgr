@@ -44,15 +44,15 @@ export class TaskListDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  closeUnassignedTaskDialog() {
+  closeTaskListDialog() {
     this.dialogRef.close();
   }
 
-  handleCompleteTask(task: Task) {
+  completeTask(task: Task) {
     this.store$.dispatch(new taskActions.CompleteTaskAction(task));
   }
 
-  handleUpdateTask(taskVM: TaskVM) {
+  openTaskDialog(taskVM: TaskVM) {
     this.store$.dispatch(new taskActions.SelectTaskAction(taskVM));
 
     const dialogRef: MatDialogRef<NewTaskComponent> = this.dialog.open(NewTaskComponent, { data: { task: taskVM } });

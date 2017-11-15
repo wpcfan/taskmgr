@@ -5,16 +5,19 @@ import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { TaskListDialogComponent } from '../../components/task-list-dialog';
 import { NewProjectComponent } from '../../../project/components/new-project';
+import { NewTaskComponent } from '../../components/new-task';
 import { Project, TaskHistory } from '../../../domain';
-import { TaskListVM, TaskHistoryVM } from '../../../vm';
+import { TaskListVM, TaskHistoryVM, TaskVM } from '../../../vm';
 import {
   getUnassignedTasks,
   getTodayTasks,
   getProjectTaskHistories,
-  getProjectTaskHistoryVMs
+  getProjectTaskHistoryVMs,
+  getTaskVM
 } from '../../../utils/project-menu.util';
 import * as fromRoot from '../../../reducers';
 import * as projectActions from '../../../actions/project.action';
+import * as taskActions from '../../../actions/task.action';
 
 @Component({
   selector: 'app-project-menu-nav',
@@ -31,9 +34,11 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
 
   private taskListVMs$: Observable<TaskListVM[]>;
   private _taskListVMsSub: Subscription;
+  private taskListVMs: TaskListVM[];
 
   private projectTaskHistories$: Observable<TaskHistory[]>;
   private _projectTaskHistoriesSub: Subscription;
+
 
   constructor(
     private dialog: MatDialog,
@@ -46,10 +51,11 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
     this._taskListVMsSub = this.taskListVMs$.subscribe((taskListVMs: TaskListVM[]) => {
       this.unassignedNumber = getUnassignedTasks(taskListVMs).length;
       this.todayNumber = getTodayTasks(taskListVMs).length;
+      this.taskListVMs = taskListVMs;
     });
 
     this._projectTaskHistoriesSub = this.projectTaskHistories$.subscribe((histories: TaskHistory[]) => {
-      this.projectTaskHistoryVMs = getProjectTaskHistoryVMs(getProjectTaskHistories(histories));
+      this.projectTaskHistoryVMs = getProjectTaskHistoryVMs(getProjectTaskHistories(histories, 5));
     });
   }
 
@@ -83,7 +89,7 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
       })
   }
 
-  openUnassignedTaskDialog() {
+  openUnassignedTaskListDialog() {
     const dialogRef: MatDialogRef<TaskListDialogComponent> = this.dialog.open(TaskListDialogComponent, {
       height: `${document.body.clientHeight - 100}px`,
       width: `600px`,
@@ -91,12 +97,30 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
     });
   }
 
-  openTodayTaskDialog() {
+  openTodayTaskListDialog() {
     const dialogRef: MatDialogRef<TaskListDialogComponent> = this.dialog.open(TaskListDialogComponent, {
       height: `${document.body.clientHeight - 100}px`,
       width: `600px`,
       data: { title: '今天的任务', showUnassignedTaskList: false },
     });
+  }
+
+  openTaskDialog(taskId: string) {
+    const taskVM: TaskVM = getTaskVM(taskId, this.taskListVMs);
+
+    this.store$.dispatch(new taskActions.SelectTaskAction(taskVM));
+
+    const dialogRef: MatDialogRef<NewTaskComponent> = this.dialog.open(NewTaskComponent, { data: { task: taskVM } });
+    dialogRef.afterClosed()
+      .take(1)
+      .filter(n => n)
+      .subscribe((val) => {
+        if (val.type !== 'delete') {
+          this.store$.dispatch(new taskActions.UpdateTaskAction({ ...taskVM, ...val.task }));
+        } else {
+          this.store$.dispatch(new taskActions.DeleteTaskAction(val.task));
+        }
+      });
   }
 
   private getThumbnailsObs(): Observable<string[]> {

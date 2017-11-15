@@ -120,7 +120,7 @@ export const getTasksState = createFeatureSelector<fromTasks.State>('tasks');
 export const getTaskHistoriesState = createFeatureSelector<fromTaskHistories.State>('taskHistories');
 export const getProjectTaskHistoriesState = createFeatureSelector<fromProjectTaskHistories.State>('projectTaskHistories');
 
-export const getTasks = createSelector(getTasksState, fromTasks.getTasks);
+export const getTasks = createSelector<State, fromTasks.State, Task[]>(getTasksState, fromTasks.getTasks);
 export const getSelectedTask = createSelector<State, fromTaskHistories.State, TaskVM | null>(getTaskHistoriesState, fromTaskHistories.getSelectedTask);
 export const getUpdatedTask = createSelector<State, fromTaskHistories.State, TaskVM | null>(getTaskHistoriesState, fromTaskHistories.getUpdatedTask);
 
@@ -165,7 +165,7 @@ export const getSelectedProject = createSelector<State, string | null, { [id: st
   return projectEntities[<string>projectId];
 });
 
-const getTasksWithOwner = createSelector(getTasks, getUserEntities, (tasks, entities) => tasks.map(task =>
+export const getTasksWithOwner = createSelector<State, Task[], { [id: string]: User }, TaskVM[]>(getTasks, getUserEntities, (tasks, entities) => tasks.map(task =>
   (
     {
       ...task,
@@ -196,9 +196,11 @@ export const getTaskByFilter = createSelector<State, TaskListVM[], TaskFilterVM,
 export const getProjectMembers = (projectId: string) => createSelector<State, fromProjects.State, { [id: string]: User }, User[]>(getProjectsState, getUserEntities, (state, entities) => {
   return state!.entities[projectId]!.members!.map((id: string) => entities[id]);
 });
+
 export const getAuth = createSelector(getAuthState, getUserEntities, (_auth, _entities) => {
   return { ..._auth, user: _entities[<string>_auth.userId] };
 });
+
 export const getAuthUser = createSelector(getAuthState, getUserEntities, (_auth, _entities) => {
   return _entities[<string>_auth.userId];
 });

@@ -1,4 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
 import { TaskHistoryVM } from '../../../vm';
 
 @Component({
@@ -9,10 +15,15 @@ import { TaskHistoryVM } from '../../../vm';
 export class TaskHistoryDialogItemComponent implements OnInit {
 
   @Input() taskHistoryVM: TaskHistoryVM;
+  @Output() itemClicked = new EventEmitter<void>();
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  onItemClicked(ev: Event) {
+    ev.preventDefault();
+    this.itemClicked.emit();
+  }
 }

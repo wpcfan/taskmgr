@@ -8,7 +8,6 @@ import { getDateDesc } from './history.util';
 import * as DateFns from 'date-fns';
 import * as History from '../domain/history';
 
-
 export const getUnassignedTasks = (taskListVMs: TaskListVM[]): TaskVM[] => {
   //Get All Tasks
   let taskVMs: TaskVM[] = taskListVMs.reduce((acc: TaskVM[], value: TaskListVM) => {
@@ -53,6 +52,16 @@ export const getTodayTasks = (taskListVMs: TaskListVM[]): TaskVM[] => {
   });
 
   return taskVMs;
+}
+
+export const getTaskVM = (taskId: string, taskListVMs: TaskListVM[]): TaskVM => {
+  let taskVMs: TaskVM[] = taskListVMs.reduce((acc: TaskVM[], value: TaskListVM) => {
+    return [...acc, ...value.tasks];
+  }, []);
+
+  taskVMs = taskVMs.filter((taskVM: TaskVM) => taskVM.id === taskId);
+
+  return taskVMs[0];
 }
 
 export const getOwnerAvatar = (taskVM: TaskVM): string => {
@@ -122,7 +131,7 @@ export const isFutureDate = (date: Date): boolean => {
   return todayDate.getTime() < dueDate.getTime();
 }
 
-export const getProjectTaskHistories = (taskHistories: TaskHistory[]): TaskHistory[] => {
+export const getProjectTaskHistories = (taskHistories: TaskHistory[], limit: number): TaskHistory[] => {
   let histories: TaskHistory[] = taskHistories.filter((taskHistory: TaskHistory) => {
     switch (taskHistory.operation.type) {
       case History.CREATE_TASK:
@@ -139,6 +148,10 @@ export const getProjectTaskHistories = (taskHistories: TaskHistory[]): TaskHisto
     const nextTimestamp: number = new Date(<Date>nextHistory.date).getTime();
     return nextTimestamp - currentTimestamp;
   })
+
+  if (limit > 0 && histories.length > limit) {
+    return histories.slice(0, limit);
+  }
 
   return histories;
 }
