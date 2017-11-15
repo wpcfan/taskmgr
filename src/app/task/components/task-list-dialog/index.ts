@@ -11,7 +11,7 @@ import * as taskActions from '../../../actions/task.action';
 import * as fromRoot from '../../../reducers';
 
 @Component({
-  selector: 'app-today-task-list',
+  selector: 'app-task-list-dialog',
   templateUrl: './task-list-dialog.component.html',
   styleUrls: ['./task-list-dialog.component.scss']
 })

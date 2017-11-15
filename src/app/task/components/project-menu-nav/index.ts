@@ -3,8 +3,9 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
-import { TaskListDialogComponent } from '../../components/task-list-dialog';
 import { NewProjectComponent } from '../../../project/components/new-project';
+import { TaskListDialogComponent } from '../../components/task-list-dialog';
+import { TaskHistoryDialogComponent } from '../../components/task-history-dialog';
 import { NewTaskComponent } from '../../components/new-task';
 import { Project, TaskHistory } from '../../../domain';
 import { TaskListVM, TaskHistoryVM, TaskVM } from '../../../vm';
@@ -102,6 +103,13 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
       height: `${document.body.clientHeight - 100}px`,
       width: `600px`,
       data: { title: '今天的任务', showUnassignedTaskList: false },
+    });
+  }
+
+  openTaskHistoryDialog() {
+    const dialogRef: MatDialogRef<TaskHistoryDialogComponent> = this.dialog.open(TaskHistoryDialogComponent, {
+      height: `${document.body.clientHeight - 100}px`,
+      width: `600px`,
     });
   }
 
