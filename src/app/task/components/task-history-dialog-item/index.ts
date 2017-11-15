@@ -8,7 +8,7 @@ import { TaskHistoryVM } from '../../../vm';
 })
 export class TaskHistoryDialogItemComponent implements OnInit {
 
-  @Input() item: TaskHistoryVM;
+  @Input() taskHistoryVM: TaskHistoryVM;
 
   constructor() { }
 

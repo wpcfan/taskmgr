@@ -1,0 +1,49 @@
+.task-history-item {
+  color: #383838;
+  font-size: 14px;
+  padding: 10px 15px 0 15px;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+}
+
+.task-history-item:hover {
+  background: #EEEEEE;
+}
+
+.task-history-item-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  overflow: hidden;
+  color: #808080;
+}
+
+.task-history-item-content {
+  flex: 1;
+  margin-left: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #EEEEEE;
+  display: flex;
+  flex-direction: column;
+}
+
+.task-history-item-desc {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.task-history-item-desc-name {
+  font-weight: bold;
+}
+
+.task-history-item-desc-gap {
+  margin: 0 5px;
+}
+
+.task-history-item-date {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #808080;
+}

@@ -1,4 +1,12 @@
-<div>
-  {{item.name}} {{item.title}} {{item.dateDesc}}
-</div>
+<div class="task-history-item">
+  <mat-icon class="task-history-item-avatar" [svgIcon]="taskHistoryVM.icon"></mat-icon>
+  <div class="task-history-item-content">
+    <div class="task-history-item-desc">
+      <span class="task-history-item-desc-name">{{taskHistoryVM.name}}</span>
+      <span class="task-history-item-desc-gap">{{taskHistoryVM.title}}</span>
+      <span>{{taskHistoryVM.content}}</span>
+    </div>
+    <span class="task-history-item-date">{{taskHistoryVM.dateDesc}}</span>
+  </div>
 
+</div>

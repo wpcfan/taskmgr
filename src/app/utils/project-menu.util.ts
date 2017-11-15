@@ -145,34 +145,45 @@ export const getProjectTaskHistories = (taskHistories: TaskHistory[]): TaskHisto
 
 export const getProjectTaskHistoryVMs = (histories: TaskHistory[]): TaskHistoryVM[] => {
   return histories.map((history: TaskHistory) => {
+    const avatar: string = history.operator.avatar ? <string>history.operator.avatar : 'unassigned'
+    const name: string = <string>history.operator.name;
+    const dateDesc: string = getDateDesc(history.date);
+
     switch (history.operation.type) {
       case History.CREATE_TASK:
         return {
           ...history,
-          name: `${history.operator.name}`,
-          title: `创建了任务 ${history.operation.payload}`,
-          dateDesc: getDateDesc(history.date),
+          icon: avatar,
+          name: name,
+          title: `创建了任务:`,
+          content: `${history.operation.payload}`,
+          dateDesc: dateDesc,
         };
       case History.COMPLETE_TASK:
         return {
           ...history,
-          name: `${history.operator.name}`,
-          title: `完成了任务 ${history.operation.payload}`,
-          dateDesc: getDateDesc(history.date),
+          icon: avatar,
+          name: name,
+          title: `完成了任务:`,
+          content: `${history.operation.payload}`,
+          dateDesc: dateDesc,
         };
       case History.RECREATE_TASK:
         return {
           ...history,
-          name: `${history.operator.name}`,
-          title: `重做了任务 ${history.operation.payload}`,
-          dateDesc: getDateDesc(history.date),
+          icon: avatar,
+          name: name,
+          title: `重做了任务:`,
+          content: `${history.operation.payload}`,
+          dateDesc: dateDesc,
         };
       default:
         return {
           ...history,
-          name: `${history.operator.name}`,
+          icon: avatar,
+          name: name,
           title: `未知操作`,
-          dateDesc: getDateDesc(history.date),
+          dateDesc: dateDesc,
         };
     }
   });
