@@ -7,8 +7,8 @@ import { NewTaskComponent } from '../../components/new-task';
 import { TaskHistory } from '../../../domain';
 import { TaskListVM, TaskHistoryVM, TaskVM } from '../../../vm';
 import {
-  getProjectTaskHistories,
-  getProjectTaskHistoryVMs,
+  getTaskHistories,
+  getTaskHistoryVMs,
   getTaskVM
 } from '../../../utils/project-menu.util';
 import * as fromRoot from '../../../reducers';
@@ -21,19 +21,21 @@ import * as taskActions from '../../../actions/task.action';
 })
 export class TaskHistoryDialogComponent implements OnInit, OnDestroy {
 
-  projectTaskHistoryVMs: TaskHistoryVM[] = [];
+  taskHistoryVMs: TaskHistoryVM[] = [];
 
   private taskListVMs$: Observable<TaskListVM[]>;
   private _taskListVMsSub: Subscription;
   private taskListVMs: TaskListVM[];
 
-  private projectTaskHistories$: Observable<TaskHistory[]>;
-  private _projectTaskHistoriesSub: Subscription;
+  private taskHistories$: Observable<TaskHistory[]>;
+  private _taskHistoriesSub: Subscription;
 
-  constructor(private dialog: MatDialog,
+  constructor(
+    private dialogRef: MatDialogRef<TaskHistoryDialogComponent>,
+    private dialog: MatDialog,
     private store$: Store<fromRoot.State>) {
     this.taskListVMs$ = this.store$.select(fromRoot.getTasksByList);
-    this.projectTaskHistories$ = this.store$.select(fromRoot.getProjectTaskHistories);
+    this.taskHistories$ = this.store$.select(fromRoot.getProjectTaskHistories);
   }
 
   ngOnInit() {
@@ -41,8 +43,8 @@ export class TaskHistoryDialogComponent implements OnInit, OnDestroy {
       this.taskListVMs = taskListVMs;
     });
 
-    this._projectTaskHistoriesSub = this.projectTaskHistories$.subscribe((histories: TaskHistory[]) => {
-      this.projectTaskHistoryVMs = getProjectTaskHistoryVMs(getProjectTaskHistories(histories, 5));
+    this._taskHistoriesSub = this.taskHistories$.subscribe((histories: TaskHistory[]) => {
+      this.taskHistoryVMs = getTaskHistoryVMs(getTaskHistories(histories, -1));
     });
   }
 
@@ -51,9 +53,13 @@ export class TaskHistoryDialogComponent implements OnInit, OnDestroy {
       this._taskListVMsSub.unsubscribe();
     }
 
-    if (this._projectTaskHistoriesSub) {
-      this._projectTaskHistoriesSub.unsubscribe();
+    if (this._taskHistoriesSub) {
+      this._taskHistoriesSub.unsubscribe();
     }
+  }
+
+  closeTaskHistoryDialog() {
+    this.dialogRef.close();
   }
 
   openTaskDialog(taskId: string) {

@@ -32,7 +32,7 @@
         <mat-icon class="project-menu-nav-category-header-icon">sort</mat-icon>
         <span class="project-menu-nav-category-header-title">项目动态</span>
       </div>
-      <app-task-history-dialog-item *ngFor="let taskHistoryVM of projectTaskHistoryVMs" [taskHistoryVM]="taskHistoryVM" (itemClicked)="openTaskDialog(taskHistoryVM.taskId)">
+      <app-task-history-dialog-item *ngFor="let taskHistoryVM of taskHistoryVMs" [taskHistoryVM]="taskHistoryVM" (itemClicked)="openTaskDialog(taskHistoryVM.taskId)">
       </app-task-history-dialog-item>
     </div>
     <div class="project-menu-nav-category-container">

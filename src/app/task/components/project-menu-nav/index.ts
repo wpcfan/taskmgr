@@ -12,8 +12,8 @@ import { TaskListVM, TaskHistoryVM, TaskVM } from '../../../vm';
 import {
   getUnassignedTasks,
   getTodayTasks,
-  getProjectTaskHistories,
-  getProjectTaskHistoryVMs,
+  getTaskHistories,
+  getTaskHistoryVMs,
   getTaskVM
 } from '../../../utils/project-menu.util';
 import * as fromRoot from '../../../reducers';
@@ -31,21 +31,20 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
 
   unassignedNumber: number = 0;
   todayNumber: number = 0;
-  projectTaskHistoryVMs: TaskHistoryVM[] = [];
+  taskHistoryVMs: TaskHistoryVM[] = [];
 
   private taskListVMs$: Observable<TaskListVM[]>;
   private _taskListVMsSub: Subscription;
   private taskListVMs: TaskListVM[];
 
-  private projectTaskHistories$: Observable<TaskHistory[]>;
-  private _projectTaskHistoriesSub: Subscription;
-
+  private taskHistories$: Observable<TaskHistory[]>;
+  private _taskHistoriesSub: Subscription;
 
   constructor(
     private dialog: MatDialog,
     private store$: Store<fromRoot.State>) {
     this.taskListVMs$ = this.store$.select(fromRoot.getTasksByList);
-    this.projectTaskHistories$ = this.store$.select(fromRoot.getProjectTaskHistories);
+    this.taskHistories$ = this.store$.select(fromRoot.getProjectTaskHistories);
   }
 
   ngOnInit() {
@@ -55,8 +54,8 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
       this.taskListVMs = taskListVMs;
     });
 
-    this._projectTaskHistoriesSub = this.projectTaskHistories$.subscribe((histories: TaskHistory[]) => {
-      this.projectTaskHistoryVMs = getProjectTaskHistoryVMs(getProjectTaskHistories(histories, 5));
+    this._taskHistoriesSub = this.taskHistories$.subscribe((histories: TaskHistory[]) => {
+      this.taskHistoryVMs = getTaskHistoryVMs(getTaskHistories(histories, 5));
     });
   }
 
@@ -65,8 +64,8 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
       this._taskListVMsSub.unsubscribe();
     }
 
-    if (this._projectTaskHistoriesSub) {
-      this._projectTaskHistoriesSub.unsubscribe();
+    if (this._taskHistoriesSub) {
+      this._taskHistoriesSub.unsubscribe();
     }
   }
 

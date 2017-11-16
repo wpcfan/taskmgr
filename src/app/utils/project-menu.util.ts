@@ -131,7 +131,7 @@ export const isFutureDate = (date: Date): boolean => {
   return todayDate.getTime() < dueDate.getTime();
 }
 
-export const getProjectTaskHistories = (taskHistories: TaskHistory[], limit: number): TaskHistory[] => {
+export const getTaskHistories = (taskHistories: TaskHistory[], limit: number): TaskHistory[] => {
   let histories: TaskHistory[] = taskHistories.filter((taskHistory: TaskHistory) => {
     switch (taskHistory.operation.type) {
       case History.CREATE_TASK:
@@ -156,7 +156,7 @@ export const getProjectTaskHistories = (taskHistories: TaskHistory[], limit: num
   return histories;
 }
 
-export const getProjectTaskHistoryVMs = (histories: TaskHistory[]): TaskHistoryVM[] => {
+export const getTaskHistoryVMs = (histories: TaskHistory[]): TaskHistoryVM[] => {
   return histories.map((history: TaskHistory) => {
     const avatar: string = history.operator.avatar ? <string>history.operator.avatar : 'unassigned'
     const name: string = <string>history.operator.name;
