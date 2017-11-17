@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared';
+import { ChartModule } from 'angular2-highcharts';
+import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 import { TaskListComponent } from './components/task-list';
 import { TaskItemComponent } from './components/task-item';
 import { TaskRoutingModule } from './task-routing.module';
@@ -17,9 +19,15 @@ import { TaskListDialogItemComponent } from './components/task-list-dialog-item'
 import { TaskHistoryDialogComponent } from './components/task-history-dialog';
 import { TaskHistoryDialogItemComponent } from './components/task-history-dialog-item';
 
+declare var require: any;
+export function highchartsFactory() {
+  return require('highcharts');
+}
+
 @NgModule({
   imports: [
     SharedModule,
+    ChartModule,
     TaskRoutingModule
   ],
   declarations: [
@@ -45,6 +53,12 @@ import { TaskHistoryDialogItemComponent } from './components/task-history-dialog
     CopyTaskComponent,
     TaskListDialogComponent,
     TaskHistoryDialogComponent,
+  ],
+  providers: [
+    {
+      provide: HighchartsStatic,
+      useFactory: highchartsFactory
+    }
   ]
 })
 export class TaskModule {

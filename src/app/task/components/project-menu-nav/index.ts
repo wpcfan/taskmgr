@@ -32,6 +32,7 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
   unassignedNumber: number = 0;
   todayNumber: number = 0;
   taskHistoryVMs: TaskHistoryVM[] = [];
+  options: Object;
 
   private taskListVMs$: Observable<TaskListVM[]>;
   private _taskListVMsSub: Subscription;
@@ -52,6 +53,8 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
       this.unassignedNumber = getUnassignedTasks(taskListVMs).length;
       this.todayNumber = getTodayTasks(taskListVMs).length;
       this.taskListVMs = taskListVMs;
+
+      this.buildChartOptions();
     });
 
     this._taskHistoriesSub = this.taskHistories$.subscribe((histories: TaskHistory[]) => {
@@ -141,5 +144,39 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
 
   private buildImgSrc(img: string): string {
     return img.indexOf('_') > -1 ? img.split('_', 1)[0] + '.jpg' : img;
+  }
+
+  private buildChartOptions() {
+    const data: number[] = [20, 15, 35, 20];
+    this.options = {
+      chart: {
+        backgroundColor: 'coral',
+        height: 75,
+        width: 260
+      },
+      title: {
+        text: ''
+      },
+      subtitle: {
+        text: ''
+      },
+      credits: {
+        enabled: false
+      },
+      tooltip: {
+        enabled: false
+      },
+      legend: {
+        enabled: false
+      },
+      yAxis: {
+        title: {
+          text: ''
+        }
+      },
+      series: [{
+        data: data,
+      }]
+    };
   }
 }

@@ -79,7 +79,7 @@
 
 .project-menu-nav-statistics-container {
   height: 58px;
-  margin: 0 5px 0 40px;
+  margin: 0 15px 0 40px;
   display: flex;
   flex-direction: row;
 }
@@ -94,6 +94,7 @@
   flex-direction: column;
   cursor: pointer;
 }
+
 .project-menu-nav-statistics-item:hover {
   background: #EEEEEE;
 }
@@ -106,4 +107,29 @@
 .project-menu-nav-statistics-today-number {
   color: #FF9800;
   font-size: 24px;
+}
+
+.project-menu-nav-chart-container {
+  margin: 0 0 15px 40px;
+}
+
+.project-menu-nav-chart-header {
+  height: 50px;
+  line-height: 50px;
+  font-size: 15px;
+  color: #383838;
+}
+
+.project-menu-nav-chart-body {
+  height: 95px;
+  width: 290px;
+  background: white;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.project-menu-nav-chart-content {
+  position: absolute;
+  bottom: 0;
 }
