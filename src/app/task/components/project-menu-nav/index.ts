@@ -147,12 +147,14 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
   }
 
   private buildChartOptions() {
-    const data: number[] = [20, 15, 35, 20];
+    const data1: number[] = [4, 4, 4, 4, 4, 6];
+    const data2: number[] = [0, 0, 0, 0, 0, 4];
     this.options = {
       chart: {
-        backgroundColor: 'coral',
-        height: 75,
-        width: 260
+        type: 'area',
+        backgroundColor: 'rgba(0,0,0,0)',
+        height: 100,
+        width: 280
       },
       title: {
         text: ''
@@ -163,19 +165,65 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
       credits: {
         enabled: false
       },
-      tooltip: {
-        enabled: false
-      },
       legend: {
         enabled: false
       },
+      xAxis: {
+        labels: {
+          enabled: false
+        },
+        gridLineWidth: 0,
+        lineWidth: 0,
+        tickWidth: 0
+      },
       yAxis: {
+        labels: {
+          enabled: false
+        },
         title: {
           text: ''
+        },
+        endOnTick: false,
+        gridLineWidth: 0
+      },
+      tooltip: {
+        shared: true,
+        crosshairs: false
+      },
+      plotOptions: {
+        series: {
+          animation: false,
+          lineWidth: 1,
+          marker: {
+            enabled: false
+          },
+          states: {
+            hover: {
+              lineWidth: 1
+            }
+          }
         }
       },
       series: [{
-        data: data,
+        data: data1,
+        lineColor: '#3DA8F5',
+        color: '#CDEEFD',
+        marker: {
+          radius: 3,
+          lineWidth: 3,
+          lineColor: null,
+          fillColor: '#3DA8F5'
+        }
+      }, {
+        data: data2,
+        lineColor: '#259B24',
+        color: '#D1EBD0',
+        marker: {
+          radius: 4,
+          lineWidth: 3,
+          lineColor: null,
+          fillColor: '#259B24'
+        }
       }]
     };
   }
