@@ -21,14 +21,17 @@ export function reducer(state: Auth = initialState, action: actions.Actions): Au
       };
     }
     case actions.LOAD_TOKEN: {
-      const token = localStorage.getItem('access_token');
-      const userId = localStorage.getItem('userId');
-      return {
-        user: null,
-        err: null,
-        token: token ? token : null,
-        userId: userId ? userId : null,
-      };
+      if (typeof window !== 'undefined') {
+        const token = localStorage.getItem('access_token');
+        const userId = localStorage.getItem('userId');
+        return {
+          user: null,
+          err: null,
+          token: token ? token : null,
+          userId: userId ? userId : null,
+        };
+      }
+      return state;
     }
     case actions.LOGIN_FAIL:
     case actions.REGISTER_FAIL: {

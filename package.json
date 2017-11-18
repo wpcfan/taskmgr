@@ -35,6 +35,7 @@
     "@angular/platform-browser": "^5.0.2",
     "@angular/platform-browser-dynamic": "^5.0.2",
     "@angular/router": "^5.0.2",
+    "@ngrx/db": "^2.1.0",
     "@ngrx/effects": "^4.1.1",
     "@ngrx/entity": "github:ngrx/entity-builds",
     "@ngrx/router-store": "^4.1.1",

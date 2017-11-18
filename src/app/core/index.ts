@@ -4,6 +4,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatIconRegistry, DateAdapter, MAT_DATE_FORMATS, MatDatepickerIntl} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
 import {RouterStateSerializer} from '@ngrx/router-store';
+import {DBModule} from '@ngrx/db';
 
 import {SharedModule} from '../shared';
 import {AppRoutingModule} from './app-routing.module';
@@ -23,9 +24,13 @@ import {DatepickerI18n} from '../shared/adapters/datepicker-i18n';
 import {MD_FNS_DATE_FORMATS} from '../shared/adapters/date-formats';
 import {CustomRouterStateSerializer} from '../utils/router.util';
 import '../utils/debug.util';
+import { schema } from '../db';
 
 export function tokenGetter () {
-  return localStorage.getItem('access_token');
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('access_token');
+  }
+  return null;
 }
 @NgModule({
   imports: [
@@ -41,6 +46,7 @@ export function tokenGetter () {
     ServicesModule.forRoot(),
     AppStoreModule,
     AppRoutingModule,
+    DBModule.provideDB(schema),
     BrowserAnimationsModule
   ],
   exports: [

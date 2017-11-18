@@ -50,7 +50,11 @@ export class AuthEffects {
   @Effect()
   logout$: Observable<Action> = this.actions$
     .ofType<actions.LogoutAction>(actions.LOGOUT)
-    .do(_ => localStorage.clear())
+    .do(_ => {
+      if (typeof window !== 'undefined') {
+        localStorage.clear();
+      }
+    })
     .map(() => new routerActions.Go({path: ['/']}));
 
   @Effect({ dispatch: false })
@@ -64,8 +68,10 @@ export class AuthEffects {
     .ofType<actions.LoginSuccessAction>(actions.LOGIN_SUCCESS)
     .map(action => action.payload)
     .do(auth => {
-      localStorage.setItem('access_token', <string>auth.token);
-      localStorage.setItem('userId', <string>auth.user!.username);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('access_token', <string>auth.token);
+        localStorage.setItem('userId', <string>auth.user!.username);
+      }
     })
 
   @Effect({ dispatch: false })
@@ -73,8 +79,10 @@ export class AuthEffects {
     .ofType<actions.RegisterSuccessAction>(actions.REGISTER_SUCCESS)
     .map(action => action.payload)
     .do(auth => {
-      localStorage.setItem('access_token', <string>auth.token);
-      localStorage.setItem('userId', <string>auth.user!.username);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('access_token', <string>auth.token);
+        localStorage.setItem('userId', <string>auth.user!.username);
+      }
     })
 
   /**
