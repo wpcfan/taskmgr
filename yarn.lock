@@ -129,9 +129,9 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/flex-layout@^2.0.0-beta.10-4905443":
-  version "2.0.0-beta.10-4905443"
-  resolved "https://registry.npmjs.org/@angular/flex-layout/-/flex-layout-2.0.0-beta.10-4905443.tgz#c62915c8f9a379d1da4800c12e3751e32cc7f855"
+"@angular/flex-layout@angular/flex-layout-builds":
+  version "2.0.0-beta.11-b01c2d7"
+  resolved "https://codeload.github.com/angular/flex-layout-builds/tar.gz/e7c5621361a04f0c7315091cf44127d8836bb84f"
   dependencies:
     tslib "^1.7.1"
 
