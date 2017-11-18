@@ -26,9 +26,9 @@
     minimist "^1.2.0"
     rxjs "^5.5.2"
 
-"@angular/animations@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/@angular/animations/-/animations-5.0.1.tgz#a92b2b186a6e5a31a9f1584911dd6aa7e16c5de1"
+"@angular/animations@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/@angular/animations/-/animations-5.0.2.tgz#6d3a735a4f85c388da6ba3f775dbbe61404ac02d"
   dependencies:
     tslib "^1.7.1"
 
@@ -38,14 +38,14 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/cli@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.npmjs.org/@angular/cli/-/cli-1.5.0.tgz#2abc3ff1648d54ad4a14f82f9d517f371370406c"
+"@angular/cli@^1.5.2":
+  version "1.5.2"
+  resolved "https://registry.npmjs.org/@angular/cli/-/cli-1.5.2.tgz#e3d25302a3dce1e801158160d201fdc1220bae7c"
   dependencies:
     "@angular-devkit/build-optimizer" "~0.0.31"
     "@angular-devkit/schematics" "~0.0.34"
     "@ngtools/json-schema" "1.1.0"
-    "@ngtools/webpack" "1.8.0"
+    "@ngtools/webpack" "1.8.2"
     "@schematics/angular" "~0.1.0"
     autoprefixer "^6.5.3"
     chalk "~2.2.0"
@@ -70,6 +70,7 @@
     license-webpack-plugin "^1.0.0"
     lodash "^4.11.1"
     memory-fs "^0.4.1"
+    minimatch "^3.0.4"
     node-modules-path "^1.0.0"
     nopt "^4.0.1"
     opn "~5.1.0"
@@ -101,54 +102,54 @@
   optionalDependencies:
     node-sass "^4.3.0"
 
-"@angular/common@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/@angular/common/-/common-5.0.1.tgz#43005ab3c8b8ffaf176aafb3b86ba931c3e4bdf9"
+"@angular/common@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/@angular/common/-/common-5.0.2.tgz#d80322153faaa9acca91552638a3e47dc237ba6a"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/compiler-cli@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/@angular/compiler-cli/-/compiler-cli-5.0.1.tgz#526dc1bb394fb16ad916601eea9aa00eb44b4fff"
+"@angular/compiler-cli@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/@angular/compiler-cli/-/compiler-cli-5.0.2.tgz#59b167413285d195f99dd1d9be73f70fedb33429"
   dependencies:
     chokidar "^1.4.2"
     minimist "^1.2.0"
     reflect-metadata "^0.1.2"
     tsickle "^0.24.0"
 
-"@angular/compiler@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/@angular/compiler/-/compiler-5.0.1.tgz#7fd4c7fa4bbbef4c146962fa946b827330a6c8ed"
+"@angular/compiler@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/@angular/compiler/-/compiler-5.0.2.tgz#d865d437227cdd16183f87900a38893d8f5fb139"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/core@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/@angular/core/-/core-5.0.1.tgz#a4a74afc7e2058d30b8263eb6d66daace9f427ba"
+"@angular/core@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/@angular/core/-/core-5.0.2.tgz#fbb5691d1af7ec62924801c8943955693562854a"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/flex-layout@^2.0.0-beta.11":
+"@angular/flex-layout@^2.0.0-beta.10-4905443":
   version "2.0.0-beta.10-4905443"
   resolved "https://registry.npmjs.org/@angular/flex-layout/-/flex-layout-2.0.0-beta.10-4905443.tgz#c62915c8f9a379d1da4800c12e3751e32cc7f855"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/forms@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/@angular/forms/-/forms-5.0.1.tgz#69f303c4c13da3caa0de63437588388b6ad62b21"
+"@angular/forms@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/@angular/forms/-/forms-5.0.2.tgz#f4c6ff25d51790f632762eb1c50774d17c8cf465"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/http@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/@angular/http/-/http-5.0.1.tgz#350cbdf63cfac8939613d753ff071ed58a60561b"
+"@angular/http@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/@angular/http/-/http-5.0.2.tgz#cb3af1521e14f040aa8ca1554e28f8df9b56fde8"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/language-service@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/@angular/language-service/-/language-service-5.0.1.tgz#869e09dbd6e3d95c117c062d21dd1fd920ad44d6"
+"@angular/language-service@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/@angular/language-service/-/language-service-5.0.2.tgz#ab8663671f96278353fb5f1e6376a07506198f07"
 
 "@angular/material@^5.0.0-rc0":
   version "5.0.0-rc0"
@@ -156,29 +157,29 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/platform-browser-dynamic@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/@angular/platform-browser-dynamic/-/platform-browser-dynamic-5.0.1.tgz#16db67d52d4531563ab15429c6bdfe18bc1bedc8"
+"@angular/platform-browser-dynamic@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/@angular/platform-browser-dynamic/-/platform-browser-dynamic-5.0.2.tgz#8984a7e2fc4f8a6760f9a05d95a2bb9f6b0b7f9a"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/platform-browser@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/@angular/platform-browser/-/platform-browser-5.0.1.tgz#14895dd30ed2a30ee7b99c76b764748f46c1a862"
+"@angular/platform-browser@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/@angular/platform-browser/-/platform-browser-5.0.2.tgz#d10baff03c2437f3088479c173d30afdf0b124a9"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/platform-server@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/@angular/platform-server/-/platform-server-5.0.1.tgz#005a64eb657e670d265fdfae9473f19a764f8737"
+"@angular/platform-server@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/@angular/platform-server/-/platform-server-5.0.2.tgz#ddd24f58c1337d06e3d880ab3ae356c791229fe0"
   dependencies:
     domino "^1.0.29"
     tslib "^1.7.1"
     xhr2 "^0.1.4"
 
-"@angular/router@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.npmjs.org/@angular/router/-/router-5.0.1.tgz#9ac08f29302ef60cdfd3c7810d96c265dec463d6"
+"@angular/router@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/@angular/router/-/router-5.0.2.tgz#be104fb091bcec418dd3d854f8af64a03e5c679d"
   dependencies:
     tslib "^1.7.1"
 
@@ -210,9 +211,9 @@
   version "1.1.0"
   resolved "https://registry.npmjs.org/@ngtools/json-schema/-/json-schema-1.1.0.tgz#c3a0c544d62392acc2813a42c8a0dc6f58f86922"
 
-"@ngtools/webpack@1.8.0":
-  version "1.8.0"
-  resolved "https://registry.npmjs.org/@ngtools/webpack/-/webpack-1.8.0.tgz#443204e016aa3a287544eacadb4c95964ae6e2c4"
+"@ngtools/webpack@1.8.2":
+  version "1.8.2"
+  resolved "https://registry.npmjs.org/@ngtools/webpack/-/webpack-1.8.2.tgz#0cd38eb387bb6679d295da5f3aa12dec2be57bd4"
   dependencies:
     chalk "~2.2.0"
     enhanced-resolve "^3.1.0"
@@ -261,9 +262,13 @@
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
 
-"@types/jasmine@*", "@types/jasmine@2.6.3":
+"@types/jasmine@*":
   version "2.6.3"
   resolved "https://registry.npmjs.org/@types/jasmine/-/jasmine-2.6.3.tgz#586963bfdd35e38f24a0a0b63a438cf521292ed9"
+
+"@types/jasmine@2.8.2":
+  version "2.8.2"
+  resolved "https://registry.npmjs.org/@types/jasmine/-/jasmine-2.8.2.tgz#6ae4d8740c0da5d5a627df725b4eed71b8e36668"
 
 "@types/jasminewd2@~2.0.3":
   version "2.0.3"
@@ -279,13 +284,17 @@
   version "2.0.0"
   resolved "https://registry.npmjs.org/@types/mime/-/mime-2.0.0.tgz#5a7306e367c539b9f6543499de8dd519fac37a8b"
 
-"@types/node@*", "@types/node@~8.0.51":
+"@types/node@*":
   version "8.0.51"
   resolved "https://registry.npmjs.org/@types/node/-/node-8.0.51.tgz#b31d716fb8d58eeb95c068a039b9b6292817d5fb"
 
 "@types/node@^6.0.46":
   version "6.0.90"
   resolved "https://registry.npmjs.org/@types/node/-/node-6.0.90.tgz#0ed74833fa1b73dcdb9409dcb1c97ec0a8b13b02"
+
+"@types/node@~8.0.53":
+  version "8.0.53"
+  resolved "https://registry.npmjs.org/@types/node/-/node-8.0.53.tgz#396b35af826fa66aad472c8cb7b8d5e277f4e6d8"
 
 "@types/q@^0.0.32":
   version "0.0.32"

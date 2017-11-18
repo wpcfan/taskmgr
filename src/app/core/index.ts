@@ -1,6 +1,5 @@
 import {NgModule, Optional, SkipSelf, LOCALE_ID} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatIconRegistry, DateAdapter, MAT_DATE_FORMATS, MatDatepickerIntl} from '@angular/material';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -30,7 +29,6 @@ export function tokenGetter () {
 }
 @NgModule({
   imports: [
-    HttpModule,
     SharedModule,
     HttpClientModule,
     InterceptorsModule.forRoot({

@@ -12,7 +12,7 @@ import {isValidDate} from '../../utils/date.util';
   template: `
     <div>
       <mat-form-field>
-        <mat-select placeholder="证件类型" (change)="onIdTypeChange($event.value)" [(ngModel)]="identity.identityType">
+        <mat-select placeholder="证件类型" (selectionChange)="onIdTypeChange($event.value)" [(ngModel)]="identity.identityType">
           <mat-option *ngFor="let type of identityTypes" [value]="type.value" >
             {{type.label}}
           </mat-option>

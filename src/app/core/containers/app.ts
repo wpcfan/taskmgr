@@ -10,14 +10,14 @@ import {Auth, Project} from '../../domain';
 @Component({
   selector: 'app-root',
   template: `
-  <mat-sidenav-container [class.myapp-dark-theme]="dark" fullscreen>
-    <mat-sidenav #sidenav mode="over">
+  <mat-drawer-container [class.myapp-dark-theme]="dark" fullscreen>
+    <mat-drawer #sidenav mode="over">
       <app-sidebar
         [auth]="(auth$ | async)?.token"
         [projects]="projects$ | async"
         (navClicked)="sidenav.close()"
         (prjClicked)="onPrjClicked($event)"></app-sidebar>
-    </mat-sidenav>
+    </mat-drawer>
     <div class="site" fxLayout="column">
       <header>
         <app-header
@@ -34,14 +34,14 @@ import {Auth, Project} from '../../domain';
         <app-footer></app-footer>
       </footer>
     </div>
-  </mat-sidenav-container>
+  </mat-drawer-container>
   `,
   styles: [`
-    mat-sidenav-container.myapp-dark-theme {
+    mat-drawer-container.myapp-dark-theme {
       background: black;
     }
 
-    mat-sidenav {
+    mat-drawer {
       width: 300px;
     }
   `]

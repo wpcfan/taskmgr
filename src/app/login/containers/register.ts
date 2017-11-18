@@ -13,7 +13,7 @@ import {isValidDate} from '../../utils/date.util';
   template: `
   <form fxFlex fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center stretch" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
     <mat-card fxFlex="1 1 auto">
-      <mat-tab-group [dynamicHeight]="true" [selectedIndex]="selectedTab" (selectChange)="onTabChange($event.index)">
+      <mat-tab-group [dynamicHeight]="true" [selectedIndex]="selectedTab" (selectedTabChange)="onTabChange($event.index)">
         <mat-tab label="帐号信息">
           <mat-form-field class="full-width">
             <input matInput placeholder="电子邮件" formControlName="username">

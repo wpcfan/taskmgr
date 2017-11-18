@@ -15,7 +15,7 @@ import {Address} from '../../domain';
           <mat-select
             placeholder="请选择省份"
             [(ngModel)]="_address.province"
-            (change)="onProvinceChange()">
+            (selectionChange)="onProvinceChange()">
             <mat-option *ngFor="let p of provinces" [value]="p">
               {{ p }}
             </mat-option>
@@ -27,7 +27,7 @@ import {Address} from '../../domain';
           <mat-select
             placeholder="请选择城市"
             [(ngModel)]="_address.city"
-            (change)="onCityChange()">
+            (selectionChange)="onCityChange()">
             <mat-option *ngFor="let c of cities$ | async" [value]="c">
               {{ c }}
             </mat-option>
@@ -39,7 +39,7 @@ import {Address} from '../../domain';
           <mat-select
             placeholder="请选择区县"
             [(ngModel)]="_address.district"
-            (change)="onDistrictChange()">
+            (selectionChange)="onDistrictChange()">
             <mat-option *ngFor="let d of districts$ | async" [value]="d">
               {{ d }}
             </mat-option>
