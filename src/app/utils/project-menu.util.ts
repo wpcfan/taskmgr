@@ -10,9 +10,7 @@ import * as History from '../domain/history';
 
 export const getUnassignedTasks = (taskListVMs: TaskListVM[]): TaskVM[] => {
   //Get All Tasks
-  let taskVMs: TaskVM[] = taskListVMs.reduce((acc: TaskVM[], value: TaskListVM) => {
-    return [...acc, ...value.tasks];
-  }, []);
+  let taskVMs: TaskVM[] = getTaskVMs(taskListVMs);
 
   //Filter Unassigned Tasks (No Owner & Not Completed)
   taskVMs = taskVMs.filter((taskVM: TaskVM) => !taskVM.owner && !taskVM.completed);
@@ -29,9 +27,7 @@ export const getUnassignedTasks = (taskListVMs: TaskListVM[]): TaskVM[] => {
 
 export const getTodayTasks = (taskListVMs: TaskListVM[]): TaskVM[] => {
   //Get All Tasks
-  let taskVMs: TaskVM[] = taskListVMs.reduce((acc: TaskVM[], value: TaskListVM) => {
-    return [...acc, ...value.tasks];
-  }, []);
+  let taskVMs: TaskVM[] = getTaskVMs(taskListVMs);
 
   //Filter Today Tasks (DueDate <= TodayDate & Not Completed)
   taskVMs = taskVMs.filter((taskVM: TaskVM) => {
@@ -55,13 +51,17 @@ export const getTodayTasks = (taskListVMs: TaskListVM[]): TaskVM[] => {
 }
 
 export const getTaskVM = (taskId: string, taskListVMs: TaskListVM[]): TaskVM => {
-  let taskVMs: TaskVM[] = taskListVMs.reduce((acc: TaskVM[], value: TaskListVM) => {
-    return [...acc, ...value.tasks];
-  }, []);
+  let taskVMs: TaskVM[] = getTaskVMs(taskListVMs);
 
   taskVMs = taskVMs.filter((taskVM: TaskVM) => taskVM.id === taskId);
 
   return taskVMs[0];
+}
+
+const getTaskVMs = (taskListVMs: TaskListVM[]): TaskVM[] => {
+  return taskListVMs.reduce((acc: TaskVM[], value: TaskListVM) => {
+    return [...acc, ...value.tasks];
+  }, []);
 }
 
 export const getOwnerAvatar = (taskVM: TaskVM): string => {
@@ -129,6 +129,53 @@ export const isFutureDate = (date: Date): boolean => {
   dueDate = new Date(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
 
   return todayDate.getTime() < dueDate.getTime();
+}
+
+export const getChartDateDescs = (): string[] => {
+  return getChartDates().map((date: Date) => {
+    return getDateDesc(date).split(' ', 1)[0];
+  });
+}
+
+export const getChartTotalNumbers = (taskListVMs: TaskListVM[]): number[] => {
+  const taskVMs: TaskVM[] = getTaskVMs(taskListVMs);
+  const createDates: Date[] = taskVMs.map((taskVM: TaskVM) => new Date(<Date>taskVM.createDate));
+  const chartDates: Date[] = getChartDates();
+
+  let numbers: number[] = [];
+  chartDates.forEach((chartDate: Date) => {
+    const tempDates: Date[] = createDates.filter((createDate: Date) =>
+      new Date(createDate.getFullYear(), createDate.getMonth(), createDate.getDate()).getTime() <= chartDate.getTime()
+    );
+    numbers.push(tempDates.length);
+  });
+
+  return numbers;
+}
+
+export const getChartDoneNumbers = (taskListVMs: TaskListVM[]): number[] => {
+  const taskVMs: TaskVM[] = getTaskVMs(taskListVMs).filter((taskVM: TaskVM) => taskVM.completed);
+  const createDates: Date[] = taskVMs.map((taskVM: TaskVM) => new Date(<Date>taskVM.createDate));
+  const chartDates: Date[] = getChartDates();
+  let numbers: number[] = [];
+  chartDates.forEach((chartDate: Date) => {
+    const tempDates: Date[] = createDates.filter((createDate: Date) =>
+      new Date(createDate.getFullYear(), createDate.getMonth(), createDate.getDate()).getTime() <= chartDate.getTime()
+    );
+    numbers.push(tempDates.length);
+  });
+  return numbers;
+}
+
+const getChartDates = (): Date[] => {
+  const nowDate: Date = new Date();
+  const todayDate: Date = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
+
+  let dates: Date[] = [];
+  for (let i: number = 13; i >= 0; i--) {
+    dates.push(new Date(todayDate.getTime() - i * 24 * 60 * 60 * 1000));
+  }
+  return dates;
 }
 
 export const getTaskHistories = (taskHistories: TaskHistory[], limit: number): TaskHistory[] => {

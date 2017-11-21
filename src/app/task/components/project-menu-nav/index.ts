@@ -14,7 +14,10 @@ import {
   getTodayTasks,
   getTaskHistories,
   getTaskHistoryVMs,
-  getTaskVM
+  getTaskVM,
+  getChartDateDescs,
+  getChartTotalNumbers,
+  getChartDoneNumbers
 } from '../../../utils/project-menu.util';
 import * as fromRoot from '../../../reducers';
 import * as projectActions from '../../../actions/project.action';
@@ -41,6 +44,11 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
   private taskHistories$: Observable<TaskHistory[]>;
   private _taskHistoriesSub: Subscription;
 
+  private chartDateDescs: string[] = getChartDateDescs();
+  private chartTotalNumbers: number[] = [];
+  private chartUndoneNumbers: number[] = [];
+  private chartDoneNumbers: number[] = [];
+
   constructor(
     private dialog: MatDialog,
     private store$: Store<fromRoot.State>) {
@@ -53,6 +61,9 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
       this.unassignedNumber = getUnassignedTasks(taskListVMs).length;
       this.todayNumber = getTodayTasks(taskListVMs).length;
       this.taskListVMs = taskListVMs;
+
+      this.chartTotalNumbers = getChartTotalNumbers(taskListVMs);
+      this.chartDoneNumbers = getChartDoneNumbers(taskListVMs);
 
       this.buildChartOptions();
     });
@@ -147,14 +158,14 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
   }
 
   private buildChartOptions() {
-    const data1: number[] = [4, 4, 4, 4, 4, 6];
-    const data2: number[] = [0, 0, 0, 0, 0, 4];
+    const data1: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 6];
+    const data2: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4];
     this.options = {
       chart: {
         type: 'area',
         backgroundColor: 'rgba(0,0,0,0)',
         height: 100,
-        width: 280
+        width: 290
       },
       title: {
         text: ''
@@ -174,7 +185,8 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
         },
         gridLineWidth: 0,
         lineWidth: 0,
-        tickWidth: 0
+        tickWidth: 0,
+        categories: this.chartDateDescs
       },
       yAxis: {
         labels: {
@@ -188,7 +200,17 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
       },
       tooltip: {
         shared: true,
-        crosshairs: false
+        crosshairs: false,
+        shadow: false,
+        backgroundColor: 'white',
+        borderColor: '#EEEEEE',
+        borderWidth: 2,
+        x: undefined, //Because of strict mode
+        formatter: function () {
+          return `<span>${this.x}</span><br/>
+            <span style="color: #3DA8F5">1 未完成</span><br/>
+            <span style="color: #259B24">0 已完成</span><br/>`;
+        }
       },
       plotOptions: {
         series: {
@@ -205,7 +227,7 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
         }
       },
       series: [{
-        data: data1,
+        data: this.chartTotalNumbers,
         lineColor: '#3DA8F5',
         color: '#CDEEFD',
         marker: {
