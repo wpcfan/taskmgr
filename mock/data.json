@@ -85,30 +85,35 @@
       "name": "待办",
       "projectId": "Sk2HaTagb",
       "order": 1,
+      "deleted": false,
       "id": "BkenST66lb"
     },
     {
       "name": "已完成",
       "projectId": "Sk2HaTagb",
       "order": 3,
+      "deleted": false,
       "id": "SkG3Ba6Tgb"
     },
     {
       "name": "待办",
       "projectId": "Hya1moGb-",
       "order": 1,
+      "deleted": false,
       "id": "BylTyXiM-b"
     },
     {
       "name": "进行中",
       "projectId": "Hya1moGb-",
       "order": 2,
+      "deleted": false,
       "id": "BkWpk7jGZb"
     },
     {
       "name": "已完成",
       "projectId": "Hya1moGb-",
       "order": 3,
+      "deleted": false,
       "id": "H1fTyXjMWW"
     }
   ],

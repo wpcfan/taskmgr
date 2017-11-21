@@ -3,6 +3,7 @@ import { User } from './user';
 export const CREATE_TASK = 'createTask';
 export const COMPLETE_TASK = 'completeTask';
 export const RECREATE_TASK = 'recreateTask';
+export const DELETE_TASK = 'deleteTask';
 
 export const UPDATE_TASK_CONTENT = 'updateTaskContent';
 export const UPDATE_TASK_PRIORITY = 'updateTaskPriority';
@@ -50,6 +51,13 @@ export class CompleteTaskOperation implements Operation {
 
 export class RecreateTaskOperation implements Operation {
   readonly type = RECREATE_TASK;
+
+  constructor(public payload: string) {
+  }
+}
+
+export class DeleteTaskOperation implements Operation {
+  readonly type = DELETE_TASK;
 
   constructor(public payload: string) {
   }
@@ -124,6 +132,7 @@ export type TaskOperations
   = CreateTaskOperation
   | CompleteTaskOperation
   | RecreateTaskOperation
+  | DeleteTaskOperation
   | UpdateTaskContentOperation
   | UpdateTaskPriorityOperation
   | UpdateTaskRemarkOperation

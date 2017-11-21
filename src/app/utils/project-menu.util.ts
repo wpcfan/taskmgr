@@ -184,6 +184,7 @@ export const getTaskHistories = (taskHistories: TaskHistory[], limit: number): T
       case History.CREATE_TASK:
       case History.COMPLETE_TASK:
       case History.RECREATE_TASK:
+      case History.DELETE_TASK:
         return true;
       default:
         return false;
@@ -234,6 +235,15 @@ export const getTaskHistoryVMs = (histories: TaskHistory[]): TaskHistoryVM[] => 
           icon: avatar,
           name: name,
           title: `重做了任务:`,
+          content: `${history.operation.payload}`,
+          dateDesc: dateDesc,
+        };
+        case History.DELETE_TASK:
+        return {
+          ...history,
+          icon: avatar,
+          name: name,
+          title: `删除了任务:`,
           content: `${history.operation.payload}`,
           dateDesc: dateDesc,
         };

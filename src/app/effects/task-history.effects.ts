@@ -77,6 +77,16 @@ export class TaskHistoryEffects {
       return new actions.AddTaskHistoryAction({ taskId: <string>task.id, operation: operation });
     });
 
+  @Effect()
+  addDeleteTaskHistory$: Observable<Action> = this.actions$
+    .ofType<taskActions.DeleteTaskSuccessAction>(taskActions.DELETE_SUCCESS)
+    .map(action => action.payload)
+    .map((task: Task) => {
+      const operation: History.DeleteTaskOperation = new History.DeleteTaskOperation(task.desc);
+
+      return new actions.AddTaskHistoryAction({ taskId: <string>task.id, operation: operation });
+    })
+
   @Effect({ dispatch: false })
   addUpdateTaskHistory$: Observable<{ selectedTaskVM: TaskVM; updatedTaskVM: TaskVM; user: User }> = this.actions$
     .ofType<taskActions.UpdateTaskSuccessAction>(taskActions.UPDATE_SUCCESS)
