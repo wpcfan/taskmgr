@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
@@ -51,6 +51,7 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialog: MatDialog,
+    private snackBar: MatSnackBar,
     private store$: Store<fromRoot.State>) {
     this.taskListVMs$ = this.store$.select(fromRoot.getTasksByList);
     this.taskHistories$ = this.store$.select(fromRoot.getProjectTaskHistories);
@@ -128,6 +129,11 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
 
   openTaskDialog(taskId: string) {
     const taskVM: TaskVM = getTaskVM(taskId, this.taskListVMs);
+
+    if (!taskVM) {
+      this.snackBar.open('任务不存在', '', { duration: 1000 });
+      return;
+    }
 
     this.store$.dispatch(new taskActions.SelectTaskAction(taskVM));
 
@@ -227,7 +233,7 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
         }
       },
       series: [{
-        data: this.chartTotalNumbers,
+        data: data1,
         lineColor: '#3DA8F5',
         color: '#CDEEFD',
         marker: {

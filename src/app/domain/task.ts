@@ -5,6 +5,7 @@ export interface Task {
   taskListId: string;
   desc: string;
   completed: boolean;
+  deleted?: boolean;
   ownerId: string;
   participantIds: string[];
   dueDate?: Date;

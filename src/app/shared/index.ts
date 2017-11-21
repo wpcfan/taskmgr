@@ -1,6 +1,6 @@
-import {NgModule} from '@angular/core';
-import {ReactiveFormsModule, FormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import {
   MatToolbarModule,
   MatSidenavModule,
@@ -24,16 +24,17 @@ import {
   MatTabsModule,
   MatTooltipModule,
   MatSlideToggleModule,
+  MatSnackBarModule,
 } from '@angular/material';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {ConfirmDialogComponent} from './components/confirm-dialog';
-import {ImageListSelectComponent} from './components/image-list-select';
-import {ChipsListComponent} from './components/chips-list';
-import {IdentityInputComponent} from './components/identity-input';
-import {AreaListComponent} from './components/area-list';
-import {AgeInputComponent} from './components/age-input';
-import {NewProjectComponent} from '../project/components/new-project';
-import {DirectivesModule} from '../directives';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ConfirmDialogComponent } from './components/confirm-dialog';
+import { ImageListSelectComponent } from './components/image-list-select';
+import { ChipsListComponent } from './components/chips-list';
+import { IdentityInputComponent } from './components/identity-input';
+import { AreaListComponent } from './components/area-list';
+import { AgeInputComponent } from './components/age-input';
+import { NewProjectComponent } from '../project/components/new-project';
+import { DirectivesModule } from '../directives';
 
 const MATERIAL_MODULES = [
   MatToolbarModule, MatSidenavModule, MatAutocompleteModule, MatButtonModule,
@@ -41,7 +42,7 @@ const MATERIAL_MODULES = [
   MatDatepickerModule, MatDialogModule, MatGridListModule, MatIconModule,
   MatInputModule, MatListModule, MatMenuModule, MatNativeDateModule,
   MatProgressBarModule, MatRadioModule, MatSelectModule, MatTabsModule,
-  MatTooltipModule, MatSlideToggleModule,
+  MatTooltipModule, MatSlideToggleModule, MatSnackBarModule,
 ];
 
 const MODULES = [
@@ -88,4 +89,4 @@ const EXPORT_COMPONENTS = [
 export class SharedModule {
 }
 
-export {ConfirmDialogComponent}
+export { ConfirmDialogComponent }

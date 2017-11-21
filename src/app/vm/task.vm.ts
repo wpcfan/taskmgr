@@ -4,6 +4,7 @@ export interface TaskVM {
   taskListId: string;
   desc: string;
   completed: boolean;
+  deleted?: boolean;
   owner?: User;
   participants?: User[];
   dueDate?: Date;

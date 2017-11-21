@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog, MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
@@ -33,6 +33,7 @@ export class TaskHistoryDialogComponent implements OnInit, OnDestroy {
   constructor(
     private dialogRef: MatDialogRef<TaskHistoryDialogComponent>,
     private dialog: MatDialog,
+    private snackBar: MatSnackBar,
     private store$: Store<fromRoot.State>) {
     this.taskListVMs$ = this.store$.select(fromRoot.getTasksByList);
     this.taskHistories$ = this.store$.select(fromRoot.getProjectTaskHistories);
@@ -64,6 +65,11 @@ export class TaskHistoryDialogComponent implements OnInit, OnDestroy {
 
   openTaskDialog(taskId: string) {
     const taskVM: TaskVM = getTaskVM(taskId, this.taskListVMs);
+
+    if (!taskVM) {
+      this.snackBar.open('任务不存在', '', { duration: 1000 });
+      return;
+    }
 
     this.store$.dispatch(new taskActions.SelectTaskAction(taskVM));
 

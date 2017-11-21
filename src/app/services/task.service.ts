@@ -1,7 +1,7 @@
-import {Inject, Injectable} from '@angular/core';
-import {HttpHeaders, HttpClient, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import {Task, User, TaskList} from '../domain';
+import { Inject, Injectable } from '@angular/core';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { Task, User, TaskList } from '../domain';
 
 @Injectable()
 export class TaskService {
@@ -9,8 +9,8 @@ export class TaskService {
   private headers = new HttpHeaders()
     .set('Content-Type', 'application/json');
 
-  constructor(@Inject('BASE_CONFIG') private config: {uri: string},
-              private http: HttpClient) {
+  constructor( @Inject('BASE_CONFIG') private config: { uri: string },
+    private http: HttpClient) {
   }
 
   add(task: Task): Observable<Task> {
@@ -19,6 +19,7 @@ export class TaskService {
       taskListId: task.taskListId,
       desc: task.desc,
       completed: task.completed,
+      deleted: false,
       ownerId: task.ownerId,
       participantIds: task.participantIds,
       dueDate: task.dueDate,
@@ -29,7 +30,7 @@ export class TaskService {
     };
     // const addTaskRef$ = this.addTaskRef()
     return this.http
-      .post<Task>(uri, JSON.stringify(toAdd), {headers: this.headers});
+      .post<Task>(uri, JSON.stringify(toAdd), { headers: this.headers });
 
   }
 
@@ -45,23 +46,27 @@ export class TaskService {
       remark: task.remark
     };
     return this.http
-      .patch<Task>(uri, JSON.stringify(toUpdate), {headers: this.headers});
+      .patch<Task>(uri, JSON.stringify(toUpdate), { headers: this.headers });
   }
 
   del(task: Task): Observable<Task> {
     const uri = `${this.config.uri}/${this.domain}/${task.id}`;
+    const toUpdate = {
+      deleted: true
+    }
+
     return this.http
-      .delete(uri)
-      .mapTo(task);
+      .patch<Task>(uri, JSON.stringify(toUpdate), { headers: this.headers });
   }
 
   // GET /tasklist
   get(taskListId: string): Observable<Task[]> {
     const uri = `${this.config.uri}/${this.domain}`;
     const params = new HttpParams()
-      .set('taskListId', taskListId);
+      .set('taskListId', taskListId)
+      .set('deleted', 'false');
     return this.http
-      .get<Task[]>(uri, {params});
+      .get<Task[]>(uri, { params });
   }
 
   getByLists(lists: TaskList[]): Observable<Task[]> {
@@ -82,20 +87,20 @@ export class TaskService {
   move(taskId: string, taskListId: string): Observable<Task> {
     const uri = `${this.config.uri}/${this.domain}/${taskId}`;
     return this.http
-      .patch<Task>(uri, JSON.stringify({taskListId: taskListId}), {headers: this.headers});
+      .patch<Task>(uri, JSON.stringify({ taskListId: taskListId }), { headers: this.headers });
   }
 
   complete(task: Task): Observable<Task> {
     const uri = `${this.config.uri}/${this.domain}/${task.id}`;
     return this.http
-      .patch<Task>(uri, JSON.stringify({completed: !task.completed}), {headers: this.headers});
+      .patch<Task>(uri, JSON.stringify({ completed: !task.completed }), { headers: this.headers });
   }
 
   addTaskRef(user: User, taskId: string): Observable<User> {
     const uri = `${this.config.uri}/users/${user.id}`;
     const taskIds = (user.taskIds) ? user.taskIds : [];
     return this.http
-      .patch<User>(uri, JSON.stringify({taskIds: [...taskIds, taskId]}), {headers: this.headers});
+      .patch<User>(uri, JSON.stringify({ taskIds: [...taskIds, taskId] }), { headers: this.headers });
   }
 
   removeTaskRef(user: User, taskId: string): Observable<User> {
@@ -103,6 +108,6 @@ export class TaskService {
     const taskIds = (user.taskIds) ? user.taskIds : [];
     const index = taskIds.indexOf(taskId);
     return this.http
-      .patch<User>(uri, JSON.stringify({taskIds: [...taskIds.slice(0, index), taskIds.slice(index + 1)]}), {headers: this.headers});
+      .patch<User>(uri, JSON.stringify({ taskIds: [...taskIds.slice(0, index), taskIds.slice(index + 1)] }), { headers: this.headers });
   }
 }

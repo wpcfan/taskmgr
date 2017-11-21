@@ -118,6 +118,7 @@
       "taskListId": "BkenST66lb",
       "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
       "completed": true,
+      "deleted": false,
       "participantIds": [
         "BkkDvwee-",
         "37489e0c-df34-c261-71c4-ce75357e3035"
@@ -136,6 +137,7 @@
       "taskListId": "SkG3Ba6Tgb",
       "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
       "completed": false,
+      "deleted": false,
       "participantIds": [
         "37489e0c-df34-c261-71c4-ce75357e3035"
       ],
@@ -152,6 +154,7 @@
       "taskListId": "BkenST66lb",
       "ownerId": "BkkDvwee-",
       "completed": false,
+      "deleted": false,
       "participantIds": [],
       "dueDate": "2017-06-15T16:00:00.000Z",
       "reminder": "2017-06-21T16:00:00.000Z",
@@ -163,6 +166,7 @@
       "taskListId": "BylTyXiM-b",
       "desc": "登录鉴权需携带 token 访问 API",
       "completed": false,
+      "deleted": false,
       "ownerId": "BkkDvwee-",
       "participantIds": [],
       "dueDate": "2017-07-03T16:00:00.000Z",
@@ -176,6 +180,7 @@
       "taskListId": "BkWpk7jGZb",
       "desc": "增加统计报表功能",
       "completed": false,
+      "deleted": false,
       "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
       "participantIds": [],
       "dueDate": "2017-07-25T16:00:00.000Z",
@@ -189,6 +194,7 @@
       "taskListId": "BylTyXiM-b",
       "desc": "首页banner增加2px的margin",
       "completed": false,
+      "deleted": false,
       "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
       "participantIds": [
         "BkkDvwee-"
@@ -204,6 +210,7 @@
       "taskListId": "BkWpk7jGZb",
       "desc": "库存管理 -- 出库操作 API",
       "completed": false,
+      "deleted": false,
       "ownerId": "BkkDvwee-",
       "participantIds": [
         "37489e0c-df34-c261-71c4-ce75357e3035"
@@ -219,6 +226,7 @@
       "taskListId": "H1fTyXjMWW",
       "desc": "用户可以签入签出设备",
       "completed": true,
+      "deleted": false,
       "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
       "participantIds": [],
       "dueDate": "2017-05-20T16:00:00.000Z",
@@ -232,6 +240,7 @@
       "taskListId": "BkWpk7jGZb",
       "desc": "什么情况啊？",
       "completed": false,
+      "deleted": false,
       "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
       "participantIds": [],
       "dueDate": null,
