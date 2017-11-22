@@ -16,8 +16,9 @@ import {
   getTaskHistoryVMs,
   getTaskVM,
   getChartDateDescs,
+  getTaskHistoriesByTask,
   getChartTotalNumbers,
-  getChartDoneNumbers
+  // getChartDoneNumbers
 } from '../../../utils/project-menu.util';
 import * as fromRoot from '../../../reducers';
 import * as projectActions from '../../../actions/project.action';
@@ -62,15 +63,15 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
       this.unassignedNumber = getUnassignedTasks(taskListVMs).length;
       this.todayNumber = getTodayTasks(taskListVMs).length;
       this.taskListVMs = taskListVMs;
-
-      this.chartTotalNumbers = getChartTotalNumbers(taskListVMs);
-      this.chartDoneNumbers = getChartDoneNumbers(taskListVMs);
-
-      this.buildChartOptions();
     });
 
     this._taskHistoriesSub = this.taskHistories$.subscribe((histories: TaskHistory[]) => {
       this.taskHistoryVMs = getTaskHistoryVMs(getTaskHistories(histories, 5));
+
+      const taskHistoriesByTask: TaskHistory[][] = getTaskHistoriesByTask(histories);
+      this.chartTotalNumbers = getChartTotalNumbers(taskHistoriesByTask);
+
+      this.buildChartOptions();
     });
   }
 
@@ -233,7 +234,7 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
         }
       },
       series: [{
-        data: data1,
+        data: this.chartTotalNumbers,
         lineColor: '#3DA8F5',
         color: '#CDEEFD',
         marker: {

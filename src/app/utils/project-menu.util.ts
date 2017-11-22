@@ -131,40 +131,74 @@ export const isFutureDate = (date: Date): boolean => {
   return todayDate.getTime() < dueDate.getTime();
 }
 
+//TODO: Invoke getDateDesc may return 'a couple of seconds/mins before' rather than 'today'
 export const getChartDateDescs = (): string[] => {
   return getChartDates().map((date: Date) => {
     return getDateDesc(date).split(' ', 1)[0];
   });
 }
 
-export const getChartTotalNumbers = (taskListVMs: TaskListVM[]): number[] => {
-  const taskVMs: TaskVM[] = getTaskVMs(taskListVMs);
-  const createDates: Date[] = taskVMs.map((taskVM: TaskVM) => new Date(<Date>taskVM.createDate));
-  const chartDates: Date[] = getChartDates();
+export const getTaskHistoriesByTask = (taskHistories: TaskHistory[]): TaskHistory[][] => {
+  //Filter & Sort By Date
+  let histories: TaskHistory[] = getSortTaskHistories(taskHistories, true);
 
-  let numbers: number[] = [];
-  chartDates.forEach((chartDate: Date) => {
-    const tempDates: Date[] = createDates.filter((createDate: Date) =>
-      new Date(createDate.getFullYear(), createDate.getMonth(), createDate.getDate()).getTime() <= chartDate.getTime()
-    );
-    numbers.push(tempDates.length);
-  });
+  //Convert TaskHistory[] To TaskHistory[][] By TaskId
+  let historiesByTask: TaskHistory[][] = [];
+  while (histories.length > 0) {
+    let specifiedTaskHistories: TaskHistory[] = [];
+    let comparedHistory: TaskHistory = <TaskHistory>histories.shift();
+    specifiedTaskHistories.push(comparedHistory);
+    console.log('<<COMPARED>>', histories.length, comparedHistory.taskId, JSON.stringify(comparedHistory.operation));
+    histories.forEach((history: TaskHistory) => {
+      if (history.taskId === comparedHistory.taskId) {
+        specifiedTaskHistories.push(history);
+        console.log('<<MATCHED>>', history.taskId, JSON.stringify(history.operation));
+      }
+    })
+    histories = histories.filter((history: TaskHistory) => history.taskId !== comparedHistory.taskId);
+    historiesByTask.push(specifiedTaskHistories);
+  }
 
-  return numbers;
+  console.log('<<>>', historiesByTask);
+
+  /**
+   * Convert TaskHistory[][] To number[][]
+   * 0: Not Created Yet, Done, Deleted
+   * 1: Created, Recreated
+   */
+  return historiesByTask;
 }
 
-export const getChartDoneNumbers = (taskListVMs: TaskListVM[]): number[] => {
-  const taskVMs: TaskVM[] = getTaskVMs(taskListVMs).filter((taskVM: TaskVM) => taskVM.completed);
-  const createDates: Date[] = taskVMs.map((taskVM: TaskVM) => new Date(<Date>taskVM.createDate));
+export const getChartTotalNumbers = (taskHistoriesByTask: TaskHistory[][]): number[] => {
+  let totalNumbers: number[] = [];
   const chartDates: Date[] = getChartDates();
-  let numbers: number[] = [];
+
   chartDates.forEach((chartDate: Date) => {
-    const tempDates: Date[] = createDates.filter((createDate: Date) =>
-      new Date(createDate.getFullYear(), createDate.getMonth(), createDate.getDate()).getTime() <= chartDate.getTime()
-    );
-    numbers.push(tempDates.length);
+    const comparedTimestamp: number = chartDate.getTime() + 24 * 60 * 60 * 1000;
+    let totalNumber: number = 0;
+
+    taskHistoriesByTask.forEach((taskHistories: TaskHistory[]) => {
+      let index = taskHistories.findIndex((history: TaskHistory) => comparedTimestamp < new Date(history.date).getTime());
+
+      if (index < 0) {
+        if (taskHistories[taskHistories.length - 1].operation.type != History.DELETE_TASK)
+          totalNumber += 1;
+      }
+      else if (index === 0) {
+
+      }
+      else {
+        if (taskHistories[index - 1].operation.type != History.DELETE_TASK)
+          totalNumber += 1;
+      }
+    });
+
+    totalNumbers.push(totalNumber);
   });
-  return numbers;
+
+  console.log('<<Total Number>>', totalNumbers);
+
+  return totalNumbers;
 }
 
 const getChartDates = (): Date[] => {
@@ -179,23 +213,7 @@ const getChartDates = (): Date[] => {
 }
 
 export const getTaskHistories = (taskHistories: TaskHistory[], limit: number): TaskHistory[] => {
-  let histories: TaskHistory[] = taskHistories.filter((taskHistory: TaskHistory) => {
-    switch (taskHistory.operation.type) {
-      case History.CREATE_TASK:
-      case History.COMPLETE_TASK:
-      case History.RECREATE_TASK:
-      case History.DELETE_TASK:
-        return true;
-      default:
-        return false;
-    }
-  });
-
-  histories = histories.sort((currentHistory: TaskHistory, nextHistory: TaskHistory) => {
-    const currentTimestamp: number = new Date(<Date>currentHistory.date).getTime();
-    const nextTimestamp: number = new Date(<Date>nextHistory.date).getTime();
-    return nextTimestamp - currentTimestamp;
-  })
+  const histories: TaskHistory[] = getSortTaskHistories(taskHistories, false);
 
   if (limit > 0 && histories.length > limit) {
     return histories.slice(0, limit);
@@ -238,7 +256,7 @@ export const getTaskHistoryVMs = (histories: TaskHistory[]): TaskHistoryVM[] => 
           content: `${history.operation.payload}`,
           dateDesc: dateDesc,
         };
-        case History.DELETE_TASK:
+      case History.DELETE_TASK:
         return {
           ...history,
           icon: avatar,
@@ -257,4 +275,26 @@ export const getTaskHistoryVMs = (histories: TaskHistory[]): TaskHistoryVM[] => 
         };
     }
   });
+}
+
+const getSortTaskHistories = (taskHistories: TaskHistory[], asc: boolean): TaskHistory[] => {
+  let histories: TaskHistory[] = taskHistories.filter((taskHistory: TaskHistory) => {
+    switch (taskHistory.operation.type) {
+      case History.CREATE_TASK:
+      case History.COMPLETE_TASK:
+      case History.RECREATE_TASK:
+      case History.DELETE_TASK:
+        return true;
+      default:
+        return false;
+    }
+  });
+
+  histories = histories.sort((currentHistory: TaskHistory, nextHistory: TaskHistory) => {
+    const currentTimestamp: number = new Date(<Date>currentHistory.date).getTime();
+    const nextTimestamp: number = new Date(<Date>nextHistory.date).getTime();
+    return currentTimestamp - nextTimestamp;
+  });
+
+  return asc ? histories : histories.reverse();
 }
