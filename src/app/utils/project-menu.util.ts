@@ -139,33 +139,34 @@ export const getChartDateDescs = (): string[] => {
 }
 
 export const getTaskHistoriesByTask = (taskHistories: TaskHistory[]): TaskHistory[][] => {
-  //Filter & Sort By Date
+  //Get filterd and sorted (Asc by date) task histories
   let histories: TaskHistory[] = getSortTaskHistories(taskHistories, true);
 
-  //Convert TaskHistory[] To TaskHistory[][] By TaskId
+  //Convert TaskHistory[] to TaskHistory[][] by TaskId
   let historiesByTask: TaskHistory[][] = [];
+
   while (histories.length > 0) {
+
     let specifiedTaskHistories: TaskHistory[] = [];
-    let comparedHistory: TaskHistory = <TaskHistory>histories.shift();
+
+    //Remove the first element from histories and push it into specifiedTaskHistories where all the elements will have the same taskId
+    const comparedHistory: TaskHistory = <TaskHistory>histories.shift();
     specifiedTaskHistories.push(comparedHistory);
-    console.log('<<COMPARED>>', histories.length, comparedHistory.taskId, JSON.stringify(comparedHistory.operation));
+
+    //Traverse the histories, push all the elements whose taskId is equal to the compared one into specifiedTaskHistories
     histories.forEach((history: TaskHistory) => {
       if (history.taskId === comparedHistory.taskId) {
         specifiedTaskHistories.push(history);
-        console.log('<<MATCHED>>', history.taskId, JSON.stringify(history.operation));
       }
     })
+
+    //Remove all the elements that just has been pushed into specifiedTaskHistories from histories
     histories = histories.filter((history: TaskHistory) => history.taskId !== comparedHistory.taskId);
+
+    //Push the specifiedTaskHistories into historiesByTask
     historiesByTask.push(specifiedTaskHistories);
   }
 
-  console.log('<<>>', historiesByTask);
-
-  /**
-   * Convert TaskHistory[][] To number[][]
-   * 0: Not Created Yet, Done, Deleted
-   * 1: Created, Recreated
-   */
   return historiesByTask;
 }
 
@@ -178,7 +179,7 @@ export const getChartTotalNumbers = (taskHistoriesByTask: TaskHistory[][]): numb
     let totalNumber: number = 0;
 
     taskHistoriesByTask.forEach((taskHistories: TaskHistory[]) => {
-      let index = taskHistories.findIndex((history: TaskHistory) => comparedTimestamp < new Date(history.date).getTime());
+      const index = taskHistories.findIndex((history: TaskHistory) => comparedTimestamp < new Date(history.date).getTime());
 
       if (index < 0) {
         if (taskHistories[taskHistories.length - 1].operation.type != History.DELETE_TASK)
@@ -188,17 +189,112 @@ export const getChartTotalNumbers = (taskHistoriesByTask: TaskHistory[][]): numb
 
       }
       else {
-        if (taskHistories[index - 1].operation.type != History.DELETE_TASK)
-          totalNumber += 1;
+        /**
+         * DELETE must be the last operation type For one task's histories, so we can count it into totalNumber directly without any condition.
+         */
+        totalNumber += 1;
       }
     });
 
     totalNumbers.push(totalNumber);
   });
 
-  console.log('<<Total Number>>', totalNumbers);
-
   return totalNumbers;
+}
+
+export const getChartUndoneNumbers = (taskHistoriesByTask: TaskHistory[][]): number[] => {
+  let undoneNumbers: number[] = [];
+  const chartDates: Date[] = getChartDates();
+
+  chartDates.forEach((chartDate: Date) => {
+    const comparedTimestamp: number = chartDate.getTime() + 24 * 60 * 60 * 1000;
+    let undoneNumber: number = 0;
+
+    taskHistoriesByTask.forEach((taskHistories: TaskHistory[]) => {
+      const index = taskHistories.findIndex((history: TaskHistory) => comparedTimestamp < new Date(history.date).getTime());
+
+      if (index < 0) {
+        const type: string = taskHistories[taskHistories.length - 1].operation.type;
+        if (type === History.CREATE_TASK || type === History.RECREATE_TASK)
+          undoneNumber += 1;
+      }
+      else if (index === 0) {
+
+      }
+      else {
+        const type: string = taskHistories[index - 1].operation.type;
+        if (type === History.CREATE_TASK || type === History.RECREATE_TASK)
+          undoneNumber += 1;
+      }
+    });
+
+    undoneNumbers.push(undoneNumber);
+  });
+
+  return undoneNumbers;
+}
+
+export const getChartDoneNumbers = (taskHistoriesByTask: TaskHistory[][]): number[] => {
+  let doneNumbers: number[] = [];
+  const chartDates: Date[] = getChartDates();
+
+  /**
+   * Traverse the chartDates, figure out each date's task number and push it into doneNumbers
+   */
+  chartDates.forEach((chartDate: Date) => {
+    //Compared date: next day 00:00
+    const comparedTimestamp: number = chartDate.getTime() + 24 * 60 * 60 * 1000;
+    let doneNumber: number = 0;
+
+    /**
+     * Traverse the taskHistoriesByTask to find out the corresponding position
+     * where the compared date should be in the taskHistories according to the date
+     * and to check the task state in order to decide whether to count it into the doneNumber
+     */
+    taskHistoriesByTask.forEach((taskHistories: TaskHistory[]) => {
+      const index = taskHistories.findIndex((history: TaskHistory) => comparedTimestamp < new Date(history.date).getTime());
+
+      /**
+       * Later than all the histories's date, so we should check if the last history's operation type is COMPLETE,
+       * if so, count it into doneNumber
+       */
+      if (index < 0) {
+        if (taskHistories[taskHistories.length - 1].operation.type === History.COMPLETE_TASK)
+          doneNumber += 1;
+      }
+      /**
+       * Earlier than all the histories's date, than means the task has not created yet, so we skip it.
+       */
+      else if (index === 0) {
+
+      }
+      /**
+       * Similar to case index < 0, we should check taskHistories[index - 1]'s operation type.
+       * Notice: It's taskHistories[index - 1] rather than taskHistories[index], the taskHistories[index] is next day.
+       *         The reason is that we want to check the last history's operation type of the chartDate,
+       *         for exmaple, the taskHistories is like this:
+       *         ----- 11.10 08:30 CREATE ----- 11.15 12:12 DONE ----- 11.15 13: 15 RECREATE ----- 11.18 16:50 DELETE
+       *         The chartDate is 11.15 00:00, if you use chartDate to look for the position, you will get 1,
+       *         that's the first history of 11.15, but we should find the last history of 11.15,
+       *         so we use comparedDate 11.16 00:00 and get 3, then we check taskHistories[3 - 1] operation type.
+       *         If the type is COMPLETE, count it into doneNumber
+       */
+      else {
+        if (taskHistories[index - 1].operation.type === History.COMPLETE_TASK)
+          doneNumber += 1;
+      }
+    });
+
+    doneNumbers.push(doneNumber);
+  });
+
+  return doneNumbers;
+}
+
+export const getChartTotalData = (totalNumbers: number[], undoneNumbers: number[]): { number: number; y: number; }[] => {
+  return totalNumbers.map((totalNumber: number, index: number) => {
+    return { number: undoneNumbers[index], y: totalNumber }
+  });
 }
 
 const getChartDates = (): Date[] => {

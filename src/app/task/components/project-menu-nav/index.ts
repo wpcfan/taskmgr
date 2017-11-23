@@ -18,7 +18,9 @@ import {
   getChartDateDescs,
   getTaskHistoriesByTask,
   getChartTotalNumbers,
-  // getChartDoneNumbers
+  getChartUndoneNumbers,
+  getChartDoneNumbers,
+  getChartTotalData,
 } from '../../../utils/project-menu.util';
 import * as fromRoot from '../../../reducers';
 import * as projectActions from '../../../actions/project.action';
@@ -49,6 +51,7 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
   private chartTotalNumbers: number[] = [];
   private chartUndoneNumbers: number[] = [];
   private chartDoneNumbers: number[] = [];
+  private chartTotalData: { number: number; y: number }[];
 
   constructor(
     private dialog: MatDialog,
@@ -70,6 +73,9 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
 
       const taskHistoriesByTask: TaskHistory[][] = getTaskHistoriesByTask(histories);
       this.chartTotalNumbers = getChartTotalNumbers(taskHistoriesByTask);
+      this.chartUndoneNumbers = getChartUndoneNumbers(taskHistoriesByTask);
+      this.chartDoneNumbers = getChartDoneNumbers(taskHistoriesByTask);
+      this.chartTotalData = getChartTotalData(this.chartTotalNumbers, this.chartUndoneNumbers);
 
       this.buildChartOptions();
     });
@@ -165,8 +171,6 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
   }
 
   private buildChartOptions() {
-    const data1: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 6];
-    const data2: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4];
     this.options = {
       chart: {
         type: 'area',
@@ -213,10 +217,11 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
         borderColor: '#EEEEEE',
         borderWidth: 2,
         x: undefined, //Because of strict mode
+        points: [{ point: { number: undefined, y: undefined } }], //Because of strict mode
         formatter: function () {
           return `<span>${this.x}</span><br/>
-            <span style="color: #3DA8F5">1 未完成</span><br/>
-            <span style="color: #259B24">0 已完成</span><br/>`;
+            <span style="color: #3DA8F5">${this.points[0].point.number} 未完成</span><br/>
+            <span style="color: #259B24">${this.points[1].point.y} 已完成</span><br/>`;
         }
       },
       plotOptions: {
@@ -234,7 +239,7 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
         }
       },
       series: [{
-        data: this.chartTotalNumbers,
+        data: this.chartTotalData,
         lineColor: '#3DA8F5',
         color: '#CDEEFD',
         marker: {
@@ -244,7 +249,7 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
           fillColor: '#3DA8F5'
         }
       }, {
-        data: data2,
+        data: this.chartDoneNumbers,
         lineColor: '#259B24',
         color: '#D1EBD0',
         marker: {
