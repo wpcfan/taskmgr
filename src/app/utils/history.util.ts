@@ -158,24 +158,12 @@ export const getDateDesc = (date: Date): string => {
   const thisWeekTimestamp: number = thisWeekDate.getTime();
   const lastWeekTimestamp: number = lastWeekDate.getTime();
   const deltaTimestamp: number = nowTimestamp - historyTimestamp;
-  // const deltaTimestamp: number = 45 * 60 * 1000 + 500;
-
-  /*console.log('<now day>', nowDate.getDay());
-  console.log('<today date>', todayDate.getDate());
-  console.log('<<nowTimestamp>>', nowTimestamp);
-  console.log('<<todayTimestamp>>', todayDate.getTime());
-  console.log('<<yesterdayTimestamp>>', yesterdayDate.getTime());
-  console.log('<<historyTimestamp>>', historyTimestamp);
-  console.log('<<DateFns Now>>', DateFns.format(nowDate, 'YYYY-MM-DD'));
-  console.log('<<DateFns Today>>', DateFns.format(todayDate, 'YYYY-MM-DD'));
-  console.log('<<DateFns Yesterday>>', DateFns.format(yesterdayDate, 'YYYY-MM-DD'));
-  console.log('<<DateFns ThisWeek>>', DateFns.format(thisWeekDate, 'YYYY-MM-DD W'));
-  console.log('<<DateFns LastWeek>>', DateFns.format(lastWeekDate, 'YYYY-MM-DD W'));
-  console.log('<<DateFns History>>', DateFns.format(historyDate, 'YYYY-MM-DD'));*/
 
   if (deltaTimestamp < 60 * 1000) {
     return '几秒前'
-  } else if (deltaTimestamp < 60 * 60 * 1000) {
+  }
+
+  if (deltaTimestamp < 60 * 60 * 1000) {
     return `${(deltaTimestamp / 1000 / 60).toFixed(0)}分钟前`;
   }
 

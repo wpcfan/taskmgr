@@ -131,10 +131,34 @@ export const isFutureDate = (date: Date): boolean => {
   return todayDate.getTime() < dueDate.getTime();
 }
 
-//TODO: Invoke getDateDesc may return 'a couple of seconds/mins before' rather than 'today'
 export const getChartDateDescs = (): string[] => {
+  const nowDate: Date = new Date();
+  const todayDate: Date = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
+  const yesterdayDate: Date = new Date(todayDate.getTime() - 24 * 60 * 60 * 1000);
+  const thisWeekDate: Date = new Date(todayDate.getTime() - (nowDate.getDay() === 0 ? 6 : nowDate.getDay() - 1) * 24 * 60 * 60 * 1000);
+  const lastWeekDate: Date = new Date(thisWeekDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const thisWeekTimestamp: number = thisWeekDate.getTime();
+  const lastWeekTimestamp: number = lastWeekDate.getTime();
+
   return getChartDates().map((date: Date) => {
-    return getDateDesc(date).split(' ', 1)[0];
+
+    if (DateFns.format(nowDate, 'YYYY-MM-DD') === DateFns.format(date, 'YYYY-MM-DD')) {
+      return `今天`;
+    }
+
+    if (DateFns.format(yesterdayDate, 'YYYY-MM-DD') === DateFns.format(date, 'YYYY-MM-DD')) {
+      return `昨天`;
+    }
+
+    if (date.getTime() >= thisWeekTimestamp) {
+      return `本周${getDayName(date.getDay())}`;
+    }
+
+    if (date.getTime() >= lastWeekTimestamp && date.getTime() < thisWeekTimestamp) {
+      return `上周${getDayName(date.getDay())}`;
+    }
+
+    return DateFns.format(date, 'M月D日');
   });
 }
 
