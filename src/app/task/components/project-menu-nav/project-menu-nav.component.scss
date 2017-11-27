@@ -1,10 +1,16 @@
-.project-menu-nav-container {
+.project-menu-nav-container,
+.project-menu-nav-container-dark {
   width: 350px;
   height: 100%;
   display: flex;
   flex-direction: column;
   background: #F7F7F7;
   border-left: 1px solid #D9D9D9;
+}
+
+.project-menu-nav-container-dark {
+  background: #303030;
+  border-left: 1px solid #2D2D2D;
 }
 
 .project-menu-nav-header {
@@ -14,12 +20,18 @@
   position: relative;
 }
 
-.project-menu-nav-title {
+.project-menu-nav-title,
+.project-menu-nav-title-dark {
   margin: 0 15px;
   font-size: 15px;
   font-weight: bold;
   border-bottom: 1px solid #D1D1D1;
   color: #383838;
+}
+
+.project-menu-nav-title-dark {
+  border-bottom: 1px solid #595959;
+  color: #C1C1C1;
 }
 
 .project-menu-nav-close {
@@ -42,7 +54,10 @@
   padding: 6px 0 4px;
 }
 
-.project-menu-nav-category-header, .project-menu-nav-category-clicked-header{
+.project-menu-nav-category-header,
+.project-menu-nav-category-header-dark,
+.project-menu-nav-category-clicked-header,
+.project-menu-nav-category-clicked-header-dark {
   height: 40px;
   line-height: 40px;
   position: relative;
@@ -54,12 +69,22 @@
   flex-direction: row;
 }
 
-.project-menu-nav-category-clicked-header {
+.project-menu-nav-category-header-dark,
+.project-menu-nav-category-clicked-header-dark {
+  color: #C1C1C1;
+}
+
+.project-menu-nav-category-clicked-header,
+.project-menu-nav-category-clicked-header-dark {
   cursor: pointer;
 }
 
 .project-menu-nav-category-clicked-header:hover {
   background: #EEEEEE;
+}
+
+.project-menu-nav-category-clicked-header-dark:hover {
+  background: #494949;
 }
 
 .project-menu-nav-category-header-icon {
@@ -72,9 +97,14 @@
   margin-left: 5px;
 }
 
-.project-menu-nav-divider {
+.project-menu-nav-divider,
+.project-menu-nav-divider-dark {
   margin: 5px 15px 0 45px;
   border-bottom: 1px solid #EEEEEE;
+}
+
+.project-menu-nav-divider-dark {
+  border-bottom: 1px solid #494949;
 }
 
 .project-menu-nav-statistics-container {
@@ -84,7 +114,8 @@
   flex-direction: row;
 }
 
-.project-menu-nav-statistics-item {
+.project-menu-nav-statistics-item,
+.project-menu-nav-statistics-item-dark {
   flex: 1;
   font-size: 14px;
   padding: 5px 0 0 5px;
@@ -95,8 +126,16 @@
   cursor: pointer;
 }
 
+.project-menu-nav-statistics-item-dark {
+  color: #C1C1C1;
+}
+
 .project-menu-nav-statistics-item:hover {
   background: #EEEEEE;
+}
+
+.project-menu-nav-statistics-item-dark:hover {
+  background: #494949;
 }
 
 .project-menu-nav-statistics-unassigned-number {
@@ -113,20 +152,30 @@
   margin: 0 0 15px 40px;
 }
 
-.project-menu-nav-chart-header {
+.project-menu-nav-chart-header,
+.project-menu-nav-chart-header-dark {
   height: 50px;
   line-height: 50px;
   font-size: 15px;
   color: #383838;
 }
 
-.project-menu-nav-chart-body {
+.project-menu-nav-chart-header-dark {
+  color: #C1C1C1;
+}
+
+.project-menu-nav-chart-body,
+.project-menu-nav-chart-body-dark {
   height: 95px;
   width: 290px;
   background: white;
   border-radius: 2px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
   position: relative;
+}
+
+.project-menu-nav-chart-body-dark {
+  background: #2D2D2D;
 }
 
 .project-menu-nav-chart-content {

@@ -35,6 +35,7 @@ import { storeFreeze } from 'ngrx-store-freeze';
 /**
  * 分别从每个 reducer 中将需要导出的函数或对象进行导出，并起个易懂的名字
  */
+import * as fromTheme from './theme.reducer';
 import * as fromAuth from './auth.reducer';
 import * as fromQuote from './quote.reducer';
 import * as fromProjects from './project.reducer';
@@ -45,7 +46,6 @@ import * as fromTaskFilterVM from './task-filter-vm.reducer';
 import * as fromTaskHistories from './task-history.reducer';
 import * as fromProjectTaskHistories from './project-task-history.reducer';
 import * as fromUsers from './user.reducer';
-import { initialState } from './user.reducer';
 
 import { RouterStateUrl } from '../utils/router.util';
 import { Quote } from '../domain/quote';
@@ -54,6 +54,7 @@ import { Quote } from '../domain/quote';
  * 并且使用一个 key 来标识各个子 state
  */
 export interface State {
+  theme: fromTheme.State;
   auth: Auth;
   quote: Quote;
   projects: fromProjects.State;
@@ -68,6 +69,7 @@ export interface State {
 }
 
 export const reducers: ActionReducerMap<State> = {
+  theme: fromTheme.reducer,
   auth: fromAuth.reducer,
   quote: fromQuote.reducer,
   projects: fromProjects.reducer,
@@ -108,7 +110,7 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
   ]
   : [storeStateGuard];
 
-
+export const getThemeState = createFeatureSelector<fromTheme.State>('theme');
 export const getAuthState = createFeatureSelector<Auth>('auth');
 export const getQuoteState = createFeatureSelector<Quote>('quote');
 export const getProjectsState = createFeatureSelector<fromProjects.State>('projects');
@@ -159,7 +161,9 @@ export const {
   selectTotal: getUserTotal
 } = fromUsers.adapter.getSelectors(getUsersState);
 
-export const getSelectedProjectId = createSelector(getProjectsState, fromProjects.getSelectedId);
+export const getTheme = createSelector<State, fromTheme.State, boolean>(getThemeState, fromTheme.getTheme);
+
+export const getSelectedProjectId = createSelector<State, fromProjects.State, string | null>(getProjectsState, fromProjects.getSelectedId);
 
 export const getSelectedProject = createSelector<State, string | null, { [id: string]: Project }, Project>(getSelectedProjectId, getProjectEntities, (projectId, projectEntities) => {
   return projectEntities[<string>projectId];

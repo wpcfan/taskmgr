@@ -25,6 +25,7 @@ import {
 import * as fromRoot from '../../../reducers';
 import * as projectActions from '../../../actions/project.action';
 import * as taskActions from '../../../actions/task.action';
+import * as themActions from '../../../actions/theme.action';
 
 @Component({
   selector: 'app-project-menu-nav',
@@ -34,6 +35,15 @@ import * as taskActions from '../../../actions/task.action';
 export class ProjectMenuNavComponent implements OnInit, OnDestroy {
 
   @Output() closeClicked = new EventEmitter<void>();
+
+  classContainer: string = 'project-menu-nav-container';
+  classTitle: string = 'project-menu-nav-title';
+  classCategoryHeader: string = 'project-menu-nav-category-header';
+  classCategoryClickedHeader: string = 'project-menu-nav-category-clicked-header';
+  classDivider: string = 'project-menu-nav-divider';
+  classStatisticsItem: string = 'project-menu-nav-statistics-item';
+  classChartHeader: string = 'project-menu-nav-chart-header';
+  classChartBody: string = 'project-menu-nav-chart-body';
 
   unassignedNumber: number = 0;
   todayNumber: number = 0;
@@ -47,6 +57,9 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
   private taskHistories$: Observable<TaskHistory[]>;
   private _taskHistoriesSub: Subscription;
 
+  private theme$: Observable<boolean>;
+  private _themeSub: Subscription;
+
   private chartDateDescs: string[] = getChartDateDescs();
   private chartTotalNumbers: number[] = [];
   private chartUndoneNumbers: number[] = [];
@@ -57,11 +70,16 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private store$: Store<fromRoot.State>) {
+    this.theme$ = this.store$.select(fromRoot.getTheme);
     this.taskListVMs$ = this.store$.select(fromRoot.getTasksByList);
     this.taskHistories$ = this.store$.select(fromRoot.getProjectTaskHistories);
   }
 
   ngOnInit() {
+    this._themeSub = this.theme$.subscribe((dark: boolean) => {
+      this.switchTheme(dark);
+    })
+
     this._taskListVMsSub = this.taskListVMs$.subscribe((taskListVMs: TaskListVM[]) => {
       this.unassignedNumber = getUnassignedTasks(taskListVMs).length;
       this.todayNumber = getTodayTasks(taskListVMs).length;
@@ -82,12 +100,39 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if (this._themeSub) {
+      this._themeSub.unsubscribe();
+    }
+
     if (this._taskListVMsSub) {
       this._taskListVMsSub.unsubscribe();
     }
 
     if (this._taskHistoriesSub) {
       this._taskHistoriesSub.unsubscribe();
+    }
+  }
+
+  switchTheme(dark: boolean) {
+    if (!dark) {
+      this.classContainer = 'project-menu-nav-container';
+      this.classTitle = 'project-menu-nav-title';
+      this.classCategoryHeader = 'project-menu-nav-category-header';
+      this.classCategoryClickedHeader = 'project-menu-nav-category-clicked-header';
+      this.classDivider = 'project-menu-nav-divider';
+      this.classStatisticsItem = 'project-menu-nav-statistics-item';
+      this.classChartHeader = 'project-menu-nav-chart-header';
+      this.classChartBody = 'project-menu-nav-chart-body';
+    }
+    else {
+      this.classContainer = 'project-menu-nav-container-dark';
+      this.classTitle = 'project-menu-nav-title-dark';
+      this.classCategoryHeader = 'project-menu-nav-category-header-dark';
+      this.classCategoryClickedHeader = 'project-menu-nav-category-clicked-header-dark';
+      this.classDivider = 'project-menu-nav-divider-dark';
+      this.classStatisticsItem = 'project-menu-nav-statistics-item-dark';
+      this.classChartHeader = 'project-menu-nav-chart-header-dark';
+      this.classChartBody = 'project-menu-nav-chart-body-dark';
     }
   }
 

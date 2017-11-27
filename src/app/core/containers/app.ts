@@ -1,11 +1,12 @@
-import {Component} from '@angular/core';
-import {OverlayContainer} from '@angular/cdk/overlay';
-import {Observable} from 'rxjs/Observable';
-import {Store} from '@ngrx/store';
+import { Component } from '@angular/core';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
 import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/auth.action';
 import * as prjActions from '../../actions/project.action';
-import {Auth, Project} from '../../domain';
+import * as themeActions from '../../actions/theme.action';
+import { Auth, Project } from '../../domain';
 
 @Component({
   selector: 'app-root',
@@ -55,8 +56,8 @@ export class AppComponent {
   constructor(
     private oc: OverlayContainer,
     private store$: Store<fromRoot.State>) {
-      this.auth$ = this.store$.select(fromRoot.getAuth);
-      this.projects$ = this.store$.select(fromRoot.getProjects);
+    this.auth$ = this.store$.select(fromRoot.getAuth);
+    this.projects$ = this.store$.select(fromRoot.getProjects);
   }
 
   get dark() {
@@ -65,11 +66,13 @@ export class AppComponent {
 
   switchDarkTheme(dark: boolean) {
     this._dark = dark;
-    if(dark) {
+    if (dark) {
       this.oc.getContainerElement().classList.add('myapp-dark-theme');
     } else {
       this.oc.getContainerElement().classList.remove('myapp-dark-theme');
     }
+
+    this.store$.dispatch(new themeActions.SwitchThemeAction(dark));
   }
 
   onLogout() {

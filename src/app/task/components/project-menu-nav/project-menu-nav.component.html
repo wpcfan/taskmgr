@@ -1,41 +1,41 @@
-<div class="project-menu-nav-container">
+<div [class]="classContainer">
   <div class="project-menu-nav-header">
-    <div class="project-menu-nav-title">项目菜单</div>
+    <div [class]="classTitle">项目菜单</div>
     <mat-icon class="project-menu-nav-close" (click)="onCloseClicked($event)">clear</mat-icon>
   </div>
   <div class="project-menu-nav-body">
     <div class="project-menu-nav-category-container">
-      <div class="project-menu-nav-category-clicked-header" (click)="openProjectDialog()">
+      <div [class]="classCategoryClickedHeader" (click)="openProjectDialog()">
         <mat-icon class="project-menu-nav-category-header-icon">settings</mat-icon>
         <span class="project-menu-nav-category-header-title">项目设置</span>
       </div>
     </div>
     <div class="project-menu-nav-category-container">
-      <div class="project-menu-nav-category-header">
+      <div [class]="classCategoryHeader">
         <mat-icon class="project-menu-nav-category-header-icon">alarm</mat-icon>
         <span class="project-menu-nav-category-header-title">任务统计</span>
       </div>
       <div class="project-menu-nav-statistics-container">
-        <div class="project-menu-nav-statistics-item" (click)="openUnassignedTaskListDialog()">
+        <div [class]="classStatisticsItem" (click)="openUnassignedTaskListDialog()">
           <span>待认领的任务</span>
           <span class="project-menu-nav-statistics-unassigned-number">{{unassignedNumber}}</span>
         </div>
-        <div class="project-menu-nav-statistics-item" (click)="openTodayTaskListDialog()">
+        <div [class]="classStatisticsItem" (click)="openTodayTaskListDialog()">
           <span>今天的事</span>
           <span class="project-menu-nav-statistics-today-number">{{todayNumber}}</span>
         </div>
       </div>
-      <div class="project-menu-nav-divider"></div>
+      <div [class]="classDivider"></div>
       <div class="project-menu-nav-chart-container">
-        <div class="project-menu-nav-chart-header">项目进展</div>
-        <div class="project-menu-nav-chart-body">
+        <div [class]="classChartHeader">项目进展</div>
+        <div [class]="classChartBody">
           <chart class="project-menu-nav-chart-content" [options]="options"></chart>
         </div>
       </div>
-      <div class="project-menu-nav-divider"></div>
+      <div [class]="classDivider"></div>
     </div>
     <div class="project-menu-nav-category-container">
-      <div class="project-menu-nav-category-header">
+      <div [class]="classCategoryHeader">
         <mat-icon class="project-menu-nav-category-header-icon">sort</mat-icon>
         <span class="project-menu-nav-category-header-title">项目动态</span>
       </div>
@@ -43,7 +43,7 @@
       </app-task-history-dialog-item>
     </div>
     <div class="project-menu-nav-category-container">
-      <div class="project-menu-nav-category-clicked-header" (click)="openTaskHistoryDialog()">
+      <div [class]="classCategoryClickedHeader" (click)="openTaskHistoryDialog()">
         <mat-icon class="project-menu-nav-category-header-icon">more_horiz</mat-icon>
         <span class="project-menu-nav-category-header-title">查看所有项目动态</span>
       </div>
