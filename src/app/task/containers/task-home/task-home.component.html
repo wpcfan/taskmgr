@@ -1,4 +1,4 @@
-<div class="task-lists-navigation">
+<div [class]="classNavigation">
   <div class="task-lists-navigation-menu-container" (click)="handleSideNav(0)" [ngClass]="{'task-lists-navigation-opened': currentNavIndex === 0}">
     <mat-icon class="task-lists-navigation-menu-icon">visibility</mat-icon>
     <span class="task-lists-navigation-menu-text">视图</span>

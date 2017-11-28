@@ -72,7 +72,11 @@ import * as TaskActions from '../../actions/task.action';
       </div>
     </ng-template>
   `,
-  styles: [``],
+  styles: [`
+    .full-width {
+      width: 100%;
+    }
+  `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewTaskComponent implements OnInit, OnDestroy {

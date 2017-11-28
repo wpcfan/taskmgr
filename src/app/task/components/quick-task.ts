@@ -10,7 +10,11 @@ import { Component, Output, EventEmitter, HostListener, ChangeDetectionStrategy 
       </button>
     </mat-form-field>
   `,
-  styles: [``],
+  styles: [`
+    .full-width {
+      width: 100%;
+    }
+  `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuickTaskComponent {

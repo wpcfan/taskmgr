@@ -1,6 +1,7 @@
-import { Component, HostBinding, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostBinding, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { MatDialog, MatSidenav } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '../../../reducers';
@@ -21,21 +22,48 @@ import { TaskListVM, TaskVM } from '../../../vm';
   animations: [defaultRouteAnim, listAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskHomeComponent {
+export class TaskHomeComponent implements OnInit, OnDestroy {
 
   @HostBinding('@routeAnim') state: string;
   @ViewChild('sidenav') sideNav: MatSidenav;
+
+  classNavigation: string = 'task-lists-navigation';
 
   lists$: Observable<TaskListVM[]>;
   private projectId$: Observable<string>;
 
   currentNavIndex: number = -1;
 
+  private theme$: Observable<boolean>;
+  private _themeSub: Subscription;
+
   constructor(private route: ActivatedRoute,
     private dialog: MatDialog,
     private store$: Store<fromRoot.State>) {
     this.projectId$ = this.route.paramMap.map(p => <string>p.get('id'));
     this.lists$ = this.store$.select(fromRoot.getTaskByFilter);
+    this.theme$ = this.store$.select(fromRoot.getTheme);
+  }
+
+  ngOnInit() {
+    this._themeSub = this.theme$.subscribe((dark: boolean) => {
+      this.switchTheme(dark);
+    })
+  }
+
+  ngOnDestroy() {
+    if (this._themeSub) {
+      this._themeSub.unsubscribe();
+    }
+  }
+
+  switchTheme(dark: boolean) {
+    if (!dark) {
+      this.classNavigation = 'task-lists-navigation';
+    }
+    else {
+      this.classNavigation = 'task-lists-navigation-dark';
+    }
   }
 
   handleRenameList(list: TaskList) {

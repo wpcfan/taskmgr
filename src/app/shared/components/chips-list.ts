@@ -29,6 +29,9 @@ import {User} from '../../domain';
     </mat-autocomplete>
   `,
   styles: [`
+    .full-width {
+      width: 100%;
+    }
   `],
   providers: [
     {
