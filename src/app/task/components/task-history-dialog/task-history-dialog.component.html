@@ -1,8 +1,8 @@
 <div class="task-history-container">
-  <div class="task-history-header">
+  <div [class]="classHeader">
     <div class="task-history-header-title">项目动态</div>
     <mat-icon class="task-history-close" (click)="closeTaskHistoryDialog()">clear</mat-icon>
-    <div class="task-history-divider"></div>
+    <div [class]="classDivider"></div>
   </div>
   <div class="task-history-body">
     <div *ngIf="taskHistoryVMs.length > 0 else empty" class="task-history-data-container">

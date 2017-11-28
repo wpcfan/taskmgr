@@ -25,7 +25,6 @@ import {
 import * as fromRoot from '../../../reducers';
 import * as projectActions from '../../../actions/project.action';
 import * as taskActions from '../../../actions/task.action';
-import * as themActions from '../../../actions/theme.action';
 
 @Component({
   selector: 'app-project-menu-nav',
@@ -70,16 +69,12 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private store$: Store<fromRoot.State>) {
-    this.theme$ = this.store$.select(fromRoot.getTheme);
     this.taskListVMs$ = this.store$.select(fromRoot.getTasksByList);
     this.taskHistories$ = this.store$.select(fromRoot.getProjectTaskHistories);
+    this.theme$ = this.store$.select(fromRoot.getTheme);
   }
 
   ngOnInit() {
-    this._themeSub = this.theme$.subscribe((dark: boolean) => {
-      this.switchTheme(dark);
-    })
-
     this._taskListVMsSub = this.taskListVMs$.subscribe((taskListVMs: TaskListVM[]) => {
       this.unassignedNumber = getUnassignedTasks(taskListVMs).length;
       this.todayNumber = getTodayTasks(taskListVMs).length;
@@ -97,19 +92,23 @@ export class ProjectMenuNavComponent implements OnInit, OnDestroy {
 
       this.buildChartOptions();
     });
+
+    this._themeSub = this.theme$.subscribe((dark: boolean) => {
+      this.switchTheme(dark);
+    })
   }
 
   ngOnDestroy() {
-    if (this._themeSub) {
-      this._themeSub.unsubscribe();
-    }
-
     if (this._taskListVMsSub) {
       this._taskListVMsSub.unsubscribe();
     }
 
     if (this._taskHistoriesSub) {
       this._taskHistoriesSub.unsubscribe();
+    }
+
+    if (this._themeSub) {
+      this._themeSub.unsubscribe();
     }
   }
 

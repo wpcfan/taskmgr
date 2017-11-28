@@ -1,4 +1,5 @@
-.task-list-item {
+.task-list-item,
+.task-list-item-dark {
   height: 48px;
   position: relative;
   color: #383838;
@@ -10,8 +11,16 @@
   cursor: pointer;
 }
 
+.task-list-item-dark {
+  color: #C1C1C1;
+}
+
 .task-list-item:hover {
   background: #EEEEEE;
+}
+
+.task-list-item-dark:hover {
+  background: #494949;
 }
 
 .task-list-item-priority {
@@ -34,13 +43,18 @@
   background: red;
 }
 
-.task-list-item-avatar {
+.task-list-item-avatar,
+.task-list-item-avatar-dark {
   width: 28px;
   height: 28px;
   border-radius: 50%;
   overflow: hidden;
   color: #808080;
   margin: 0 12px;
+}
+
+.task-list-item-avatar-dark {
+  color: #C1C1C1;
 }
 
 .task-list-item-date-container {

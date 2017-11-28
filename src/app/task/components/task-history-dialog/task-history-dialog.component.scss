@@ -4,7 +4,8 @@
   flex-direction: column;
 }
 
-.task-history-header {
+.task-history-header,
+.task-history-header-dark {
   height: 50px;
   line-height: 50px;
   text-align: center;
@@ -12,6 +13,10 @@
   margin: -24px -24px 0 -24px;
   color: #383838;
   font-weight: bold;
+}
+
+.task-history-header-dark {
+  color: #C1C1C1;
 }
 
 .task-history-header-title {
@@ -27,10 +32,15 @@
   cursor: pointer;
 }
 
-.task-history-divider {
+.task-history-divider,
+.task-history-divider-dark {
   height: 1px;
   margin: 0 15px;
   background: #EEEEEE;
+}
+
+.task-history-divider-dark {
+  background: #494949;
 }
 
 .task-history-body {

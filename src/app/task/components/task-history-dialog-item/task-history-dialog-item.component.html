@@ -1,6 +1,6 @@
-<div class="task-history-item" (click)="onItemClicked($event)">
-  <mat-icon class="task-history-item-avatar" [svgIcon]="taskHistoryVM.icon"></mat-icon>
-  <div class="task-history-item-content">
+<div [class]="classItem" (click)="onItemClicked($event)">
+  <mat-icon [class]="classItemAvatar" [svgIcon]="taskHistoryVM.icon"></mat-icon>
+  <div [class]="classItemContent">
     <div class="task-history-item-desc">
       <span class="task-history-item-desc-name">{{taskHistoryVM.name}}</span>
       <span class="task-history-item-desc-gap">{{taskHistoryVM.title}}</span>

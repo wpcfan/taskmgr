@@ -48,7 +48,8 @@ mat-checkbox {
   flex-direction: column;
 }
 
-.task-list-header {
+.task-list-header,
+.task-list-header-dark {
   height: 50px;
   line-height: 50px;
   text-align: center;
@@ -56,6 +57,10 @@ mat-checkbox {
   margin: -24px -24px 0 -24px; //refer to mat-dialog-actions:last-child
   color: #383838;
   font-weight: bold;
+}
+
+.task-list-header-dark {
+  color: #C1C1C1;
 }
 
 .task-list-header-title {
@@ -102,8 +107,13 @@ mat-checkbox {
   flex-direction: column;
 }
 
-.task-list-item-divider {
+.task-list-item-divider,
+.task-list-item-divider-dark {
   height: 1px;
   margin: 0 15px;
   background: #EEEEEE;
+}
+
+.task-list-item-divider-dark {
+  background: #494949;
 }

@@ -21,6 +21,9 @@ import * as taskActions from '../../../actions/task.action';
 })
 export class TaskHistoryDialogComponent implements OnInit, OnDestroy {
 
+  classHeader: string = 'task-history-header';
+  classDivider: string = 'task-history-divider';
+
   taskHistoryVMs: TaskHistoryVM[] = [];
 
   private taskListVMs$: Observable<TaskListVM[]>;
@@ -30,6 +33,9 @@ export class TaskHistoryDialogComponent implements OnInit, OnDestroy {
   private taskHistories$: Observable<TaskHistory[]>;
   private _taskHistoriesSub: Subscription;
 
+  private theme$: Observable<boolean>;
+  private _themeSub: Subscription;
+
   constructor(
     private dialogRef: MatDialogRef<TaskHistoryDialogComponent>,
     private dialog: MatDialog,
@@ -37,6 +43,7 @@ export class TaskHistoryDialogComponent implements OnInit, OnDestroy {
     private store$: Store<fromRoot.State>) {
     this.taskListVMs$ = this.store$.select(fromRoot.getTasksByList);
     this.taskHistories$ = this.store$.select(fromRoot.getProjectTaskHistories);
+    this.theme$ = this.store$.select(fromRoot.getTheme);
   }
 
   ngOnInit() {
@@ -47,6 +54,10 @@ export class TaskHistoryDialogComponent implements OnInit, OnDestroy {
     this._taskHistoriesSub = this.taskHistories$.subscribe((histories: TaskHistory[]) => {
       this.taskHistoryVMs = getTaskHistoryVMs(getTaskHistories(histories, -1));
     });
+
+    this._themeSub = this.theme$.subscribe((dark: boolean) => {
+      this.switchTheme(dark);
+    })
   }
 
   ngOnDestroy() {
@@ -56,6 +67,21 @@ export class TaskHistoryDialogComponent implements OnInit, OnDestroy {
 
     if (this._taskHistoriesSub) {
       this._taskHistoriesSub.unsubscribe();
+    }
+
+    if (this._themeSub) {
+      this._themeSub.unsubscribe();
+    }
+  }
+
+  switchTheme(dark: boolean) {
+    if (!dark) {
+      this.classHeader = 'task-history-header';
+      this.classDivider = 'task-history-divider';
+    }
+    else {
+      this.classHeader = 'task-history-header-dark';
+      this.classDivider = 'task-history-divider-dark';
     }
   }
 

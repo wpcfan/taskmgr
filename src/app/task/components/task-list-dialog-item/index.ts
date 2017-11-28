@@ -1,11 +1,15 @@
 import {
   Component,
   OnInit,
+  OnDestroy,
   Input,
   Output,
   EventEmitter,
   HostListener
 } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import { Store } from '@ngrx/store';
 import { priorityAnim } from '../../../anim';
 import { TaskVM } from '../../../vm';
 import {
@@ -15,6 +19,7 @@ import {
   isTodayDate,
   isFutureDate
 } from '../../../utils/project-menu.util';
+import * as fromRoot from '../../../reducers';
 
 @Component({
   selector: 'app-task-list-dialog-item',
@@ -22,7 +27,7 @@ import {
   styleUrls: ['./task-list-dialog-item.component.scss'],
   animations: [priorityAnim]
 })
-export class TaskListDialogItemComponent implements OnInit {
+export class TaskListDialogItemComponent implements OnInit, OnDestroy {
 
   @Input() taskVM: TaskVM;
   @Output() taskComplete = new EventEmitter<void>();
@@ -30,11 +35,37 @@ export class TaskListDialogItemComponent implements OnInit {
 
   animState = 'out';
 
-  constructor() {
+  classItem: string = 'task-list-item';
+  classItemAvatar: string = 'task-list-item-avatar';
+
+  private theme$: Observable<boolean>;
+  private _themeSub: Subscription;
+
+  constructor(private store$: Store<fromRoot.State>) {
+    this.theme$ = this.store$.select(fromRoot.getTheme);
   }
 
   ngOnInit() {
+    this._themeSub = this.theme$.subscribe((dark: boolean) => {
+      this.switchTheme(dark);
+    })
+  }
 
+  ngOnDestroy() {
+    if (this._themeSub) {
+      this._themeSub.unsubscribe();
+    }
+  }
+
+  switchTheme(dark: boolean) {
+    if (!dark) {
+      this.classItem = 'task-list-item';
+      this.classItemAvatar = 'task-list-item-avatar';
+    }
+    else {
+      this.classItem = 'task-list-item-dark';
+      this.classItemAvatar = 'task-list-item-avatar-dark';
+    }
   }
 
   getOwnerAvatar(taskVM: TaskVM) {

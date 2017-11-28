@@ -17,11 +17,17 @@ import * as fromRoot from '../../../reducers';
 })
 export class TaskListDialogComponent implements OnInit, OnDestroy {
 
+  classHeader: string = 'task-list-header';
+  classDivider: string = 'task-list-item-divider';
+
   title: string;
   taskVMs: TaskVM[];
 
   private taskListVMs$: Observable<TaskListVM[]>;
   private _taskListVMsSub: Subscription;
+
+  private theme$: Observable<boolean>;
+  private _themeSub: Subscription;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: { title: string; showUnassignedTaskList: boolean },
@@ -29,6 +35,7 @@ export class TaskListDialogComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private store$: Store<fromRoot.State>) {
     this.taskListVMs$ = this.store$.select(fromRoot.getTasksByList);
+    this.theme$ = this.store$.select(fromRoot.getTheme);
   }
 
   ngOnInit() {
@@ -36,11 +43,30 @@ export class TaskListDialogComponent implements OnInit, OnDestroy {
     this._taskListVMsSub = this.taskListVMs$.subscribe((taskListVMs: TaskListVM[]) => {
       this.taskVMs = this.data.showUnassignedTaskList ? getUnassignedTasks(taskListVMs) : getTodayTasks(taskListVMs);
     });
+
+    this._themeSub = this.theme$.subscribe((dark: boolean) => {
+      this.switchTheme(dark);
+    })
   }
 
   ngOnDestroy() {
     if (this._taskListVMsSub) {
       this._taskListVMsSub.unsubscribe();
+    }
+
+    if (this._themeSub) {
+      this._themeSub.unsubscribe();
+    }
+  }
+
+  switchTheme(dark: boolean) {
+    if (!dark) {
+      this.classHeader = 'task-list-header';
+      this.classDivider = 'task-list-item-divider';
+    }
+    else {
+      this.classHeader = 'task-list-header-dark';
+      this.classDivider = 'task-list-item-divider-dark';
     }
   }
 

@@ -1,15 +1,15 @@
 <div class="task-list-container">
-  <div class="task-list-header">
+  <div [class]="classHeader">
     <div class="task-list-header-title">{{title}}</div>
     <mat-icon class="task-list-close" (click)="closeTaskListDialog()">clear</mat-icon>
-    <div class="task-list-item-divider"></div>
+    <div [class]="classDivider"></div>
   </div>
   <div class="task-list-body">
     <div *ngIf="taskVMs.length > 0 else empty" class="task-list-data-container">
       <div *ngFor="let taskVM of taskVMs">
         <app-task-list-dialog-item [taskVM]="taskVM" (taskComplete)="completeTask(taskVM)" (itemClicked)="openTaskDialog(taskVM)">
         </app-task-list-dialog-item>
-        <div class="task-list-item-divider"></div>
+        <div [class]="classDivider"></div>
       </div>
     </div>
     <ng-template #empty>
