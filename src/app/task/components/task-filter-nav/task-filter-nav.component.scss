@@ -1,11 +1,16 @@
-.task-filter-nav-container {
+.task-filter-nav-container,
+.task-filter-nav-container-dark {
   width: 350px;
   height: 100%;
   display: flex;
   flex-direction: column;
   background: #F7F7F7;
   border-left: 1px solid #D9D9D9;
-  // box-shadow: -3px 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.task-filter-nav-container-dark {
+  background: #303030;
+  border-left: 1px solid #2D2D2D;
 }
 
 .task-filter-nav-header {
@@ -15,12 +20,18 @@
   position: relative;
 }
 
-.task-filter-nav-title {
+.task-filter-nav-title,
+.task-filter-nav-title-dark {
   margin: 0 15px;
   font-size: 15px;
   font-weight: bold;
   border-bottom: 1px solid #D1D1D1;
   color: #383838;
+}
+
+.task-filter-nav-title-dark {
+  border-bottom: 1px solid #595959;
+  color: #C1C1C1;
 }
 
 .task-filter-nav-close {
@@ -47,7 +58,10 @@
   padding: 6px 0 4px;
 }
 
-.task-filter-nav-category-header {
+.task-filter-nav-category-header,
+.task-filter-nav-category-header-dark,
+.task-filter-nav-category-header-highlight,
+.task-filter-nav-category-header-highlight-dark {
   height: 40px;
   line-height: 40px;
   position: relative;
@@ -58,11 +72,18 @@
   flex-direction: row;
 }
 
-.task-filter-nav-category-header-highlight {
+.task-filter-nav-category-header-dark,
+.task-filter-nav-category-header-highlight-dark {
+  color: #C1C1C1;
+}
+
+.task-filter-nav-category-header-highlight,
+.task-filter-nav-category-header-highlight-dark {
   cursor: pointer;
 }
 
-.task-filter-nav-category-header-highlight:hover {
+.task-filter-nav-category-header-highlight:hover,
+.task-filter-nav-category-header-highlight-dark:hover {
   color: #3da8f5;
 }
 
@@ -78,7 +99,6 @@
 .task-filter-nav-category-header-icon {
   font-size: 18px;
   line-height: 40px;
-  // color: #808080;
 }
 
 .task-filter-nav-category-header-end-icon {
@@ -100,12 +120,18 @@
   cursor: pointer;
 }
 
-.task-filter-nav-category-divider {
+.task-filter-nav-category-divider,
+.task-filter-nav-category-divider-dark {
   margin: 0 15px;
   border-bottom: 1px solid #EEEEEE;
 }
 
-.task-filter-nav-category-item-container {
+.task-filter-nav-category-divider-dark {
+  border-bottom: 1px solid #494949;
+}
+
+.task-filter-nav-category-item-container,
+.task-filter-nav-category-item-container-dark {
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -115,9 +141,13 @@
   background: #EEEEEE;
 }
 
-.task-filter-nav-category-item {
+.task-filter-nav-category-item-container-dark:hover {
+  background: #494949;
+}
+
+.task-filter-nav-category-item,
+.task-filter-nav-category-item-dark {
   height: 40px;
-  // line-height: 40px;
   position: relative;
   color: #808080;
   font-size: 14px;
@@ -130,6 +160,10 @@
 
 .task-filter-nav-category-item:hover {
   background: #EEEEEE;
+}
+
+.task-filter-nav-category-item-dark:hover {
+  background: #494949;
 }
 
 .task-filter-nav-category-extra-item {
@@ -148,11 +182,16 @@
   font-size: 18px;
 }
 
-.task-filter-nav-category-input-container {
+.task-filter-nav-category-input-container,
+.task-filter-nav-category-input-container-dark {
   padding: 0 15px;
   height: 40px;
   font-size: 14px;
   color: #383838;
+}
+
+.task-filter-nav-category-input-container-dark {
+  color: #C1C1C1;
 }
 
 .task-filter-nav-category-item-avatar {
@@ -163,7 +202,8 @@
   margin-right: 10px;
 }
 
-.task-filter-nav-menu-header {
+.task-filter-nav-menu-header,
+.task-filter-nav-menu-header-dark {
   width: 250px;
   height: 40px;
   line-height: 40px;
@@ -171,9 +211,12 @@
   color: #383838;
   font-size: 15px;
   font-weight: bold;
-  // text-align: center;
   display: flex;
   flex-direction: row;
+}
+
+.task-filter-nav-menu-header-dark {
+  color: #C1C1C1;
 }
 
 .task-filter-nav-menu-header-title {
@@ -195,7 +238,8 @@
   color: #3da8f5;
 }
 
-.task-filter-nav-menu-item {
+.task-filter-nav-menu-item,
+.task-filter-nav-menu-item-dark {
   height: 40px;
   position: relative;
   color: #808080;
@@ -206,8 +250,16 @@
   cursor: pointer;
 }
 
+.task-filter-nav-menu-item-dark {
+  color: #C1C1C1;
+}
+
 .task-filter-nav-menu-item:hover {
   background: #EEEEEE;
+}
+
+.task-filter-nav-menu-item-dark:hover {
+  background: #494949;
 }
 
 .task-filter-nav-sort-menu-width {
@@ -225,4 +277,8 @@
 .task-filter-nav-menu-item-colored-desc {
   margin-left: 15px;
   color: #3da8f5;
+}
+
+.full-width {
+  width: 100%;
 }

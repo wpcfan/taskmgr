@@ -41,14 +41,31 @@ export class TaskFilterNavComponent implements OnInit, OnDestroy {
 
   @Output() closeClicked = new EventEmitter<void>();
 
+  classContainer: string = 'task-filter-nav-container';
+  classTitle: string = 'task-filter-nav-title';
+  classCategoryHeader: string = 'task-filter-nav-category-header';
+  classCategoryHighlight: string = 'task-filter-nav-category-header-highlight';
+  classCategoryDivider: string = 'task-filter-nav-category-divider';
+  classCategoryItemContainer: string = 'task-filter-nav-category-item-container';
+  classCategoryItem: string = 'task-filter-nav-category-item';
+  classCategoryInputContainer: string = 'task-filter-nav-category-input-container';
+  classMenuHeader: string = 'task-filter-nav-menu-header';
+  classSortMenuItem: string = 'task-filter-nav-menu-item task-filter-nav-sort-menu-width';
+  classEditMenuItem: string = 'task-filter-nav-menu-item task-filter-nav-edit-menu-width';
+
+
   form: FormGroup;
   taskFilterVM: TaskFilterVM;
   taskDesc: string;
 
   private taskFilterVM$: Observable<TaskFilterVM>;
-  private descFilter$: Observable<string>;
   private _taskFilterVMSub: Subscription;
+
+  private descFilter$: Observable<string>;
   private _descFilterSub: Subscription;
+
+  private theme$: Observable<boolean>;
+  private _themeSub: Subscription;
 
   constructor(private fb: FormBuilder, private store$: Store<fromRoot.State>) {
     this.form = this.fb.group({
@@ -59,6 +76,7 @@ export class TaskFilterNavComponent implements OnInit, OnDestroy {
 
     this.taskFilterVM$ = this.store$.select(fromRoot.getTaskFilterVMState);
     this.descFilter$ = this.form.controls['descFilter'].valueChanges;
+    this.theme$ = this.store$.select(fromRoot.getTheme);
   }
 
   ngOnInit() {
@@ -72,6 +90,10 @@ export class TaskFilterNavComponent implements OnInit, OnDestroy {
         this.taskDesc = desc.trim();
         this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction({ ...this.taskFilterVM, desc: this.taskDesc }));
       });
+
+    this._themeSub = this.theme$.subscribe((dark: boolean) => {
+      this.switchTheme(dark);
+    })
   }
 
   ngOnDestroy() {
@@ -81,6 +103,39 @@ export class TaskFilterNavComponent implements OnInit, OnDestroy {
 
     if (this._descFilterSub) {
       this._descFilterSub.unsubscribe();
+    }
+
+    if (this._themeSub) {
+      this._themeSub.unsubscribe();
+    }
+  }
+
+  switchTheme(dark: boolean) {
+    if (!dark) {
+      this.classContainer = 'task-filter-nav-container';
+      this.classTitle = 'task-filter-nav-title';
+      this.classCategoryHeader = 'task-filter-nav-category-header';
+      this.classCategoryHighlight = 'task-filter-nav-category-header-highlight';
+      this.classCategoryDivider = 'task-filter-nav-category-divider';
+      this.classCategoryItemContainer = 'task-filter-nav-category-item-container';
+      this.classCategoryItem = 'task-filter-nav-category-item';
+      this.classCategoryInputContainer = 'task-filter-nav-category-input-container';
+      this.classMenuHeader = 'task-filter-nav-menu-header';
+      this.classSortMenuItem = 'task-filter-nav-menu-item task-filter-nav-sort-menu-width';
+      this.classEditMenuItem = 'task-filter-nav-menu-item task-filter-nav-edit-menu-width';
+    }
+    else {
+      this.classContainer = 'task-filter-nav-container-dark';
+      this.classTitle = 'task-filter-nav-title-dark';
+      this.classCategoryHeader = 'task-filter-nav-category-header-dark';
+      this.classCategoryHighlight = 'task-filter-nav-category-header-highlight-dark';
+      this.classCategoryDivider = 'task-filter-nav-category-divider-dark';
+      this.classCategoryItemContainer = 'task-filter-nav-category-item-container-dark';
+      this.classCategoryItem = 'task-filter-nav-category-item-dark';
+      this.classCategoryInputContainer = 'task-filter-nav-category-input-container-dark';
+      this.classMenuHeader = 'task-filter-nav-menu-header-dark';
+      this.classSortMenuItem = 'task-filter-nav-menu-item-dark task-filter-nav-sort-menu-width';
+      this.classEditMenuItem = 'task-filter-nav-menu-item-dark task-filter-nav-edit-menu-width';
     }
   }
 
