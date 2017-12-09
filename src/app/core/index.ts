@@ -26,7 +26,6 @@ import {CustomRouterStateSerializer} from '../utils/router.util';
 import '../utils/debug.util';
 @NgModule({
   imports: [
-    HttpModule,
     SharedModule,
     HttpClientModule,
     AppEffectsModule,
