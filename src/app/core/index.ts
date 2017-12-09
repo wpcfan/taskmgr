@@ -1,8 +1,8 @@
-import {NgModule, Optional, SkipSelf, LOCALE_ID} from '@angular/core';
+import {NgModule, Optional, SkipSelf} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatIconRegistry, DateAdapter, MAT_DATE_FORMATS, MatDatepickerIntl} from '@angular/material';
+import {MatIconRegistry, DateAdapter, MAT_DATE_FORMATS, MatDatepickerIntl, MAT_DATE_LOCALE} from '@angular/material';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DomSanitizer} from '@angular/platform-browser';
 import {RouterStateSerializer} from '@ngrx/router-store';
@@ -40,7 +40,7 @@ import '../utils/debug.util';
   ],
   providers: [
     {provide: 'BASE_CONFIG', useValue: { uri: 'http://localhost:3002'}},
-    {provide: LOCALE_ID, useValue: 'zh-CN'},
+    {provide: MAT_DATE_LOCALE, useValue: 'zh-CN'},
     {provide: DateAdapter, useClass: MomentDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: MD_FNS_DATE_FORMATS},
     {provide: MatDatepickerIntl, useClass: DatepickerI18n},
