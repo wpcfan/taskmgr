@@ -93,7 +93,9 @@ export class ProjectListComponent {
       .map(memberIds => this.dialog.open(InviteComponent, {data: { memberIds: memberIds}}))
       .switchMap(dialogRef => dialogRef.afterClosed().take(1).filter(n => n))
       .subscribe(val => {
-        this.store$.dispatch(new actions.InviteMembersAction({projectId: <string>project.id, memberIds: <String[]>val.map((v: {id: string; username: string}) => v.id)}));
+        this.store$.dispatch(new actions.InviteMembersAction({
+          projectId: <string>project.id,
+          memberIds: <String[]>val.map((v: {id: string; username: string}) => v.id)}));
       });
   }
 
