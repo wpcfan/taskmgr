@@ -2,7 +2,6 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/app",
-    // required to set this for angular server rendering
     "module": "commonjs",
     "baseUrl": "./",
     "types": []
@@ -11,8 +10,6 @@
     "test.ts",
     "**/*.spec.ts"
   ],
-  // Add "angularCompilerOptions" with the AppServerModule you wrote
-  // set as the "entryModule".
   "angularCompilerOptions": {
     "entryModule": "app/app.server.module#AppServerModule"
   }

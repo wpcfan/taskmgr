@@ -1,3 +1,4 @@
+// These are important and needed before anything else
 import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
 
@@ -38,6 +39,7 @@ app.engine('html', (_, options, callback) => {
     callback(null, html);
   });
 });
+
 app.set('view engine', 'html');
 app.set('views', join(DIST_FOLDER, 'browser'));
 
