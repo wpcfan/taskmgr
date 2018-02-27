@@ -6,7 +6,7 @@ import {User} from '../../domain';
 @Component({
   selector: 'app-invite',
   template: `
-    <h2 matDialogTitle>{{dialogTitle}}</h2>
+    <h2 matDialogTitle>{{ dialogTitle }}</h2>
     <form class="full-width" #f="ngForm" (ngSubmit)="onSubmit($event, f)">
       <app-chips-list [label]="'邀请成员'" name="members" [(ngModel)]="members">
       </app-chips-list>

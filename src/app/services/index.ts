@@ -21,7 +21,7 @@ export {
   TaskHistoryService,
   UserService,
   MyCalService,
-}
+};
 
 @NgModule()
 export class ServicesModule {

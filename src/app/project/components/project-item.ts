@@ -17,13 +17,13 @@ import {Project} from '../../domain';
       <mat-card-header>
         <mat-card-title>
           <span>
-            {{item.name}}
+            {{ item.name }}
           </span>
         </mat-card-title>
       </mat-card-header>
       <img matCardImage [src]="item.coverImg">
       <mat-card-content>
-        <p>{{item.desc}}</p>
+        <p>{{ item.desc }}</p>
       </mat-card-content>
       <mat-card-actions>
         <button mat-button (click)="openUpdateDialog($event)">

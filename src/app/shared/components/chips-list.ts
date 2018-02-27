@@ -4,15 +4,16 @@ import {MatAutocomplete} from '@angular/material';
 import {Observable} from 'rxjs/Observable';
 import {UserService} from '../../services';
 import {User} from '../../domain';
+import { startWith, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chips-list',
   template: `
     <div [formGroup]="chips" class="full-width">
-      <span>{{label}}</span>
+      <span>{{ label }}</span>
       <mat-chip-list>
         <mat-chip color="primary" selected="true" *ngFor="let member of items">
-          {{member.name}} <span (click)="removeMember(member)" class="remove-tag">x</span>
+          {{ member.name }} <span (click)="removeMember(member)" class="remove-tag">x</span>
         </mat-chip>
       </mat-chip-list>
       <mat-form-field *ngIf="displayInput" class="full-width">
@@ -24,7 +25,7 @@ import {User} from '../../domain';
         *ngFor="let item of memberResults$ | async"
         [value]="item"
         (onSelectionChange)="handleMemberSelection(item)">
-        {{item.name}}
+        {{ item.name }}
       </mat-option>
     </mat-autocomplete>
   `,
@@ -136,11 +137,14 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   }
 
   searchUsers(obs: Observable<string>): Observable<User[]> {
-    return obs.startWith('')
-      .debounceTime(300)
-      .distinctUntilChanged()
-      .filter((s: string) => (s !== null || s !== undefined) && s.length > 1)
-      .switchMap(str => this.service.searchUsers(str));
+    return obs
+      .pipe(
+        startWith(''),
+        debounceTime(300),
+        distinctUntilChanged(),
+        filter((s: string) => (s !== null || s !== undefined) && s.length > 1),
+        switchMap(str => this.service.searchUsers(str))
+      );
   }
 
   get displayInput() {

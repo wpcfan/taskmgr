@@ -7,7 +7,7 @@ import {Observable} from 'rxjs/Observable';
   selector: 'app-new-project',
   template: `
     <form fxLayout="column" class="form" [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
-      <h3 matDialogTitle>{{dialogTitle}}</h3>
+      <h3 matDialogTitle>{{ dialogTitle }}</h3>
       <div matDialogContent>
         <mat-form-field class="full-width">
           <input matInput placeholder="项目名称" formControlName="name">

@@ -6,7 +6,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
   selector: 'app-new-task-list',
   template: `
     <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
-      <h3 matDialogTitle>{{dialogTitle}}</h3>
+      <h3 matDialogTitle>{{ dialogTitle }}</h3>
       <div matDialogContent>
         <mat-form-field class="full-width">
           <input matInput placeholder="列表名称" formControlName="name">

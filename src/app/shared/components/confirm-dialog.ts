@@ -10,10 +10,10 @@ export interface ConfirmDialog {
 @Component({
   selector: 'app-confirm-dialog',
   template: `
-    <h1 matDialogTitle>{{dialog.title}}</h1>
-    <div matDialogContent>{{dialog.content}}</div>
+    <h1 matDialogTitle>{{ dialog.title }}</h1>
+    <div matDialogContent>{{ dialog.content }}</div>
     <div matDialogActions>
-      <button mat-raised-button color="primary" (click)="handleAction(true)">{{dialog.confirmAction}}</button>
+      <button mat-raised-button color="primary" (click)="handleAction(true)">{{ dialog.confirmAction }}</button>
       <button mat-raised-button matDialogClose type="button" (click)="handleAction(false)">关闭</button>
     </div>
   `,

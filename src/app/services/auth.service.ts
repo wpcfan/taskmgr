@@ -1,7 +1,9 @@
-import {Inject, Injectable} from '@angular/core';
-import {HttpHeaders, HttpClient, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import {Auth, User} from '../domain';
+import { Inject, Injectable } from '@angular/core';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { Auth, User } from '../domain';
+import { map, switchMap } from 'rxjs/operators';
+import { _throw } from 'rxjs/observable/throw';
 
 /**
  * 认证服务主要用于用户的注册和登录功能
@@ -23,7 +25,7 @@ export class AuthService {
    * @param config 注入基础配置
    */
   constructor(private http: HttpClient,
-              @Inject('BASE_CONFIG') private config: {uri: string}) {
+    @Inject('BASE_CONFIG') private config: { uri: string }) {
   }
 
   /**
@@ -35,15 +37,18 @@ export class AuthService {
     const params = new HttpParams()
       .set('email', user.email);
     const uri = `${this.config.uri}/users`;
-    return this.http
-      .get(uri, {params})
-      .switchMap(res => {
-        if ((<User[]>res).length > 0) {
-          return Observable.throw('username existed');
-        }
-        return this.http.post(uri, JSON.stringify(user), {headers: this.headers})
-          .map(r => ({token: this.token, user: <User>r}));
-      });
+    return this.http.get(uri, { params })
+      .pipe(
+        switchMap(res => {
+          if ((<User[]>res).length > 0) {
+            return _throw('username existed');
+          }
+          return this.http.post(uri, JSON.stringify(user), { headers: this.headers })
+            .pipe(
+              map(r => ({ token: this.token, user: <User>r }))
+            );
+        })
+      );
   }
 
   /**
@@ -57,17 +62,18 @@ export class AuthService {
     const params = new HttpParams()
       .set('email', email)
       .set('password', password);
-    return this.http
-      .get(uri, {params})
-      .map(res => {
-        const users = <User[]>res;
-        if (users.length === 0) {
-          throw(new Error('Username or password incorrect'));
-        }
-        return {
-          token: this.token,
-          user: users[0]
-        };
-      });
+    return this.http.get(uri, { params })
+      .pipe(
+        map(res => {
+          const users = <User[]>res;
+          if (users.length === 0) {
+            throw (new Error('Username or password incorrect'));
+          }
+          return {
+            token: this.token,
+            user: users[0]
+          };
+        })
+      );
   }
 }

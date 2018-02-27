@@ -94,7 +94,7 @@ export function storeStateGuard(reducer: ActionReducer<State>): ActionReducer<St
     }
 
     return reducer(state, action);
-  }
+  };
 }
 
 export const metaReducers: MetaReducer<State>[] = !environment.production
@@ -117,8 +117,8 @@ export const getTasksState = createFeatureSelector<fromTasks.State>('tasks');
 export const getTaskHistoriesState = createFeatureSelector<fromTaskHistory.State>('taskHistories');
 
 export const getTasks = createSelector(getTasksState, fromTasks.getTasks);
-export const getSelectedTask = createSelector<State, fromTaskHistory.State, TaskVM | null>(getTaskHistoriesState, fromTaskHistory.getSelectedTask);
-export const getUpdatedTask = createSelector<State, fromTaskHistory.State, TaskVM | null>(getTaskHistoriesState, fromTaskHistory.getUpdatedTask);
+export const getSelectedTask = createSelector(getTaskHistoriesState, fromTaskHistory.getSelectedTask);
+export const getUpdatedTask = createSelector(getTaskHistoriesState, fromTaskHistory.getUpdatedTask);
 
 export const {
   selectIds: getProjectIds,
@@ -159,11 +159,11 @@ const getTasksWithOwner = createSelector(getTasks, getUserEntities, (tasks, enti
     }
   )));
 
-export const getProjectTaskList = createSelector<State, string | null, TaskList[], TaskList[]>(getSelectedProjectId, getTaskLists, (projectId, taskLists) => {
+export const getProjectTaskList = createSelector(getSelectedProjectId, getTaskLists, (projectId, taskLists) => {
   return taskLists.filter(taskList => taskList.projectId === projectId);
 });
 
-export const getTasksByList = createSelector<State, TaskList[], TaskVM[], TaskListVM[]>(getProjectTaskList, getTasksWithOwner, (lists, tasks) => {
+export const getTasksByList = createSelector(getProjectTaskList, getTasksWithOwner, (lists, tasks) => {
   return lists.map(list => (
     <TaskListVM>{
       ...list,
@@ -172,14 +172,18 @@ export const getTasksByList = createSelector<State, TaskList[], TaskVM[], TaskLi
   ));
 });
 
-export const getTaskByFilter = createSelector<State, TaskListVM[], TaskFilterVM, TaskListVM[]>(getTasksByList, getTaskFilterVMState, (taskLists, filterVM) => {
+export const getTaskByFilter = createSelector(getTasksByList, getTaskFilterVMState, (taskLists, filterVM) => {
   return taskLists.map(taskList => {
     return { ...taskList, tasks: getTasksByFilterVM(taskList.tasks, filterVM) };
   });
-})
+});
 
-export const getProjectMembers = (projectId: string) => createSelector<State, fromProjects.State, { [id: string]: User }, User[]>(getProjectsState, getUserEntities, (state, entities) => {
-  return state!.entities[projectId]!.members!.map((id: string) => entities[id]);
+export const getProjectMembers = (projectId: string) => createSelector(getProjectsState, getUserEntities, (state, entities) => {
+  const prj = state.entities[projectId];
+  if (!prj || !prj.members) {
+    return [];
+  }
+  return prj.members.map((id: string) => entities[id]);
 });
 export const getAuth = createSelector(getAuthState, getUserEntities, (_auth, _entities) => {
   return { ..._auth, user: _entities[<string>_auth.userId] };
@@ -189,7 +193,7 @@ export const getAuthUser = createSelector(getAuthState, getUserEntities, (_auth,
 });
 
 export const getUserTasks = createSelector(getAuthUser, getTasks, (user, tasks) => {
-  return tasks.filter(task => task.ownerId === user.id)
+  return tasks.filter(task => task.ownerId === user.id);
 });
 
 @NgModule({

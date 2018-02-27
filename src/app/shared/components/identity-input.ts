@@ -6,6 +6,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {Identity, IdentityType} from '../../domain';
 import {isValidAddr, extractInfo} from '../../utils/identity.util';
 import {isValidDate} from '../../utils/date.util';
+import { combineLatest } from 'rxjs/observable/combineLatest';
 
 @Component({
   selector: 'app-indentity-input',
@@ -14,7 +15,7 @@ import {isValidDate} from '../../utils/date.util';
       <mat-form-field>
         <mat-select placeholder="证件类型" (change)="onIdTypeChange($event.value)" [(ngModel)]="identity.identityType">
           <mat-option *ngFor="let type of identityTypes" [value]="type.value" >
-            {{type.label}}
+            {{ type.label }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -72,7 +73,7 @@ export class IdentityInputComponent implements ControlValueAccessor, OnInit, OnD
   ngOnInit() {
     const idType$ = this.idType;
     const idNo$ = this.idNo;
-    const val$ = Observable.combineLatest(idType$, idNo$, (_type, _no) => {
+    const val$ = combineLatest(idType$, idNo$, (_type, _no) => {
       return {
         identityType: _type,
         identityNo: _no

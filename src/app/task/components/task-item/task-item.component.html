@@ -17,10 +17,10 @@
     (change)="checkboxChanged()">
   </mat-checkbox>
   <div matLine [matTooltip]="item.desc" class="content" [ngClass]="{'completed': item.completed}">
-    {{item.desc}}
+    {{ item.desc }}
   </div>
   <div matLine class="bottom-bar">
-    <span class="duedate" *ngIf="item.dueDate">{{item.dueDate | date:"yy-MM-dd"}}</span>
+    <span class="duedate" *ngIf="item.dueDate">{{ item.dueDate | date:"yy-MM-dd" }}</span>
     <mat-icon *ngIf="item.reminder" class="alarm">alarm</mat-icon>
   </div>
   <mat-icon matListAvatar class="avatar" [svgIcon]="avatar"></mat-icon>

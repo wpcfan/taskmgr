@@ -1,5 +1,5 @@
 <div>
-  <span>{{title}}</span>
+  <span>{{ title }}</span>
   <mat-icon class="avatar" [svgIcon]="selected" *ngIf="useSvgIcon else imgSelected"></mat-icon>
   <ng-template #imgSelected>
     <img class="cover" [src]="selected">

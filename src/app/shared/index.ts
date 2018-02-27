@@ -84,4 +84,4 @@ const EXPORT_COMPONENTS = [
 export class SharedModule {
 }
 
-export {ConfirmDialogComponent}
+export {ConfirmDialogComponent};

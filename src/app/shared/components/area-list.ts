@@ -1,10 +1,12 @@
-import {Component, OnInit, ChangeDetectionStrategy, forwardRef, OnDestroy} from '@angular/core';
-import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {getProvinces, getCitiesByProvince, getAreasByCity} from '../../utils/area.util';
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
-import {Subscription} from 'rxjs/Subscription';
-import {Address} from '../../domain';
+import { Component, OnInit, ChangeDetectionStrategy, forwardRef, OnDestroy } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { getProvinces, getCitiesByProvince, getAreasByCity } from '../../utils/area.util';
+import { Observable } from 'rxjs/Observable';
+import { startWith, map } from 'rxjs/operators';
+import { combineLatest } from 'rxjs/observable/combineLatest';
+import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
+import { Address } from '../../domain';
 
 @Component({
   selector: 'app-area-list',
@@ -95,17 +97,17 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
   provinces = getProvinces();
 
   private _sub: Subscription;
-  private propagateChange = (_: any) => {};
+  private propagateChange = (_: any) => { };
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
 
-    const province$ = this._province.asObservable().startWith('');
-    const city$ = this._city.asObservable().startWith('');
-    const district$ = this._district.asObservable().startWith('');
-    const street$ = this._street.asObservable().startWith('');
-    const val$ = Observable.combineLatest([province$, city$, district$, street$], (_p: string, _c: string, _d: string, _s: string) => {
+    const province$ = this._province.asObservable().pipe(startWith(''));
+    const city$ = this._city.asObservable().pipe(startWith(''));
+    const district$ = this._district.asObservable().pipe(startWith(''));
+    const street$ = this._street.asObservable().pipe(startWith(''));
+    const val$ = combineLatest([province$, city$, district$, street$], (_p: string, _c: string, _d: string, _s: string) => {
       return {
         province: _p,
         city: _c,
@@ -118,10 +120,9 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
     });
 
     // 根据省份的选择得到城市列表
-    this.cities$ = province$.map(province => getCitiesByProvince(province));
+    this.cities$ = province$.pipe(map(province => getCitiesByProvince(province)));
     // 根据省份和城市的选择得到地区列表
-    this.districts$ = Observable
-      .combineLatest(province$, city$, (p, c) => getAreasByCity(p, c));
+    this.districts$ = combineLatest(province$, city$, (p, c) => getAreasByCity(p, c));
 
   }
 
@@ -132,7 +133,7 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
   }
 
   // 验证表单，验证结果正确返回 null 否则返回一个验证结果对象
-  validate(c: FormControl): {[key: string]: any} | null {
+  validate(c: FormControl): { [key: string]: any } | null {
     const val = c.value;
     if (!val) {
       return null;

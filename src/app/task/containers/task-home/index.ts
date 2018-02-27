@@ -2,11 +2,8 @@ import { Component, HostBinding, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
-import * as fromRoot from '../../../reducers';
-import * as listActions from '../../../actions/task-list.action';
-import * as taskActions from '../../../actions/task.action';
-import * as TaskHistoryActions from '../../../actions/task-history.action';
+import { Store, select } from '@ngrx/store';
+import { map, take, filter, withLatestFrom, switchMap } from 'rxjs/operators';
 import { Task, TaskList } from '../../../domain';
 import { NewTaskListComponent } from '../../components/new-task-list';
 import { NewTaskComponent } from '../../components/new-task';
@@ -14,6 +11,10 @@ import { CopyTaskComponent } from '../../components/copy-task';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog';
 import { defaultRouteAnim, listAnimation } from '../../../anim';
 import { TaskListVM, TaskVM } from '../../../vm';
+import * as fromRoot from '../../../reducers';
+import * as listActions from '../../../actions/task-list.action';
+import * as taskActions from '../../../actions/task.action';
+import * as TaskHistoryActions from '../../../actions/task-history.action';
 
 @Component({
   selector: 'app-task-home',
@@ -30,38 +31,49 @@ export class TaskHomeComponent {
   constructor(private route: ActivatedRoute,
     private dialog: MatDialog,
     private store$: Store<fromRoot.State>) {
-    this.projectId$ = this.route.paramMap.map(p => <string>p.get('id'));
-    this.lists$ = this.store$.select(fromRoot.getTaskByFilter);
+    this.projectId$ = this.route.paramMap.pipe(map(p => <string>p.get('id')));
+    this.lists$ = this.store$.pipe(select(fromRoot.getTaskByFilter));
   }
 
   handleRenameList(list: TaskList) {
     const dialogRef = this.dialog.open(NewTaskListComponent, { data: { name: list.name } });
-    dialogRef.afterClosed().take(1).filter(n => n).subscribe(name => {
-      this.store$.dispatch(new listActions.UpdateTaskListAction({ ...list, name: name }));
-    });
+    dialogRef.afterClosed()
+      .pipe(
+        take(1),
+        filter(n => n)
+      ).subscribe(name => {
+        this.store$.dispatch(new listActions.UpdateTaskListAction({ ...list, name: name }));
+      });
   }
 
   handleNewTaskList(ev: Event) {
     ev.preventDefault();
     const dialogRef = this.dialog.open(NewTaskListComponent, { data: {} });
     dialogRef.afterClosed()
-      .take(1)
-      .filter(n => n)
-      .withLatestFrom(this.store$.select(fromRoot.getTaskListTotal), (_n, _o) => ({ name: _n, order: _o }))
-      .withLatestFrom(this.projectId$, (val, projectId) => ({ ...val, projectId: projectId }))
+      .pipe(
+        take(1),
+        filter(n => n),
+        withLatestFrom(this.store$.select(fromRoot.getTaskListTotal), (_n, _o) => ({ name: _n, order: _o })),
+        withLatestFrom(this.projectId$, (val, projectId) => ({ ...val, projectId: projectId }))
+      )
       .subscribe(({ name, order, projectId }) => {
         this.store$.dispatch(new listActions.AddTaskListAction({ id: undefined, name: name, order: order + 1, projectId: projectId }));
       });
   }
 
   handleMoveList(listId: string) {
-    const list$ = this.store$
-      .select(fromRoot.getProjectTaskList)
-      .map(lists => lists.filter((list: TaskList) => list.id !== listId));
+    const list$ = this.store$.pipe(
+      select(fromRoot.getProjectTaskList),
+      map(lists => lists.filter((list: TaskList) => list.id !== listId))
+    );
     const dialogRef = this.dialog.open(CopyTaskComponent, { data: { srcListId: listId, lists: list$ } });
-    dialogRef.afterClosed().take(1).filter(n => n).subscribe(val => {
-      this.store$.dispatch(new taskActions.MoveAllAction(val));
-    });
+    dialogRef.afterClosed()
+      .pipe(
+        take(1),
+        filter(n => n)
+      ).subscribe(val => {
+        this.store$.dispatch(new taskActions.MoveAllAction(val));
+      });
   }
 
   handleDelList(list: TaskList) {
@@ -73,11 +85,15 @@ export class TaskHomeComponent {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, { data: { dialog: confirm } });
 
     // 使用 take(1) 来自动销毁订阅，因为 take(1) 意味着接收到 1 个数据后就完成了
-    dialogRef.afterClosed().take(1).subscribe(val => {
-      if (val) {
-        this.store$.dispatch(new listActions.DeleteTaskListAction(list));
-      }
-    });
+    dialogRef.afterClosed()
+      .pipe(
+        take(1)
+      )
+      .subscribe(val => {
+        if (val) {
+          this.store$.dispatch(new listActions.DeleteTaskListAction(list));
+        }
+      });
   }
 
   handleCompleteTask(task: Task) {
@@ -100,11 +116,17 @@ export class TaskHomeComponent {
   }
 
   handleAddTask(listId: string) {
-    const user$ = this.store$.select(fromRoot.getAuthUser);
+    const user$ = this.store$.pipe(select(fromRoot.getAuthUser));
     user$
-      .take(1)
-      .map(user => this.dialog.open(NewTaskComponent, { data: { owner: user } }))
-      .switchMap(dialogRef => dialogRef.afterClosed().take(1).filter(n => n))
+      .pipe(
+        take(1),
+        map(user => this.dialog.open(NewTaskComponent, { data: { owner: user } })),
+        switchMap(dialogRef => dialogRef.afterClosed()
+          .pipe(
+            take(1),
+            filter(n => n)
+          ))
+      )
       .subscribe(val => {
         this.store$.dispatch(new taskActions.AddTaskAction({
           ...val.task,
@@ -120,8 +142,10 @@ export class TaskHomeComponent {
 
     const dialogRef = this.dialog.open(NewTaskComponent, { data: { task: task } });
     dialogRef.afterClosed()
-      .take(1)
-      .filter(n => n)
+      .pipe(
+        take(1),
+        filter(n => n)
+      )
       .subscribe((val) => {
         if (val.type !== 'delete') {
           this.store$.dispatch(new taskActions.UpdateTaskAction({ ...task, ...val.task }));
@@ -132,8 +156,8 @@ export class TaskHomeComponent {
   }
 
   handleQuickTask(desc: string, listId: string) {
-    const user$ = this.store$.select(fromRoot.getAuthUser);
-    user$.take(1).subscribe(user => {
+    const user$ = this.store$.pipe(select(fromRoot.getAuthUser));
+    user$.pipe(take(1)).subscribe(user => {
       this.store$.dispatch(new taskActions.AddTaskAction({
         id: undefined,
         desc: desc,
@@ -144,6 +168,6 @@ export class TaskHomeComponent {
         completed: false,
         createDate: new Date()
       }));
-    })
+    });
   }
 }

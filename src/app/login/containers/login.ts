@@ -1,6 +1,6 @@
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Store} from '@ngrx/store';
+import {Store, select} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
 import {Quote} from '../../domain';
 import * as fromRoot from '../../reducers';
@@ -35,12 +35,12 @@ import * as actions from '../../actions/quote.action';
       <mat-card-header>
         <mat-card-title> 佳句</mat-card-title>
         <mat-card-subtitle>
-          {{(quote$ | async)?.cn}}
+          {{ (quote$ | async)?.cn }}
         </mat-card-subtitle>
       </mat-card-header>
       <img matCardImage [src]="(quote$ | async)?.pic">
       <mat-card-content>
-        <p> {{(quote$ | async)?.en}}</p>
+        <p> {{ (quote$ | async)?.en }}</p>
       </mat-card-content>
     </mat-card>
   </form>
@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private store$: Store<fromRoot.State>) {
-    this.quote$ = this.store$.select(fromRoot.getQuoteState);
+    this.quote$ = this.store$.pipe(select(fromRoot.getQuoteState));
   }
 
   ngOnInit() {

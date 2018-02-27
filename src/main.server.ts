@@ -1,4 +1,3 @@
-import './rxjs.imports';
 import { environment } from './environments/environment';
 import { enableProdMode } from '@angular/core';
 

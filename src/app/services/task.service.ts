@@ -1,7 +1,9 @@
-import {Inject, Injectable} from '@angular/core';
-import {HttpHeaders, HttpClient, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import {Task, User, TaskList} from '../domain';
+import { Inject, Injectable } from '@angular/core';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { from } from 'rxjs/observable/from';
+import { mergeMap, reduce, mapTo } from 'rxjs/operators';
+import { Task, User, TaskList } from '../domain';
 
 @Injectable()
 export class TaskService {
@@ -9,8 +11,8 @@ export class TaskService {
   private headers = new HttpHeaders()
     .set('Content-Type', 'application/json');
 
-  constructor(@Inject('BASE_CONFIG') private config: {uri: string},
-              private http: HttpClient) {
+  constructor(@Inject('BASE_CONFIG') private config: { uri: string },
+    private http: HttpClient) {
   }
 
   add(task: Task): Observable<Task> {
@@ -29,7 +31,7 @@ export class TaskService {
     };
     // const addTaskRef$ = this.addTaskRef()
     return this.http
-      .post<Task>(uri, JSON.stringify(toAdd), {headers: this.headers});
+      .post<Task>(uri, JSON.stringify(toAdd), { headers: this.headers });
 
   }
 
@@ -45,14 +47,15 @@ export class TaskService {
       remark: task.remark
     };
     return this.http
-      .patch<Task>(uri, JSON.stringify(toUpdate), {headers: this.headers});
+      .patch<Task>(uri, JSON.stringify(toUpdate), { headers: this.headers });
   }
 
   del(task: Task): Observable<Task> {
     const uri = `${this.config.uri}/${this.domain}/${task.id}`;
-    return this.http
-      .delete(uri)
-      .mapTo(task);
+    return this.http.delete(uri)
+      .pipe(
+        mapTo(task)
+      );
   }
 
   // GET /tasklist
@@ -61,41 +64,45 @@ export class TaskService {
     const params = new HttpParams()
       .set('taskListId', taskListId);
     return this.http
-      .get<Task[]>(uri, {params});
+      .get<Task[]>(uri, { params });
   }
 
   getByLists(lists: TaskList[]): Observable<Task[]> {
-    return Observable.from(lists)
-      .mergeMap((list: TaskList) => this.get(<string>list.id))
-      .reduce((tasks: Task[], t: Task[]) => [...tasks, ...t], []);
+    return from(lists)
+      .pipe(
+        mergeMap((list: TaskList) => this.get(<string>list.id)),
+        reduce((tasks: Task[], t: Task[]) => [...tasks, ...t], [])
+      );
   }
 
   moveAll(srcListId: string, targetListId: string): Observable<Task[]> {
     return this.get(srcListId)
-      .mergeMap((tasks: Task[]) => Observable.from(tasks))
-      .mergeMap((task: Task) => this.move(<string>task.id, targetListId))
-      .reduce((arrTasks: Task[], t: Task) => {
-        return [...arrTasks, t];
-      }, []);
+      .pipe(
+        mergeMap((tasks: Task[]) => from(tasks)),
+        mergeMap((task: Task) => this.move(<string>task.id, targetListId)),
+        reduce((arrTasks: Task[], t: Task) => {
+          return [...arrTasks, t];
+        }, [])
+      );
   }
 
   move(taskId: string, taskListId: string): Observable<Task> {
     const uri = `${this.config.uri}/${this.domain}/${taskId}`;
     return this.http
-      .patch<Task>(uri, JSON.stringify({taskListId: taskListId}), {headers: this.headers});
+      .patch<Task>(uri, JSON.stringify({ taskListId: taskListId }), { headers: this.headers });
   }
 
   complete(task: Task): Observable<Task> {
     const uri = `${this.config.uri}/${this.domain}/${task.id}`;
     return this.http
-      .patch<Task>(uri, JSON.stringify({completed: !task.completed}), {headers: this.headers});
+      .patch<Task>(uri, JSON.stringify({ completed: !task.completed }), { headers: this.headers });
   }
 
   addTaskRef(user: User, taskId: string): Observable<User> {
     const uri = `${this.config.uri}/users/${user.id}`;
     const taskIds = (user.taskIds) ? user.taskIds : [];
     return this.http
-      .patch<User>(uri, JSON.stringify({taskIds: [...taskIds, taskId]}), {headers: this.headers});
+      .patch<User>(uri, JSON.stringify({ taskIds: [...taskIds, taskId] }), { headers: this.headers });
   }
 
   removeTaskRef(user: User, taskId: string): Observable<User> {
@@ -103,6 +110,6 @@ export class TaskService {
     const taskIds = (user.taskIds) ? user.taskIds : [];
     const index = taskIds.indexOf(taskId);
     return this.http
-      .patch<User>(uri, JSON.stringify({taskIds: [...taskIds.slice(0, index), taskIds.slice(index + 1)]}), {headers: this.headers});
+      .patch<User>(uri, JSON.stringify({ taskIds: [...taskIds.slice(0, index), taskIds.slice(index + 1)] }), { headers: this.headers });
   }
 }

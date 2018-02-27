@@ -22,6 +22,9 @@ import {
 import {Observable} from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { convertToDate, isValidDate } from '../../utils/date.util';
+import { map, distinctUntilChanged, filter, debounceTime, startWith } from 'rxjs/operators';
+import { combineLatest } from 'rxjs/observable/combineLatest';
+import { merge } from 'rxjs/observable/merge';
 export enum AgeUnit {
   Year = 0,
   Month,
@@ -119,45 +122,65 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       }, {validator: this.validateAge('ageNum', 'ageUnit')})
     });
     const birthday = this.form.get('birthday');
-    const ageNum = this.form.get('age')!.get('ageNum');
-    const ageUnit = this.form.get('age')!.get('ageUnit');
+    if (!birthday) {
+      return;
+    }
+    const age = this.form.get('age');
+    if (!age) {
+      return;
+    }
+    const ageNum = this.form.get('age.ageNum');
+    if (!ageNum) {
+      return;
+    }
+    const ageUnit = this.form.get('age.ageUnit');
+    if (!ageUnit) {
+      return;
+    }
 
-    const birthday$ = birthday!.valueChanges
-      .map(d => ({date: d, from: 'birthday'}))
-      .debounceTime(this.debounceTime)
-      .distinctUntilChanged()
-      .filter(date => birthday!.valid);
-    const ageNum$ = ageNum!.valueChanges
-      .startWith(ageNum!.value)
-      .debounceTime(this.debounceTime)
-      .distinctUntilChanged();
-    const ageUnit$ = ageUnit!.valueChanges
-      .startWith(ageUnit!.value)
-      .debounceTime(this.debounceTime)
-      .distinctUntilChanged();
-    const age$ = Observable
-      .combineLatest(ageNum$, ageUnit$, (_num, _unit) => this.toDate({age: _num, unit: _unit}))
-      .map(d => ({date: d, from: 'age'}))
-      .filter(_ => this.form.get('age')!.valid);
-    const merged$ = Observable
-      .merge(birthday$, age$)
-      .filter(_ => this.form.valid)
-      .debug('[Age-Input][Merged]:');
+    const birthday$ = birthday.valueChanges
+      .pipe(
+        map(d => ({date: d, from: 'birthday'})),
+        debounceTime(this.debounceTime),
+        distinctUntilChanged(),
+        filter(date => birthday.valid)
+      );
+    const ageNum$ = ageNum.valueChanges
+      .pipe(
+        startWith(ageNum.value),
+        debounceTime(this.debounceTime),
+        distinctUntilChanged()
+      );
+    const ageUnit$ = ageUnit.valueChanges
+      .pipe(
+        startWith(ageUnit.value),
+        debounceTime(this.debounceTime),
+        distinctUntilChanged()
+      );
+    const age$ = combineLatest(ageNum$, ageUnit$, (_num, _unit) => this.toDate({age: _num, unit: _unit}))
+      .pipe(
+        map(d => ({date: d, from: 'age'})),
+        filter(_ => age.valid)
+      );
+    const merged$ = merge(birthday$, age$)
+      .pipe(
+        filter(_ => this.form.valid)
+      );
     this.subBirth = merged$.subscribe(date => {
-      const age = this.toAge(date.date);
+      const aged = this.toAge(date.date);
       if (date.from === 'birthday') {
-        if (age.age === ageNum!.value && age.unit === ageUnit!.value) {
+        if (aged.age === ageNum.value && aged.unit === ageUnit.value) {
           return;
         }
-        ageUnit!.patchValue(age.unit, {emitEvent: false, emitModelToViewChange: true, emitViewToModelChange: true});
-        ageNum!.patchValue(age.age, {emitEvent: false});
-        this.selectedUnit = age.unit;
+        ageUnit.patchValue(aged.unit, {emitEvent: false, emitModelToViewChange: true, emitViewToModelChange: true});
+        ageNum.patchValue(aged.age, {emitEvent: false});
+        this.selectedUnit = aged.unit;
         this.propagateChange(date.date);
 
       } else {
-        const ageToCompare = this.toAge(birthday!.value);
-        if (age.age !== ageToCompare.age || age.unit !== ageToCompare.unit) {
-          birthday!.patchValue(parse(date.date), {emitEvent: false});
+        const ageToCompare = this.toAge(birthday.value);
+        if (aged.age !== ageToCompare.age || aged.unit !== ageToCompare.unit) {
+          birthday.patchValue(parse(date.date), {emitEvent: false});
           this.propagateChange(date.date);
         }
       }
@@ -174,7 +197,11 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   public writeValue(obj: Date) {
     if (obj) {
       const date = parse(convertToDate(obj));
-      this.form.get('birthday')!.patchValue(date, {emitEvent: true});
+      const birthday = this.form.get('birthday');
+      if (!birthday) {
+        return;
+      }
+      birthday.patchValue(date, {emitEvent: true});
     }
   }
 
@@ -206,7 +233,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     const val = c.value;
     return isValidDate(val) ? null : {
       birthdayInvalid: true
-    }
+    };
   }
 
   validateAge(ageNumKey: string, ageUnitKey: string) {
@@ -218,15 +245,15 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
 
       switch (ageUnit.value) {
         case AgeUnit.Year: {
-          result = ageNumVal >= this.yearsBottom && ageNumVal <= this.yearsTop
+          result = ageNumVal >= this.yearsBottom && ageNumVal <= this.yearsTop;
           break;
         }
         case AgeUnit.Month: {
-          result = ageNumVal >= this.monthsBottom && ageNumVal <= this.monthsTop
+          result = ageNumVal >= this.monthsBottom && ageNumVal <= this.monthsTop;
           break;
         }
         case AgeUnit.Day: {
-          result = ageNumVal >= this.daysBottom && ageNumVal <= this.daysTop
+          result = ageNumVal >= this.daysBottom && ageNumVal <= this.daysTop;
           break;
         }
         default: {

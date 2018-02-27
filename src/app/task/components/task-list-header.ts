@@ -5,7 +5,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@
   template: `
     <div matSubheader class="header-container" fxLayout="row" fxLayoutAlign="center center">
       <div>
-        <h4>{{header}}</h4>
+        <h4>{{ header }}</h4>
       </div>
       <div class="fill" fxFlex>
         <button mat-button (click)="addNewTask($event)">

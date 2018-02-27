@@ -8,7 +8,7 @@ export class TaskFilterService {
   private readonly domain: string = 'taskFilter';
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  constructor( @Inject('BASE_CONFIG') private config: { uri: string }, private http: HttpClient) {
+  constructor(@Inject('BASE_CONFIG') private config: { uri: string }, private http: HttpClient) {
   }
 
   addTaskFilter(filter: TaskFilter): Observable<TaskFilter> {
@@ -24,6 +24,6 @@ export class TaskFilterService {
   updateTaskFilter(filter: TaskFilter): Observable<TaskFilter> {
     const uri = `${this.config.uri}/${this.domain}/${filter.id}`;
     return this.http
-    .patch<TaskFilter>(uri, JSON.stringify(filter), {headers: this.headers});
+      .patch<TaskFilter>(uri, JSON.stringify(filter), { headers: this.headers });
   }
 }

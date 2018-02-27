@@ -1,8 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import * as _ from 'lodash';
 import { Project, User } from '../domain';
+import * as _ from 'lodash';
+import { from } from 'rxjs/observable/from';
+import { mergeMap, count, switchMap, map } from 'rxjs/operators';
 
 @Injectable()
 export class ProjectService {
@@ -37,14 +39,21 @@ export class ProjectService {
 
   // DELETE /projects instead of deleting the records
   del(project: Project): Observable<Project> {
-    const deltask$ = Observable.from(project.taskLists ? project.taskLists : [])
-      .mergeMap(listId => this.http
-        .delete(`${this.config.uri}/taskLists/${listId}`))
-      .count();
+    const deltask$ = from(project.taskLists ? project.taskLists : [])
+      .pipe(
+        mergeMap(listId => this.http
+          .delete(`${this.config.uri}/taskLists/${listId}`)),
+        count()
+      );
     const uri = `${this.config.uri}/${this.domain}/${project.id}`;
-    return deltask$.switchMap(p => this.http
-      .delete(uri)
-      .map(_ => project));
+    return deltask$
+      .pipe(
+        switchMap(p => this.http.delete(uri)
+          .pipe(
+            map(prj => project)
+          )
+        )
+      );
   }
 
   // GET /projects
@@ -77,13 +86,14 @@ export class ProjectService {
   inviteMembers(projectId: string, users: User[]) {
     const uri = `${this.config.uri}/${this.domain}/${projectId}`;
 
-    return this.http
-      .get(uri)
-      .switchMap((project: Project) => {
-        const existingMemberIds = project.members;
-        const invitedIds = users.map(user => user.id);
-        const newIds = _.union(existingMemberIds, invitedIds);
-        return this.http.patch(uri, JSON.stringify({ members: newIds }), { headers: this.headers });
-      });
+    return this.http.get(uri)
+      .pipe(
+        switchMap((project: Project) => {
+          const existingMemberIds = project.members;
+          const invitedIds = users.map(user => user.id);
+          const newIds = _.union(existingMemberIds, invitedIds);
+          return this.http.patch(uri, JSON.stringify({ members: newIds }), { headers: this.headers });
+        })
+      );
   }
 }

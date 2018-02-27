@@ -1,10 +1,11 @@
-import {provideMockActions} from '@ngrx/effects/testing';
-import {RouterTestingModule} from '@angular/router/testing';
-import {hot, cold} from 'jasmine-marbles';
-import {Observable} from 'rxjs/Observable';
-import {fakeAsync, TestBed} from '@angular/core/testing';
-import {AuthEffects} from './auth.effects';
-import {AuthService} from '../services/auth.service';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { hot, cold } from 'jasmine-marbles';
+import { of } from 'rxjs/observable/of';
+import { Observable } from 'rxjs/Observable';
+import { fakeAsync, TestBed } from '@angular/core/testing';
+import { AuthEffects } from './auth.effects';
+import { AuthService } from '../services/auth.service';
 import * as actions from '../actions/auth.action';
 
 describe('测试 AuthEffects', () => {
@@ -54,10 +55,10 @@ describe('测试 AuthEffects', () => {
           email: 'wang@163.com'
         }
       };
-      actions$ = hot('--a-', { a: new actions.LoginAction({email: 'wang@dev.local', password: '123abc'}) });
-      const {authEffects} = setup('login', {returnedAuth: Observable.of(auth)});
+      actions$ = hot('--a-', { a: new actions.LoginAction({ email: 'wang@dev.local', password: '123abc' }) });
+      const { authEffects } = setup('login', { returnedAuth: of(auth) });
 
-      const expectedResult = cold('--b', { b: new actions.LoginSuccessAction(auth)});
+      const expectedResult = cold('--b', { b: new actions.LoginSuccessAction(auth) });
       expect(effects.login$).toBeObservable(expectedResult);
     }));
   });

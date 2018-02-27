@@ -20,7 +20,7 @@
       "prefix": "app",
       "styles": [
         "styles.scss",
-        "../node_modules/angular-calendar/css/angular-calendar.css"
+        "../node_modules/angular-calendar/scss/angular-calendar.scss"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
@@ -47,7 +47,7 @@
       "prefix": "app",
       "styles": [
         "styles.scss",
-        "../node_modules/angular-calendar/dist/css/angular-calendar.css"
+        "../node_modules/angular-calendar/scss/angular-calendar.scss"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

@@ -28,6 +28,7 @@ import {
 import * as fromRoot from '../../../reducers';
 import * as TaskFilterActions from '../../../actions/task-filter.action';
 import * as TaskFilterVMActions from '../../../actions/task-filter-vm.action';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task-filter-nav',
@@ -66,8 +67,11 @@ export class TaskFilterNavComponent implements OnInit, OnDestroy {
       this.taskFilterVM = filterVM;
     });
 
-    this._descFilterSub = this.descFilter$.debounceTime(300)
-      .distinctUntilChanged()
+    this._descFilterSub = this.descFilter$
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
       .subscribe((desc: string) => {
         this.taskDesc = desc.trim();
         this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction({ ...this.taskFilterVM, desc: this.taskDesc }));
@@ -137,7 +141,9 @@ export class TaskFilterNavComponent implements OnInit, OnDestroy {
 
   onCreateDateItemClicked(ev: Event, createDate: TaskFilterItemVM) {
     ev.preventDefault();
-    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByCreateDate(this.taskFilterVM, createDate)));
+    this.store$.dispatch(
+      new TaskFilterVMActions.UpdateTaskFilterVMAction(
+        getUpdateTaskFilterVMByCreateDate(this.taskFilterVM, createDate)));
   }
 
   onStartCreateDateClicked(ev: Event) {
@@ -155,11 +161,15 @@ export class TaskFilterNavComponent implements OnInit, OnDestroy {
   }
 
   onStartCreateDateChanged(date: Date) {
-    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByCustomCreateDate(this.taskFilterVM, date, true)));
+    this.store$.dispatch(
+      new TaskFilterVMActions.UpdateTaskFilterVMAction(
+        getUpdateTaskFilterVMByCustomCreateDate(this.taskFilterVM, date, true)));
   }
 
   onEndCreateDateChanged(date: Date) {
-    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByCustomCreateDate(this.taskFilterVM, date, false)));
+    this.store$.dispatch(
+      new TaskFilterVMActions.UpdateTaskFilterVMAction(
+        getUpdateTaskFilterVMByCustomCreateDate(this.taskFilterVM, date, false)));
   }
 
   onPriorityItemClicked(ev: Event, priority: TaskFilterPriorityVM) {

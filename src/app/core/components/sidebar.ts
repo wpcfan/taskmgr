@@ -16,9 +16,9 @@ import {Project} from '../../domain';
         <mat-list-item *ngFor="let prj of projects" (click)="onPrjClicked($event, prj)">
           <mat-icon matListIcon svgIcon="project"></mat-icon>
           <a matLine>
-            {{prj.name}}
+            {{ prj.name }}
           </a>
-          <span matLine matSubheader> {{prj.desc}} </span>
+          <span matLine matSubheader> {{ prj.desc }} </span>
         </mat-list-item>
         <mat-divider></mat-divider>
         <h3 matSubheader>日历</h3>
@@ -73,6 +73,6 @@ export class SidebarComponent {
 
   onPrjClicked(ev: Event, prj: Project) {
     ev.preventDefault();
-    this.prjClicked.emit(prj)
+    this.prjClicked.emit(prj);
   }
 }

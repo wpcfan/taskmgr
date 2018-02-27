@@ -16,14 +16,14 @@ import * as TaskActions from '../../actions/task.action';
   selector: 'app-new-task',
   template: `
     <form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
-      <h2 matDialogTitle>{{dialogTitle}}</h2>
+      <h2 matDialogTitle>{{ dialogTitle }}</h2>
       <div matDialogContent>
         <mat-form-field class="full-width">
           <input matInput type="text" placeholder="任务内容" formControlName="desc">
         </mat-form-field>
         <mat-radio-group class="full-width" formControlName="priority">
           <mat-radio-button *ngFor="let priorityItem of priorities" [value]="priorityItem.value">
-            {{priorityItem.label}}
+            {{ priorityItem.label }}
           </mat-radio-button>
         </mat-radio-group>
         <div class="full-width">
@@ -187,6 +187,6 @@ export class NewTaskComponent implements OnInit, OnDestroy {
   }
 
   reallyDel() {
-    this.dialogRef.close({ type: 'delete', task: this.data.task })
+    this.dialogRef.close({ type: 'delete', task: this.data.task });
   }
 }

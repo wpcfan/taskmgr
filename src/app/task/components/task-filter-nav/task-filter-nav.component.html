@@ -7,7 +7,7 @@
     <div class="task-filter-nav-category-container">
       <div class="task-filter-nav-category-header task-filter-nav-category-header-highlight" [matMenuTriggerFor]="sortMenu">
         <mat-icon class="task-filter-nav-category-header-icon">sort</mat-icon>
-        <span class="task-filter-nav-category-header-title">{{getSortLabel()}}</span>
+        <span class="task-filter-nav-category-header-title">{{ getSortLabel() }}</span>
         <mat-icon class="task-filter-nav-category-header-end-icon">keyboard_arrow_down</mat-icon>
       </div>
     </div>
@@ -27,7 +27,7 @@
       <div class="task-filter-nav-category-header">执行者</div>
       <div class="task-filter-nav-category-item" *ngFor="let ownerVM of taskFilterVM.ownerVMs" (click)="onOwnerItemClicked($event, ownerVM)">
         <mat-icon class="task-filter-nav-category-item-avatar" [svgIcon]="getOwnerAvatar(ownerVM)"></mat-icon>
-        <span>{{getOwnerName(ownerVM)}}</span>
+        <span>{{ getOwnerName(ownerVM) }}</span>
         <mat-icon *ngIf="ownerVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
       </div>
       <div class="task-filter-nav-category-divider"></div>
@@ -35,7 +35,7 @@
     <div *ngIf="taskFilterVM.hasDueDate" class="task-filter-nav-category-container">
       <div class="task-filter-nav-category-header">截止时间</div>
       <div class="task-filter-nav-category-item" *ngFor="let dueDateVM of taskFilterVM.dueDateVMs" (click)="onDueDateItemClicked($event, dueDateVM)">
-        <span>{{dueDateVM.label}}</span>
+        <span>{{ dueDateVM.label }}</span>
         <mat-icon *ngIf="dueDateVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
       </div>
       <div class="task-filter-nav-category-divider"></div>
@@ -44,13 +44,13 @@
       <div class="task-filter-nav-category-header">创建时间</div>
       <div class="task-filter-nav-category-item-container" *ngFor="let createDateVM of taskFilterVM.createDateVMs" (click)="onCreateDateItemClicked($event, createDateVM)">
         <div class="task-filter-nav-category-item">
-          <span>{{createDateVM.label}}</span>
+          <span>{{ createDateVM.label }}</span>
           <mat-icon *ngIf="createDateVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
         </div>
         <div *ngIf="createDateVM.hasExtra && createDateVM.checked" class="task-filter-nav-category-extra-item">
-          <span (click)="onStartCreateDateClicked($event)">{{getStartCreateDateDesc()}}</span>
+          <span (click)="onStartCreateDateClicked($event)">{{ getStartCreateDateDesc() }}</span>
           <span>-</span>
-          <span (click)="onEndCreateDateClicked($event)">{{getEndCreateDateDesc()}}</span>
+          <span (click)="onEndCreateDateClicked($event)">{{ getEndCreateDateDesc() }}</span>
 
           <mat-form-field style="display: none;">
             <input matInput [matDatepicker]="startDatePicker" formControlName="startCreateDate">
@@ -67,7 +67,7 @@
     <div *ngIf="taskFilterVM.hasPriority" class="task-filter-nav-category-container">
       <div class="task-filter-nav-category-header">优先级</div>
       <div class="task-filter-nav-category-item" *ngFor="let priorityVM of taskFilterVM.priorityVMs" (click)="onPriorityItemClicked($event, priorityVM)">
-        <span>{{priorityVM.label}}</span>
+        <span>{{ priorityVM.label }}</span>
         <mat-icon *ngIf="priorityVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
       </div>
       <div class="task-filter-nav-category-divider"></div>
@@ -89,14 +89,14 @@
   <div class="task-filter-nav-category-divider"></div>
   <div class="task-filter-nav-menu-item task-filter-nav-edit-menu-width" *ngFor="let categoryVM of taskFilterVM.categoryVMs"
     (click)="onEditFilterItemClicked($event, categoryVM)">
-    <span class="task-filter-nav-menu-item-desc">{{categoryVM.label}}</span>
+    <span class="task-filter-nav-menu-item-desc">{{ categoryVM.label }}</span>
     <mat-icon *ngIf="categoryVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
   </div>
 </mat-menu>
 
 <mat-menu #sortMenu="matMenu" xPosition="after" yPosition="below" [overlapTrigger]="false">
   <div class="task-filter-nav-menu-item task-filter-nav-sort-menu-width" *ngFor="let sortVM of taskFilterVM.sortVMs" (click)="onSortItemClicked($event, sortVM)">
-    <span class="task-filter-nav-menu-item-desc">{{sortVM.label}}</span>
+    <span class="task-filter-nav-menu-item-desc">{{ sortVM.label }}</span>
     <mat-icon *ngIf="sortVM.checked" class="task-filter-nav-category-item-selected">check</mat-icon>
   </div>
   <div class="task-filter-nav-category-divider"></div>

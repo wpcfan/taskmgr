@@ -7,6 +7,8 @@ import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/auth.action';
 import {extractInfo, getAddrByCode, isValidAddr} from '../../utils/identity.util';
 import {isValidDate} from '../../utils/date.util';
+import { range } from 'rxjs/observable/range';
+import { map, reduce, debounceTime, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -90,10 +92,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
               private store$: Store<fromRoot.State>) {
 
-    this.avatars$ = Observable
-      .range(1, 16)
-      .map(i => `${this.avatarName}:svg-${i}`)
-      .reduce((r, x) => [...r, x], []);
+    this.avatars$ = range(1, 16)
+      .pipe(
+        map(i => `${this.avatarName}:svg-${i}`),
+        reduce((r: string[], x: string) => [...r, x], [])
+      );
   }
 
   ngOnInit() {
@@ -108,10 +111,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
       address: ['', Validators.maxLength(80)],
       identity: []
     });
-    const id$ = this.form.get('identity')!.valueChanges
-      .debug('id$: ')
-      .debounceTime(300)
-      .filter(v => this.form.get('identity')!.valid);
+    const identity = this.form.get('identity');
+    if (!identity) {
+      return;
+    }
+    const id$ = identity.valueChanges
+      .pipe(
+        debounceTime(300),
+        filter(v => identity.valid)
+      );
 
     this._sub = id$.subscribe(id => {
       const info = extractInfo(id.identityNo);

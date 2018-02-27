@@ -1,4 +1,4 @@
-import { GB2260 } from './identity.data'
+import { GB2260 } from './identity.data';
 
 export function extractInfo(idNo: string) {
   const addrPart = idNo.substring(0, 6); // 前六位地址码

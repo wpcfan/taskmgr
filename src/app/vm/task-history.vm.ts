@@ -7,5 +7,5 @@ export interface TaskHistoryVM {
   title: string;
   content?: string;
   date: Date;
-  dateDesc: string,
+  dateDesc: string;
 }

@@ -12,9 +12,9 @@ export const covertToTask = (taskVM: TaskVM): Task => {
     createDate: taskVM.createDate,
     reminder: taskVM.reminder,
     remark: taskVM.remark,
-    ownerId: <string>taskVM!.owner!.id,
-    participantIds: <string[]>taskVM!.participants!.map(user => <string>user.id)
-  }
+    ownerId: taskVM.owner ? <string>taskVM.owner.id : '',
+    participantIds: taskVM.participants ? <string[]>taskVM.participants.map(user => <string>user.id) : []
+  };
 };
 
 export const converToTaskList = (taskListVM: TaskListVM): TaskList => {
@@ -24,7 +24,7 @@ export const converToTaskList = (taskListVM: TaskListVM): TaskList => {
     order: taskListVM.order,
     projectId: <string>taskListVM.projectId,
     taskIds: taskListVM.tasks.map((task: TaskVM) => <string>task.id)
-  }
+  };
 };
 
 export const convertToProject = (projectVM: ProjectVM): Project => {
@@ -34,7 +34,7 @@ export const convertToProject = (projectVM: ProjectVM): Project => {
     coverImg: projectVM.coverImg,
     desc: projectVM.desc,
     enabled: projectVM.enabled,
-    members: <string[]>projectVM!.members!.map((user: User) => <string>user.id),
-    taskLists: <string[]>projectVM!.taskLists!.map((tl: TaskListVM) => <string>tl.id)
-  }
-}
+    members: projectVM.members ? <string[]>projectVM.members.map((user: User) => <string>user.id) : [],
+    taskLists: projectVM.taskLists ? <string[]>projectVM.taskLists.map((tl: TaskListVM) => <string>tl.id) : []
+  };
+};

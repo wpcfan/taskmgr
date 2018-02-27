@@ -8,12 +8,12 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   selector: 'app-copy-task',
   template: `
     <form [formGroup]="form" (ngSubmit)="onSubmit(form, $event)">
-      <span matDialogTitle>{{dialogTitle}}</span>
+      <span matDialogTitle>{{ dialogTitle }}</span>
       <div matDialogContent>
         <mat-form-field>
           <mat-select placeholder="选择目标列表" formControlName="targetList" class="full-width">
             <mat-option *ngFor="let list of lists$ | async" [value]="list.id">
-              {{list.name}}
+              {{ list.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>

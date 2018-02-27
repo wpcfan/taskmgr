@@ -1,12 +1,13 @@
-import {Component, HostBinding} from '@angular/core';
-import {CalendarEvent} from 'angular-calendar';
-import {addDays, addHours, endOfDay, endOfMonth, isSameDay, isSameMonth, startOfDay, subDays} from 'date-fns';
-import {Observable} from 'rxjs/Observable';
-import {ActivatedRoute} from '@angular/router';
-import {MyCalService} from '../../services';
-import {Store} from '@ngrx/store';
+import { Component, HostBinding } from '@angular/core';
+import { CalendarEvent } from 'angular-calendar';
+import { addDays, addHours, endOfDay, endOfMonth, isSameDay, isSameMonth, startOfDay, subDays } from 'date-fns';
+import { Observable } from 'rxjs/Observable';
+import { map, switchMap } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { Store, select } from '@ngrx/store';
+import { MyCalService } from '../../services';
+import { defaultRouteAnim } from '../../anim';
 import * as fromRoot from '../../reducers';
-import {defaultRouteAnim} from '../../anim';
 
 @Component({
   selector: 'app-cal-home',
@@ -24,7 +25,7 @@ import {defaultRouteAnim} from '../../anim';
         mat-button
         mwlCalendarToday
         [(viewDate)]="viewDate">
-        {{viewDate | date: 'yyyy-MM-dd'}}
+        {{ viewDate | date: 'yyyy-MM-dd' }}
       </button>
       <button
         mat-icon-button
@@ -80,19 +81,21 @@ export class CalendarHomeComponent {
   events$: Observable<CalendarEvent[]>;
 
   constructor(private route: ActivatedRoute,
-              private service$: MyCalService,
-              private store$: Store<fromRoot.State>) {
+    private service$: MyCalService,
+    private store$: Store<fromRoot.State>) {
     this.viewDate = new Date();
-    this.view$ = this.route.paramMap.map(p => <string>p.get('view'));
-    this.events$ = this.store$.select(fromRoot.getAuthUser)
-      .switchMap(user => this.service$.getUserTasks(<string>user.id));
+    this.view$ = this.route.paramMap.pipe(map(p => <string>p.get('view')));
+    this.events$ = this.store$.pipe(
+      select(fromRoot.getAuthUser),
+      switchMap(user => this.service$.getUserTasks(<string>user.id))
+    );
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
     console.log('events handled');
   }
 
-  dayClicked({date, events}: { date: Date, events: CalendarEvent[] }): void {
+  dayClicked({ date, events }: { date: Date, events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if ((isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) || events.length === 0) {
         this.activeDayIsOpen = false;
