@@ -14,12 +14,14 @@
   "editor.fontSize": 16,
   "editor.lineHeight": 24,
   "editor.fontLigatures": true,
-  "editor.fontFamily": "'Fira Code', 'Operator Mono', Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontFamily":
+    "'Fira Code', 'Operator Mono', Menlo, Monaco, 'Courier New', monospace",
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.snippetSuggestions": "top",
   "editor.trimAutoWhitespace": true,
   "files.insertFinalNewline": true,
   "terminal.integrated.fontSize": 18,
-  "terminal.integrated.fontFamily": "'Fira Code', 'Operator Mono', Menlo, Monaco, 'Courier New', monospace"
+  "terminal.integrated.fontFamily":
+    "'Fira Code', 'Operator Mono', Menlo, Monaco, 'Courier New', monospace"
 }
