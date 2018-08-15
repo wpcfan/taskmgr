@@ -14,11 +14,11 @@ mat-icon.avatar {
 }
 
 .priority-normal {
-  border-left: 3px solid #A6A6A6;
+  border-left: 3px solid #a6a6a6;
 }
 
 .priority-important {
-  border-left: 3px solid #FFAF38;
+  border-left: 3px solid #ffaf38;
 }
 
 .priority-emergency {
@@ -26,11 +26,11 @@ mat-icon.avatar {
 }
 
 .checkbox-section {
-  border: 0 solid #A6A6A6;
+  border: 0 solid #a6a6a6;
 }
 
 .duedate {
-  background-color: #FF4F3E;
+  background-color: #ff4f3e;
   color: #fff;
 }
 
@@ -44,6 +44,8 @@ mat-icon.avatar {
   font-size: 10px;
   width: 100%;
   order: 1;
+  display: flex;
+  flex: 0 0 18px;
 }
 
 .status {

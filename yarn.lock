@@ -27,21 +27,21 @@
     "@ngtools/json-schema" "^1.1.0"
     rxjs "^5.5.6"
 
-"@angular/animations@^5.2.6":
+"@angular/animations@5.2.6":
   version "5.2.6"
-  resolved "https://registry.npmjs.org/@angular/animations/-/animations-5.2.6.tgz#433aace8929ce362762dcccdb5044c3945a194bd"
+  resolved "http://registry.npm.taobao.org/@angular/animations/download/@angular/animations-5.2.6.tgz#433aace8929ce362762dcccdb5044c3945a194bd"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/cdk@^5.2.2":
+"@angular/cdk@5.2.2":
   version "5.2.2"
-  resolved "https://registry.npmjs.org/@angular/cdk/-/cdk-5.2.2.tgz#5a53929e3a4ce4d0166d6319611d2035454bb778"
+  resolved "http://registry.npm.taobao.org/@angular/cdk/download/@angular/cdk-5.2.2.tgz#5a53929e3a4ce4d0166d6319611d2035454bb778"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/cli@^1.7.1":
+"@angular/cli@1.7.1":
   version "1.7.1"
-  resolved "https://registry.npmjs.org/@angular/cli/-/cli-1.7.1.tgz#3a9d0b8314d4c54226f941beeb53071385c294e0"
+  resolved "http://registry.npm.taobao.org/@angular/cli/download/@angular/cli-1.7.1.tgz#3a9d0b8314d4c54226f941beeb53071385c294e0"
   dependencies:
     "@angular-devkit/build-optimizer" "0.3.2"
     "@angular-devkit/core" "0.3.2"
@@ -104,30 +104,30 @@
   optionalDependencies:
     node-sass "^4.7.2"
 
-"@angular/common@^5.2.6":
+"@angular/common@5.2.6":
   version "5.2.6"
-  resolved "https://registry.npmjs.org/@angular/common/-/common-5.2.6.tgz#0c6771739f1407eae0533e82c3ee42425badd489"
+  resolved "http://registry.npm.taobao.org/@angular/common/download/@angular/common-5.2.6.tgz#0c6771739f1407eae0533e82c3ee42425badd489"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/compiler-cli@^5.2.6":
+"@angular/compiler-cli@5.2.6":
   version "5.2.6"
-  resolved "https://registry.npmjs.org/@angular/compiler-cli/-/compiler-cli-5.2.6.tgz#f60fccabaf8d09641aada8c112a6e4f336f8412d"
+  resolved "http://registry.npm.taobao.org/@angular/compiler-cli/download/@angular/compiler-cli-5.2.6.tgz#f60fccabaf8d09641aada8c112a6e4f336f8412d"
   dependencies:
     chokidar "^1.4.2"
     minimist "^1.2.0"
     reflect-metadata "^0.1.2"
     tsickle "^0.27.2"
 
-"@angular/compiler@^5.2.6":
+"@angular/compiler@5.2.6":
   version "5.2.6"
-  resolved "https://registry.npmjs.org/@angular/compiler/-/compiler-5.2.6.tgz#0abf72b46c401688342057e3fb7cd59fef0a5ab1"
+  resolved "http://registry.npm.taobao.org/@angular/compiler/download/@angular/compiler-5.2.6.tgz#0abf72b46c401688342057e3fb7cd59fef0a5ab1"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/core@^5.2.6":
+"@angular/core@5.2.6":
   version "5.2.6"
-  resolved "https://registry.npmjs.org/@angular/core/-/core-5.2.6.tgz#483fb0b720d563d3ec4d1895878249beafa39b9b"
+  resolved "http://registry.npm.taobao.org/@angular/core/download/@angular/core-5.2.6.tgz#483fb0b720d563d3ec4d1895878249beafa39b9b"
   dependencies:
     tslib "^1.7.1"
 
@@ -137,83 +137,83 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/forms@^5.2.6":
+"@angular/forms@5.2.6":
   version "5.2.6"
-  resolved "https://registry.npmjs.org/@angular/forms/-/forms-5.2.6.tgz#fa3e37a9e97fa3e2b24d8564a66a11d430379bfe"
+  resolved "http://registry.npm.taobao.org/@angular/forms/download/@angular/forms-5.2.6.tgz#fa3e37a9e97fa3e2b24d8564a66a11d430379bfe"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/http@^5.2.6":
+"@angular/http@5.2.6":
   version "5.2.6"
-  resolved "https://registry.npmjs.org/@angular/http/-/http-5.2.6.tgz#4fa92e61b9848f8571c61ae9ad32af27cd71b043"
+  resolved "http://registry.npm.taobao.org/@angular/http/download/@angular/http-5.2.6.tgz#4fa92e61b9848f8571c61ae9ad32af27cd71b043"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/language-service@^5.2.6":
+"@angular/language-service@5.2.6":
   version "5.2.6"
-  resolved "https://registry.npmjs.org/@angular/language-service/-/language-service-5.2.6.tgz#f88f49f54a82e95b05af50ded22f4ebbb344df1f"
+  resolved "http://registry.npm.taobao.org/@angular/language-service/download/@angular/language-service-5.2.6.tgz#f88f49f54a82e95b05af50ded22f4ebbb344df1f"
 
-"@angular/material-moment-adapter@^5.2.2":
+"@angular/material-moment-adapter@5.2.2":
   version "5.2.2"
-  resolved "https://registry.npmjs.org/@angular/material-moment-adapter/-/material-moment-adapter-5.2.2.tgz#da7616636f0b783e72af8d6aaa8b9d49ef860c3f"
+  resolved "http://registry.npm.taobao.org/@angular/material-moment-adapter/download/@angular/material-moment-adapter-5.2.2.tgz#da7616636f0b783e72af8d6aaa8b9d49ef860c3f"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/material@^5.2.2":
+"@angular/material@5.2.2":
   version "5.2.2"
-  resolved "https://registry.npmjs.org/@angular/material/-/material-5.2.2.tgz#13822736b7aa034ed0566a6962ee574d299208ee"
+  resolved "http://registry.npm.taobao.org/@angular/material/download/@angular/material-5.2.2.tgz#13822736b7aa034ed0566a6962ee574d299208ee"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/platform-browser-dynamic@^5.2.6":
+"@angular/platform-browser-dynamic@5.2.6":
   version "5.2.6"
-  resolved "https://registry.npmjs.org/@angular/platform-browser-dynamic/-/platform-browser-dynamic-5.2.6.tgz#8795cca57306b7bdc2bc166d3928bc8eb145125c"
+  resolved "http://registry.npm.taobao.org/@angular/platform-browser-dynamic/download/@angular/platform-browser-dynamic-5.2.6.tgz#8795cca57306b7bdc2bc166d3928bc8eb145125c"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/platform-browser@^5.2.6":
+"@angular/platform-browser@5.2.6":
   version "5.2.6"
-  resolved "https://registry.npmjs.org/@angular/platform-browser/-/platform-browser-5.2.6.tgz#ecb8a6d37506ffb3f181ea10696a3c7feaf1674c"
+  resolved "http://registry.npm.taobao.org/@angular/platform-browser/download/@angular/platform-browser-5.2.6.tgz#ecb8a6d37506ffb3f181ea10696a3c7feaf1674c"
   dependencies:
     tslib "^1.7.1"
 
-"@angular/platform-server@^5.2.6":
+"@angular/platform-server@5.2.6":
   version "5.2.6"
-  resolved "https://registry.npmjs.org/@angular/platform-server/-/platform-server-5.2.6.tgz#9a218acabd7a95b215ad8884f2f1d03d6faed024"
+  resolved "http://registry.npm.taobao.org/@angular/platform-server/download/@angular/platform-server-5.2.6.tgz#9a218acabd7a95b215ad8884f2f1d03d6faed024"
   dependencies:
     domino "^1.0.29"
     tslib "^1.7.1"
     xhr2 "^0.1.4"
 
-"@angular/router@^5.2.6":
+"@angular/router@5.2.6":
   version "5.2.6"
-  resolved "https://registry.npmjs.org/@angular/router/-/router-5.2.6.tgz#513b555d5cc4b206833646468ffb47fa8f5c1c0b"
+  resolved "http://registry.npm.taobao.org/@angular/router/download/@angular/router-5.2.6.tgz#513b555d5cc4b206833646468ffb47fa8f5c1c0b"
   dependencies:
     tslib "^1.7.1"
 
-"@angularclass/hmr@^2.1.3":
+"@angularclass/hmr@2.1.3":
   version "2.1.3"
-  resolved "https://registry.yarnpkg.com/@angularclass/hmr/-/hmr-2.1.3.tgz#34e658ed3da37f23b0a200e2da5a89be92bb209f"
+  resolved "http://registry.npm.taobao.org/@angularclass/hmr/download/@angularclass/hmr-2.1.3.tgz#34e658ed3da37f23b0a200e2da5a89be92bb209f"
 
-"@ngrx/effects@^5.1.0":
+"@ngrx/effects@5.1.0":
   version "5.1.0"
-  resolved "https://registry.npmjs.org/@ngrx/effects/-/effects-5.1.0.tgz#cef84576b2d0333f19188aedfe156fd301bff70a"
+  resolved "http://registry.npm.taobao.org/@ngrx/effects/download/@ngrx/effects-5.1.0.tgz#cef84576b2d0333f19188aedfe156fd301bff70a"
 
 "@ngrx/entity@5.1.0":
   version "5.1.0"
   resolved "https://registry.npmjs.org/@ngrx/entity/-/entity-5.1.0.tgz#27de53bd10c7f93c82d8aa1642357c65657e1459"
 
-"@ngrx/router-store@^5.0.1":
+"@ngrx/router-store@5.0.1":
   version "5.0.1"
-  resolved "https://registry.npmjs.org/@ngrx/router-store/-/router-store-5.0.1.tgz#db872327bb958a2ebf296734c97de68672ec628a"
+  resolved "http://registry.npm.taobao.org/@ngrx/router-store/download/@ngrx/router-store-5.0.1.tgz#db872327bb958a2ebf296734c97de68672ec628a"
 
-"@ngrx/store-devtools@^5.1.0":
+"@ngrx/store-devtools@5.1.0":
   version "5.1.0"
-  resolved "https://registry.npmjs.org/@ngrx/store-devtools/-/store-devtools-5.1.0.tgz#7df8a6da652cc792000ad058ca4072a32e3629b1"
+  resolved "http://registry.npm.taobao.org/@ngrx/store-devtools/download/@ngrx/store-devtools-5.1.0.tgz#7df8a6da652cc792000ad058ca4072a32e3629b1"
 
-"@ngrx/store@^5.1.0":
+"@ngrx/store@5.1.0":
   version "5.1.0"
-  resolved "https://registry.npmjs.org/@ngrx/store/-/store-5.1.0.tgz#d957131e62041deede043524fd300db9fa835d68"
+  resolved "http://registry.npm.taobao.org/@ngrx/store/download/@ngrx/store-5.1.0.tgz#d957131e62041deede043524fd300db9fa835d68"
 
 "@ngtools/json-schema@1.2.0":
   version "1.2.0"
@@ -236,13 +236,13 @@
     tree-kill "^1.0.0"
     webpack-sources "^1.1.0"
 
-"@nguniversal/express-engine@^5.0.0-beta.5":
+"@nguniversal/express-engine@5.0.0-beta.5":
   version "5.0.0-beta.5"
-  resolved "https://registry.npmjs.org/@nguniversal/express-engine/-/express-engine-5.0.0-beta.5.tgz#3cbc0fb7f928012d61240681631581fb0ad327f5"
+  resolved "http://registry.npm.taobao.org/@nguniversal/express-engine/download/@nguniversal/express-engine-5.0.0-beta.5.tgz#3cbc0fb7f928012d61240681631581fb0ad327f5"
 
-"@nguniversal/module-map-ngfactory-loader@^5.0.0-beta.5":
+"@nguniversal/module-map-ngfactory-loader@5.0.0-beta.5":
   version "5.0.0-beta.5"
-  resolved "https://registry.npmjs.org/@nguniversal/module-map-ngfactory-loader/-/module-map-ngfactory-loader-5.0.0-beta.5.tgz#d86497e704f702e1a18bbcab5dd6586057941fa5"
+  resolved "http://registry.npm.taobao.org/@nguniversal/module-map-ngfactory-loader/download/@nguniversal/module-map-ngfactory-loader-5.0.0-beta.5.tgz#d86497e704f702e1a18bbcab5dd6586057941fa5"
 
 "@schematics/angular@0.3.2":
   version "0.3.2"
@@ -265,9 +265,9 @@
     "@types/express" "*"
     "@types/node" "*"
 
-"@types/crypto-js@^3.1.38":
+"@types/crypto-js@3.1.38":
   version "3.1.38"
-  resolved "https://registry.npmjs.org/@types/crypto-js/-/crypto-js-3.1.38.tgz#e1367f773edde2986ba9aebee3bf1cdf3e818a5d"
+  resolved "http://registry.npm.taobao.org/@types/crypto-js/download/@types/crypto-js-3.1.38.tgz#e1367f773edde2986ba9aebee3bf1cdf3e818a5d"
 
 "@types/express-serve-static-core@*":
   version "4.0.49"
@@ -283,9 +283,9 @@
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
 
-"@types/express@^4.11.1":
+"@types/express@4.11.1":
   version "4.11.1"
-  resolved "https://registry.npmjs.org/@types/express/-/express-4.11.1.tgz#f99663b3ab32d04cb11db612ef5dd7933f75465b"
+  resolved "http://registry.npm.taobao.org/@types/express/download/@types/express-4.11.1.tgz#f99663b3ab32d04cb11db612ef5dd7933f75465b"
   dependencies:
     "@types/body-parser" "*"
     "@types/express-serve-static-core" "*"
@@ -305,9 +305,9 @@
   dependencies:
     "@types/jasmine" "*"
 
-"@types/lodash@^4.14.104":
+"@types/lodash@4.14.104":
   version "4.14.104"
-  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.104.tgz#53ee2357fa2e6e68379341d92eb2ecea4b11bb80"
+  resolved "http://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.104.tgz#53ee2357fa2e6e68379341d92eb2ecea4b11bb80"
 
 "@types/mime@*":
   version "1.3.1"
@@ -469,9 +469,9 @@ amqplib@^0.5.2:
     readable-stream "1.x >=1.1.9"
     safe-buffer "^5.0.1"
 
-angular-calendar@^0.23.6:
+angular-calendar@0.23.6:
   version "0.23.6"
-  resolved "https://registry.npmjs.org/angular-calendar/-/angular-calendar-0.23.6.tgz#92c59a19960a6561324c52dedaf0a9f16f583335"
+  resolved "http://registry.npm.taobao.org/angular-calendar/download/angular-calendar-0.23.6.tgz#92c59a19960a6561324c52dedaf0a9f16f583335"
   dependencies:
     angular-draggable-droppable "^2.0.0"
     angular-resizable-element "^2.0.0"
@@ -1621,9 +1621,9 @@ concat-stream@~1.5.0, concat-stream@~1.5.1:
     readable-stream "~2.0.0"
     typedarray "~0.0.5"
 
-concurrently@^3.5.1:
+concurrently@3.5.1:
   version "3.5.1"
-  resolved "https://registry.npmjs.org/concurrently/-/concurrently-3.5.1.tgz#ee8b60018bbe86b02df13e5249453c6ececd2521"
+  resolved "http://registry.npm.taobao.org/concurrently/download/concurrently-3.5.1.tgz#ee8b60018bbe86b02df13e5249453c6ececd2521"
   dependencies:
     chalk "0.5.1"
     commander "2.6.0"
@@ -1717,13 +1717,13 @@ copy-webpack-plugin@~4.4.1:
     p-limit "^1.0.0"
     serialize-javascript "^1.4.0"
 
+core-js@2.5.3:
+  version "2.5.3"
+  resolved "http://registry.npm.taobao.org/core-js/download/core-js-2.5.3.tgz#8acc38345824f16d8365b7c9b4259168e8ed603e"
+
 core-js@^2.2.0, core-js@^2.4.0:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.4.1.tgz#4de911e667b0eae9124e34254b53aea6fc618d3e"
-
-core-js@^2.5.3:
-  version "2.5.3"
-  resolved "https://registry.npmjs.org/core-js/-/core-js-2.5.3.tgz#8acc38345824f16d8365b7c9b4259168e8ed603e"
 
 core-js@~2.3.0:
   version "2.3.0"
@@ -1836,9 +1836,9 @@ crypto-browserify@^3.11.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
 
-crypto-js@^3.1.9-1:
+crypto-js@3.1.9-1:
   version "3.1.9-1"
-  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.1.9-1.tgz#fda19e761fc077e01ffbfdc6e9fdfc59e8806cd8"
+  resolved "http://registry.npm.taobao.org/crypto-js/download/crypto-js-3.1.9-1.tgz#fda19e761fc077e01ffbfdc6e9fdfc59e8806cd8"
 
 css-parse@1.7.x:
   version "1.7.0"
@@ -1909,13 +1909,13 @@ data-uri-to-buffer@1:
   version "1.2.0"
   resolved "https://registry.npmjs.org/data-uri-to-buffer/-/data-uri-to-buffer-1.2.0.tgz#77163ea9c20d8641b4707e8f18abdf9a78f34835"
 
+date-fns@1.29.0:
+  version "1.29.0"
+  resolved "http://registry.npm.taobao.org/date-fns/download/date-fns-1.29.0.tgz#12e609cdcb935127311d04d33334e2960a2a54e6"
+
 date-fns@^1.23.0, date-fns@^1.28.5:
   version "1.28.5"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.28.5.tgz#257cfc45d322df45ef5658665967ee841cd73faf"
-
-date-fns@^1.29.0:
-  version "1.29.0"
-  resolved "https://registry.npmjs.org/date-fns/-/date-fns-1.29.0.tgz#12e609cdcb935127311d04d33334e2960a2a54e6"
 
 date-format@^1.2.0:
   version "1.2.0"
@@ -2547,9 +2547,9 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
-express@^4.16.2:
+express@4.16.2, express@^4.16.2:
   version "4.16.2"
-  resolved "https://registry.npmjs.org/express/-/express-4.16.2.tgz#e35c6dfe2d64b7dca0a5cd4f21781be3299e076c"
+  resolved "http://registry.npm.taobao.org/express/download/express-4.16.2.tgz#e35c6dfe2d64b7dca0a5cd4f21781be3299e076c"
   dependencies:
     accepts "~1.3.4"
     array-flatten "1.1.1"
@@ -3082,9 +3082,9 @@ growl@1.9.2:
   version "1.9.2"
   resolved "https://registry.yarnpkg.com/growl/-/growl-1.9.2.tgz#0ea7743715db8d8de2c5ede1775e1b45ac85c02f"
 
-hammerjs@^2.0.8:
+hammerjs@2.0.8:
   version "2.0.8"
-  resolved "https://registry.yarnpkg.com/hammerjs/-/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
+  resolved "http://registry.npm.taobao.org/hammerjs/download/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
 
 handle-thing@^1.2.5:
   version "1.2.5"
@@ -3884,9 +3884,9 @@ jasmine-core@~2.99.1:
   version "2.99.1"
   resolved "https://registry.npmjs.org/jasmine-core/-/jasmine-core-2.99.1.tgz#e6400df1e6b56e130b61c4bcd093daa7f6e8ca15"
 
-jasmine-marbles@^0.2.0:
+jasmine-marbles@0.2.0:
   version "0.2.0"
-  resolved "https://registry.npmjs.org/jasmine-marbles/-/jasmine-marbles-0.2.0.tgz#b893d8508b75790b634876d3a1bea1345d65c156"
+  resolved "http://registry.npm.taobao.org/jasmine-marbles/download/jasmine-marbles-0.2.0.tgz#b893d8508b75790b634876d3a1bea1345d65c156"
   dependencies:
     lodash "^4.5.0"
 
@@ -4021,16 +4021,16 @@ karma-cli@~1.0.1:
   dependencies:
     resolve "^1.1.6"
 
-karma-coverage-istanbul-reporter@^1.4.1:
+karma-coverage-istanbul-reporter@1.4.1:
   version "1.4.1"
-  resolved "https://registry.npmjs.org/karma-coverage-istanbul-reporter/-/karma-coverage-istanbul-reporter-1.4.1.tgz#2b42d145ddbb4868d85d52888c495a21c61d873c"
+  resolved "http://registry.npm.taobao.org/karma-coverage-istanbul-reporter/download/karma-coverage-istanbul-reporter-1.4.1.tgz#2b42d145ddbb4868d85d52888c495a21c61d873c"
   dependencies:
     istanbul-api "^1.1.14"
     minimatch "^3.0.4"
 
-karma-jasmine-html-reporter@^0.2.2:
+karma-jasmine-html-reporter@0.2.2:
   version "0.2.2"
-  resolved "https://registry.yarnpkg.com/karma-jasmine-html-reporter/-/karma-jasmine-html-reporter-0.2.2.tgz#48a8e5ef18807617ee2b5e33c1194c35b439524c"
+  resolved "http://registry.npm.taobao.org/karma-jasmine-html-reporter/download/karma-jasmine-html-reporter-0.2.2.tgz#48a8e5ef18807617ee2b5e33c1194c35b439524c"
   dependencies:
     karma-jasmine "^1.0.2"
 
@@ -4315,13 +4315,13 @@ lodash.tail@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.tail/-/lodash.tail-4.1.1.tgz#d2333a36d9e7717c8ad2f7cacafec7c32b444664"
 
+lodash@4.17.5, lodash@^4.15.0:
+  version "4.17.5"
+  resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
+
 lodash@^4.0.0, lodash@^4.11.1, lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.5.0, lodash@^4.5.1, lodash@~4.17.4:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
-
-lodash@^4.15.0, lodash@^4.17.5:
-  version "4.17.5"
-  resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
 log4js@^2.3.9:
   version "2.5.2"
@@ -4653,9 +4653,9 @@ module-deps@^4.0.8:
     through2 "^2.0.0"
     xtend "^4.0.0"
 
-moment@^2.20.1:
+moment@2.20.1:
   version "2.20.1"
-  resolved "https://registry.npmjs.org/moment/-/moment-2.20.1.tgz#d6eb1a46cbcc14a2b2f9434112c1ff8907f313fd"
+  resolved "http://registry.npm.taobao.org/moment/download/moment-2.20.1.tgz#d6eb1a46cbcc14a2b2f9434112c1ff8907f313fd"
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -4725,9 +4725,9 @@ netmask@~1.0.4:
   version "1.0.6"
   resolved "https://registry.npmjs.org/netmask/-/netmask-1.0.6.tgz#20297e89d86f6f6400f250d9f4f6b4c1945fcd35"
 
-ngrx-store-freeze@^0.2.1:
+ngrx-store-freeze@0.2.1:
   version "0.2.1"
-  resolved "https://registry.npmjs.org/ngrx-store-freeze/-/ngrx-store-freeze-0.2.1.tgz#04fb29db33cafda0f2d6ea32adeaac4891b1b27b"
+  resolved "http://registry.npm.taobao.org/ngrx-store-freeze/download/ngrx-store-freeze-0.2.1.tgz#04fb29db33cafda0f2d6ea32adeaac4891b1b27b"
   dependencies:
     deep-freeze-strict "^1.1.1"
 
@@ -6024,17 +6024,17 @@ rx@2.3.24:
   version "2.3.24"
   resolved "https://registry.yarnpkg.com/rx/-/rx-2.3.24.tgz#14f950a4217d7e35daa71bbcbe58eff68ea4b2b7"
 
-rxjs-tslint-rules@^3.14.0:
+rxjs-tslint-rules@3.14.0:
   version "3.14.0"
-  resolved "https://registry.npmjs.org/rxjs-tslint-rules/-/rxjs-tslint-rules-3.14.0.tgz#ba7dca949b56c75aa66ddc8827e3971b6b920e40"
+  resolved "http://registry.npm.taobao.org/rxjs-tslint-rules/download/rxjs-tslint-rules-3.14.0.tgz#ba7dca949b56c75aa66ddc8827e3971b6b920e40"
   dependencies:
     decamelize "^2.0.0"
     resolve "^1.4.0"
     tslib "^1.8.0"
 
-rxjs@^5.5.6:
+rxjs@5.5.6, rxjs@^5.5.6:
   version "5.5.6"
-  resolved "https://registry.npmjs.org/rxjs/-/rxjs-5.5.6.tgz#e31fb96d6fd2ff1fd84bcea8ae9c02d007179c02"
+  resolved "http://registry.npm.taobao.org/rxjs/download/rxjs-5.5.6.tgz#e31fb96d6fd2ff1fd84bcea8ae9c02d007179c02"
   dependencies:
     symbol-observable "1.0.1"
 
@@ -7326,9 +7326,9 @@ wbuf@^1.1.0, wbuf@^1.7.2:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-web-animations-js@^2.3.1:
+web-animations-js@2.3.1:
   version "2.3.1"
-  resolved "https://registry.yarnpkg.com/web-animations-js/-/web-animations-js-2.3.1.tgz#3a6d9bc15196377a90f8e2803fa5262165b04510"
+  resolved "http://registry.npm.taobao.org/web-animations-js/download/web-animations-js-2.3.1.tgz#3a6d9bc15196377a90f8e2803fa5262165b04510"
 
 webdriver-js-extender@^1.0.0:
   version "1.0.0"
@@ -7418,9 +7418,9 @@ webpack-merge@^4.1.0:
   dependencies:
     lodash "^4.17.4"
 
-webpack-node-externals@^1.6.0:
+webpack-node-externals@1.6.0:
   version "1.6.0"
-  resolved "https://registry.yarnpkg.com/webpack-node-externals/-/webpack-node-externals-1.6.0.tgz#232c62ec6092b100635a3d29d83c1747128df9bd"
+  resolved "http://registry.npm.taobao.org/webpack-node-externals/download/webpack-node-externals-1.6.0.tgz#232c62ec6092b100635a3d29d83c1747128df9bd"
 
 webpack-sources@^1.0.0, webpack-sources@^1.1.0:
   version "1.1.0"
@@ -7703,6 +7703,6 @@ yn@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/yn/-/yn-2.0.0.tgz#e5adabc8acf408f6385fc76495684c88e6af689a"
 
-zone.js@^0.8.20:
+zone.js@0.8.20:
   version "0.8.20"
-  resolved "https://registry.npmjs.org/zone.js/-/zone.js-0.8.20.tgz#a218c48db09464b19ff6fc8f0d4bb5b1046e185d"
+  resolved "http://registry.npm.taobao.org/zone.js/download/zone.js-0.8.20.tgz#a218c48db09464b19ff6fc8f0d4bb5b1046e185d"
