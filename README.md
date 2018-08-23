@@ -1,5 +1,7 @@
 # 多用户任务管理系统
 
+[![Build Status](https://travis-ci.org/wpcfan/taskmgr.svg?branch=master)](https://travis-ci.org/wpcfan/taskmgr)
+
 ## 采用的技术
 
 - 基于 `@ngrx/store` 和 `@ngrx/effects` 管理状态以及状态产生的影响。并且使用 `@ngrx/entity` 减少了 reducer 的重复代码。
