@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit, forwardRef, Input, ViewChild} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormGroup, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {MatAutocomplete} from '@angular/material';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {UserService} from '../../services';
 import {User} from '../../domain';
 import { startWith, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';

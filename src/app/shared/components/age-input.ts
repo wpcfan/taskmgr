@@ -1,4 +1,11 @@
-import {ChangeDetectionStrategy, Component, forwardRef, OnInit, OnDestroy, Input} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  OnInit,
+  OnDestroy,
+  Input
+} from '@angular/core';
 import {
   ControlValueAccessor,
   FormBuilder,
@@ -19,12 +26,18 @@ import {
   differenceInYears,
   parse
 } from 'date-fns';
-import {Observable} from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { convertToDate, isValidDate } from '../../utils/date.util';
-import { map, distinctUntilChanged, filter, debounceTime, startWith } from 'rxjs/operators';
-import { combineLatest } from 'rxjs/observable/combineLatest';
-import { merge } from 'rxjs/observable/merge';
+import {
+  map,
+  distinctUntilChanged,
+  filter,
+  debounceTime,
+  startWith
+} from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
+import { merge } from 'rxjs';
 export enum AgeUnit {
   Year = 0,
   Month,
@@ -65,61 +78,73 @@ export interface Age {
       </ng-container>
     </div>
     `,
-  styles: [`
-    .age-num{
-      width: 50px;
-    }
-    .age-input{
-      display: flex;
-      flex-wrap: nowrap;
-      flex-direction: row;
-      align-items: baseline;
-    }
-  `],
+  styles: [
+    `
+      .age-num {
+        width: 50px;
+      }
+      .age-input {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        align-items: baseline;
+      }
+    `
+  ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => AgeInputComponent),
-      multi: true,
+      multi: true
     },
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => AgeInputComponent),
-      multi: true,
+      multi: true
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestroy {
-
+export class AgeInputComponent
+  implements ControlValueAccessor, OnInit, OnDestroy {
   selectedUnit = AgeUnit.Year;
   form: FormGroup;
   ageUnits = [
-    {value: AgeUnit.Year, label: '岁'},
-    {value: AgeUnit.Month, label: '月'},
-    {value: AgeUnit.Day, label: '天'}
+    { value: AgeUnit.Year, label: '岁' },
+    { value: AgeUnit.Month, label: '月' },
+    { value: AgeUnit.Day, label: '天' }
   ];
-  @Input() daysTop = 90;
-  @Input() daysBottom = 0;
-  @Input() monthsTop = 24;
-  @Input() monthsBottom = 1;
-  @Input() yearsBottom = 1;
-  @Input() yearsTop = 150;
-  @Input() debounceTime = 300;
+  @Input()
+  daysTop = 90;
+  @Input()
+  daysBottom = 0;
+  @Input()
+  monthsTop = 24;
+  @Input()
+  monthsBottom = 1;
+  @Input()
+  yearsBottom = 1;
+  @Input()
+  yearsTop = 150;
+  @Input()
+  debounceTime = 300;
   private subBirth: Subscription;
   private propagateChange = (_: any) => {};
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
     const initDate = convertToDate(subYears(Date.now(), 30));
     const initAge = this.toAge(initDate);
     this.form = this.fb.group({
       birthday: [parse(initDate), this.validateDate],
-      age:  this.fb.group({
-        ageNum: [initAge.age],
-        ageUnit: [initAge.unit]
-      }, {validator: this.validateAge('ageNum', 'ageUnit')})
+      age: this.fb.group(
+        {
+          ageNum: [initAge.age],
+          ageUnit: [initAge.unit]
+        },
+        { validator: this.validateAge('ageNum', 'ageUnit') }
+      )
     });
     const birthday = this.form.get('birthday');
     if (!birthday) {
@@ -138,49 +163,47 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       return;
     }
 
-    const birthday$ = birthday.valueChanges
-      .pipe(
-        map(d => ({date: d, from: 'birthday'})),
-        debounceTime(this.debounceTime),
-        distinctUntilChanged(),
-        filter(date => birthday.valid)
-      );
-    const ageNum$ = ageNum.valueChanges
-      .pipe(
-        startWith(ageNum.value),
-        debounceTime(this.debounceTime),
-        distinctUntilChanged()
-      );
-    const ageUnit$ = ageUnit.valueChanges
-      .pipe(
-        startWith(ageUnit.value),
-        debounceTime(this.debounceTime),
-        distinctUntilChanged()
-      );
-    const age$ = combineLatest(ageNum$, ageUnit$, (_num, _unit) => this.toDate({age: _num, unit: _unit}))
-      .pipe(
-        map(d => ({date: d, from: 'age'})),
-        filter(_ => age.valid)
-      );
-    const merged$ = merge(birthday$, age$)
-      .pipe(
-        filter(_ => this.form.valid)
-      );
+    const birthday$ = birthday.valueChanges.pipe(
+      map(d => ({ date: d, from: 'birthday' })),
+      debounceTime(this.debounceTime),
+      distinctUntilChanged(),
+      filter(date => birthday.valid)
+    );
+    const ageNum$ = ageNum.valueChanges.pipe(
+      startWith(ageNum.value),
+      debounceTime(this.debounceTime),
+      distinctUntilChanged()
+    );
+    const ageUnit$ = ageUnit.valueChanges.pipe(
+      startWith(ageUnit.value),
+      debounceTime(this.debounceTime),
+      distinctUntilChanged()
+    );
+    const age$ = combineLatest(ageNum$, ageUnit$, (_num, _unit) =>
+      this.toDate({ age: _num, unit: _unit })
+    ).pipe(
+      map(d => ({ date: d, from: 'age' })),
+      filter(_ => age.valid)
+    );
+    const merged$ = merge(birthday$, age$).pipe(filter(_ => this.form.valid));
     this.subBirth = merged$.subscribe(date => {
       const aged = this.toAge(date.date);
       if (date.from === 'birthday') {
         if (aged.age === ageNum.value && aged.unit === ageUnit.value) {
           return;
         }
-        ageUnit.patchValue(aged.unit, {emitEvent: false, emitModelToViewChange: true, emitViewToModelChange: true});
-        ageNum.patchValue(aged.age, {emitEvent: false});
+        ageUnit.patchValue(aged.unit, {
+          emitEvent: false,
+          emitModelToViewChange: true,
+          emitViewToModelChange: true
+        });
+        ageNum.patchValue(aged.age, { emitEvent: false });
         this.selectedUnit = aged.unit;
         this.propagateChange(date.date);
-
       } else {
         const ageToCompare = this.toAge(birthday.value);
         if (aged.age !== ageToCompare.age || aged.unit !== ageToCompare.unit) {
-          birthday.patchValue(parse(date.date), {emitEvent: false});
+          birthday.patchValue(parse(date.date), { emitEvent: false });
           this.propagateChange(date.date);
         }
       }
@@ -201,7 +224,7 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
       if (!birthday) {
         return;
       }
-      birthday.patchValue(date, {emitEvent: true});
+      birthday.patchValue(date, { emitEvent: true });
     }
   }
 
@@ -212,11 +235,10 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
   }
 
   // 这里没有使用，用于注册 touched 状态
-  public registerOnTouched() {
-  }
+  public registerOnTouched() {}
 
   // 验证表单，验证结果正确返回 null 否则返回一个验证结果对象
-  validate(c: FormControl): {[key: string]: any} | null {
+  validate(c: FormControl): { [key: string]: any } | null {
     const val = c.value;
     if (!val) {
       return null;
@@ -229,15 +251,17 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
     };
   }
 
-  validateDate(c: FormControl): {[key: string]: any} | null {
+  validateDate(c: FormControl): { [key: string]: any } | null {
     const val = c.value;
-    return isValidDate(val) ? null : {
-      birthdayInvalid: true
-    };
+    return isValidDate(val)
+      ? null
+      : {
+          birthdayInvalid: true
+        };
   }
 
   validateAge(ageNumKey: string, ageUnitKey: string) {
-    return (group: FormGroup): {[key: string]: any} | null => {
+    return (group: FormGroup): { [key: string]: any } | null => {
       const ageNum = group.controls[ageNumKey];
       const ageUnit = group.controls[ageUnitKey];
       let result = false;
@@ -249,7 +273,8 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
           break;
         }
         case AgeUnit.Month: {
-          result = ageNumVal >= this.monthsBottom && ageNumVal <= this.monthsTop;
+          result =
+            ageNumVal >= this.monthsBottom && ageNumVal <= this.monthsTop;
           break;
         }
         case AgeUnit.Day: {
@@ -261,9 +286,11 @@ export class AgeInputComponent implements ControlValueAccessor, OnInit, OnDestro
           break;
         }
       }
-      return result ? null : {
-        ageInvalid: true
-      };
+      return result
+        ? null
+        : {
+            ageInvalid: true
+          };
     };
   }
 

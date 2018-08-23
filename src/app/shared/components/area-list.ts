@@ -1,11 +1,26 @@
-import { Component, OnInit, ChangeDetectionStrategy, forwardRef, OnDestroy } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { getProvinces, getCitiesByProvince, getAreasByCity } from '../../utils/area.util';
-import { Observable } from 'rxjs/Observable';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  forwardRef,
+  OnDestroy
+} from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR
+} from '@angular/forms';
+import {
+  getProvinces,
+  getCitiesByProvince,
+  getAreasByCity
+} from '../../utils/area.util';
+import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { combineLatest } from 'rxjs/observable/combineLatest';
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription';
+import { combineLatest } from 'rxjs';
+import { Subject } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Address } from '../../domain';
 
 @Component({
@@ -55,33 +70,36 @@ import { Address } from '../../domain';
       </div>
     </div>
     `,
-  styles: [`
-    .street{
-      flex: 1 1 100%;
-    }
-    .address-group{
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      flex-direction: row;
-      justify-content: space-between;
-    }
-  `],
+  styles: [
+    `
+      .street {
+        flex: 1 1 100%;
+      }
+      .address-group {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    `
+  ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => AreaListComponent),
-      multi: true,
+      multi: true
     },
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => AreaListComponent),
-      multi: true,
-    },
+      multi: true
+    }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestroy {
+export class AreaListComponent
+  implements ControlValueAccessor, OnInit, OnDestroy {
   _address: Address = {
     province: '',
     city: '',
@@ -97,33 +115,38 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
   provinces = getProvinces();
 
   private _sub: Subscription;
-  private propagateChange = (_: any) => { };
+  private propagateChange = (_: any) => {};
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-
     const province$ = this._province.asObservable().pipe(startWith(''));
     const city$ = this._city.asObservable().pipe(startWith(''));
     const district$ = this._district.asObservable().pipe(startWith(''));
     const street$ = this._street.asObservable().pipe(startWith(''));
-    const val$ = combineLatest([province$, city$, district$, street$], (_p: string, _c: string, _d: string, _s: string) => {
-      return {
-        province: _p,
-        city: _c,
-        district: _d,
-        street: _s
-      };
-    });
+    const val$ = combineLatest(
+      [province$, city$, district$, street$],
+      (_p: string, _c: string, _d: string, _s: string) => {
+        return {
+          province: _p,
+          city: _c,
+          district: _d,
+          street: _s
+        };
+      }
+    );
     this._sub = val$.subscribe(v => {
       this.propagateChange(v);
     });
 
     // 根据省份的选择得到城市列表
-    this.cities$ = province$.pipe(map(province => getCitiesByProvince(province)));
+    this.cities$ = province$.pipe(
+      map(province => getCitiesByProvince(province))
+    );
     // 根据省份和城市的选择得到地区列表
-    this.districts$ = combineLatest(province$, city$, (p, c) => getAreasByCity(p, c));
-
+    this.districts$ = combineLatest(province$, city$, (p, c) =>
+      getAreasByCity(p, c)
+    );
   }
 
   ngOnDestroy() {
@@ -138,7 +161,13 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
     if (!val) {
       return null;
     }
-    if (val.province && val.city && val.district && val.street && val.street.length >= 4) {
+    if (
+      val.province &&
+      val.city &&
+      val.district &&
+      val.street &&
+      val.street.length >= 4
+    ) {
       return null;
     }
     return {
@@ -172,8 +201,7 @@ export class AreaListComponent implements ControlValueAccessor, OnInit, OnDestro
   }
 
   // 这里没有使用，用于注册 touched 状态
-  public registerOnTouched() {
-  }
+  public registerOnTouched() {}
 
   onProvinceChange() {
     this._province.next(this._address.province);

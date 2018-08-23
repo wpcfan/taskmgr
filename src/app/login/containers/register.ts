@@ -1,13 +1,22 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
-import {Subscription} from 'rxjs/Subscription';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy
+} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import * as fromRoot from '../../reducers';
 import * as actions from '../../actions/auth.action';
-import {extractInfo, getAddrByCode, isValidAddr} from '../../utils/identity.util';
-import {isValidDate} from '../../utils/date.util';
-import { range } from 'rxjs/observable/range';
+import {
+  extractInfo,
+  getAddrByCode,
+  isValidAddr
+} from '../../utils/identity.util';
+import { isValidDate } from '../../utils/date.util';
+import { range } from 'rxjs';
 import { map, reduce, debounceTime, filter } from 'rxjs/operators';
 
 @Component({
@@ -68,43 +77,47 @@ import { map, reduce, debounceTime, filter } from 'rxjs/operators';
     </mat-card>
   </form>
   `,
-  styles: [`
-    .text-right {
-      margin: 10px;
-      text-align: end;
-    }
+  styles: [
+    `
+      .text-right {
+        margin: 10px;
+        text-align: end;
+      }
 
-    .control-padding{
-      margin-top: 10px;
-      padding-top: 10px;
-    }
-  `],
+      .control-padding {
+        margin-top: 10px;
+        padding-top: 10px;
+      }
+    `
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-
   selectedTab = 0;
   form: FormGroup;
   avatars$: Observable<string[]>;
   private _sub: Subscription;
   private readonly avatarName = 'avatars';
 
-  constructor(private fb: FormBuilder,
-              private store$: Store<fromRoot.State>) {
-
-    this.avatars$ = range(1, 16)
-      .pipe(
-        map(i => `${this.avatarName}:svg-${i}`),
-        reduce((r: string[], x: string) => [...r, x], [])
-      );
+  constructor(private fb: FormBuilder, private store$: Store<fromRoot.State>) {
+    this.avatars$ = range(1, 16).pipe(
+      map(i => `${this.avatarName}:svg-${i}`),
+      reduce((r: string[], x: string) => [...r, x], [])
+    );
   }
 
   ngOnInit() {
     const img = `${this.avatarName}:svg-${(Math.random() * 16).toFixed()}`;
     this.form = this.fb.group({
-      name: ['', Validators.compose([Validators.required, Validators.maxLength(20)])],
+      name: [
+        '',
+        Validators.compose([Validators.required, Validators.maxLength(20)])
+      ],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      password: ['', Validators.compose([Validators.required, Validators.maxLength(20)])],
+      password: [
+        '',
+        Validators.compose([Validators.required, Validators.maxLength(20)])
+      ],
       repeat: ['', Validators.required],
       avatar: [img],
       dateOfBirth: [''],
@@ -115,23 +128,22 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (!identity) {
       return;
     }
-    const id$ = identity.valueChanges
-      .pipe(
-        debounceTime(300),
-        filter(v => identity.valid)
-      );
+    const id$ = identity.valueChanges.pipe(
+      debounceTime(300),
+      filter(v => identity.valid)
+    );
 
     this._sub = id$.subscribe(id => {
       const info = extractInfo(id.identityNo);
       if (isValidAddr(info.addrCode)) {
         const addr = getAddrByCode(info.addrCode);
-        this.form.patchValue({address: addr});
-        this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
+        this.form.patchValue({ address: addr });
+        this.form.updateValueAndValidity({ onlySelf: true, emitEvent: true });
       }
       if (isValidDate(info.dateOfBirth)) {
         const date = info.dateOfBirth;
-        this.form.patchValue({dateOfBirth: date});
-        this.form.updateValueAndValidity({onlySelf: true, emitEvent: true});
+        this.form.patchValue({ dateOfBirth: date });
+        this.form.updateValueAndValidity({ onlySelf: true, emitEvent: true });
       }
     });
   }
@@ -142,7 +154,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit({value, valid}: FormGroup, e: Event) {
+  onSubmit({ value, valid }: FormGroup, e: Event) {
     e.preventDefault();
     if (!valid) {
       return;
@@ -157,7 +169,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
         identity: value.identity,
         address: value.address,
         dateOfBirth: value.dateOfBirth
-      }));
+      })
+    );
   }
 
   prevTab() {

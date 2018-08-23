@@ -1,7 +1,7 @@
 import { Component, HostBinding } from '@angular/core';
 import { CalendarEvent } from 'angular-calendar';
 import { addDays, addHours, endOfDay, endOfMonth, isSameDay, isSameMonth, startOfDay, subDays } from 'date-fns';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';

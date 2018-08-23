@@ -1,9 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable, throwError } from 'rxjs';
 import { Auth, User } from '../domain';
 import { map, switchMap } from 'rxjs/operators';
-import { _throw } from 'rxjs/observable/throw';
 
 /**
  * 认证服务主要用于用户的注册和登录功能
@@ -14,7 +13,8 @@ export class AuthService {
     'Content-Type': 'application/json'
   });
 
-  private token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9' +
+  private token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9' +
     '.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9' +
     '.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ';
 
@@ -24,9 +24,10 @@ export class AuthService {
    * @param http 注入Http
    * @param config 注入基础配置
    */
-  constructor(private http: HttpClient,
-    @Inject('BASE_CONFIG') private config: { uri: string }) {
-  }
+  constructor(
+    private http: HttpClient,
+    @Inject('BASE_CONFIG') private config: { uri: string }
+  ) {}
 
   /**
    * 使用用户提供的个人信息进行注册，成功则返回 User，否则抛出异常
@@ -34,21 +35,18 @@ export class AuthService {
    * @param user 用户信息，id 属性会被忽略，因为服务器端会创建新的 id
    */
   register(user: User): Observable<Auth> {
-    const params = new HttpParams()
-      .set('email', user.email);
+    const params = new HttpParams().set('email', user.email);
     const uri = `${this.config.uri}/users`;
-    return this.http.get(uri, { params })
-      .pipe(
-        switchMap(res => {
-          if ((<User[]>res).length > 0) {
-            return _throw('username existed');
-          }
-          return this.http.post(uri, JSON.stringify(user), { headers: this.headers })
-            .pipe(
-              map(r => ({ token: this.token, user: <User>r }))
-            );
-        })
-      );
+    return this.http.get(uri, { params }).pipe(
+      switchMap(res => {
+        if ((<User[]>res).length > 0) {
+          return throwError('username existed');
+        }
+        return this.http
+          .post(uri, JSON.stringify(user), { headers: this.headers })
+          .pipe(map(r => ({ token: this.token, user: <User>r })));
+      })
+    );
   }
 
   /**
@@ -62,18 +60,17 @@ export class AuthService {
     const params = new HttpParams()
       .set('email', email)
       .set('password', password);
-    return this.http.get(uri, { params })
-      .pipe(
-        map(res => {
-          const users = <User[]>res;
-          if (users.length === 0) {
-            throw (new Error('Username or password incorrect'));
-          }
-          return {
-            token: this.token,
-            user: users[0]
-          };
-        })
-      );
+    return this.http.get(uri, { params }).pipe(
+      map(res => {
+        const users = <User[]>res;
+        if (users.length === 0) {
+          throw new Error('Username or password incorrect');
+        }
+        return {
+          token: this.token,
+          user: users[0]
+        };
+      })
+    );
   }
 }

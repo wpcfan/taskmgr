@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {OverlayContainer} from '@angular/cdk/overlay';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {Store, select} from '@ngrx/store';
 import {Auth, Project} from '../../domain';
 import * as fromRoot from '../../reducers';

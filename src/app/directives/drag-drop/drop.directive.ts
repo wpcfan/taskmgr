@@ -1,6 +1,6 @@
 import {Directive, Input, Output, EventEmitter, HostListener, ElementRef, Renderer2} from '@angular/core';
 import {DragDropService, DragData} from '../drag-drop.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 @Directive({

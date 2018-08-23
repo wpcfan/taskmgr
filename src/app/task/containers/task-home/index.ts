@@ -1,6 +1,6 @@
 import { Component, HostBinding, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { map, take, filter, withLatestFrom, switchMap } from 'rxjs/operators';

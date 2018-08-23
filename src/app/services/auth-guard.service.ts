@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { map, defaultIfEmpty } from 'rxjs/operators';
 import * as routerActions from '../actions/router.action';

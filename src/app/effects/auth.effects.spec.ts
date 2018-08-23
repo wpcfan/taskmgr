@@ -1,8 +1,8 @@
 import { provideMockActions } from '@ngrx/effects/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { hot, cold } from 'jasmine-marbles';
-import { of } from 'rxjs/observable/of';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { fakeAsync, TestBed } from '@angular/core/testing';
 import { AuthEffects } from './auth.effects';
 import { AuthService } from '../services/auth.service';
@@ -14,16 +14,14 @@ describe('测试 AuthEffects', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule.withRoutes([]),
-      ],
+      imports: [RouterTestingModule.withRoutes([])],
       providers: [
         AuthEffects,
         {
           provide: AuthService,
           useValue: jasmine.createSpyObj('authService', ['login', 'register'])
         },
-        provideMockActions(() => actions$),
+        provideMockActions(() => actions$)
       ]
     });
     effects = TestBed.get(AuthEffects);
@@ -46,7 +44,6 @@ describe('测试 AuthEffects', () => {
 
   describe('登录逻辑：login$', () => {
     it('登录成功发送 LoginSuccessAction', fakeAsync(() => {
-
       const auth = {
         token: '',
         user: {
@@ -55,10 +52,17 @@ describe('测试 AuthEffects', () => {
           email: 'wang@163.com'
         }
       };
-      actions$ = hot('--a-', { a: new actions.LoginAction({ email: 'wang@dev.local', password: '123abc' }) });
+      actions$ = hot('--a-', {
+        a: new actions.LoginAction({
+          email: 'wang@dev.local',
+          password: '123abc'
+        })
+      });
       const { authEffects } = setup('login', { returnedAuth: of(auth) });
 
-      const expectedResult = cold('--b', { b: new actions.LoginSuccessAction(auth) });
+      const expectedResult = cold('--b', {
+        b: new actions.LoginSuccessAction(auth)
+      });
       expect(effects.login$).toBeObservable(expectedResult);
     }));
   });
