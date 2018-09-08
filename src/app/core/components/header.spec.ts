@@ -1,8 +1,12 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {StoreModule} from '@ngrx/store';
-import {reducers, metaReducers} from '../../reducers';
-import {MatSlideToggleModule, MatToolbarModule} from '@angular/material';
-import {HeaderComponent} from './header';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from '../../reducers';
+import {
+  MatSlideToggleModule,
+  MatToolbarModule,
+  MatIconModule
+} from '@angular/material';
+import { HeaderComponent } from './header';
 
 describe('测试顶部组件：HeaderComponent', () => {
   let component: HeaderComponent;
@@ -13,11 +17,11 @@ describe('测试顶部组件：HeaderComponent', () => {
       declarations: [HeaderComponent],
       imports: [
         StoreModule.forRoot(reducers, { metaReducers: metaReducers }),
+        MatIconModule,
         MatToolbarModule,
         MatSlideToggleModule
       ]
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
