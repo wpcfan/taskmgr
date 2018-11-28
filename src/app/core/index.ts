@@ -1,6 +1,7 @@
-import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { NgModule, Optional, SkipSelf, LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeZh from '@angular/common/locales/zh-Hans';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatIconRegistry,
@@ -42,6 +43,7 @@ import { CustomRouterStateSerializer } from '../utils/router.util';
   exports: [AppComponent, AppRoutingModule],
   providers: [
     { provide: 'BASE_CONFIG', useValue: { uri: 'http://localhost:3002' } },
+    { provide: LOCALE_ID, useValue: 'zh-Hans' },
     { provide: MAT_DATE_LOCALE, useValue: 'zh-CN' },
     { provide: DateAdapter, useClass: MomentDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: MD_FNS_DATE_FORMATS },
@@ -72,6 +74,7 @@ export class CoreModule {
     if (parentModule) {
       throw new Error('CoreModule 已经装载，请仅在 AppModule 中引入该模块。');
     }
+    registerLocaleData(localeZh);
     loadSvgResources(iconRegistry, sanitizer);
   }
 }

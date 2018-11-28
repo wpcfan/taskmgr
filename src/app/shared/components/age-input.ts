@@ -55,8 +55,17 @@ export interface Age {
     <div [formGroup]="form" class="age-input">
       <div>
         <mat-form-field>
-          <input matInput [matDatepicker]="birthPicker" type="text" placeholder="出生日期" formControlName="birthday" >
-          <mat-datepicker-toggle matSuffix [for]="birthPicker"></mat-datepicker-toggle>
+          <input
+            matInput
+            [matDatepicker]="birthPicker"
+            type="text"
+            placeholder="出生日期"
+            formControlName="birthday"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="birthPicker"
+          ></mat-datepicker-toggle>
           <mat-error>日期不正确</mat-error>
         </mat-form-field>
         <mat-datepicker touchUi="true" #birthPicker></mat-datepicker>
@@ -64,20 +73,35 @@ export interface Age {
       <ng-container formGroupName="age">
         <div class="age-num">
           <mat-form-field>
-            <input matInput type="number" placeholder="年龄" formControlName="ageNum">
+            <input
+              matInput
+              type="number"
+              placeholder="年龄"
+              formControlName="ageNum"
+            />
           </mat-form-field>
         </div>
         <div>
-          <mat-button-toggle-group formControlName="ageUnit" [(ngModel)]="selectedUnit">
-            <mat-button-toggle *ngFor="let unit of ageUnits" [value]="unit?.value">
+          <mat-button-toggle-group
+            formControlName="ageUnit"
+            [(ngModel)]="selectedUnit"
+          >
+            <mat-button-toggle
+              *ngFor="let unit of ageUnits"
+              [value]="unit?.value"
+            >
               {{ unit?.label }}
             </mat-button-toggle>
           </mat-button-toggle-group>
         </div>
-        <mat-error class="mat-body-2" *ngIf="form.get('age')?.hasError('ageInvalid')">年龄或单位不正确</mat-error>
+        <mat-error
+          class="mat-body-2"
+          *ngIf="form.get('age')?.hasError('ageInvalid')"
+          >年龄或单位不正确</mat-error
+        >
       </ng-container>
     </div>
-    `,
+  `,
   styles: [
     `
       .age-num {
@@ -179,35 +203,41 @@ export class AgeInputComponent
       debounceTime(this.debounceTime),
       distinctUntilChanged()
     );
-    const age$ = combineLatest(ageNum$, ageUnit$, (_num, _unit) =>
-      this.toDate({ age: _num, unit: _unit })
-    ).pipe(
+    const age$ = combineLatest(ageNum$, ageUnit$).pipe(
+      map((_num: number, _unit: AgeUnit) =>
+        this.toDate({ age: _num, unit: _unit })
+      ),
       map(d => ({ date: d, from: 'age' })),
       filter(_ => age.valid)
     );
     const merged$ = merge(birthday$, age$).pipe(filter(_ => this.form.valid));
-    this.subBirth = merged$.subscribe(date => {
-      const aged = this.toAge(date.date);
-      if (date.from === 'birthday') {
-        if (aged.age === ageNum.value && aged.unit === ageUnit.value) {
-          return;
-        }
-        ageUnit.patchValue(aged.unit, {
-          emitEvent: false,
-          emitModelToViewChange: true,
-          emitViewToModelChange: true
-        });
-        ageNum.patchValue(aged.age, { emitEvent: false });
-        this.selectedUnit = aged.unit;
-        this.propagateChange(date.date);
-      } else {
-        const ageToCompare = this.toAge(birthday.value);
-        if (aged.age !== ageToCompare.age || aged.unit !== ageToCompare.unit) {
-          birthday.patchValue(parse(date.date), { emitEvent: false });
+    this.subBirth = merged$.subscribe(
+      (date: { date: string; from: string }) => {
+        const aged = this.toAge(date.date);
+        if (date.from === 'birthday') {
+          if (aged.age === ageNum.value && aged.unit === ageUnit.value) {
+            return;
+          }
+          ageUnit.patchValue(aged.unit, {
+            emitEvent: false,
+            emitModelToViewChange: true,
+            emitViewToModelChange: true
+          });
+          ageNum.patchValue(aged.age, { emitEvent: false });
+          this.selectedUnit = aged.unit;
           this.propagateChange(date.date);
+        } else {
+          const ageToCompare = this.toAge(birthday.value);
+          if (
+            aged.age !== ageToCompare.age ||
+            aged.unit !== ageToCompare.unit
+          ) {
+            birthday.patchValue(parse(date.date), { emitEvent: false });
+            this.propagateChange(date.date);
+          }
         }
       }
-    });
+    );
   }
 
   ngOnDestroy() {

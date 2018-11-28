@@ -1,5 +1,17 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Input, Output} from '@angular/core';
-import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  forwardRef,
+  Input,
+  Output
+} from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR
+} from '@angular/forms';
 
 @Component({
   selector: 'app-image-list-select',
@@ -9,18 +21,17 @@ import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} fro
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => ImageListSelectComponent),
-      multi: true,
+      multi: true
     },
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => ImageListSelectComponent),
-      multi: true,
+      multi: true
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ImageListSelectComponent implements ControlValueAccessor {
-
   selected: string;
   @Input() title = '选择封面：';
   @Input() items: string[] = [];
@@ -28,7 +39,7 @@ export class ImageListSelectComponent implements ControlValueAccessor {
   @Input() rowHeight = '64px';
   @Input() itemWidth = '80px';
   @Input() useSvgIcon = false;
-  @Output('itemChange') itemChange = new EventEmitter<string>();
+  @Output() itemChange = new EventEmitter<string>();
 
   // 这里是做一个空函数体，真正使用的方法在 registerOnChange 中
   // 由框架注册，然后我们使用它把变化发回表单
@@ -50,16 +61,17 @@ export class ImageListSelectComponent implements ControlValueAccessor {
 
   // 验证表单，验证结果正确返回 null 否则返回一个验证结果对象
   public validate(c: FormControl) {
-    return this.selected ? null : {
-      imageListSelect: {
-        valid: false,
-      },
-    };
+    return this.selected
+      ? null
+      : {
+          imageListSelect: {
+            valid: false
+          }
+        };
   }
 
   // 这里没有使用，用于注册 touched 状态
-  public registerOnTouched() {
-  }
+  public registerOnTouched() {}
 
   // 列表元素选择发生改变触发
   onChange(i: number) {
@@ -68,5 +80,4 @@ export class ImageListSelectComponent implements ControlValueAccessor {
     this.propagateChange(this.items[i]);
     this.itemChange.emit(this.items[i]);
   }
-
 }

@@ -3,7 +3,7 @@ import { createWriteStream } from 'fs';
 // abstract writing screen shot to a file
 function writeScreenShot(data, filename) {
   const stream = createWriteStream(filename);
-  stream.write(new Buffer(data, 'base64'));
+  stream.write(Buffer.from(data, 'base64'));
   stream.end();
 }
 

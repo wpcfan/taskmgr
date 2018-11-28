@@ -32,7 +32,8 @@ import { Address } from '../../domain';
           <mat-select
             placeholder="请选择省份"
             [(ngModel)]="_address.province"
-            (change)="onProvinceChange()">
+            (change)="onProvinceChange()"
+          >
             <mat-option *ngFor="let p of provinces" [value]="p">
               {{ p }}
             </mat-option>
@@ -44,8 +45,9 @@ import { Address } from '../../domain';
           <mat-select
             placeholder="请选择城市"
             [(ngModel)]="_address.city"
-            (change)="onCityChange()">
-            <mat-option *ngFor="let c of cities$ | async" [value]="c">
+            (change)="onCityChange()"
+          >
+            <mat-option *ngFor="let c of (cities$ | async)" [value]="c">
               {{ c }}
             </mat-option>
           </mat-select>
@@ -56,8 +58,9 @@ import { Address } from '../../domain';
           <mat-select
             placeholder="请选择区县"
             [(ngModel)]="_address.district"
-            (change)="onDistrictChange()">
-            <mat-option *ngFor="let d of districts$ | async" [value]="d">
+            (change)="onDistrictChange()"
+          >
+            <mat-option *ngFor="let d of (districts$ | async)" [value]="d">
               {{ d }}
             </mat-option>
           </mat-select>
@@ -65,11 +68,16 @@ import { Address } from '../../domain';
       </div>
       <div class="street">
         <mat-form-field class="full-width">
-          <input matInput placeholder="街道地址" [(ngModel)]="_address.street" (change)="onStreetChange()">
+          <input
+            matInput
+            placeholder="街道地址"
+            [(ngModel)]="_address.street"
+            (change)="onStreetChange()"
+          />
         </mat-form-field>
       </div>
     </div>
-    `,
+  `,
   styles: [
     `
       .street {
@@ -124,16 +132,13 @@ export class AreaListComponent
     const city$ = this._city.asObservable().pipe(startWith(''));
     const district$ = this._district.asObservable().pipe(startWith(''));
     const street$ = this._street.asObservable().pipe(startWith(''));
-    const val$ = combineLatest(
-      [province$, city$, district$, street$],
-      (_p: string, _c: string, _d: string, _s: string) => {
-        return {
-          province: _p,
-          city: _c,
-          district: _d,
-          street: _s
-        };
-      }
+    const val$ = combineLatest([province$, city$, district$, street$]).pipe(
+      map(([_p, _c, _d, _s]) => ({
+        province: _p,
+        city: _c,
+        district: _d,
+        street: _s
+      }))
     );
     this._sub = val$.subscribe(v => {
       this.propagateChange(v);
@@ -144,8 +149,8 @@ export class AreaListComponent
       map(province => getCitiesByProvince(province))
     );
     // 根据省份和城市的选择得到地区列表
-    this.districts$ = combineLatest(province$, city$, (p, c) =>
-      getAreasByCity(p, c)
+    this.districts$ = combineLatest(province$, city$).pipe(
+      map(([p, c]) => getAreasByCity(p, c))
     );
   }
 

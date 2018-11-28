@@ -18,14 +18,19 @@ import { Identity, IdentityType } from '../../domain';
 import { isValidAddr, extractInfo } from '../../utils/identity.util';
 import { isValidDate } from '../../utils/date.util';
 import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-indentity-input',
   template: `
     <div>
       <mat-form-field>
-        <mat-select placeholder="证件类型" (change)="onIdTypeChange($event.value)" [(ngModel)]="identity.identityType">
-          <mat-option *ngFor="let type of identityTypes" [value]="type.value" >
+        <mat-select
+          placeholder="证件类型"
+          (change)="onIdTypeChange($event.value)"
+          [(ngModel)]="identity.identityType"
+        >
+          <mat-option *ngFor="let type of identityTypes" [value]="type.value">
             {{ type.label }}
           </mat-option>
         </mat-select>
@@ -33,7 +38,13 @@ import { combineLatest } from 'rxjs';
     </div>
     <div class="id-input">
       <mat-form-field class="full-width">
-        <input matInput type="text" placeholder="证件号码" (change)="onIdNoChange($event.target.value)" [(ngModel)]="identity.identityNo">
+        <input
+          matInput
+          type="text"
+          placeholder="证件号码"
+          (change)="onIdNoChange($event.target.value)"
+          [(ngModel)]="identity.identityNo"
+        />
         <mat-error>证件号码输入有误</mat-error>
       </mat-form-field>
     </div>
@@ -86,12 +97,12 @@ export class IdentityInputComponent
   ngOnInit() {
     const idType$ = this.idType;
     const idNo$ = this.idNo;
-    const val$ = combineLatest(idType$, idNo$, (_type, _no) => {
-      return {
+    const val$ = combineLatest(idType$, idNo$).pipe(
+      map(([_type, _no]) => ({
         identityType: _type,
         identityNo: _no
-      };
-    });
+      }))
+    );
     this._sub = val$.subscribe(v => {
       this.identity = v;
       this.propagateChange(v);
