@@ -203,10 +203,8 @@ export class AgeInputComponent
       debounceTime(this.debounceTime),
       distinctUntilChanged()
     );
-    const age$ = combineLatest(ageNum$, ageUnit$).pipe(
-      map((_num: number, _unit: AgeUnit) =>
-        this.toDate({ age: _num, unit: _unit })
-      ),
+    const age$ = combineLatest(ageNum$, ageUnit$, (_num: number, _unit: AgeUnit) =>
+      this.toDate({ age: _num, unit: _unit })).pipe(
       map(d => ({ date: d, from: 'age' })),
       filter(_ => age.valid)
     );

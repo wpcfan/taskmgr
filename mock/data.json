@@ -133,7 +133,7 @@
     {
       "id": "2",
       "desc": "赶快出发去万达",
-      "taskListId": "BkenST66lb",
+      "taskListId": "SkG3Ba6Tgb",
       "ownerId": "37489e0c-df34-c261-71c4-ce75357e3035",
       "completed": false,
       "participantIds": [
@@ -305,6 +305,34 @@
       },
       "date": "2017-09-18T06:53:26.420Z",
       "id": "BJAwpkacb"
+    },
+    {
+      "taskId": "3",
+      "operator": {
+        "id": "37489e0c-df34-c261-71c4-ce75357e3035",
+        "email": "wpcfan@163.com",
+        "name": "王芃",
+        "avatar": "avatars:svg-1"
+      },
+      "operation": {
+        "type": "completeTask"
+      },
+      "date": "2018-11-29T10:19:53.996Z",
+      "id": "Rd~QHfx"
+    },
+    {
+      "taskId": "3",
+      "operator": {
+        "id": "37489e0c-df34-c261-71c4-ce75357e3035",
+        "email": "wpcfan@163.com",
+        "name": "王芃",
+        "avatar": "avatars:svg-1"
+      },
+      "operation": {
+        "type": "recreateTask"
+      },
+      "date": "2018-11-29T10:19:56.055Z",
+      "id": "9YlZkyc"
     }
   ],
   "quotes": [
