@@ -37,8 +37,8 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 })
 export class TaskFilterNavComponent implements OnInit, OnDestroy {
 
-  @ViewChild('startDatePicker') startDatePicker: MatDatepicker<Date>;
-  @ViewChild('endDatePicker') endDatePicker: MatDatepicker<Date>;
+  @ViewChild('startDatePicker', { static: false }) startDatePicker: MatDatepicker<Date>;
+  @ViewChild('endDatePicker', { static: false }) endDatePicker: MatDatepicker<Date>;
 
   @Output() closeClicked = new EventEmitter<void>();
 

@@ -11,18 +11,18 @@ const routes: Routes = [
   },
   {
     path: 'projects',
-    loadChildren: 'app/project#ProjectModule',
+    loadChildren: () => import('app/project').then(m => m.ProjectModule),
     pathMatch: 'full',
     canActivate: [AuthGuardService]
   },
   {
     path: 'tasklists/:id',
-    loadChildren: 'app/task#TaskModule',
+    loadChildren: () => import('app/task').then(m => m.TaskModule),
     canActivate: [AuthGuardService]
   },
   {
     path: 'mycal/:view',
-    loadChildren: 'app/my-calendar#MyCalendarModule',
+    loadChildren: () => import('app/my-calendar').then(m => m.MyCalendarModule),
     canActivate: [AuthGuardService]
   },
   {
