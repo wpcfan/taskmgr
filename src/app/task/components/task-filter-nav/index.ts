@@ -1,6 +1,13 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Output,
+  EventEmitter,
+  ViewChild
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDatepicker } from '@angular/material';
+import { MatDatepicker } from '@angular/material/datepicker';
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -36,9 +43,11 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   styleUrls: ['./task-filter-nav.component.scss']
 })
 export class TaskFilterNavComponent implements OnInit, OnDestroy {
-
-  @ViewChild('startDatePicker', { static: false }) startDatePicker: MatDatepicker<Date>;
-  @ViewChild('endDatePicker', { static: false }) endDatePicker: MatDatepicker<Date>;
+  @ViewChild('startDatePicker', { static: false })
+  startDatePicker: MatDatepicker<Date>;
+  @ViewChild('endDatePicker', { static: false }) endDatePicker: MatDatepicker<
+    Date
+  >;
 
   @Output() closeClicked = new EventEmitter<void>();
 
@@ -63,18 +72,22 @@ export class TaskFilterNavComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._taskFilterVMSub = this.taskFilterVM$.subscribe((filterVM: TaskFilterVM) => {
-      this.taskFilterVM = filterVM;
-    });
+    this._taskFilterVMSub = this.taskFilterVM$.subscribe(
+      (filterVM: TaskFilterVM) => {
+        this.taskFilterVM = filterVM;
+      }
+    );
 
     this._descFilterSub = this.descFilter$
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged()
-      )
+      .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((desc: string) => {
         this.taskDesc = desc.trim();
-        this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction({ ...this.taskFilterVM, desc: this.taskDesc }));
+        this.store$.dispatch(
+          new TaskFilterVMActions.UpdateTaskFilterVMAction({
+            ...this.taskFilterVM,
+            desc: this.taskDesc
+          })
+        );
       });
   }
 
@@ -121,29 +134,45 @@ export class TaskFilterNavComponent implements OnInit, OnDestroy {
   onSortItemClicked(ev: Event, sortVM: TaskFilterItemVM) {
     ev.preventDefault();
     ev.stopPropagation();
-    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMBySort(this.taskFilterVM, sortVM)));
+    this.store$.dispatch(
+      new TaskFilterVMActions.UpdateTaskFilterVMAction(
+        getUpdateTaskFilterVMBySort(this.taskFilterVM, sortVM)
+      )
+    );
   }
 
   onSaveSortItemClicked(ev: Event) {
     ev.preventDefault();
-    this.store$.dispatch(new TaskFilterActions.UpdateTaskFilterAction(this.taskFilterVM));
+    this.store$.dispatch(
+      new TaskFilterActions.UpdateTaskFilterAction(this.taskFilterVM)
+    );
   }
 
   onOwnerItemClicked(ev: Event, ownerVM: TaskFilterOwnerVM) {
     ev.preventDefault();
-    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByOwner(this.taskFilterVM, ownerVM)));
+    this.store$.dispatch(
+      new TaskFilterVMActions.UpdateTaskFilterVMAction(
+        getUpdateTaskFilterVMByOwner(this.taskFilterVM, ownerVM)
+      )
+    );
   }
 
   onDueDateItemClicked(ev: Event, dueDate: TaskFilterItemVM) {
     ev.preventDefault();
-    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByDueDate(this.taskFilterVM, dueDate)));
+    this.store$.dispatch(
+      new TaskFilterVMActions.UpdateTaskFilterVMAction(
+        getUpdateTaskFilterVMByDueDate(this.taskFilterVM, dueDate)
+      )
+    );
   }
 
   onCreateDateItemClicked(ev: Event, createDate: TaskFilterItemVM) {
     ev.preventDefault();
     this.store$.dispatch(
       new TaskFilterVMActions.UpdateTaskFilterVMAction(
-        getUpdateTaskFilterVMByCreateDate(this.taskFilterVM, createDate)));
+        getUpdateTaskFilterVMByCreateDate(this.taskFilterVM, createDate)
+      )
+    );
   }
 
   onStartCreateDateClicked(ev: Event) {
@@ -163,18 +192,26 @@ export class TaskFilterNavComponent implements OnInit, OnDestroy {
   onStartCreateDateChanged(date: Date) {
     this.store$.dispatch(
       new TaskFilterVMActions.UpdateTaskFilterVMAction(
-        getUpdateTaskFilterVMByCustomCreateDate(this.taskFilterVM, date, true)));
+        getUpdateTaskFilterVMByCustomCreateDate(this.taskFilterVM, date, true)
+      )
+    );
   }
 
   onEndCreateDateChanged(date: Date) {
     this.store$.dispatch(
       new TaskFilterVMActions.UpdateTaskFilterVMAction(
-        getUpdateTaskFilterVMByCustomCreateDate(this.taskFilterVM, date, false)));
+        getUpdateTaskFilterVMByCustomCreateDate(this.taskFilterVM, date, false)
+      )
+    );
   }
 
   onPriorityItemClicked(ev: Event, priority: TaskFilterPriorityVM) {
     ev.preventDefault();
-    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(getUpdateTaskFilterVMByPriority(this.taskFilterVM, priority)));
+    this.store$.dispatch(
+      new TaskFilterVMActions.UpdateTaskFilterVMAction(
+        getUpdateTaskFilterVMByPriority(this.taskFilterVM, priority)
+      )
+    );
   }
 
   onEditFilterHeaderClicked(ev: Event) {
@@ -189,8 +226,15 @@ export class TaskFilterNavComponent implements OnInit, OnDestroy {
   onEditFilterItemClicked(ev: Event, category: TaskFilterItemVM) {
     ev.preventDefault();
     ev.stopPropagation();
-    const updatedTaskFilterVM: TaskFilterVM = getUpdateTaskFilterVMByCategory(this.taskFilterVM, category);
-    this.store$.dispatch(new TaskFilterVMActions.UpdateTaskFilterVMAction(updatedTaskFilterVM));
-    this.store$.dispatch(new TaskFilterActions.UpdateTaskFilterAction(updatedTaskFilterVM));
+    const updatedTaskFilterVM: TaskFilterVM = getUpdateTaskFilterVMByCategory(
+      this.taskFilterVM,
+      category
+    );
+    this.store$.dispatch(
+      new TaskFilterVMActions.UpdateTaskFilterVMAction(updatedTaskFilterVM)
+    );
+    this.store$.dispatch(
+      new TaskFilterActions.UpdateTaskFilterAction(updatedTaskFilterVM)
+    );
   }
 }

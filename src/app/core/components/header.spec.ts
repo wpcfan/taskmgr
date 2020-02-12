@@ -1,11 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { reducers, metaReducers } from '../../reducers';
-import {
-  MatSlideToggleModule,
-  MatToolbarModule,
-  MatIconModule
-} from '@angular/material';
 import { HeaderComponent } from './header';
 
 describe('测试顶部组件：HeaderComponent', () => {

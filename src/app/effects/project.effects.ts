@@ -30,7 +30,7 @@ export class ProjectEffects {
     ofType<actions.LoadProjectsAction>(actions.LOADS),
     withLatestFrom(this.store$.pipe(select(fromRoot.getAuth))),
     switchMap(([_, auth]) =>
-      this.service.get(<string>auth.user.id).pipe(
+      this.service.get(auth?.user?.id || '').pipe(
         map(projects => new actions.LoadProjectsSuccessAction(projects)),
         catchError(err =>
           of(new actions.LoadProjectsFailAction(JSON.stringify(err)))
@@ -45,7 +45,7 @@ export class ProjectEffects {
     map(action => action.payload),
     withLatestFrom(this.store$.pipe(select(fromRoot.getAuth))),
     switchMap(([project, auth]) => {
-      const added = { ...project, members: [`${auth.user.id}`] };
+      const added = { ...project, members: [`${auth?.user?.id || ''}`] };
       return this.service.add(added).pipe(
         map(returned => new actions.AddProjectSuccessAction(returned)),
         catchError(err =>

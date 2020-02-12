@@ -24,7 +24,7 @@ import {
   differenceInDays,
   differenceInMonths,
   differenceInYears,
-  parse
+  parseISO
 } from 'date-fns';
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs';
@@ -161,7 +161,7 @@ export class AgeInputComponent
     const initDate = convertToDate(subYears(Date.now(), 30));
     const initAge = this.toAge(initDate);
     this.form = this.fb.group({
-      birthday: [parse(initDate), this.validateDate],
+      birthday: [parseISO(initDate), this.validateDate],
       age: this.fb.group(
         {
           ageNum: [initAge.age],
@@ -203,8 +203,11 @@ export class AgeInputComponent
       debounceTime(this.debounceTime),
       distinctUntilChanged()
     );
-    const age$ = combineLatest(ageNum$, ageUnit$, (_num: number, _unit: AgeUnit) =>
-      this.toDate({ age: _num, unit: _unit })).pipe(
+    const age$ = combineLatest(
+      ageNum$,
+      ageUnit$,
+      (_num: number, _unit: AgeUnit) => this.toDate({ age: _num, unit: _unit })
+    ).pipe(
       map(d => ({ date: d, from: 'age' })),
       filter(_ => age.valid)
     );
@@ -230,7 +233,7 @@ export class AgeInputComponent
             aged.age !== ageToCompare.age ||
             aged.unit !== ageToCompare.unit
           ) {
-            birthday.patchValue(parse(date.date), { emitEvent: false });
+            birthday.patchValue(parseISO(date.date), { emitEvent: false });
             this.propagateChange(date.date);
           }
         }
@@ -247,7 +250,7 @@ export class AgeInputComponent
   // 提供值的写入方法
   public writeValue(obj: Date) {
     if (obj) {
-      const date = parse(convertToDate(obj));
+      const date = parseISO(convertToDate(obj));
       const birthday = this.form.get('birthday');
       if (!birthday) {
         return;
@@ -323,7 +326,7 @@ export class AgeInputComponent
   }
 
   private toAge(dateStr: string): Age {
-    const date = parse(dateStr);
+    const date = parseISO(dateStr);
     const now = new Date();
     if (isBefore(subDays(now, this.daysTop), date)) {
       return {

@@ -14,22 +14,22 @@ export const getDefaultDueDateVMs = (): TaskFilterItemVM[] => {
     {
       label: '今天截止',
       value: 'today',
-      checked: false,
+      checked: false
     },
     {
       label: '已逾期',
       value: 'overdue',
-      checked: false,
+      checked: false
     },
     {
       label: '未完成',
       value: 'undone',
-      checked: false,
+      checked: false
     },
     {
       label: '已完成',
       value: 'done',
-      checked: false,
+      checked: false
     }
   ];
 };
@@ -39,28 +39,28 @@ export const getDefaultCreateDateVMs = (): TaskFilterItemVM[] => {
     {
       label: '今天',
       value: 'today',
-      checked: false,
+      checked: false
     },
     {
       label: '昨天',
       value: 'yesterday',
-      checked: false,
+      checked: false
     },
     {
       label: '过去一周',
       value: 'pastWeek',
-      checked: false,
+      checked: false
     },
     {
       label: '过去一月',
       value: 'pastMonth',
-      checked: false,
+      checked: false
     },
     {
       label: '自定义',
       value: 'custom',
       checked: false,
-      hasExtra: true,
+      hasExtra: true
     }
   ];
 };
@@ -70,34 +70,35 @@ export const getDefaultFilterSortVMs = (): TaskFilterItemVM[] => {
     {
       label: '项目自定义排序',
       value: 'default',
-      checked: false,
+      checked: false
     },
     {
       label: '按照优先级最高',
       value: 'priorityDesc',
-      checked: false,
+      checked: false
     },
     {
       label: '按截止时间最近',
       value: 'dueDateDesc',
-      checked: false,
+      checked: false
     },
     {
       label: '按创建时间最早',
       value: 'createDateAsc',
-      checked: false,
+      checked: false
     },
     {
       label: '按创建时间最晚',
       value: 'createDateDesc',
-      checked: false,
+      checked: false
     }
   ];
 };
 
-
-export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): TaskVM[] => {
-
+export const getTasksByFilterVM = (
+  tasks: TaskVM[],
+  filterVM: TaskFilterVM
+): TaskVM[] => {
   const newTasks: TaskVM[] = tasks.filter((task: TaskVM) => {
     /** Desc */
     if (filterVM.desc) {
@@ -108,21 +109,25 @@ export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): Tas
 
     /** Owner */
     if (filterVM.hasOwner) {
-      const ownerVMCheckeds: TaskFilterOwnerVM[] = filterVM.ownerVMs.filter((ownerVM: TaskFilterOwnerVM) => ownerVM.checked);
+      const ownerVMCheckeds: TaskFilterOwnerVM[] = filterVM.ownerVMs.filter(
+        (ownerVM: TaskFilterOwnerVM) => ownerVM.checked
+      );
       if (ownerVMCheckeds.length > 0) {
-        const matchedOwnerVMs: TaskFilterOwnerVM[] = ownerVMCheckeds.filter((ownerVM: TaskFilterOwnerVM) => {
-          if (ownerVM.owner && task.owner) {
-            if (ownerVM.owner.id === task.owner.id) {
+        const matchedOwnerVMs: TaskFilterOwnerVM[] = ownerVMCheckeds.filter(
+          (ownerVM: TaskFilterOwnerVM) => {
+            if (ownerVM.owner && task.owner) {
+              if (ownerVM.owner.id === task.owner.id) {
+                return true;
+              }
+            }
+
+            if (!ownerVM.owner && !task.owner) {
               return true;
             }
-          }
 
-          if (!ownerVM.owner && !task.owner) {
-            return true;
+            return false;
           }
-
-          return false;
-        });
+        );
 
         if (matchedOwnerVMs.length === 0) {
           return false;
@@ -132,34 +137,45 @@ export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): Tas
 
     /** DueDate */
     if (filterVM.hasDueDate) {
-      const dueDateVMCheckeds: TaskFilterItemVM[] = filterVM.dueDateVMs.filter((dueDateVM: TaskFilterItemVM) => dueDateVM.checked);
+      const dueDateVMCheckeds: TaskFilterItemVM[] = filterVM.dueDateVMs.filter(
+        (dueDateVM: TaskFilterItemVM) => dueDateVM.checked
+      );
       if (dueDateVMCheckeds.length > 0) {
-        const matchedDueDateVMs: TaskFilterItemVM[] = dueDateVMCheckeds.filter((dueDateVM: TaskFilterItemVM) => {
-          switch (dueDateVM.value) {
-            case 'today':
-              if (!task.dueDate) {
-                return false;
+        const matchedDueDateVMs: TaskFilterItemVM[] = dueDateVMCheckeds.filter(
+          (dueDateVM: TaskFilterItemVM) => {
+            switch (dueDateVM.value) {
+              case 'today':
+                if (!task.dueDate) {
+                  return false;
+                }
+
+                return (
+                  DateFns.format(new Date(), 'yyyy-MM-dd') ===
+                  DateFns.format(task.dueDate, 'yyyy-MM-dd')
+                );
+              case 'overdue': {
+                if (!task.dueDate) {
+                  return false;
+                }
+
+                const nowDate: Date = new Date();
+                const todayDate: Date = new Date(
+                  nowDate.getFullYear(),
+                  nowDate.getMonth(),
+                  nowDate.getDate()
+                );
+
+                return todayDate.getTime() > new Date(task.dueDate).getTime();
               }
-
-              return DateFns.format(new Date(), 'YYYY-MM-DD') === DateFns.format(task.dueDate, 'YYYY-MM-DD');
-            case 'overdue': {
-              if (!task.dueDate) {
-                return false;
-              }
-
-              const nowDate: Date = new Date();
-              const todayDate: Date = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
-
-              return todayDate.getTime() > new Date(task.dueDate).getTime();
+              case 'undone':
+                return !task.completed;
+              case 'done':
+                return task.completed;
+              default:
+                return true;
             }
-            case 'undone':
-              return !task.completed;
-            case 'done':
-              return task.completed;
-            default:
-              return true;
           }
-        });
+        );
 
         if (matchedDueDateVMs.length === 0) {
           return false;
@@ -169,37 +185,66 @@ export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): Tas
 
     /** CreateDate */
     if (filterVM.hasCreateDate) {
-      const createDateVMCheckeds = filterVM.createDateVMs.filter((createDateVM: TaskFilterItemVM) => createDateVM.checked);
+      const createDateVMCheckeds = filterVM.createDateVMs.filter(
+        (createDateVM: TaskFilterItemVM) => createDateVM.checked
+      );
       if (createDateVMCheckeds.length > 0) {
-        const matchedCreateDateVMs: TaskFilterItemVM[] = createDateVMCheckeds.filter((createDateVM: TaskFilterItemVM) => {
-          const createDate: Date = new Date(<Date>task.createDate);
-          const createTimestamp: number = createDate.getTime();
+        const matchedCreateDateVMs: TaskFilterItemVM[] = createDateVMCheckeds.filter(
+          (createDateVM: TaskFilterItemVM) => {
+            const createDate: Date = new Date(<Date>task.createDate);
+            const createTimestamp: number = createDate.getTime();
 
-          const nowDate: Date = new Date();
-          const todayDate: Date = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
-          const yesterdayDate: Date = new Date(todayDate.getTime() - 24 * 60 * 60 * 1000);
-          const pastWeekDate: Date = new Date(todayDate.getTime() - 7 * 24 * 60 * 60 * 1000);
-          const pastMonthDate: Date = new Date(nowDate.getFullYear(), nowDate.getMonth() - 1, nowDate.getDate());
+            const nowDate: Date = new Date();
+            const todayDate: Date = new Date(
+              nowDate.getFullYear(),
+              nowDate.getMonth(),
+              nowDate.getDate()
+            );
+            const yesterdayDate: Date = new Date(
+              todayDate.getTime() - 24 * 60 * 60 * 1000
+            );
+            const pastWeekDate: Date = new Date(
+              todayDate.getTime() - 7 * 24 * 60 * 60 * 1000
+            );
+            const pastMonthDate: Date = new Date(
+              nowDate.getFullYear(),
+              nowDate.getMonth() - 1,
+              nowDate.getDate()
+            );
 
-          const createZeroTimestamp: number = new Date(createDate.getFullYear(), createDate.getMonth(), createDate.getDate()).getTime();
-          const customStartTimestamp: number = filterVM.customCreateDate.startDate.getTime();
-          const customEndTimestamp: number = filterVM.customCreateDate.endDate.getTime();
+            const createZeroTimestamp: number = new Date(
+              createDate.getFullYear(),
+              createDate.getMonth(),
+              createDate.getDate()
+            ).getTime();
+            const customStartTimestamp: number = filterVM.customCreateDate.startDate.getTime();
+            const customEndTimestamp: number = filterVM.customCreateDate.endDate.getTime();
 
-          switch (createDateVM.value) {
-            case 'today':
-              return DateFns.format(new Date(), 'YYYY-MM-DD') === DateFns.format(createDate, 'YYYY-MM-DD');
-            case 'yesterday':
-              return DateFns.format(yesterdayDate, 'YYYY-MM-DD') === DateFns.format(createDate, 'YYYY-MM-DD');
-            case 'pastWeek':
-              return createTimestamp >= pastWeekDate.getTime();
-            case 'pastMonth':
-              return createTimestamp >= pastMonthDate.getTime();
-            case 'custom':
-              return createZeroTimestamp >= customStartTimestamp && createZeroTimestamp <= customEndTimestamp;
-            default:
-              return true;
+            switch (createDateVM.value) {
+              case 'today':
+                return (
+                  DateFns.format(new Date(), 'yyyy-MM-dd') ===
+                  DateFns.format(createDate, 'yyyy-MM-dd')
+                );
+              case 'yesterday':
+                return (
+                  DateFns.format(yesterdayDate, 'yyyy-MM-dd') ===
+                  DateFns.format(createDate, 'yyyy-MM-dd')
+                );
+              case 'pastWeek':
+                return createTimestamp >= pastWeekDate.getTime();
+              case 'pastMonth':
+                return createTimestamp >= pastMonthDate.getTime();
+              case 'custom':
+                return (
+                  createZeroTimestamp >= customStartTimestamp &&
+                  createZeroTimestamp <= customEndTimestamp
+                );
+              default:
+                return true;
+            }
           }
-        });
+        );
 
         if (matchedCreateDateVMs.length === 0) {
           return false;
@@ -209,9 +254,16 @@ export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): Tas
 
     /** Priority */
     if (filterVM.hasPriority) {
-      const priorityVMCheckeds = filterVM.priorityVMs.filter((priorityVM: TaskFilterPriorityVM) => priorityVM.checked);
+      const priorityVMCheckeds = filterVM.priorityVMs.filter(
+        (priorityVM: TaskFilterPriorityVM) => priorityVM.checked
+      );
       if (priorityVMCheckeds.length > 0) {
-        if (priorityVMCheckeds.filter((priorityVM: TaskFilterPriorityVM) => priorityVM.value === task.priority).length === 0) {
+        if (
+          priorityVMCheckeds.filter(
+            (priorityVM: TaskFilterPriorityVM) =>
+              priorityVM.value === task.priority
+          ).length === 0
+        ) {
           return false;
         }
       }
@@ -223,12 +275,19 @@ export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): Tas
   /** Sort */
   switch (filterVM.sort) {
     case 'priorityDesc':
-      return newTasks.sort((currentTask: TaskVM, nextTask: TaskVM) => currentTask.priority - nextTask.priority);
+      return newTasks.sort(
+        (currentTask: TaskVM, nextTask: TaskVM) =>
+          currentTask.priority - nextTask.priority
+      );
     case 'dueDateDesc':
       return newTasks.sort((currentTask: TaskVM, nextTask: TaskVM) => {
         if (currentTask.dueDate && nextTask.dueDate) {
-          const currentTimestamp: number = new Date(<Date>currentTask.dueDate).getTime();
-          const nextTimestamp: number = new Date(<Date>nextTask.dueDate).getTime();
+          const currentTimestamp: number = new Date(
+            <Date>currentTask.dueDate
+          ).getTime();
+          const nextTimestamp: number = new Date(
+            <Date>nextTask.dueDate
+          ).getTime();
           return nextTimestamp - currentTimestamp;
         }
 
@@ -244,14 +303,22 @@ export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): Tas
       });
     case 'createDateAsc':
       return newTasks.sort((currentTask: TaskVM, nextTask: TaskVM) => {
-        const currentTimestamp: number = new Date(<Date>currentTask.createDate).getTime();
-        const nextTimestamp: number = new Date(<Date>nextTask.createDate).getTime();
+        const currentTimestamp: number = new Date(
+          <Date>currentTask.createDate
+        ).getTime();
+        const nextTimestamp: number = new Date(
+          <Date>nextTask.createDate
+        ).getTime();
         return currentTimestamp - nextTimestamp;
       });
     case 'createDateDesc':
       return newTasks.sort((currentTask: TaskVM, nextTask: TaskVM) => {
-        const currentTimestamp: number = new Date(<Date>currentTask.createDate).getTime();
-        const nextTimestamp: number = new Date(<Date>nextTask.createDate).getTime();
+        const currentTimestamp: number = new Date(
+          <Date>currentTask.createDate
+        ).getTime();
+        const nextTimestamp: number = new Date(
+          <Date>nextTask.createDate
+        ).getTime();
         return nextTimestamp - currentTimestamp;
       });
     default:
@@ -259,7 +326,10 @@ export const getTasksByFilterVM = (tasks: TaskVM[], filterVM: TaskFilterVM): Tas
   }
 };
 
-export const getUpdateTaskFilterVMBySort = (taskFilterVM: TaskFilterVM, checkedSortVM: TaskFilterItemVM): TaskFilterVM => {
+export const getUpdateTaskFilterVMBySort = (
+  taskFilterVM: TaskFilterVM,
+  checkedSortVM: TaskFilterItemVM
+): TaskFilterVM => {
   let sortVMs: TaskFilterItemVM[] = getDefaultFilterSortVMs();
   let sort = taskFilterVM.sort;
   sortVMs = sortVMs.map((sortVM: TaskFilterItemVM) => {
@@ -273,7 +343,10 @@ export const getUpdateTaskFilterVMBySort = (taskFilterVM: TaskFilterVM, checkedS
   return { ...taskFilterVM, sort: sort, sortVMs: sortVMs };
 };
 
-export const getUpdateTaskFilterVMByOwner = (taskFilterVM: TaskFilterVM, checkedOwnerVM: TaskFilterOwnerVM): TaskFilterVM => {
+export const getUpdateTaskFilterVMByOwner = (
+  taskFilterVM: TaskFilterVM,
+  checkedOwnerVM: TaskFilterOwnerVM
+): TaskFilterVM => {
   let ownerVMs: TaskFilterOwnerVM[] = taskFilterVM.ownerVMs;
   ownerVMs = ownerVMs.map((ownerVM: TaskFilterOwnerVM) => {
     if (ownerVM.owner && checkedOwnerVM.owner) {
@@ -292,32 +365,53 @@ export const getUpdateTaskFilterVMByOwner = (taskFilterVM: TaskFilterVM, checked
   return { ...taskFilterVM, ownerVMs: ownerVMs };
 };
 
-export const getUpdateTaskFilterVMByDueDate = (taskFilterVM: TaskFilterVM, checkedDueDateVM: TaskFilterItemVM): TaskFilterVM => {
+export const getUpdateTaskFilterVMByDueDate = (
+  taskFilterVM: TaskFilterVM,
+  checkedDueDateVM: TaskFilterItemVM
+): TaskFilterVM => {
   let dueDateVMs: TaskFilterItemVM[] = taskFilterVM.dueDateVMs;
   dueDateVMs = dueDateVMs.map((dueDateVM: TaskFilterItemVM) => {
-    return dueDateVM.value === checkedDueDateVM.value ? { ...dueDateVM, checked: !dueDateVM.checked } : dueDateVM;
+    return dueDateVM.value === checkedDueDateVM.value
+      ? { ...dueDateVM, checked: !dueDateVM.checked }
+      : dueDateVM;
   });
   return { ...taskFilterVM, dueDateVMs: dueDateVMs };
 };
 
-export const getUpdateTaskFilterVMByCreateDate = (taskFilterVM: TaskFilterVM, checkedCreateDateVM: TaskFilterItemVM): TaskFilterVM => {
+export const getUpdateTaskFilterVMByCreateDate = (
+  taskFilterVM: TaskFilterVM,
+  checkedCreateDateVM: TaskFilterItemVM
+): TaskFilterVM => {
   let createDateVMs: TaskFilterItemVM[] = taskFilterVM.createDateVMs;
   createDateVMs = createDateVMs.map((createDateVM: TaskFilterItemVM) => {
-    return createDateVM.value === checkedCreateDateVM.value ? { ...createDateVM, checked: !createDateVM.checked } : createDateVM;
+    return createDateVM.value === checkedCreateDateVM.value
+      ? { ...createDateVM, checked: !createDateVM.checked }
+      : createDateVM;
   });
   return { ...taskFilterVM, createDateVMs: createDateVMs };
 };
 
-export const getUpdateTaskFilterVMByCustomCreateDate = (taskFilterVM: TaskFilterVM, date: Date, start: boolean): TaskFilterVM => {
+export const getUpdateTaskFilterVMByCustomCreateDate = (
+  taskFilterVM: TaskFilterVM,
+  date: Date,
+  start: boolean
+): TaskFilterVM => {
   let customCreateDate: TaskFilterCustomDate = taskFilterVM.customCreateDate;
-  customCreateDate = start ? { ...customCreateDate, startDate: date } : { ...customCreateDate, endDate: date };
+  customCreateDate = start
+    ? { ...customCreateDate, startDate: date }
+    : { ...customCreateDate, endDate: date };
   return { ...taskFilterVM, customCreateDate: customCreateDate };
 };
 
-export const getUpdateTaskFilterVMByPriority = (taskFilterVM: TaskFilterVM, checkedPriorityVM: TaskFilterPriorityVM): TaskFilterVM => {
+export const getUpdateTaskFilterVMByPriority = (
+  taskFilterVM: TaskFilterVM,
+  checkedPriorityVM: TaskFilterPriorityVM
+): TaskFilterVM => {
   let priorityVMs: TaskFilterPriorityVM[] = taskFilterVM.priorityVMs;
   priorityVMs = priorityVMs.map((priorityVM: TaskFilterPriorityVM) => {
-    return priorityVM.value === checkedPriorityVM.value ? { ...priorityVM, checked: !priorityVM.checked } : priorityVM;
+    return priorityVM.value === checkedPriorityVM.value
+      ? { ...priorityVM, checked: !priorityVM.checked }
+      : priorityVM;
   });
 
   return { ...taskFilterVM, priorityVMs: priorityVMs };
@@ -331,7 +425,7 @@ export const getDefaultTaskFilter = (): TaskFilter => {
     hasOwner: true,
     hasDueDate: true,
     hasCreateDate: false,
-    hasPriority: false,
+    hasPriority: false
   };
 };
 
@@ -343,11 +437,14 @@ export const getToAddTaskFilter = (projectId: string): TaskFilter => {
     hasOwner: true,
     hasDueDate: true,
     hasCreateDate: false,
-    hasPriority: false,
+    hasPriority: false
   };
 };
 
-export const getToUpdateTaskFilter = (currentTaskFilter: TaskFilter, updatedTaskFilterVM: TaskFilterVM): TaskFilter => {
+export const getToUpdateTaskFilter = (
+  currentTaskFilter: TaskFilter,
+  updatedTaskFilterVM: TaskFilterVM
+): TaskFilter => {
   return {
     ...currentTaskFilter,
     sort: updatedTaskFilterVM.sort,
@@ -358,12 +455,13 @@ export const getToUpdateTaskFilter = (currentTaskFilter: TaskFilter, updatedTask
   };
 };
 
-
 export const getSortVMs = (taskFilter: TaskFilter): TaskFilterItemVM[] => {
   let sortVMs: TaskFilterItemVM[] = getDefaultFilterSortVMs();
   if (taskFilter.sort) {
     sortVMs = sortVMs.map((sortVM: TaskFilterItemVM) => {
-      return sortVM.value === taskFilter.sort ? { ...sortVM, checked: true } : sortVM;
+      return sortVM.value === taskFilter.sort
+        ? { ...sortVM, checked: true }
+        : sortVM;
     });
   } else {
     sortVMs = sortVMs.map((sortVM: TaskFilterItemVM) => {
@@ -390,22 +488,22 @@ export const getDefaultCategoryVMs = (): TaskFilterItemVM[] => {
     {
       label: '执行者',
       value: 'hasOwner',
-      checked: false,
+      checked: false
     },
     {
       label: '截止时间',
       value: 'hasDueDate',
-      checked: false,
+      checked: false
     },
     {
       label: '创建时间',
       value: 'hasCreateDate',
-      checked: false,
+      checked: false
     },
     {
       label: '优先级',
       value: 'hasPriority',
-      checked: false,
+      checked: false
     }
   ];
 };
@@ -445,15 +543,25 @@ export const getOwnerVMAvatar = (ownerVM: TaskFilterOwnerVM): string => {
 
 export const getDefaultCustomStartDate = (): Date => {
   const nowDate: Date = new Date();
-  const todayDate: Date = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
-  const pastWeekDate: Date = new Date(todayDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const todayDate: Date = new Date(
+    nowDate.getFullYear(),
+    nowDate.getMonth(),
+    nowDate.getDate()
+  );
+  const pastWeekDate: Date = new Date(
+    todayDate.getTime() - 7 * 24 * 60 * 60 * 1000
+  );
 
   return pastWeekDate;
 };
 
 export const getDefaultCustomEndDate = (): Date => {
   const nowDate: Date = new Date();
-  const todayDate: Date = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
+  const todayDate: Date = new Date(
+    nowDate.getFullYear(),
+    nowDate.getMonth(),
+    nowDate.getDate()
+  );
 
   return todayDate;
 };
@@ -474,18 +582,18 @@ export const getDefaultPrioritiesVMs = (): TaskFilterPriorityVM[] => {
     {
       label: '普通',
       value: 3,
-      checked: false,
+      checked: false
     },
     {
       label: '重要',
       value: 2,
-      checked: false,
+      checked: false
     },
     {
       label: '紧急',
       value: 1,
-      checked: false,
-    },
+      checked: false
+    }
   ];
 };
 
@@ -518,21 +626,28 @@ export const getDefaultTaskFilterVM = (): TaskFilterVM => {
     dueDateVMs: getDefaultDueDateVMs(),
     createDateVMs: getDefaultCreateDateVMs(),
     priorityVMs: getDefaultPrioritiesVMs(),
-    categoryVMs: getDefaultCategoryVMs(),
+    categoryVMs: getDefaultCategoryVMs()
   };
 };
 
-export const getUpdateTaskFilterVMByCategory = (taskFilterVM: TaskFilterVM, checkedCategoryVM: TaskFilterItemVM): TaskFilterVM => {
+export const getUpdateTaskFilterVMByCategory = (
+  taskFilterVM: TaskFilterVM,
+  checkedCategoryVM: TaskFilterItemVM
+): TaskFilterVM => {
   let categoryVMs: TaskFilterItemVM[] = taskFilterVM.categoryVMs;
   categoryVMs = categoryVMs.map((categoryVM: TaskFilterItemVM) => {
-    return categoryVM.value === checkedCategoryVM.value ? { ...categoryVM, checked: !categoryVM.checked } : categoryVM;
+    return categoryVM.value === checkedCategoryVM.value
+      ? { ...categoryVM, checked: !categoryVM.checked }
+      : categoryVM;
   });
 
   switch (checkedCategoryVM.value) {
     case 'hasOwner':
-      const ownerVMs: TaskFilterOwnerVM[] = taskFilterVM.ownerVMs.map((ownerVM: TaskFilterOwnerVM) => {
-        return { ...ownerVM, checked: false };
-      });
+      const ownerVMs: TaskFilterOwnerVM[] = taskFilterVM.ownerVMs.map(
+        (ownerVM: TaskFilterOwnerVM) => {
+          return { ...ownerVM, checked: false };
+        }
+      );
 
       return {
         ...taskFilterVM,

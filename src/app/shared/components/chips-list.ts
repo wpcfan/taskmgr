@@ -1,10 +1,30 @@
-import {ChangeDetectionStrategy, Component, OnInit, forwardRef, Input, ViewChild} from '@angular/core';
-import {ControlValueAccessor, FormBuilder, FormGroup, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {MatAutocomplete} from '@angular/material';
-import {Observable} from 'rxjs';
-import {UserService} from '../../services';
-import {User} from '../../domain';
-import { startWith, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  forwardRef,
+  Input,
+  ViewChild
+} from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR
+} from '@angular/forms';
+import { MatAutocomplete } from '@angular/material/autocomplete';
+import { Observable } from 'rxjs';
+import { UserService } from '../../services';
+import { User } from '../../domain';
+import {
+  startWith,
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  switchMap
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-chips-list',
@@ -13,40 +33,45 @@ import { startWith, debounceTime, distinctUntilChanged, filter, switchMap } from
       <span>{{ label }}</span>
       <mat-chip-list>
         <mat-chip color="primary" selected="true" *ngFor="let member of items">
-          {{ member.name }} <span (click)="removeMember(member)" class="remove-tag">x</span>
+          {{ member.name }}
+          <span (click)="removeMember(member)" class="remove-tag">x</span>
         </mat-chip>
       </mat-chip-list>
       <mat-form-field *ngIf="displayInput" class="full-width">
-        <input matInput [placeholder]="placeholderText" [matAutocomplete]="autoMember" formControlName="memberSearch">
+        <input
+          matInput
+          [placeholder]="placeholderText"
+          [matAutocomplete]="autoMember"
+          formControlName="memberSearch"
+        />
       </mat-form-field>
     </div>
     <mat-autocomplete #autoMember="matAutocomplete" [displayWith]="displayUser">
       <mat-option
         *ngFor="let item of memberResults$ | async"
         [value]="item"
-        (onSelectionChange)="handleMemberSelection(item)">
+        (onSelectionChange)="handleMemberSelection(item)"
+      >
         {{ item.name }}
       </mat-option>
     </mat-autocomplete>
   `,
-  styles: [`
-  `],
+  styles: [``],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => ChipsListComponent),
-      multi: true,
+      multi: true
     },
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => ChipsListComponent),
-      multi: true,
+      multi: true
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChipsListComponent implements ControlValueAccessor, OnInit {
-
   // fix the lint complaints about using a reference in template
   // It seems tslint requires now that a `@ViewChild` need to be declared
   // 'you are using blablabla that you're trying to access does not exist in the class declaration.'
@@ -66,7 +91,9 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
     this.chips = this.fb.group({
       memberSearch: ['']
     });
-    this.memberResults$ = this.searchUsers(this.chips.controls['memberSearch'].valueChanges);
+    this.memberResults$ = this.searchUsers(
+      this.chips.controls['memberSearch'].valueChanges
+    );
   }
 
   // 这里是做一个空函数体，真正使用的方法在 registerOnChange 中
@@ -77,11 +104,16 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   // 设置初始值
   public writeValue(obj: User[]) {
     if (obj && this.multiple) {
-      const userEntities: {[id: string]: User} = obj.reduce((entities, user) => {
-        return {...entities, [<string>user.id]: user};
-      }, {});
+      const userEntities: { [id: string]: User } = obj.reduce(
+        (entities, user) => {
+          return { ...entities, [<string>user.id]: user };
+        },
+        {}
+      );
       if (this.items) {
-        const remaining = this.items.filter(item => !userEntities[<string>item.id]);
+        const remaining = this.items.filter(
+          item => !userEntities[<string>item.id]
+        );
         this.items = [...remaining, ...obj];
       }
     } else if (obj && !this.multiple) {
@@ -97,15 +129,17 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
 
   // 验证表单，验证结果正确返回 null 否则返回一个验证结果对象
   public validate(c: FormControl) {
-    return this.items ? null : {
-      chipListInvalid: {
-        valid: false,
-      },
-    };
+    return this.items
+      ? null
+      : {
+          chipListInvalid: {
+            valid: false
+          }
+        };
   }
 
   // 这里没有使用，用于注册 touched 状态
-  public registerOnTouched() { }
+  public registerOnTouched() {}
 
   removeMember(member: User) {
     const ids = this.items.map(u => u.id);
@@ -137,17 +171,16 @@ export class ChipsListComponent implements ControlValueAccessor, OnInit {
   }
 
   searchUsers(obs: Observable<string>): Observable<User[]> {
-    return obs
-      .pipe(
-        startWith(''),
-        debounceTime(300),
-        distinctUntilChanged(),
-        filter((s: string) => (s !== null || s !== undefined) && s.length > 1),
-        switchMap(str => this.service.searchUsers(str))
-      );
+    return obs.pipe(
+      startWith(''),
+      debounceTime(300),
+      distinctUntilChanged(),
+      filter((s: string) => (s !== null || s !== undefined) && s.length > 1),
+      switchMap(str => this.service.searchUsers(str))
+    );
   }
 
   get displayInput() {
-    return this.multiple || (this.items.length === 0);
+    return this.multiple || this.items.length === 0;
   }
 }

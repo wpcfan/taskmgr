@@ -4,12 +4,12 @@ import localeZh from '@angular/common/locales/zh-Hans';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MatIconRegistry,
+  MAT_DATE_LOCALE,
   DateAdapter,
-  MAT_DATE_FORMATS,
-  MatDatepickerIntl,
-  MAT_DATE_LOCALE
-} from '@angular/material';
+  MAT_DATE_FORMATS
+} from '@angular/material/core';
+import { MatIconRegistry } from '@angular/material/icon';
+import { MatDatepickerIntl } from '@angular/material/datepicker';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RouterStateSerializer } from '@ngrx/router-store';
@@ -30,6 +30,7 @@ import { loadSvgResources } from '../utils/svg.util';
 import { DatepickerI18n } from '../shared/adapters/datepicker-i18n';
 import { MD_FNS_DATE_FORMATS } from '../shared/adapters/date-formats';
 import { CustomRouterStateSerializer } from '../utils/router.util';
+
 @NgModule({
   imports: [
     SharedModule,

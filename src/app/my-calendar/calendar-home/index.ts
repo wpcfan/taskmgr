@@ -43,7 +43,7 @@ import * as fromRoot from '../../reducers';
           <mat-icon class="md-48">chevron_right</mat-icon>
         </button>
       </div>
-      <div *ngIf="(events$ | async) as calEvents">
+      <div *ngIf="events$ | async as calEvents">
         <div [ngSwitch]="view$ | async">
           <mwl-calendar-month-view
             *ngSwitchCase="'month'"
@@ -100,7 +100,7 @@ export class CalendarHomeComponent {
     this.view$ = this.route.paramMap.pipe(map(p => <string>p.get('view')));
     this.events$ = this.store$.pipe(
       select(fromRoot.getAuthUser),
-      switchMap(user => this.service$.getUserTasks(<string>user.id))
+      switchMap(user => this.service$.getUserTasks(user?.id || ''))
     );
   }
 

@@ -1,5 +1,5 @@
 import { Component, HostBinding, ChangeDetectionStrategy } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import * as fromRoot from '../../reducers';
@@ -21,15 +21,21 @@ import { range } from 'rxjs';
         fxFlex.xs="1 1 auto"
         fxLayout="row"
         class="card"
-        *ngFor="let project of (projects$ | async)"
+        *ngFor="let project of projects$ | async"
         [item]="project"
         (itemSelected)="selectProject(project)"
         (launchUpdateDialog)="openUpdateDialog(project)"
         (launchInviteDailog)="openInviteDialog(project)"
-        (launchDeleteDailog)="openDeleteDialog(project)">
+        (launchDeleteDailog)="openDeleteDialog(project)"
+      >
       </app-project-item>
     </div>
-    <button mat-fab (click)="openNewProjectDialog()" type="button" class="fab-button">
+    <button
+      mat-fab
+      (click)="openNewProjectDialog()"
+      type="button"
+      class="fab-button"
+    >
       <mat-icon>add</mat-icon>
     </button>
   `,
