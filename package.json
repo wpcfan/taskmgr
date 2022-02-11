@@ -78,7 +78,7 @@
     "jasmine-marbles": "0.6.0",
     "jasmine-spec-reporter": "~4.2.1",
     "json-server": "^0.16.0",
-    "karma": "~4.4.1",
+    "karma": "~6.3.14",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage-istanbul-reporter": "^2.1.1",
     "karma-jasmine": "~3.1.1",
