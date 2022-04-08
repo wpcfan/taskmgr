@@ -50,7 +50,7 @@
     "express": "4.17.1",
     "hammerjs": "2.0.8",
     "lodash": "4.17.15",
-    "moment": "2.24.0",
+    "moment": "2.29.2",
     "rxjs": "^6.5.4",
     "ts-loader": "^6.2.1",
     "tslib": "^1.10.0",
