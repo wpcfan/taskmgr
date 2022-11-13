@@ -58,7 +58,7 @@
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.900.1",
+    "@angular-devkit/build-angular": "~14.2.9",
     "@angular-devkit/core": "^9.0.1",
     "@angular-devkit/schematics": "^9.0.1",
     "@angular/cli": "9.0.1",
@@ -90,7 +90,7 @@
     "tslint": "~6.0.0",
     "typescript": "3.7.5",
     "udk": "^1.1.9-rc.1",
-    "webpack-cli": "^3.3.11",
+    "webpack-cli": "^3.3.12",
     "webpack-node-externals": "1.7.2"
   },
   "description": "The Task Manager System",
